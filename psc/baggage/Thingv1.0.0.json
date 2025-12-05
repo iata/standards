@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "http://host.org/Thingv1.0.0",
+  "type": "object",
+  "$ref": "#/$defs/Thing",
+  "examples": [
+  {
+    "$schema": "http://host.org/Thingv1.0.0",
+    "key": "value"
+  },
+  {
+    "key": "value"
+  }
+  ],
+  "$defs": {
+    "Thing": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "const": "http://host.org/Thingv1.0.0"
+        },
+        "key": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "key"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
