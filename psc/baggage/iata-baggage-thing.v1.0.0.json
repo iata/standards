@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "http://host.org/Thingv1.0.0",
+  "$id": "https://schemas.developer.iata.org/psc/baggage/iata-baggage-thing.v1.0.0.json",
   "type": "object",
   "$ref": "#/$defs/Thing",
   "examples": [
@@ -17,7 +17,7 @@
       "type": "object",
       "properties": {
         "$schema": {
-          "const": "http://host.org/Thingv1.0.0"
+          "const": "https://schemas.developer.iata.org/psc/baggage/iata-baggage-thing.v1.0.0.json"
         },
         "key": {
           "type": "string"
