@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "http://www.pinggg.mywire.org/json/demo-thing-instruction-a1.v0.1.0.json",
+    "$id": "https://schemas.developer.iata.org/test/demo-thing-instruction-a1.v0.1.0.json",
     "title": "Thing-Instruction",
     "description": "Thing Instruction message",
     "type": "object",
@@ -11,7 +11,7 @@
         "ThingInstruction": {
             "title": "ThingInstruction",
             "description": "Thing is be handled per instruction",
-            "$ref": "demo-things-library-a1.v0.1.0.json#/$defs/ThingInstruction"
+            "$ref": "https://schemas.developer.iata.org/test/demo-things-library-a1.v0.1.0.json#/$defs/ThingInstruction"
         }
     },
     "additionalProperties": false
