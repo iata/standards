@@ -1,14 +1,15 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://schemas.developer.iata.org/test/demo-thing-instruction-a1.v0.1.0.json",
-    "title": "Thing-Instruction",
+    "title": "Thing Instruction",
     "description": "Thing Instruction message",
     "type": "object",
     "required": [
-        "ThingInstruction"
+        "thingInstruction"
     ],
     "properties": {
-        "ThingInstruction": {
+		"comment": "folloing the IATA AIDM guidelines, suggestion is to construct the thingInstruction message in the schema, based on the Thing object from the functional library https://schemas.developer.iata.org/test/demo-things-library-a1.v0.1.0.json"
+        "thingInstruction": {
             "title": "ThingInstruction",
             "description": "Thing is be handled per instruction",
             "$ref": "https://schemas.developer.iata.org/test/demo-things-library-a1.v0.1.0.json#/$defs/ThingInstruction"

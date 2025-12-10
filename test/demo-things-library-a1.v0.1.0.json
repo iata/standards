@@ -16,8 +16,8 @@
 			  "$ref": "#/$defs/Identifier"
 			},
 			"name":{
-			  "title": "Thing.Identifier",
-			  "description": "",
+			  "title": "Thing.name",
+			  "description": "The name of the thing",
 			  "type": "string"
 			}
 		},
@@ -31,14 +31,14 @@
             "properties": {
                 "identifier": {
                     "title": "Instruction.Identifier",
-                    "description": "Why instruction is amended",
+                    "description": "identifier of the instruction",
                     "$ref": "#/$defs/Identifier"
                 }
             },
             "additionalProperties": false
         },
         "ThingInstruction": {
-            "title": "Thing-Instruction",
+            "title": "Thing Instruction",
             "description": "Thing is be handled per instruction",
             "type": "object",
             "required": [
@@ -46,12 +46,17 @@
             ],
             "properties": {
                 "identifier": {
-                    "title": "Thing-Instruction.Identifier",
-                    "description": "Identifier identifies Thing",
+                    "title": "ThingInstruction.Identifier",
+                    "description": "Identifier identifies a Thing",
                     "$ref": "#/$defs/Identifier"
                 },
+				"thing":{
+					"title": "ThingInstruction.thing",
+                    "description": "Identifier identifies a Thing",
+                    "$ref": "#/$defs/Thing"
+				}
                 "instruction": {
-                    "title": "Each Thing-Instruction may be handled per one and only one Instruction",
+                    "title": "Each ThingInstruction may be handled per one and only one Instruction",
                     "description": "",
                     "$ref": "#/$defs/Instruction"
                 }
