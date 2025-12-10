@@ -54,7 +54,7 @@
 					"title": "ThingInstruction.thing",
                     "description": "Identifier identifies a Thing",
                     "$ref": "#/$defs/Thing"
-				}
+				},
                 "instruction": {
                     "title": "Each ThingInstruction may be handled per one and only one Instruction",
                     "description": "",
