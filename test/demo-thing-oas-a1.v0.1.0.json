@@ -1,0 +1,67 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "0.1.0",
+    "title": "demo-thing-oas-a1.v0.1.0"
+  },
+  "servers": [
+    {
+      "url": "https://localhost:3000"
+    }
+  ],
+  "paths": {
+    "/things/{identifier}": {
+      "get": {
+        "summary": "Get thing Info by identifier",
+        "description": "Retrieve the information of the thing with the identifier.",
+        "operationId": "get-thing-identifier",
+        "parameters": [
+          {
+            "name": "identifier",
+            "in": "path",
+            "description": "Id of an existing thing.",
+            "required": true,
+            "schema": {
+              "$ref": "https://schemas.developer.iata.org/test/demo-things-library-a1.v0.1.0.json#/$defs/Identifier"                        
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Thing Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "https://schemas.developer.iata.org/test/demo-things-library-a1.v0.1.0.json#/$defs/Thing"                        
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Thing Not Found"
+          }
+        }
+      }
+    },
+    "/things/instruction": {
+      "post": {
+        "summary": "Send the things instruction",
+        "operationId": "post-things-instruction",
+        "requestBody": {
+          "content": {
+            "application/json": { 
+              "schema": {
+                "$ref": "https://schemas.developer.iata.org/test/demo-thing-instruction-a1.v0.1.0.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Instruction Accepted"
+          }
+        }
+      }
+    }
+  }
+}
