@@ -1,0 +1,8 @@
+﻿{
+    "ThingInstruction": {
+        "identifier": "my Thing",
+        "instruction":{
+		"identifier": "clean"
+        }
+    }
+}

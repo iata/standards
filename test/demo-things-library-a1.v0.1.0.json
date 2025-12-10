@@ -1,0 +1,50 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "http://www.pinggg.mywire.org/json/demo-things-library-a1.v0.1.0.json",
+    "title": "Things JSON Library",
+    "description": "The common definitions from the Things domain that can be reused in Things standard schemas",
+    "$defs": {
+        "Identifier": {
+            "title": "Identifier",
+            "description": "An identifier is a character string used to uniquely identify one instance of an object within an identification scheme that is managed by an agency.",
+            "type": "string"
+        },
+        "Instruction": {
+            "title": "Instruction",
+            "description": "A communication conveyed to or left for a recipient who cannot be contacted directly, that directs the recipient to perform specific activities.",
+            "type": "object",
+            "required": [
+                "identifier"
+            ],
+            "properties": {
+                "identifier": {
+                    "title": "Instruction.Identifier",
+                    "description": "Why instruction is amended",
+                    "$ref": "#/$defs/Identifier"
+                }
+            },
+            "additionalProperties": false
+        },
+        "ThingInstruction": {
+            "title": "Thing-Instruction",
+            "description": "Thing is be handled per instruction",
+            "type": "object",
+            "required": [
+                "identifier"
+            ],
+            "properties": {
+                "identifier": {
+                    "title": "Thing-Instruction.Identifier",
+                    "description": "Identifier identifies Thing",
+                    "$ref": "#/$defs/Identifier"
+                },
+                "instruction": {
+                    "title": "Each Thing-Instruction may be handled per one and only one Instruction",
+                    "description": "",
+                    "$ref": "#/$defs/Instruction"
+                }
+            },
+            "additionalProperties": false
+        }
+    }
+}
