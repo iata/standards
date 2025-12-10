@@ -32,7 +32,6 @@
     "messages": {
       "ThingInstruction": {
         "payload": {
-          "type": "object",
           "$ref": "https://schemas.developer.iata.org/test/demo-thing-instruction-a1.v0.1.0.json"
         }
       }
