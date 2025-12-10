@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "version": "0.1.0",
-    "title": "demo-thing-oas-a1.v0.1.0"
+    "title": "The Things API demonstrates reusability on the message schema (ThingInstruction) and entity schema (Thing)"
   },
   "servers": [
     {

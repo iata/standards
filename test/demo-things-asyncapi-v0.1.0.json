@@ -1,0 +1,49 @@
+{
+  "asyncapi": "3.0.0",
+  "info": {
+    "title": "Thing Messaging Service",
+    "version": "0.1.0",
+    "description": "This service is in charge of advising thing instructions"
+  },
+  "channels": {
+    "thingInstruction": {
+      "address": "thingInstruction",
+      "messages": {
+        "thingInstruction": {
+          "$ref": "#/components/messages/ThingInstruction"
+        }
+      }
+    }
+  },
+  "operations": {
+    "thingInstruction": {
+      "action": "send",
+      "channel": {
+        "$ref": "#/channels/thingInstruction"
+      },
+      "messages": [
+        {
+          "$ref": "#/channels/thingInstruction/messages/thingInstruction"
+        }
+      ]
+    }
+  },
+  "components": {
+    "messages": {
+      "ThingInstruction": {
+        "payload": {
+          "type": "object",
+          "$ref": "#/components/schemas/ThingInstruction"
+        }
+      }
+    },
+    "schemas": {
+      "ThingInstruction": {
+        "$ref": "https://schemas.developer.iata.org/test/demo-thing-instruction-a1.v0.1.0.json"
+      },
+      "Thing":{
+        "$ref": "https://schemas.developer.iata.org/test/demo-things-library-a1.v0.1.0.json#/$defs/Thing"
+      }
+    }
+  }
+}
