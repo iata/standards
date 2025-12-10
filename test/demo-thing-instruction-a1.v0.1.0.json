@@ -8,7 +8,6 @@
         "thingInstruction"
     ],
     "properties": {
-		"comment": "folloing the IATA AIDM guidelines, suggestion is to construct the thingInstruction message in the schema, based on the Thing object from the functional library https://schemas.developer.iata.org/test/demo-things-library-a1.v0.1.0.json",
         "thingInstruction": {
             "title": "ThingInstruction",
             "description": "Thing is be handled per instruction",
