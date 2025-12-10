@@ -10,15 +10,23 @@
             "type": "string"
         },
 		"Thing":{
-			"identifier": {
-			  "title": "Thing.Identifier",
-			  "description": "",
-			  "$ref": "#/$defs/Identifier"
-			},
-			"name":{
-			  "title": "Thing.name",
-			  "description": "The name of the thing",
-			  "type": "string"
+			"title": "Thing",
+            "description": "Thing",
+            "type": "object",
+            "required": [
+                "identifier"
+            ],
+            "properties": {
+				"identifier": {
+				  "title": "Thing.Identifier",
+				  "description": "",
+				  "$ref": "#/$defs/Identifier"
+				},
+				"name":{
+				  "title": "Thing.name",
+				  "description": "The name of the thing",
+				  "type": "string"
+				}
 			}
 		},
         "Instruction": {
