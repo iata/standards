@@ -1,6 +1,6 @@
 {
 	"$schema": "https://json-schema.org/draft/2020-12/schema",
-	"$id": "https://schemas.developer.iata.org/psc/baggage/alpha/iata-baggage-cart-ride-result.v0.1.0-",
+	"$id": "https://schemas.developer.iata.org/psc/baggage/alpha/iata-baggage-cart-ride-result.v0.1.0-alpha.1.json",
 	"title": "message",
 	"description": "Cart Ride result message ",
 	"type": "object",
