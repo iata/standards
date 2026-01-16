@@ -1,1 +1,18 @@
-{ "$schema": "https://json-schema.org/draft/2020-12/schema","$id":"https://schemas.developer.iata.org/standards/psc/baggage/alpha/iata-baggage-cart-ride-result.v0.1.0-","title":"message","description":"Cart Ride result message ","type":"object", "required": ["payload"],"properties": {"payload": {"title":"payload","description":"A use of a baggage cart to package a collection of bags of same segregation for transport between terminal and aircraft stand","$ref":"iata-baggage-library.v0.1.0-alpha.1.json#/$defs/CartRideResult"}},"additionalProperties": false}
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://schemas.developer.iata.org/psc/baggage/alpha/iata-baggage-cart-ride-result.v0.1.0-",
+	"title": "message",
+	"description": "Cart Ride result message ",
+	"type": "object",
+	"required": [
+		"payload"
+	],
+	"properties": {
+		"payload": {
+			"title": "payload",
+			"description": "A use of a baggage cart to package a collection of bags of same segregation for transport between terminal and aircraft stand",
+			"$ref": "iata-baggage-library.v0.1.0-alpha.1.json#/$defs/CartRideResult"
+		}
+	},
+	"additionalProperties": false
+}
