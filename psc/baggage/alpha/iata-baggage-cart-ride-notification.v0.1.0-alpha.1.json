@@ -11,7 +11,7 @@
 		"payload": {
 			"title": "payload",
 			"description": "A use of a baggage cart to package a collection of bags of same segregation for transport between terminal and aircraft stand",
-			"$ref": "iata-baggage-library.v0.1.0-alpha.1.json#/$defs/CartRideResult"
+			"$ref": "iata-baggage-library.v0.1.0-alpha.1.json#/$defs/CartRideNotif"
 		}
 	},
 	"additionalProperties": false
