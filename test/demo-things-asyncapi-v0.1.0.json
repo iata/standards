@@ -31,14 +31,13 @@
   "components": {
     "messages": {
       "ThingInstruction": {
+        "name": "",
+        "description": "",
+        "contentType": "application/json",
+        "headers":{},
         "payload": {
-          "$ref": "https://schemas.developer.iata.org/test/demo-thing-instruction-a1.v0.1.0.json"
+          "$ref": "https://schemas.developer.iata.org/test/demo-things-library-a1.v0.1.0.json#/$defs/ThingInstruction"
         }
-      }
-    },
-    "schemas": {
-      "Thing":{
-        "$ref": "https://schemas.developer.iata.org/test/demo-things-library-a1.v0.1.0.json#/$defs/Thing"
       }
     }
   }

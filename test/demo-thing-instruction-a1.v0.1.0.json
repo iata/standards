@@ -8,8 +8,8 @@
         "thingInstruction"
     ],
     "properties": {
-        "thingInstruction": {
-            "title": "ThingInstruction",
+        "data": {
+            "title": "data",
             "description": "Thing is be handled per instruction",
             "$ref": "https://schemas.developer.iata.org/test/demo-things-library-a1.v0.1.0.json#/$defs/ThingInstruction"
         }
