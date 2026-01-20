@@ -1,8 +1,12 @@
 ﻿{
-    "ThingInstruction": {
-        "identifier": "my Thing",
-        "instruction":{
-		"identifier": "clean"
-        }
+	"data": {
+      "identifier": "1234",
+      "thing": {
+        "identifier": "5678",
+        "name": "thing"
+      },
+      "instruction": {
+        "identifier": "9876"
+      }
     }
 }
