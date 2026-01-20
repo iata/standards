@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://schemas.developer.iata.org/test/demo-things-library-a1.v0.1.0.json",
+    "$id": "https://schemas.developer.iata.org/test/things-library-v0.1.0-alpha.json",
     "title": "Things JSON Library",
     "description": "The common definitions from the Things domain that can be reused in Things standard schemas",
     "$defs": {
