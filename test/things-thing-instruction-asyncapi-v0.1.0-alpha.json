@@ -2,7 +2,7 @@
   "asyncapi": "3.0.0",
   "info": {
     "title": "Thing Messaging Service",
-    "version": "0.1.0",
+    "version": "0.1.0-alpha",
     "description": "This service is in charge of advising thing instructions"
   },
   "channels": {
