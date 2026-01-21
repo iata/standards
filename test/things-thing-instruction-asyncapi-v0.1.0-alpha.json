@@ -36,7 +36,7 @@
         "contentType": "application/json",
         "headers": {},
         "payload": {
-          "$ref": "https://schemas.developer.iata.org/test/demo-things-library-a1.v0.1.0.json#/$defs/ThingInstruction"
+          "$ref": "https://schemas.developer.iata.org/test/things-library-v0.1.0-alpha.json#/$defs/ThingInstruction"
         },
         "examples": [
           {

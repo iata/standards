@@ -22,7 +22,7 @@
             "description": "Id of an existing thing.",
             "required": true,
             "schema": {
-              "$ref": "https://schemas.developer.iata.org/test/demo-things-library-a1.v0.1.0.json#/$defs/Identifier"
+              "$ref": "https://schemas.developer.iata.org/test/things-library-v0.1.0-alpha.json#/$defs/Identifier"
             }
           }
         ],
@@ -32,7 +32,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "https://schemas.developer.iata.org/test/demo-things-library-a1.v0.1.0.json#/$defs/Thing"
+                  "$ref": "https://schemas.developer.iata.org/test/things-library-v0.1.0-alpha.json#/$defs/Thing"
                 }
               }
             }
@@ -51,7 +51,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "https://schemas.developer.iata.org/test/demo-things-library-a1.v0.1.0.json#/$defs/ThingInstruction"
+                "$ref": "https://schemas.developer.iata.org/test/things-library-v0.1.0-alpha.json#/$defs/ThingInstruction"
               },
               "examples": {
                 "Thing Instruction": {
