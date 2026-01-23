@@ -11,7 +11,7 @@
 		"data": {
 			"title": "data",
 			"description": "An allocation of a bag to a specific set of consecutive legs and a load position in vehicle performing the legs",
-			"$ref": "iata-baggage-library.v0.1.0-alpha.1.json#/$defs/BagSegmentInstruction"
+			"$ref": "https://schemas.developer.iata.org/psc/baggage/alpha/iata-baggage-library.v0.1.0-alpha.1.json#/$defs/BagSegmentInstruction"
 		}
 	},
 	"additionalProperties": false
