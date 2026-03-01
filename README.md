@@ -1,1 +1,1 @@
-# IATA Offers & Orders Standards
+# IATA Data Exchange Standards
