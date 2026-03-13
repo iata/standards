@@ -1,1 +1,1 @@
-# standards
+# IATA Data Exchange Standards
