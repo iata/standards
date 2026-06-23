@@ -1,0 +1,33 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"$id": "https://schemas.developer.iata.org/psc/standard/iata-offer-response.v0.0.1.json",
+	"title": "Offer",
+	"description": "For selected Offer Items, Offer(s) detail response from OfMS to OrMS.",
+	"type": "object",
+	"required": [
+		"data",
+		"meta"
+	],
+	"properties": {
+		"data": {
+			"title": "data",
+			"description": "For selected Offer Items, Offer(s) detail response from OfMS to OrMS.",
+			"$ref": "https://schemas.developer.iata.org/psc/standard/iata-offer-library.v0.0.1.json#/$defs/Offers"
+		},
+		"meta": {
+			"title": "metadata",
+			"type": "object",
+			"required": [
+				"schema"
+			],
+			"properties": {
+				"schema": {
+					"type": "string",
+					"const": "https://schemas.developer.iata.org/psc/standard/iata-offer-response.v0.0.1.json"
+				}
+			},
+			"additionalProperties": true
+		}
+	},
+	"additionalProperties": false
+}
