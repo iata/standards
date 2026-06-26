@@ -24,11 +24,6 @@
 					"description": "Consumption taxes summary information.",
 					"$ref": "#/$defs/ConsumptionTaxSummary"
 				},
-				"consumptionTaxes": {
-					"title": "Each Accounted Price may have one and only one Consumption Tax Summary",
-					"description": "Consumption taxes summary information.",
-					"$ref": "#/$defs/ConsumptionTaxSummary"
-				},
 				"curConversion": {
 					"title": "Each Accounted Price may has one or more Currency Conversions",
 					"description": "The result of converting one currency into another currency. E.g. local currency to USD, air miles to monetary.",
@@ -2417,18 +2412,8 @@
 			},
 			"additionalProperties": false
 		},
-		"OfferedServiceStatusCode": {
-			"title": "Offered Service Status Code",
-			"description": "Core statuses for Offer Service to be used across Enhanced and Simplified Distribution Standards, refer to IATA code set Offer Service",
-			"$ref": "#/$defs/OfferedServiceStatusCodeEnum"
-		},
-		"OfferedServiceStatusCodeEnum": {
-			"title": "Offered Service Status Code",
-			"description": "The possible statuses of an Offered Service",
-			"type": "string"
-		},
-		"Offers": {
-			"title": "Offers",
+		"OfferDetails": {
+			"title": "Offer Details",
 			"description": "A proposal to sell a specific set of products or Services under specific conditions, for a certain price. Can be the response to a shopping request.",
 			"type": "object",
 			"required": [
@@ -2436,17 +2421,17 @@
 			],
 			"properties": {
 				"dataLists": {
-					"title": "Each Offers may have one and only one Data Lists",
+					"title": "Each Offer Details may have one and only one Data Lists",
 					"description": "Data List definition for this message.",
 					"$ref": "#/$defs/DataLists"
 				},
 				"distributionChain": {
-					"title": "Each Offers may have one and only one Distribution Chain",
+					"title": "Each Offer Details may have one and only one Distribution Chain",
 					"description": "An instance of a distribution channel, which is a chain of intermediaries through which a good or service passes until it reaches the final buyer or the end consumer.",
 					"$ref": "#/$defs/DistributionChain"
 				},
 				"internalValueNewOffer": {
-					"title": "Each Offers must have at least one Internal Value New Offers",
+					"title": "Each Offer Details must have at least one Internal Value New Offers",
 					"description": "New Offer: A proposal to sell a specific set of products or Services under specific conditions, for a certain price. Can be the response to a shopping request. Can be a regular Offer or an A La Carte Offer. A La Carte Offer is defined as a container for A La Carte Offer Items. This supports a shopping basket concept for non-flight services. The main purpose of this structure is to reduce the size of the messages by inserting Offer Items which are applicable to multiple flight-related Offers. NB. For the OfferID of the ALaCarteOffer: Default OfferID identifier for A La Carte Offer Items in a scenario where items here are not selected for a flight-related Offer above. Business Identifier Fields: - [Shopping Response] Shopping Response ID - Offer ID - [Carrier] Airline Designator Code",
 					"type": "array",
 					"minItems": 1,
@@ -2456,6 +2441,16 @@
 				}
 			},
 			"additionalProperties": false
+		},
+		"OfferedServiceStatusCode": {
+			"title": "Offered Service Status Code",
+			"description": "Core statuses for Offer Service to be used across Enhanced and Simplified Distribution Standards, refer to IATA code set Offer Service",
+			"$ref": "#/$defs/OfferedServiceStatusCodeEnum"
+		},
+		"OfferedServiceStatusCodeEnum": {
+			"title": "Offered Service Status Code",
+			"description": "The possible statuses of an Offered Service",
+			"type": "string"
 		},
 		"OperationalSuffixText": {
 			"title": "Operational Suffix Text",
