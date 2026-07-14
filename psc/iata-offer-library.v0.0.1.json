@@ -1,6 +1,6 @@
 {
 	"$schema": "https://json-schema.org/draft/2020-12/schema",
-	"$id": "https://schemas.developer.iata.org/psc/standard/iata-offer-library.v0.0.1.json",
+	"$id": "https://standards.developer.iata.org/psc/iata-offer-library.v0.0.1.json",
 	"title": "Offer JSON Library",
 	"description": "The common definitions from the Offers and Orders domain that can be reused in standard schemas",
 	"$defs": {
@@ -223,6 +223,7 @@
 			"required": [
 				"eligibility",
 				"offerItemIdentifier",
+				"service",
 				"unitPrice"
 			],
 			"properties": {
@@ -312,6 +313,11 @@
 						"$ref": "#/$defs/MediaResourceRef"
 					}
 				},
+				"service": {
+					"title": "Each A La Carte Offer Item must have one or more one and only one A La Carte Service",
+					"description": "The instance of a specific flight or Service Definition as it has been offered (and eventually ordered and consumed) in the context of a specific Offer and/or Order. At the time of shopping, a service can be sold to multiple passengers on a given journey. At time of order, the services should be applied to a single passenger on a single segment.",
+					"$ref": "#/$defs/ALaCarteService"
+				},
 				"unitPrice": {
 					"title": "Each A La Carte Offer Item must has one and only one Price",
 					"description": "The amount of money expected, required, or given in payment for something.",
@@ -321,6 +327,61 @@
 					"title": "A La Carte Offer Item.Web Address URI",
 					"description": "Deep linking into another site to complete the transaction. E.g. to bring the customer directly to a page to continue with a purchase of a specific offer.",
 					"$ref": "#/$defs/Uri"
+				}
+			},
+			"additionalProperties": false
+		},
+		"ALaCarteService": {
+			"title": "A La Carte Service",
+			"description": "The instance of a specific flight or Service Definition as it has been offered (and eventually ordered and consumed) in the context of a specific Offer and/or Order. At the time of shopping, a service can be sold to multiple passengers on a given journey. At time of order, the services should be applied to a single passenger on a single segment.",
+			"type": "object",
+			"required": [
+				"serviceDefinitionRefIdentifier",
+				"serviceIdentifier"
+			],
+			"properties": {
+				"airlineTaxonomy": {
+					"title": "Each A La Carte Service may have associated Service Taxonomies one or more Airline Taxonomies",
+					"description": "Used in the context of the Airline Taxonomy to define a product or service to the seller or to request a collection of products and services from an airline. For more information on what values should be placed within these fields, see the implementation guide at: https://guides.developer.iata.org",
+					"type": "array",
+					"minItems": 0,
+					"items": {
+						"$ref": "#/$defs/AirlineTaxonomy"
+					}
+				},
+				"inventoryGuaranteeDateTime": {
+					"title": "A La Carte Service.Inventory Guarantee Date Time",
+					"description": "The length of time inventory against a given Service is guaranteed. If inventory is not guaranteed, the Order creation (or change) may fail. In the absence of a time limit, no inventory is guaranteed. Notes: The presence of an inventory guarantee does not assume a guarantee of price. For the price to be guaranteed against a given Offer Item, the Price Guarantee Time Limit must also be present. The assumption is that inventory is held when an Order is created (or changed), so this time limit only applies in the context of an Offer.",
+					"$ref": "#/$defs/DateTime"
+				},
+				"richMedia": {
+					"title": "Each A La Carte Service may one or more Media Resource References",
+					"description": "An external resource such as an Image, Video, PDF or other which is available for display",
+					"type": "array",
+					"minItems": 0,
+					"items": {
+						"$ref": "#/$defs/MediaResourceRef"
+					}
+				},
+				"serviceDefinitionRefIdentifier": {
+					"title": "A La Carte Service.Service Definition Reference Identifier",
+					"description": "Reference to a service definition.",
+					"$ref": "#/$defs/Identifier"
+				},
+				"serviceIdentifier": {
+					"title": "A La Carte Service.Service Identifier",
+					"description": "Uniquely Identifies a Service within the context of one message.",
+					"$ref": "#/$defs/Identifier"
+				},
+				"serviceRefIdentifier": {
+					"title": "A La Carte Service.Service Reference Identifier",
+					"description": "Reference to another service instance.",
+					"$ref": "#/$defs/Identifier"
+				},
+				"validatingCarrier": {
+					"title": "Each A La Carte Service may have a Validating Carrier one and only one Carrier",
+					"description": "The organization which carries the passenger, baggage, or goods, and/or commits to delivering the carriage as well as any related services such as issuance of ticket, creation of Order, etc. Business Identifier Fields: - Airline Designator Code - Duplicate Designator Indicator - Name",
+					"$ref": "#/$defs/Carrier"
 				}
 			},
 			"additionalProperties": false
@@ -636,51 +697,6 @@
 				"Name",
 				"Service"
 			]
-		},
-		"ClearanceMethods": {
-			"title": "Clearance Methods",
-			"description": "These are the clearance options with their supporting information proposed by the carrier for a given offer. It supplies the methods available to clear a payment. It is part of the 'Payment Supported Method', and it is relevant whenever the method of payment will require clearance of funds between the partners of the sale. Includes the Commission data to allow the carrier to support choices that are in line with its payment policy.",
-			"type": "object",
-			"required": [
-				"processRuleCode"
-			],
-			"properties": {
-				"commission": {
-					"title": "Each Clearance Methods may Result in one and only one Commission",
-					"description": "An amount of money, typically a set percentage of the value involved, paid to an agent in a commercial transaction.",
-					"$ref": "#/$defs/Commission"
-				},
-				"netClearanceAmount": {
-					"title": "Clearance Methods.Net Clearance Amount",
-					"description": "The funds to be cleared as a result of the payment commitment, the selected payment method, and the date when the funds must be remitted. It is the amount the Clearance Payer must pay to the Clearance Payee on a given Remittance Date taking into consideration any funds due to the Clearance Payer by the Clearance Payee as a result of the same payment commitment.",
-					"$ref": "#/$defs/Amount"
-				},
-				"processRuleCode": {
-					"title": "Clearance Methods.Process Rule Code",
-					"description": "defines under what governing rules, process and reporting standard the Clearance Manager processes the clearance. Example: IATAC00 or BLTRL00 or NDCLNK0",
-					"$ref": "#/$defs/ClearanceProcessRuleCode"
-				},
-				"remittanceDate": {
-					"title": "Clearance Methods.Remittance Date",
-					"description": "The date when the amount in the clearance request that is paid by the Clearance Payer will have to reach the settlement manager's bank account",
-					"$ref": "#/$defs/Date"
-				}
-			},
-			"additionalProperties": false
-		},
-		"ClearanceProcessRuleCode": {
-			"title": "Clearance Process Rule Code",
-			"description": "Character string of letters and numbers to describe the governance for the Clearance process.",
-			"type": "object",
-			"properties": {
-				"value": {
-					"title": "Clearance Process Rule_ Code.Content",
-					"description": "",
-					"type": "string",
-					"pattern": "^(IATAC|BLTRL)[A-Za-z0-9]{2}$"
-				}
-			},
-			"additionalProperties": false
 		},
 		"Code": {
 			"title": "Code",
@@ -1035,22 +1051,6 @@
 			"title": "Country Sub-Division Code",
 			"description": "The list of Country Sub-Division Codes in ISO 3166-2, or referenced from ISO 3166-2 for the specific countries. Max-3-char sub-division code without preceding country code.",
 			"type": "string"
-		},
-		"CryptographyKey": {
-			"title": "Cryptography Key",
-			"description": "Cryptography Key.",
-			"type": "object",
-			"required": [
-				"keyNameText"
-			],
-			"properties": {
-				"keyNameText": {
-					"title": "Cryptography Key.Key Name Text",
-					"description": "key name.",
-					"$ref": "#/$defs/Text"
-				}
-			},
-			"additionalProperties": false
 		},
 		"CurConversion": {
 			"title": "Currency Conversion",
@@ -1839,20 +1839,6 @@
 			},
 			"additionalProperties": false
 		},
-		"IinNumber": {
-			"title": "IIN Number",
-			"description": "Issuer identification number.",
-			"type": "object",
-			"properties": {
-				"value": {
-					"title": "IIN_ Number.Content",
-					"description": "Mathematical number that is assigned or is determined by calculation.",
-					"type": "string",
-					"pattern": "^[0-9]{1,8}$"
-				}
-			},
-			"additionalProperties": false
-		},
 		"Ind": {
 			"title": "Indicator",
 			"description": "An indicator is a list of two mutually exclusive Boolean values that express the only possible states of a property.",
@@ -1871,7 +1857,7 @@
 			"description": "New Offer: A proposal to sell a specific set of products or Services under specific conditions, for a certain price. Can be the response to a shopping request. Can be a regular Offer or an A La Carte Offer. A La Carte Offer is defined as a container for A La Carte Offer Items. This supports a shopping basket concept for non-flight services. The main purpose of this structure is to reduce the size of the messages by inserting Offer Items which are applicable to multiple flight-related Offers. NB. For the OfferID of the ALaCarteOffer: Default OfferID identifier for A La Carte Offer Items in a scenario where items here are not selected for a flight-related Offer above. Business Identifier Fields: - [Shopping Response] Shopping Response ID - Offer ID - [Carrier] Airline Designator Code",
 			"type": "object",
 			"required": [
-				"internalValueOfferItem",
+				"internalValueNewOfferItem",
 				"offerIdentifier",
 				"ownerCode"
 			],
@@ -1908,9 +1894,9 @@
 					"description": "Reference to a Disclosure ID within this message.",
 					"$ref": "#/$defs/Identifier"
 				},
-				"internalValueOfferItem": {
+				"internalValueNewOfferItem": {
 					"title": "Each Internal Value New Offer must has one or more at least one Internal Value New Offer Items",
-					"description": "A priced grouping of one or more services within an Offer. The New Offer Item assigns a total price for all included services for all passengers and all segments referenced. Once constructed, the OfferItem cannot be modified.",
+					"description": "",
 					"type": "array",
 					"minItems": 1,
 					"items": {
@@ -2381,37 +2367,6 @@
 			},
 			"additionalProperties": false
 		},
-		"OfferAssociation": {
-			"title": "Offer Association",
-			"description": "A set of associations to Offers and Offer Items.",
-			"type": "object",
-			"required": [
-				"offerRefIdentifier",
-				"ownerCode"
-			],
-			"properties": {
-				"offerItemRefIdentifier": {
-					"title": "Offer Association.Offer Item Reference Identifier",
-					"description": "Reference to an Offer Item ID for which the payment method applies",
-					"type": "array",
-					"minItems": 0,
-					"items": {
-						"$ref": "#/$defs/Identifier"
-					}
-				},
-				"offerRefIdentifier": {
-					"title": "Offer Association.Offer Reference Identifier",
-					"description": "Reference to an Offer ID for which the payment method applies.",
-					"$ref": "#/$defs/Identifier"
-				},
-				"ownerCode": {
-					"title": "Offer Association.Owner Code",
-					"description": "Airline code assigned to a carrier. Either ICAO-defined 3-character code or IATA-defined 2-character code.",
-					"$ref": "#/$defs/AirlineDesigCode"
-				}
-			},
-			"additionalProperties": false
-		},
 		"OfferDetails": {
 			"title": "Offer Details",
 			"description": "A proposal to sell a specific set of products or Services under specific conditions, for a certain price. Can be the response to a shopping request.",
@@ -2431,12 +2386,17 @@
 					"$ref": "#/$defs/DistributionChain"
 				},
 				"internalValueNewOffer": {
-					"title": "Each Offer Details must have at least one Internal Value New Offers",
-					"description": "New Offer: A proposal to sell a specific set of products or Services under specific conditions, for a certain price. Can be the response to a shopping request. Can be a regular Offer or an A La Carte Offer. A La Carte Offer is defined as a container for A La Carte Offer Items. This supports a shopping basket concept for non-flight services. The main purpose of this structure is to reduce the size of the messages by inserting Offer Items which are applicable to multiple flight-related Offers. NB. For the OfferID of the ALaCarteOffer: Default OfferID identifier for A La Carte Offer Items in a scenario where items here are not selected for a flight-related Offer above. Business Identifier Fields: - [Shopping Response] Shopping Response ID - Offer ID - [Carrier] Airline Designator Code",
+					"title": "Each Offer Details must have one and only one Internal Value New Offer",
+					"description": "",
+					"$ref": "#/$defs/InternalValueNewOffer"
+				},
+				"promotion": {
+					"title": "Each Offer Details may have one or more Promotions",
+					"description": "",
 					"type": "array",
-					"minItems": 1,
+					"minItems": 0,
 					"items": {
-						"$ref": "#/$defs/InternalValueNewOffer"
+						"$ref": "#/$defs/Promotion"
 					}
 				}
 			},
@@ -2561,32 +2521,6 @@
 					"minItems": 1,
 					"items": {
 						"$ref": "#/$defs/OriginDest"
-					}
-				}
-			},
-			"additionalProperties": false
-		},
-		"OtherOffers": {
-			"title": "Other Offers",
-			"description": "Grouping of Offers returned by a single ORA.",
-			"type": "object",
-			"properties": {
-				"aLaCarteOffer": {
-					"title": "Each Other Offers may one or more A La Carte Offers",
-					"description": "A proposal to sell a specific set of products or Services under specific conditions, for a certain price. Can be the response to a shopping request. Can be a regular Offer or an A La Carte Offer. A La Carte Offer is defined as a container for A La Carte Offer Items. This supports a shopping basket concept for non-flight services. The main purpose of this structure is to reduce the size of the messages by inserting Offer Items which are applicable to multiple flight-related Offers. NB. For the OfferID of the ALaCarteOffer: Default OfferID identifier for A La Carte Offer Items in a scenario where items here are not selected for a flight-related Offer above. Business Identifier Fields: - [Shopping Response] Shopping Response ID - Offer ID - [Carrier] Airline Designator Code",
-					"type": "array",
-					"minItems": 0,
-					"items": {
-						"$ref": "#/$defs/ALaCarteOffer"
-					}
-				},
-				"offer": {
-					"title": "Each Other Offers may Contains one or more Internal Value New Offers",
-					"description": "New Offer: A proposal to sell a specific set of products or Services under specific conditions, for a certain price. Can be the response to a shopping request. Can be a regular Offer or an A La Carte Offer. A La Carte Offer is defined as a container for A La Carte Offer Items. This supports a shopping basket concept for non-flight services. The main purpose of this structure is to reduce the size of the messages by inserting Offer Items which are applicable to multiple flight-related Offers. NB. For the OfferID of the ALaCarteOffer: Default OfferID identifier for A La Carte Offer Items in a scenario where items here are not selected for a flight-related Offer above. Business Identifier Fields: - [Shopping Response] Shopping Response ID - Offer ID - [Carrier] Airline Designator Code",
-					"type": "array",
-					"minItems": 0,
-					"items": {
-						"$ref": "#/$defs/InternalValueNewOffer"
 					}
 				}
 			},
@@ -2901,139 +2835,6 @@
 			},
 			"additionalProperties": false
 		},
-		"PaymentBrandCode": {
-			"title": "Payment Brand Code",
-			"description": "Additional Payment Brand codes for use in Enhanced and Simplified Distribution Standards, refer to IATA code set PAYB",
-			"$ref": "#/$defs/PaymentBrandCodeEnum"
-		},
-		"PaymentBrandCodeEnum": {
-			"title": "Payment Brand Code",
-			"description": "Enumeration of Additional Payment Brand codes for use in Enhanced and Simplified Distribution Standards",
-			"type": "string"
-		},
-		"PaymentCardAddlInfo": {
-			"title": "Payment Card Additional Information",
-			"description": "Additional Information relating to Payment Cards. For use with PaymentTypeCode(s) relating to Card forms of payment",
-			"type": "object",
-			"properties": {
-				"cardProductTypeCode": {
-					"title": "Payment Card Additional Information.Card Product Type Code",
-					"description": "Used to specify whether the card is a Consumer (personal) or Commercial (corporate) card.",
-					"$ref": "#/$defs/Code"
-				},
-				"cardTypeText": {
-					"title": "Payment Card Additional Information.Card Type Text",
-					"description": "Additional description for the magnetic stripe card type (debit card, credit card, prepaid card, etc.)",
-					"$ref": "#/$defs/Text"
-				},
-				"iinIinNumber": {
-					"title": "Payment Card Additional Information.IIN IIN_Number",
-					"description": "Payment card IIN/BIN number. Example: 40112345",
-					"$ref": "#/$defs/IinNumber"
-				},
-				"securePaymentAuthenticationVersion": {
-					"title": "Each Payment Card Additional Information may apply one and only one Secure Payment Authentication Version",
-					"description": "Used by Seller if 3D-Secure is supported. Seller can specify which version of 3D-Secure is supported. Note: 3D-Secure context should be used when the Customer-Seller interaction type is web and/or mobile.",
-					"$ref": "#/$defs/SecurePaymentAuthenticationVersion"
-				},
-				"verificationInd": {
-					"title": "Payment Card Additional Information.Verification Indicator",
-					"description": "When 'true', this payment requires additional authentication.",
-					"$ref": "#/$defs/Ind"
-				}
-			},
-			"additionalProperties": false
-		},
-		"PaymentFunctionsOffer": {
-			"title": "Payment Functions Offer",
-			"description": "Is the container of all payment relevant functions.",
-			"type": "object",
-			"properties": {
-			}
-		},
-		"PaymentMethodAddlInfo": {
-			"title": "Payment Method Additional Information",
-			"description": "a Payment Method Additional Information",
-			"type": "object",
-			"properties": {
-				"paymentOtherMethodAddlInfo": {
-					"title": "Each Payment Method Additional Information may one and only one Payment Other Method Additional Information",
-					"description": "Additional Information for other payment criteria. For use with PaymentTypeCode(s) relating to Other forms of payment",
-					"$ref": "#/$defs/PaymentOtherMethodAddlInfo"
-				}
-			},
-			"additionalProperties": false
-		},
-		"PaymentOtherMethodAddlInfo": {
-			"title": "Payment Other Method Additional Information",
-			"description": "Additional Information for other payment criteria. For use with PaymentTypeCode(s) relating to Other forms of payment",
-			"type": "object",
-			"required": [
-				"remark"
-			],
-			"properties": {
-				"remark": {
-					"title": "Each Payment Other Method Additional Information must at least one Remarks",
-					"description": "Supplementary information.",
-					"type": "array",
-					"minItems": 1,
-					"items": {
-						"$ref": "#/$defs/Remark"
-					}
-				}
-			},
-			"additionalProperties": false
-		},
-		"PaymentSupportedMethod": {
-			"title": "Payment Supported Method",
-			"description": "Contains information relating to payment method acceptance. This always relates to the airlines payment acceptance terms regardless of preference expressed by a seller using PaymentCriteria.",
-			"type": "object",
-			"required": [
-				"paymentTypeCode"
-			],
-			"properties": {
-				"clearanceMethods": {
-					"title": "Each Payment Supported Method may one or more Clearance Methodss",
-					"description": "These are the clearance options with their supporting information proposed by the carrier for a given offer. It supplies the methods available to clear a payment. It is part of the 'Payment Supported Method', and it is relevant whenever the method of payment will require clearance of funds between the partners of the sale. Includes the Commission data to allow the carrier to support choices that are in line with its payment policy.",
-					"type": "array",
-					"minItems": 0,
-					"items": {
-						"$ref": "#/$defs/ClearanceMethods"
-					}
-				},
-				"cryptographyKey": {
-					"title": "Each Payment Supported Method may Has a one and only one Cryptography Key",
-					"description": "Cryptography Key.",
-					"$ref": "#/$defs/CryptographyKey"
-				},
-				"paymentBrandCode": {
-					"title": "Payment Supported Method.Payment Brand Code",
-					"description": "A Payment Brand code assigned according to ATS Codeset PAYB. Example VI for Visa",
-					"$ref": "#/$defs/PaymentBrandCode"
-				},
-				"paymentMethodAddlInfo": {
-					"title": "Each Payment Supported Method may one and only one Payment Method Additional Information",
-					"description": "a Payment Method Additional Information",
-					"$ref": "#/$defs/PaymentMethodAddlInfo"
-				},
-				"paymentMethodCountryCode": {
-					"title": "Payment Supported Method.Payment Method Country Code",
-					"description": "The country in which the payment method was issued or created. Fir example: 'US' for a card issued in the United States or 'AU' for an e-wallet account created in Australia.",
-					"$ref": "#/$defs/CountryCode"
-				},
-				"paymentRedirectionInd": {
-					"title": "Payment Supported Method.Payment Redirection Indicator",
-					"description": "Indicates that an Airline will capture payment via a separate hosted payment platform, e.g. via a URI generated by an airline's payment platform",
-					"$ref": "#/$defs/Ind"
-				},
-				"paymentTypeCode": {
-					"title": "Payment Supported Method.Payment Type Code",
-					"description": "A Payment Type code assigned according to ATS Codeset PAYT. For example: 'CC' for Customer Card.",
-					"$ref": "#/$defs/PaymentTypeCode"
-				}
-			},
-			"additionalProperties": false
-		},
 		"PaymentTimeLimitDate": {
 			"title": "Payment Time Limit Date",
 			"description": "A container for a payment time limit date.",
@@ -3059,16 +2860,6 @@
 				}
 			},
 			"additionalProperties": false
-		},
-		"PaymentTypeCode": {
-			"title": "Payment Type Code",
-			"description": "Additional payment type codes for use in Enhanced and Simplified, refer to IATA code set PAYT",
-			"$ref": "#/$defs/PaymentTypeCodeEnum"
-		},
-		"PaymentTypeCodeEnum": {
-			"title": "Payment Type Code",
-			"description": "The type code as in 'Credit card' used for a payment.",
-			"type": "string"
 		},
 		"Percent": {
 			"title": "Percent",
@@ -3100,69 +2891,6 @@
 					"title": "Each Point Of Sale may be applicable to one and only one Country Sub-Division",
 					"description": "An area of land which is a sub-division within a country, such as a state, a county, a canton, a province, etc.",
 					"$ref": "#/$defs/CountrySubDivision"
-				}
-			},
-			"additionalProperties": false
-		},
-		"Policy": {
-			"title": "Policy",
-			"description": "Message policy information, including PCI, PII information.",
-			"type": "object",
-			"required": [
-				"policyNodeInfo",
-				"versionNumber"
-			],
-			"properties": {
-				"desc": {
-					"title": "Each Policy may one or more Descriptions",
-					"description": "An account or representation of the certain or major aspects, characteristics, or features of a person, object, or event.",
-					"type": "array",
-					"minItems": 0,
-					"items": {
-						"$ref": "#/$defs/Desc"
-					}
-				},
-				"ownerName": {
-					"title": "Policy.Owner Name",
-					"description": "Source Entity Name or Code (e.g. BA, WIDGETCO).",
-					"$ref": "#/$defs/Name"
-				},
-				"policyNodeInfo": {
-					"title": "Each Policy must at least one Policy Node Informations",
-					"description": "Policy data node detail, including an XPATH and associated Tag Name.",
-					"type": "array",
-					"minItems": 1,
-					"items": {
-						"$ref": "#/$defs/PolicyNodeInfo"
-					}
-				},
-				"policyTypeText": {
-					"title": "Policy.Policy Type Text",
-					"description": "Policy Type, examples: Policy Type. Examples: Privacy_PII, Payment_PCI, Credentialing",
-					"$ref": "#/$defs/Text"
-				},
-				"versionNumber": {
-					"title": "Policy.Version Number",
-					"description": "Policy version number. Example: 2.17",
-					"$ref": "#/$defs/Number"
-				}
-			},
-			"additionalProperties": false
-		},
-		"PolicyNodeInfo": {
-			"title": "Policy Node Information",
-			"description": "Policy data node detail, including an XPATH and associated Tag Name.",
-			"type": "object",
-			"properties": {
-				"pathText": {
-					"title": "Policy Node Information.Path Text",
-					"description": "Message property location using XPATH syntax.",
-					"$ref": "#/$defs/Text"
-				},
-				"tagName": {
-					"title": "Policy Node Information.Tag Name",
-					"description": "Message property Tag name.",
-					"$ref": "#/$defs/Name"
 				}
 			},
 			"additionalProperties": false
@@ -3711,35 +3439,6 @@
 					"minItems": 1,
 					"items": {
 						"$ref": "#/$defs/SeatProfile"
-					}
-				}
-			},
-			"additionalProperties": false
-		},
-		"SecurePaymentAuthenticationVersion": {
-			"title": "Secure Payment Authentication Version",
-			"description": "Used by Seller if 3D-Secure is supported. Seller can specify which version of 3D-Secure is supported. Note: 3D-Secure context should be used when the Customer-Seller interaction type is web and/or mobile.",
-			"type": "object",
-			"required": [
-				"supportedVersionText"
-			],
-			"properties": {
-				"cardEnrollmentVersionText": {
-					"title": "Secure Payment Authentication Version.Card Enrollment Version Text",
-					"description": "The authentication request for the 3-D Secure transaction.",
-					"type": "array",
-					"minItems": 0,
-					"items": {
-						"$ref": "#/$defs/Text"
-					}
-				},
-				"supportedVersionText": {
-					"title": "Secure Payment Authentication Version.Supported Version Text",
-					"description": "Version of 3-D secure being used in this payment transaction. Possible values '3DS2'",
-					"type": "array",
-					"minItems": 1,
-					"items": {
-						"$ref": "#/$defs/Text"
 					}
 				}
 			},
