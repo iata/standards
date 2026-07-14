@@ -23,7 +23,7 @@
 			"properties": {
 				"schema": {
 					"type": "string",
-					"const": "https://schemas.developer.iata.org/psc/standard/iata-offer-response.v0.0.1.json"
+					"const": "https://standards.developer.iata.org/psc/iata-offer-response.v0.0.1.json"
 				}
 			},
 			"additionalProperties": true
