@@ -33,6 +33,11 @@
 						"$ref": "#/$defs/CurConversion"
 					}
 				},
+				"discount": {
+					"title": "Each Accounted Price may has one and only one Discount",
+					"description": "Deduction from the price amount, made in advance of its payment.",
+					"$ref": "#/$defs/Discount"
+				},
 				"equivAmount": {
 					"title": "Accounted Price.Equivalent Amount",
 					"description": "The entire amount of transaction stated in the local currency at the point of sale, or the currency as defined by the Currency Indicator Code.",
@@ -47,6 +52,15 @@
 					"title": "Accounted Price.Loyalty Unit Name",
 					"description": "The name of the loyalty unit used by the loyalty unit amount (e.g. miles or points).",
 					"$ref": "#/$defs/Name"
+				},
+				"markup": {
+					"title": "Each Accounted Price may has one or more Markups",
+					"description": "Defines the reason for the markup added by an airline as part of the offer reported as calculation detail. The amount added to the cost price of goods to cover overhead and profit. [Oxford]",
+					"type": "array",
+					"minItems": 0,
+					"items": {
+						"$ref": "#/$defs/Markup"
+					}
 				},
 				"maskedInd": {
 					"title": "Accounted Price.Masked Indicator",
@@ -90,6 +104,15 @@
 					"title": "Airline Taxonomy.Taxonomy Code",
 					"description": "Used for defining a product or service within the Shared Industry Taxonomy or bilaterally.",
 					"$ref": "#/$defs/TaxonomyCode"
+				},
+				"taxonomyFeature": {
+					"title": "Each Airline Taxonomy may be further defined one or more Taxonomy Features",
+					"description": "Bilaterally agreed mechanism to describe specific product and service information to the Seller as defined by the Airline. This defines a further level of definition for a airline taxonomy code. e.g meal (TC 03F0) -> breakfast(03F1) - eggs(03F2),toast(03F3)",
+					"type": "array",
+					"minItems": 0,
+					"items": {
+						"$ref": "#/$defs/TaxonomyFeature"
+					}
 				}
 			},
 			"additionalProperties": false
@@ -184,6 +207,15 @@
 						"$ref": "#/$defs/Identifier"
 					}
 				},
+				"ptcOfferParameters": {
+					"title": "Each A La Carte Offer may has one or more PTC Offer Parameterss",
+					"description": "Passenger Type summary information for an offer.",
+					"type": "array",
+					"minItems": 0,
+					"items": {
+						"$ref": "#/$defs/PtcOfferParameters"
+					}
+				},
 				"redemptionInd": {
 					"title": "A La Carte Offer.Redemption Indicator",
 					"description": "When TRUE, this Offer must be redeemed, e.g. it cannot be purchased. Note: Taxes may still apply.",
@@ -202,11 +234,6 @@
 					"items": {
 						"$ref": "#/$defs/MediaResourceRef"
 					}
-				},
-				"totalPrice": {
-					"title": "Each A La Carte Offer may has one and only one Price",
-					"description": "DEPRECATED - This element is deprecated as of 24.4 and will be decommissioned in a future release of the standards. Please consult implementation guidance on alternatives to this element. The amount of money expected, required, or given in payment for something.",
-					"$ref": "#/$defs/Price"
 				},
 				"validatingCarrierCode": {
 					"title": "A La Carte Offer.Validating Carrier Code",
@@ -349,6 +376,11 @@
 						"$ref": "#/$defs/AirlineTaxonomy"
 					}
 				},
+				"emissionsInfoRefIdentifier": {
+					"title": "A La Carte Service.Emissions Information Reference Identifier",
+					"description": "Reference to an Emissions Information ID within this message",
+					"$ref": "#/$defs/Identifier"
+				},
 				"inventoryGuaranteeDateTime": {
 					"title": "A La Carte Service.Inventory Guarantee Date Time",
 					"description": "The length of time inventory against a given Service is guaranteed. If inventory is not guaranteed, the Order creation (or change) may fail. In the absence of a time limit, no inventory is guaranteed. Notes: The presence of an inventory guarantee does not assume a guarantee of price. For the price to be guaranteed against a given Offer Item, the Price Guarantee Time Limit must also be present. The assumption is that inventory is held when an Order is created (or changed), so this time limit only applies in the context of an Offer.",
@@ -486,6 +518,57 @@
 			},
 			"additionalProperties": false
 		},
+		"BaggageAssociations": {
+			"title": "Baggage Associations",
+			"description": "An association of baggage allowances to passengers.",
+			"type": "object",
+			"required": [
+				"baggageAllowanceRefIdentifier",
+				"paxRefIdentifier"
+			],
+			"properties": {
+				"baggageAllowanceRefIdentifier": {
+					"title": "Baggage Associations.Baggage Allowance Reference Identifier",
+					"description": "Reference to a Bag Allowance ID within this message. If there are multiple Allowance ID's, then this should be treated as choice and one baggage item as defined in the referred baggage allowance element can be selected.",
+					"type": "array",
+					"minItems": 1,
+					"items": {
+						"$ref": "#/$defs/Identifier"
+					}
+				},
+				"offerFlightAssociations": {
+					"title": "Offer Flight Associations",
+					"description": "Offer Flight Associations",
+					"oneOf": [
+						{
+							"title": "Each Baggage Associations may be an Offer Flight Association one and only one Dated Operating Leg Reference",
+							"description": "",
+							"$ref": "#/$defs/DatedOperatingLegRef"
+						},
+						{
+							"title": "Each Baggage Associations may be an Offer Flight Association one and only one Passenger Journey Reference",
+							"description": "",
+							"$ref": "#/$defs/PaxJourneyRef"
+						},
+						{
+							"title": "Each Baggage Associations may be an Offer Flight Association one and only one Passenger Segment Reference List",
+							"description": "",
+							"$ref": "#/$defs/PaxSegmentRefList"
+						}
+					]
+				},
+				"paxRefIdentifier": {
+					"title": "Baggage Associations.Passenger Reference Identifier",
+					"description": "Reference to a Passenger ID within this message.",
+					"type": "array",
+					"minItems": 1,
+					"items": {
+						"$ref": "#/$defs/Identifier"
+					}
+				}
+			},
+			"additionalProperties": false
+		},
 		"BaggageDisclosure": {
 			"title": "Baggage Disclosure",
 			"description": "Disclosure information specifically related to baggage.",
@@ -610,9 +693,61 @@
 					"title": "Cancel Restrictions.Passenger Reference Identifier",
 					"description": "Used to store a ref to the passenger.",
 					"$ref": "#/$defs/Identifier"
+				},
+				"refund": {
+					"title": "Each Cancel Restrictions may Cancel Restrictions can have a Refund one and only one Refund",
+					"description": "Contains refund type, payment type and amount attributes for a specific product, purpose, or service.",
+					"$ref": "#/$defs/Refund"
 				}
 			},
 			"additionalProperties": false
+		},
+		"CarbonEmissionsCalculationScopeCode": {
+			"title": "Carbon Emissions Calculation Scope Code",
+			"description": "Calculation Scope Codes of carbon emissions.",
+			"$ref": "#/$defs/CarbonEmissionsCalculationScopeCodeEnum"
+		},
+		"CarbonEmissionsCalculationScopeCodeEnum": {
+			"title": "Carbon Emissions Calculation Scope Code",
+			"description": "Enumeration set for Emission Calculation Scope Codes as defined by ATSB code set ECBS (Emissions Calculation Boundary Set).",
+			"type": "string"
+		},
+		"CarbonEmissionsMeasure": {
+			"title": "Carbon Emissions Measure",
+			"description": "Numeric value determined by measuring carbon or carbon equivalent emissions along with the specified unit of measure.",
+			"type": "object",
+			"properties": {
+				"unitCode": {
+					"title": "Carbon Emissions_ Measure.Unit. Code",
+					"description": "The type of unit of measure as specified by ATSB code set 6411 for weights.",
+					"$ref": "#/$defs/CarbonEmissionsWeightUnitCodeEnum"
+				},
+				"value": {
+					"title": "Carbon Emissions_ Measure.Content",
+					"description": "The numeric value determined by measuring an object.",
+					"type": "number"
+				}
+			},
+			"additionalProperties": false
+		},
+		"CarbonEmissionsTypeCode": {
+			"title": "Carbon Emissions Type Code",
+			"description": "Type of carbon emissions.",
+			"$ref": "#/$defs/CarbonEmissionsTypeCodeEnum"
+		},
+		"CarbonEmissionsTypeCodeEnum": {
+			"title": "Carbon Emissions Type Code",
+			"description": "Enumeration set for Cabin Component Position. Valid Values: CO2 - Carbon Dioxide; CO2e - Carbon Dioxide equivalent",
+			"type": "string",
+			"enum": [
+				"CO2",
+				"CO2e"
+			]
+		},
+		"CarbonEmissionsWeightUnitCodeEnum": {
+			"title": "Carbon Emissions Weight Unit Code",
+			"description": "List of Weight Unit Codes. Subset of ATSB code list 6411 (K - kilograms, T - tonnes).",
+			"type": "string"
 		},
 		"Carrier": {
 			"title": "Carrier",
@@ -679,6 +814,11 @@
 					"title": "Change Restrictions.Passenger Ref Identifier",
 					"description": "Used to store a ref to the passenger.",
 					"$ref": "#/$defs/Identifier"
+				},
+				"refund": {
+					"title": "Each Change Restrictions may Change Restrictions can have a Refund one and only one Refund",
+					"description": "Contains refund type, payment type and amount attributes for a specific product, purpose, or service.",
+					"$ref": "#/$defs/Refund"
 				}
 			},
 			"additionalProperties": false
@@ -729,6 +869,20 @@
 					"title": "Each Collection Point Tax must is one and only one Station",
 					"description": "Location or facility where air or surface transportation originates, stops and/or terminates, and where passengers and/or cargo can be taken on or off. Those of relevance to the airline industry are identified by an IATA Location Identifier (3 letter location identifier). There are also additional airports without an IATA identifier that may be used in disruption scenarios that will be identified by an ICAO 4 letter code (assigned to every registered airport, military or civil). Business Identifier Fields: - IATA Location Code",
 					"$ref": "#/$defs/Station"
+				}
+			},
+			"additionalProperties": false
+		},
+		"ColumnIdentifier": {
+			"title": "Column Identifier",
+			"description": "Specifies a column (e.g. A, B, C, etc.).",
+			"type": "object",
+			"properties": {
+				"value": {
+					"title": "Column_ Identifier.Content",
+					"description": "",
+					"type": "string",
+					"pattern": "^[A-Z]$"
 				}
 			},
 			"additionalProperties": false
@@ -1119,6 +1273,11 @@
 					"title": "Each Data Lists may Has a disclosure list one and only one Disclosure List",
 					"description": "Disclosure data list definition.",
 					"$ref": "#/$defs/DisclosureList"
+				},
+				"emissionsInfoList": {
+					"title": "Each Data Lists may have one and only one Emissions Information List",
+					"description": "Emissions Information Data List definition",
+					"$ref": "#/$defs/EmissionsInfoList"
 				},
 				"originDestList": {
 					"title": "Each Data Lists may one and only one Origin Destination List",
@@ -1522,6 +1681,39 @@
 			},
 			"additionalProperties": false
 		},
+		"Discount": {
+			"title": "Discount",
+			"description": "Deduction from the price amount, made in advance of its payment.",
+			"type": "object",
+			"properties": {
+				"appText": {
+					"title": "Discount.Application Text",
+					"description": "Discount application, e.g. Bag.",
+					"$ref": "#/$defs/Text"
+				},
+				"descText": {
+					"title": "Discount.Description Text",
+					"description": "Discount Description.",
+					"$ref": "#/$defs/Text"
+				},
+				"discountAmount": {
+					"title": "Discount.Discount Amount",
+					"description": "Discount amount applied to a price.",
+					"$ref": "#/$defs/Amount"
+				},
+				"discountPercent": {
+					"title": "Discount.Discount Percent",
+					"description": "Discount percentage applied to the price.",
+					"$ref": "#/$defs/Percent"
+				},
+				"preDiscountedAmount": {
+					"title": "Discount.Pre Discounted Amount",
+					"description": "The original price on which the discount was applied to.",
+					"$ref": "#/$defs/Amount"
+				}
+			},
+			"additionalProperties": false
+		},
 		"DistributionChain": {
 			"title": "Distribution Chain",
 			"description": "An instance of a distribution channel, which is a chain of intermediaries through which a good or service passes until it reaches the final buyer or the end consumer.",
@@ -1640,6 +1832,81 @@
 					"minItems": 0,
 					"items": {
 						"$ref": "#/$defs/Identifier"
+					}
+				}
+			},
+			"additionalProperties": false
+		},
+		"EmissionsInfo": {
+			"title": "Emissions Information",
+			"description": "Information associated with flight-related carbon emissions.",
+			"type": "object",
+			"required": [
+				"calcEmissionsMeasure",
+				"calculationScopeCode",
+				"emissionsInfoIdentifier",
+				"emissionsTypeCode"
+			],
+			"properties": {
+				"calcEmissionsMeasure": {
+					"title": "Emissions Information.Calculated Emissions Measure",
+					"description": "Numerical value representing the calculated emissions for the applicable service.",
+					"$ref": "#/$defs/CarbonEmissionsMeasure"
+				},
+				"calculationDateTime": {
+					"title": "Emissions Information.Calculation Date Time",
+					"description": "Date and time at which the emissions value was calculated or last updated.",
+					"$ref": "#/$defs/DateTime"
+				},
+				"calculationScopeCode": {
+					"title": "Emissions Information.Calculation Scope Code",
+					"description": "Identifies the scope of emissions included in the Emissions Value. Only one code may be provided for each passenger and dated operating leg.",
+					"$ref": "#/$defs/CarbonEmissionsCalculationScopeCode"
+				},
+				"calculationSourceText": {
+					"title": "Emissions Information.Calculation Source Text",
+					"description": "Identifies the organization, system, supplier methodology or data source responsible for providing or calculating the emissions value.",
+					"$ref": "#/$defs/Text"
+				},
+				"datedOperatingLegRefIdentifier": {
+					"title": "Emissions Information.Dated Operating Leg Reference Identifier",
+					"description": "Uniquely identifies a leg within the context of one message.",
+					"$ref": "#/$defs/Identifier"
+				},
+				"desc": {
+					"title": "Each Emissions Information may have one or more Descriptions",
+					"description": "Element enabling airline to provide description or link to carbon emissions disclosure page on their website.",
+					"type": "array",
+					"minItems": 0,
+					"items": {
+						"$ref": "#/$defs/Desc"
+					}
+				},
+				"emissionsInfoIdentifier": {
+					"title": "Emissions Information.Emissions Information Identifier",
+					"description": "Uniquely identifies the emission information in the context of flight leg, service and passenger.",
+					"$ref": "#/$defs/Identifier"
+				},
+				"emissionsTypeCode": {
+					"title": "Emissions Information.Emissions Type Code",
+					"description": "Identifies the type of emissions represented by the emissions value, such as carbon dioxide (CO2) or carbon dioxide equivalent (CO2e).",
+					"$ref": "#/$defs/CarbonEmissionsTypeCode"
+				}
+			},
+			"additionalProperties": false
+		},
+		"EmissionsInfoList": {
+			"title": "Emissions Information List",
+			"description": "Emissions Information Data List definition",
+			"type": "object",
+			"properties": {
+				"emissionsInfo": {
+					"title": "Each Emissions Information List may comprise one or more Emissions Informations",
+					"description": "Information associated with flight-related carbon emissions.",
+					"type": "array",
+					"minItems": 0,
+					"items": {
+						"$ref": "#/$defs/EmissionsInfo"
 					}
 				}
 			},
@@ -1857,11 +2124,20 @@
 			"description": "New Offer: A proposal to sell a specific set of products or Services under specific conditions, for a certain price. Can be the response to a shopping request. Can be a regular Offer or an A La Carte Offer. A La Carte Offer is defined as a container for A La Carte Offer Items. This supports a shopping basket concept for non-flight services. The main purpose of this structure is to reduce the size of the messages by inserting Offer Items which are applicable to multiple flight-related Offers. NB. For the OfferID of the ALaCarteOffer: Default OfferID identifier for A La Carte Offer Items in a scenario where items here are not selected for a flight-related Offer above. Business Identifier Fields: - [Shopping Response] Shopping Response ID - Offer ID - [Carrier] Airline Designator Code",
 			"type": "object",
 			"required": [
-				"internalValueNewOfferItem",
 				"offerIdentifier",
+				"offerItem",
 				"ownerCode"
 			],
 			"properties": {
+				"baggageAssociations": {
+					"title": "Each Internal Value New Offer may have one or more Baggage Associationss",
+					"description": "An association of baggage allowances to passengers.",
+					"type": "array",
+					"minItems": 0,
+					"items": {
+						"$ref": "#/$defs/BaggageAssociations"
+					}
+				},
 				"baggageDisclosureRefIdentifier": {
 					"title": "Internal Value New Offer.Baggage Disclosure Reference Identifier",
 					"description": "Reference to a Bag Disclosure ID within this message.",
@@ -1894,15 +2170,6 @@
 					"description": "Reference to a Disclosure ID within this message.",
 					"$ref": "#/$defs/Identifier"
 				},
-				"internalValueNewOfferItem": {
-					"title": "Each Internal Value New Offer must has one or more at least one Internal Value New Offer Items",
-					"description": "",
-					"type": "array",
-					"minItems": 1,
-					"items": {
-						"$ref": "#/$defs/InternalValueNewOfferItem"
-					}
-				},
 				"matchAppText": {
 					"title": "Internal Value New Offer.Match Application Text",
 					"description": "Specifies which type of flight request the match information relate to (examples: Attribute, Affinity, Other).",
@@ -1928,18 +2195,27 @@
 					"description": "Carrier assigned ID which uniquely identifies a specific Offer across several messages. Offer ID facilitates the tracking and verification of individually priced offer(s) selected from the shopping response. Only the Offer IDs of the ORA (Offer Responsible Airline) are returned in shopping responses. Offer ID is unique to each individually priced offer in the shopping response even if the offer price is zero. Offer ID may be specific to individual passengers in the offer, and may be associated with a segment or a journey. The set of Offer IDs returned in a response are referenced by a Shopping Response ID.",
 					"$ref": "#/$defs/Identifier"
 				},
+				"offerItem": {
+					"title": "Each Internal Value New Offer must has one or more at least one Internal Value New Offer Items",
+					"description": "",
+					"type": "array",
+					"minItems": 1,
+					"items": {
+						"$ref": "#/$defs/InternalValueNewOfferItem"
+					}
+				},
 				"ownerCode": {
 					"title": "Internal Value New Offer.Owner Code",
 					"description": "Airline code assigned to a carrier. Either ICAO-defined 3-character code or IATA-defined 2-character code.",
 					"$ref": "#/$defs/AirlineDesigCode"
 				},
-				"penaltyRefIdentifier": {
-					"title": "Internal Value New Offer.Penalty Reference Identifier",
-					"description": "Reference to a Penalty ID.",
+				"ptcOfferParameters": {
+					"title": "Each Internal Value New Offer may has one or more PTC Offer Parameterss",
+					"description": "Passenger Type summary information for an offer.",
 					"type": "array",
 					"minItems": 0,
 					"items": {
-						"$ref": "#/$defs/Identifier"
+						"$ref": "#/$defs/PtcOfferParameters"
 					}
 				},
 				"redemptionInd": {
@@ -1960,11 +2236,6 @@
 					"items": {
 						"$ref": "#/$defs/MediaResourceRef"
 					}
-				},
-				"totalPrice": {
-					"title": "Each Internal Value New Offer may has one and only one Price",
-					"description": "DEPRECATED - This element is deprecated as of 24.4 and will be decommissioned in a future release of the standards. Please consult implementation guidance on alternatives to this element. The amount of money expected, required, or given in payment for something.",
-					"$ref": "#/$defs/Price"
 				},
 				"validatingCarrierCode": {
 					"title": "Internal Value New Offer.Validating Carrier Code",
@@ -2048,22 +2319,6 @@
 					"description": "POA to ORA only: to indicate that the offer is non-modifiable. This indicates to ORA that its offer is non-modifiable (e.g. Regulatory or brand protection reasons). If indicator is set to TRUE, modifications to the POA's offer ARE NOT allowed.",
 					"$ref": "#/$defs/Ind"
 				},
-				"newOfferItemPaymentTimeLimit": {
-					"title": "New Offer Item Payment Time Limit",
-					"description": "Payment Time Limit of Internal Value New Offer Item",
-					"oneOf": [
-						{
-							"title": "Each Internal Value New Offer Item may have payment time limits one and only one Payment Time Limit Date",
-							"description": "A container for a payment time limit date.",
-							"$ref": "#/$defs/PaymentTimeLimitDate"
-						},
-						{
-							"title": "Each Internal Value New Offer Item may have payment time limits one and only one Payment Time Limit Duration",
-							"description": "A container for a payment time limit duration.",
-							"$ref": "#/$defs/PaymentTimeLimitDuration"
-						}
-					]
-				},
 				"offerItemIdentifier": {
 					"title": "Internal Value New Offer Item.Offer Item Identifier",
 					"description": "Carrier assigned ID which exists uniquely within an Offer. Exceeding 64 characters or use of dashes is not recommended.",
@@ -2078,6 +2333,22 @@
 					"title": "Internal Value New Offer Item.Owner Code",
 					"description": "Airline code assigned to a carrier. Either ICAO-defined 3-character code or IATA-defined 2-character code.",
 					"$ref": "#/$defs/AirlineDesigCode"
+				},
+				"paymentTimeLimit": {
+					"title": "Payment Time Limit",
+					"description": "Payment Time Limit of Offer Item",
+					"oneOf": [
+						{
+							"title": "Each Internal Value New Offer Item may be associated to payment time limits one and only one Payment Time Limit Date",
+							"description": "A container for a payment time limit date.",
+							"$ref": "#/$defs/PaymentTimeLimitDate"
+						},
+						{
+							"title": "Each Internal Value New Offer Item may be associated to payment time limits one and only one Payment Time Limit Duration",
+							"description": "A container for a payment time limit duration.",
+							"$ref": "#/$defs/PaymentTimeLimitDuration"
+						}
+					]
 				},
 				"price": {
 					"title": "Each Internal Value New Offer Item must has one and only one Price",
@@ -2126,6 +2397,7 @@
 			"type": "object",
 			"required": [
 				"internalValue",
+				"offerServiceAssociation",
 				"paxRefIdentifier",
 				"serviceIdentifier"
 			],
@@ -2153,6 +2425,27 @@
 					"title": "Internal Value Offered Service.Inventory Guarantee Date Time",
 					"description": "The length of time inventory against a given Service is guaranteed. If inventory is not guaranteed, the Order creation (or change) may fail. In the absence of a time limit, no inventory is guaranteed. Notes: The presence of an inventory guarantee does not assume a guarantee of price. For the price to be guaranteed against a given Offer Item, the Price Guarantee Time Limit must also be present. The assumption is that inventory is held when an Order is created (or changed), so this time limit only applies in the context of an Offer.",
 					"$ref": "#/$defs/DateTime"
+				},
+				"offerServiceAssociation": {
+					"title": "Offer Service Association",
+					"description": "Offer Service Association",
+					"oneOf": [
+						{
+							"title": "Each Internal Value Offered Service must Be an Offer Service Association one and only one Passenger Journey Reference",
+							"description": "",
+							"$ref": "#/$defs/PaxJourneyRef"
+						},
+						{
+							"title": "Each Internal Value Offered Service must Be an Offer Service Association one and only one Seat Assignment",
+							"description": "The Seat Location selected by the Passenger (via SeatAvailability) or assigned tot he Passenger by the Airline for a given segment. When used, only a single Passenger must be referenced within the Service.",
+							"$ref": "#/$defs/SeatAssignment"
+						},
+						{
+							"title": "Each Internal Value Offered Service must Be an Offer Service Association one and only one Offer Service Definition Reference",
+							"description": "Airline specific definition of a product or service (excluding flights) that can be separately sold and delivered. e.g. bag, seat, meal on a flight",
+							"$ref": "#/$defs/OfferServiceDefinitionRef"
+						}
+					]
 				},
 				"paxRefIdentifier": {
 					"title": "Internal Value Offered Service.Passenger Reference Identifier",
@@ -2249,6 +2542,28 @@
 			},
 			"additionalProperties": false
 		},
+		"Markup": {
+			"title": "Markup",
+			"description": "Defines the reason for the markup added by an airline as part of the offer reported as calculation detail. The amount added to the cost price of goods to cover overhead and profit. [Oxford]",
+			"type": "object",
+			"required": [
+				"amount",
+				"typeCode"
+			],
+			"properties": {
+				"amount": {
+					"title": "Markup.Amount",
+					"description": "Value and sold-in currency added by an airline as part of the offer reported as calculation detail.",
+					"$ref": "#/$defs/Amount"
+				},
+				"typeCode": {
+					"title": "Markup.Type Code",
+					"description": "Defines the reason for the markup added by an airline as part of the offer reported as calculation detail. (Examples: currency markup, service markup, etc).",
+					"$ref": "#/$defs/Code"
+				}
+			},
+			"additionalProperties": false
+		},
 		"MatchTypeCode": {
 			"title": "Match Type Code",
 			"description": "Data type for Offer Match Result ENUMs.",
@@ -2322,6 +2637,20 @@
 			},
 			"additionalProperties": false
 		},
+		"NaturalNumber": {
+			"title": "Natural Number",
+			"description": "A mathematical number used for counting (positive whole number or integer).",
+			"type": "object",
+			"properties": {
+				"value": {
+					"title": "Natural_ Number.Content",
+					"description": "A mathematical number used for counting (positive whole number or integer).",
+					"type": "integer",
+					"minimum": 0
+				}
+			},
+			"additionalProperties": false
+		},
 		"NonTaxableInfo": {
 			"title": "Non Taxable Information",
 			"description": "Information related to non-taxable amount",
@@ -2372,7 +2701,7 @@
 			"description": "A proposal to sell a specific set of products or Services under specific conditions, for a certain price. Can be the response to a shopping request.",
 			"type": "object",
 			"required": [
-				"internalValueNewOffer"
+				"pricedOffer"
 			],
 			"properties": {
 				"dataLists": {
@@ -2385,14 +2714,19 @@
 					"description": "An instance of a distribution channel, which is a chain of intermediaries through which a good or service passes until it reaches the final buyer or the end consumer.",
 					"$ref": "#/$defs/DistributionChain"
 				},
-				"internalValueNewOffer": {
+				"otherOffers": {
+					"title": "Each Offer Details may contains one and only one Other Offers",
+					"description": "",
+					"$ref": "#/$defs/OtherOffers"
+				},
+				"pricedOffer": {
 					"title": "Each Offer Details must have one and only one Internal Value New Offer",
 					"description": "",
 					"$ref": "#/$defs/InternalValueNewOffer"
 				},
 				"promotion": {
 					"title": "Each Offer Details may have one or more Promotions",
-					"description": "",
+					"description": "A Promotion and discount code criteria to be passed to the retailer airline that could influence returned offers.",
 					"type": "array",
 					"minItems": 0,
 					"items": {
@@ -2411,6 +2745,22 @@
 			"title": "Offered Service Status Code",
 			"description": "The possible statuses of an Offered Service",
 			"type": "string"
+		},
+		"OfferServiceDefinitionRef": {
+			"title": "Offer Service Definition Reference",
+			"description": "Airline specific definition of a product or service (excluding flights) that can be separately sold and delivered. e.g. bag, seat, meal on a flight",
+			"type": "object",
+			"required": [
+				"serviceDefinitionRefIdentifier"
+			],
+			"properties": {
+				"serviceDefinitionRefIdentifier": {
+					"title": "Offer Service Definition Reference.Service Definition Reference Identifier",
+					"description": "References a Service Definition ID within this message.",
+					"$ref": "#/$defs/Identifier"
+				}
+			},
+			"additionalProperties": false
 		},
 		"OperationalSuffixText": {
 			"title": "Operational Suffix Text",
@@ -2521,6 +2871,32 @@
 					"minItems": 1,
 					"items": {
 						"$ref": "#/$defs/OriginDest"
+					}
+				}
+			},
+			"additionalProperties": false
+		},
+		"OtherOffers": {
+			"title": "Other Offers",
+			"description": "Grouping of Offers returned by a single ORA.",
+			"type": "object",
+			"properties": {
+				"aLaCarteOffer": {
+					"title": "Each Other Offers may one or more A La Carte Offers",
+					"description": "A proposal to sell a specific set of products or Services under specific conditions, for a certain price. Can be the response to a shopping request. Can be a regular Offer or an A La Carte Offer. A La Carte Offer is defined as a container for A La Carte Offer Items. This supports a shopping basket concept for non-flight services. The main purpose of this structure is to reduce the size of the messages by inserting Offer Items which are applicable to multiple flight-related Offers. NB. For the OfferID of the ALaCarteOffer: Default OfferID identifier for A La Carte Offer Items in a scenario where items here are not selected for a flight-related Offer above. Business Identifier Fields: - [Shopping Response] Shopping Response ID - Offer ID - [Carrier] Airline Designator Code",
+					"type": "array",
+					"minItems": 0,
+					"items": {
+						"$ref": "#/$defs/ALaCarteOffer"
+					}
+				},
+				"offer": {
+					"title": "Each Other Offers may Contains one or more Internal Value New Offers",
+					"description": "New Offer: A proposal to sell a specific set of products or Services under specific conditions, for a certain price. Can be the response to a shopping request. Can be a regular Offer or an A La Carte Offer. A La Carte Offer is defined as a container for A La Carte Offer Items. This supports a shopping basket concept for non-flight services. The main purpose of this structure is to reduce the size of the messages by inserting Offer Items which are applicable to multiple flight-related Offers. NB. For the OfferID of the ALaCarteOffer: Default OfferID identifier for A La Carte Offer Items in a scenario where items here are not selected for a flight-related Offer above. Business Identifier Fields: - [Shopping Response] Shopping Response ID - Offer ID - [Carrier] Airline Designator Code",
+					"type": "array",
+					"minItems": 0,
+					"items": {
+						"$ref": "#/$defs/InternalValueNewOffer"
 					}
 				}
 			},
@@ -2678,6 +3054,26 @@
 			},
 			"additionalProperties": false
 		},
+		"PaxJourneyRef": {
+			"title": "Passenger Journey Reference",
+			"description": "A collection of segments which satisfies transportation of a passenger for a given origin and destination. Business Identifier Fields: - (no identifier available)",
+			"type": "object",
+			"required": [
+				"paxJourneyRefIdentifier"
+			],
+			"properties": {
+				"paxJourneyRefIdentifier": {
+					"title": "Passenger Journey Reference.Passenger Journey Reference Identifier",
+					"description": "Uniquely identifies a Passenger Journey within the context of one message.",
+					"type": "array",
+					"minItems": 1,
+					"items": {
+						"$ref": "#/$defs/Identifier"
+					}
+				}
+			},
+			"additionalProperties": false
+		},
 		"PaxList": {
 			"title": "Passenger List",
 			"description": "Passenger data list definition.",
@@ -2766,6 +3162,26 @@
 			},
 			"additionalProperties": false
 		},
+		"PaxSegmentRefList": {
+			"title": "Passenger Segment Reference List",
+			"description": "Reference to a PaxSegmentID's - 1 or more pax segments references. These references will be to a data list or pax segment list in the contained message.",
+			"type": "object",
+			"required": [
+				"paxSegmentRefIdentifier"
+			],
+			"properties": {
+				"paxSegmentRefIdentifier": {
+					"title": "Passenger Segment Reference List.Passenger Segment Reference Identifier",
+					"description": "Reference to a PaxSegmentID",
+					"type": "array",
+					"minItems": 1,
+					"items": {
+						"$ref": "#/$defs/Identifier"
+					}
+				}
+			},
+			"additionalProperties": false
+		},
 		"PayerIndividual": {
 			"title": "Payer Individual",
 			"description": "A Payer individual is a specialisation of the individual type defined as: A single human being as distinct from a group, class, or family.",
@@ -2834,6 +3250,16 @@
 				}
 			},
 			"additionalProperties": false
+		},
+		"PaymentMethodCode": {
+			"title": "Payment Method Code",
+			"description": "Additional BDT to specify payment method code.",
+			"$ref": "#/$defs/PaymentMethodCodeEnum"
+		},
+		"PaymentMethodCodeEnum": {
+			"title": "Payment Method Code",
+			"description": "The form of payment type. Examples: Credit Card, Cash.",
+			"type": "string"
 		},
 		"PaymentTimeLimitDate": {
 			"title": "Payment Time Limit Date",
@@ -2968,6 +3394,11 @@
 					"description": "The length of time the Base Amount of an offer item is guaranteed. In the absence of the Base Amount guarantee time limit, the Base Amount is not guaranteed. Upon expiry, the Base Amount may no longer be guaranteed and either a new shopping process should begin, or the offer should be repriced resulting in a new Offer. Should the Base Amount guarantee time limit extend beyond Order creation, the remaining length of time persists into the corresponding Order Item. The airline can increase the remaining length of time beyond the original time limit should they wish to. This field should only be used when the Airline indicates that a Price Guarantee is available.",
 					"$ref": "#/$defs/DateTime"
 				},
+				"consumptionTaxes": {
+					"title": "Each Price may have one and only one Consumption Tax Summary",
+					"description": "Consumption taxes summary information.",
+					"$ref": "#/$defs/ConsumptionTaxSummary"
+				},
 				"curConversion": {
 					"title": "Each Price may has one or more Currency Conversions",
 					"description": "The result of converting one currency into another currency. E.g. local currency to USD, air miles to monetary.",
@@ -2976,6 +3407,11 @@
 					"items": {
 						"$ref": "#/$defs/CurConversion"
 					}
+				},
+				"discount": {
+					"title": "Each Price may has one and only one Discount",
+					"description": "Deduction from the price amount, made in advance of its payment.",
+					"$ref": "#/$defs/Discount"
 				},
 				"equivAmount": {
 					"title": "Price.Equivalent Amount",
@@ -2991,6 +3427,15 @@
 					"title": "Price.Loyalty Unit Name",
 					"description": "The name of the loyalty unit used by the loyalty unit amount (e.g. miles or points).",
 					"$ref": "#/$defs/Name"
+				},
+				"markup": {
+					"title": "Each Price may has one or more Markups",
+					"description": "Defines the reason for the markup added by an airline as part of the offer reported as calculation detail. The amount added to the cost price of goods to cover overhead and profit. [Oxford]",
+					"type": "array",
+					"minItems": 0,
+					"items": {
+						"$ref": "#/$defs/Markup"
+					}
 				},
 				"maskedInd": {
 					"title": "Price.Masked Indicator",
@@ -3170,6 +3615,43 @@
 			},
 			"additionalProperties": false
 		},
+		"PtcOfferParameters": {
+			"title": "PTC Offer Parameters",
+			"description": "Passenger Type summary information for an offer.",
+			"type": "object",
+			"properties": {
+				"paxRefIdentifier": {
+					"title": "PTC Offer Parameters.Passenger Reference Identifier",
+					"description": "Reference to the passengers who are elibigle for this Offer Item",
+					"type": "array",
+					"minItems": 0,
+					"items": {
+						"$ref": "#/$defs/Identifier"
+					}
+				},
+				"pricedPaxNumber": {
+					"title": "PTC Offer Parameters.Priced Passenger Number",
+					"description": "Number of Passenger(s) for associated passenger type. Example: 2",
+					"$ref": "#/$defs/Number"
+				},
+				"ptcPricedCode": {
+					"title": "PTC Offer Parameters.PTC Priced Code",
+					"description": "Actual passenger type code used for pricing. Example: ADT",
+					"$ref": "#/$defs/IataPtcCode"
+				},
+				"ptcRequestedCode": {
+					"title": "PTC Offer Parameters.PTC Requested Code",
+					"description": "Requested passenger type code for pricing. Example: CHD Encoding scheme: IATA (three character) Passenger Type Code",
+					"$ref": "#/$defs/IataPtcCode"
+				},
+				"requestedPaxNumber": {
+					"title": "PTC Offer Parameters.Requested Passenger Number",
+					"description": "Number of Passenger(s) for associated passenger type. Example: 2",
+					"$ref": "#/$defs/Number"
+				}
+			},
+			"additionalProperties": false
+		},
 		"Qty": {
 			"title": "Quantity",
 			"description": "A quantity is a counted number of non-monetary units, possibly including fractions",
@@ -3240,6 +3722,64 @@
 			"title": "RBD Code",
 			"description": "Enumeration values of RBD Codes as per PADIS codeset 9800.",
 			"type": "string"
+		},
+		"Refund": {
+			"title": "Refund",
+			"description": "Contains refund type, payment type and amount attributes for a specific product, purpose, or service.",
+			"type": "object",
+			"properties": {
+				"descText": {
+					"title": "Refund.Description Text",
+					"description": "Description. Example: 'Full refund within 30 days of departure'.",
+					"$ref": "#/$defs/Text"
+				},
+				"fixedAmount": {
+					"title": "Refund.Fixed Amount",
+					"description": "Stores an exact fixed fee amount relating to this condition.",
+					"$ref": "#/$defs/Amount"
+				},
+				"levelTypeCode": {
+					"title": "Refund.Level Type Code",
+					"description": "This will identify the type of re fundability for the condition. This will be one of the following. Fully Refundable Partly Refundable Non Refundable",
+					"$ref": "#/$defs/RefundLevelTypeCode"
+				},
+				"maximumAmount": {
+					"title": "Refund.Maximum Amount",
+					"description": "Stores an Maximum refund amount which will be applied when a variable fee amount is effective.",
+					"$ref": "#/$defs/Amount"
+				},
+				"minimumAmount": {
+					"title": "Refund.Minimum Amount",
+					"description": "Stores an Minimum refund amount which will be applied when a variable refund amount is effective.",
+					"$ref": "#/$defs/Amount"
+				},
+				"paymentTypeCode": {
+					"title": "Refund.Payment Type Code",
+					"description": "This stores a code to represent the form of payment to be used to reimburse the customer/passenger.",
+					"$ref": "#/$defs/PaymentMethodCode"
+				},
+				"percent": {
+					"title": "Refund.Percent",
+					"description": "Stores a percentage which will be used to determine the refund to be applied in conjunction or not with minimum and maximum amounts.",
+					"$ref": "#/$defs/Percent"
+				}
+			},
+			"additionalProperties": false
+		},
+		"RefundLevelTypeCode": {
+			"title": "Refund Level Type Code",
+			"description": "This will have an associated ENUM which contains codes to represent the type of refund level",
+			"$ref": "#/$defs/RefundLevelTypeCodeEnum"
+		},
+		"RefundLevelTypeCodeEnum": {
+			"title": "Refund Level Type Code",
+			"description": "Contains the levels of re fundability FULL. PARTIAL. NONE. Valid Values: Full - Fully Refundable; None - Non Refundable.; Partial - Partial Refundable.",
+			"type": "string",
+			"enum": [
+				"Full",
+				"None",
+				"Partial"
+			]
 		},
 		"Remark": {
 			"title": "Remark",
@@ -3356,6 +3896,63 @@
 				"salesBranchIdentifier": {
 					"title": "Sales Branch.Sales Branch Identifier",
 					"description": "The industry wide unique identifier of the sales branch. Commonly, a value from the Pseudo City Code may be used, or a bi-latterly agreed code. When the latter it must only be used between parties that hold an appropriate translation.",
+					"$ref": "#/$defs/Identifier"
+				}
+			},
+			"additionalProperties": false
+		},
+		"Seat": {
+			"title": "Seat",
+			"description": "A sitting place for a passenger or crew in a cabin compartment on a transport vehicle.",
+			"type": "object",
+			"required": [
+				"columnIdentifier",
+				"rowNumber"
+			],
+			"properties": {
+				"columnIdentifier": {
+					"title": "Seat.Column Identifier",
+					"description": "Alphabetic character identifying a seat within a row.",
+					"$ref": "#/$defs/ColumnIdentifier"
+				},
+				"rowNumber": {
+					"title": "Seat.Row Number",
+					"description": "Ordinal number identifying a seat row in an aircraft.",
+					"$ref": "#/$defs/NaturalNumber"
+				},
+				"seatCharacteristicCode": {
+					"title": "Seat.Seat Characteristic Code",
+					"description": "Characteristic of an aircraft seat e.g. A (Aisle seat), E (Exit and emergency exit),..., according to PADIS code list 9825.",
+					"type": "array",
+					"minItems": 0,
+					"items": {
+						"$ref": "#/$defs/SeatCharacteristicCode"
+					}
+				},
+				"seatProfileRefIdentifier": {
+					"title": "Seat.Seat Profile Reference Identifier",
+					"description": "Reference to a Seat Profile ID within this message.",
+					"$ref": "#/$defs/Identifier"
+				}
+			},
+			"additionalProperties": false
+		},
+		"SeatAssignment": {
+			"title": "Seat Assignment",
+			"description": "The Seat Location selected by the Passenger (via SeatAvailability) or assigned tot he Passenger by the Airline for a given segment. When used, only a single Passenger must be referenced within the Service.",
+			"type": "object",
+			"required": [
+				"seat"
+			],
+			"properties": {
+				"seat": {
+					"title": "Each Seat Assignment must one and only one Seat",
+					"description": "A sitting place for a passenger or crew in a cabin compartment on a transport vehicle.",
+					"$ref": "#/$defs/Seat"
+				},
+				"serviceDefinitionRefIdentifier": {
+					"title": "Seat Assignment.Service Definition Reference Identifier",
+					"description": "Reference to a Service Definition ID within this message.",
 					"$ref": "#/$defs/Identifier"
 				}
 			},
@@ -3596,6 +4193,36 @@
 			},
 			"additionalProperties": false
 		},
+		"StopOverLocation": {
+			"title": "Stop Over Location",
+			"description": "Container to describe where a Stop Over can be added into an Itinerary. The Stop Over location is tied to the Arrival Port of the referenced Pax Segment (or Pax Leg) referenced and contains the maximum time permitted at that stop.",
+			"type": "object",
+			"required": [
+				"datedOperatingLegRefIdentifier"
+			],
+			"properties": {
+				"datedOperatingLegRefIdentifier": {
+					"title": "Stop Over Location.Dated Operating Leg Reference Identifier",
+					"description": "Reference to the Dated Operating Legs.",
+					"type": "array",
+					"minItems": 1,
+					"items": {
+						"$ref": "#/$defs/Identifier"
+					}
+				},
+				"maximumDuration": {
+					"title": "Stop Over Location.Maximum Duration",
+					"description": "Advises the Seller of the maximum time the Passenger can stay at that Stop.",
+					"$ref": "#/$defs/Duration"
+				},
+				"paxSegmentRefIdentifier": {
+					"title": "Stop Over Location.Passenger Segment Reference Identifier",
+					"description": "Used to store a reference to a given passenger Segment.",
+					"$ref": "#/$defs/Identifier"
+				}
+			},
+			"additionalProperties": false
+		},
 		"StopOverRestrictions": {
 			"title": "Stop Over Restrictions",
 			"description": "Additional information supplied by the Airline for the current Itinerary to advise the Seller that additional options could be available (if the Seller changes the request) to add Stop Overs within the itinerary.",
@@ -3620,6 +4247,15 @@
 					"title": "Stop Over Restrictions.Passenger Reference Identifier",
 					"description": "Used to store a ref to the passenger.",
 					"$ref": "#/$defs/Identifier"
+				},
+				"stopOverLocation": {
+					"title": "Each Stop Over Restrictions may Has locations one or more Stop Over Locations",
+					"description": "Container to describe where a Stop Over can be added into an Itinerary. The Stop Over location is tied to the Arrival Port of the referenced Pax Segment (or Pax Leg) referenced and contains the maximum time permitted at that stop.",
+					"type": "array",
+					"minItems": 0,
+					"items": {
+						"$ref": "#/$defs/StopOverLocation"
+					}
 				}
 			},
 			"additionalProperties": false
@@ -3757,6 +4393,29 @@
 			"title": "Taxonomy Code",
 			"description": "The code for a product or service within the Shared Industry Taxonomy or bilaterally. Refer to EASD Codeset implementation Guide. https://guides.developer.iata.org",
 			"type": "string"
+		},
+		"TaxonomyFeature": {
+			"title": "Taxonomy Feature",
+			"description": "Bilaterally agreed mechanism to describe specific product and service information to the Seller as defined by the Airline. This defines a further level of definition for a airline taxonomy code. e.g meal (TC 03F0) -> breakfast(03F1) - eggs(03F2),toast(03F3)",
+			"type": "object",
+			"properties": {
+				"codesetCode": {
+					"title": "Taxonomy Feature.Codeset Code",
+					"description": "Defines the codeset code that is being used in each entry related to the specified codeset defined.",
+					"$ref": "#/$defs/Code"
+				},
+				"codesetNameCode": {
+					"title": "Taxonomy Feature.Codeset Name Code",
+					"description": "Defines the codeset that is being used in each entry to define the codeset code and the associated value text.",
+					"$ref": "#/$defs/Code"
+				},
+				"valueText": {
+					"title": "Taxonomy Feature.Value Text",
+					"description": "The textural description associated to the codeset code for a given defined codeset.",
+					"$ref": "#/$defs/Text"
+				}
+			},
+			"additionalProperties": false
 		},
 		"Term": {
 			"title": "Term",
