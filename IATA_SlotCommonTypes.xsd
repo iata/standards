@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2007/00" targetNamespace="http://www.iata.org/IATA/2007/00" elementFormDefault="qualified" version="4.007" id="IATA2024.1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2007/00" targetNamespace="http://www.iata.org/IATA/2007/00" elementFormDefault="qualified" version="4.008" id="IATA2025.1">
 	<xs:include schemaLocation="IATA_SimpleTypes.xsd"/>
 	<xs:include schemaLocation="IATA_CommonTypes.xsd"/>
 	<xs:complexType name="BaseTransactionType">
@@ -69,7 +69,7 @@
 					<xs:documentation xml:lang="en">To move towards initial rquested time.</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="IndustrialAction">
+			<xs:enumeration value="InduAction">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">Due to industrial action.</xs:documentation>
 				</xs:annotation>
@@ -82,6 +82,66 @@
 			<xs:enumeration value="AspClosure">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">Due airspace closure.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Conference">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Major Conference</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Damage">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Aircraft Damage</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Diversion">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Diversion</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Event">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Major Event</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GovtMandate">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Government Mandate</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Holiday">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Holiday</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Immigration">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Immigration</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Mandate">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Mandate</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Repatriation">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Repatriation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SportsEvent">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Sports Event</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Temporary">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Temporary</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Weather">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">Weather</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="Other">
