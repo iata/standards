@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns="http://www.iata.org/IATA/2007/00" xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	targetNamespace="http://www.iata.org/IATA/2007/00" elementFormDefault="qualified"
-	version="2.008" id="IATA2020.2">
+	version="2.009" id="IATA2021.1">
 	<xs:include schemaLocation="IATA_SimpleTypes.xsd"/>
 	<xs:include schemaLocation="IATA_CommonTypes.xsd"/>
 	<xs:simpleType name="DepartureArrivalType">
@@ -757,10 +757,13 @@
 									</xs:annotation>
 								</xs:attribute>
 							</xs:complexType>
-						</xs:element>
-						<xs:element name="AssociatedFlightLegAircraft"
-							type="AssociatedFlightLegAircraftType" nillable="true" minOccurs="0"
-							maxOccurs="2"/>
+						</xs:element>										
+						<xs:choice>
+							<xs:element name="AssociatedFlightLegAircraft" type="AssociatedFlightLegAircraftType" nillable="true" minOccurs="0"
+								maxOccurs="2"/>
+							<xs:element name="AssociatedGeneralAviationFlightLegAircraft" type="AssociatedGeneralAviationFlightLegAircraftType" nillable="true" minOccurs="0"
+								maxOccurs="2"/>
+						</xs:choice>
 						<xs:element name="AssociatedFlightLegSchedule" nillable="true" minOccurs="0"
 							maxOccurs="20">
 							<xs:annotation>

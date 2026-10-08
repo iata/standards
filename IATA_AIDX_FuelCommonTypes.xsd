@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns="http://www.iata.org/IATA/2007/00" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	targetNamespace="http://www.iata.org/IATA/2007/00" elementFormDefault="qualified"
-	version="1.000" id="IATA2020.1">
+<xs:schema xmlns="http://www.iata.org/IATA/2007/00" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.iata.org/IATA/2007/00" elementFormDefault="qualified" version="1.003" id="IATA2021.1">
 	<xs:include schemaLocation="IATA_SimpleTypes.xsd"/>
 	<xs:include schemaLocation="IATA_CommonTypes.xsd"/>
 	<xs:include schemaLocation="IATA_AIDX_CommonTypes.xsd"/>
@@ -105,7 +103,7 @@
 			<xs:extension base="AcknowledgementType">
 				<xs:sequence>
 					<xs:element name="Entity" type="StringLength0to50" minOccurs="0"/>
-					<xs:element minOccurs="0" name="Signature" type="SignatureType"/>
+					<xs:element name="Signature" type="SignatureType" minOccurs="0"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -113,7 +111,7 @@
 	<xs:complexType name="AcknowledgementType">
 		<xs:sequence>
 			<xs:element name="DateTime" type="DateOrTimeOrDateTimeType"/>
-			<xs:element minOccurs="1" name="Acknowledged" type="xs:boolean">
+			<xs:element name="Acknowledged" type="xs:boolean" minOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Nature of acknowledgement:  True - yes this is acknowledged,  False - no this is not acknowledged.</xs:documentation>
 				</xs:annotation>
@@ -154,7 +152,7 @@
 			</xs:annotation>
 		</xs:attribute>
 	</xs:complexType>
-	<xs:complexType name="DensityType">
+	<!--xs:complexType name="DensityType">
 		<xs:annotation>
 			<xs:documentation>Fuel density measurement. MeasurementUnit1 is the mass unit and MeasurementUnit2 is the volume unit that the mass is divided by to give the density. The associated Type can currently be either MEA or STD - measured or standard.</xs:documentation>
 		</xs:annotation>
@@ -162,6 +160,27 @@
 			<xs:extension base="MeasurementType">
 				<xs:attribute name="MeasurementUnit1" type="MeasurementUnitType" use="required"/>
 				<xs:attribute name="MeasurementUnit2" type="MeasurementUnitType" use="required"/>
+				<xs:attribute name="Type" type="xs:NCName" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType-->
+	<xs:complexType name="DensityType">
+		<xs:annotation>
+			<xs:documentation>Fuel density measurement. Density Value is MassUnit divided by VolumeUnit. The associated Type can currently be either MEA or STD - measured or standard.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Value" type="xs:decimal"/>
+			<xs:element name="MassUnit" type="MeasurementUnitType"/>
+			<xs:element name="VolumeUnit" type="MeasurementUnitType"/>
+		</xs:sequence>
+		<xs:attribute name="Type" type="xs:NCName" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="DensityMeasurementType">
+		<xs:annotation>
+			<xs:documentation>Fuel density measurement. MeasurementUnit1 is the mass unit and MeasurementUnit2 is the volume unit that the mass is divided by to give the density. The associated Type can currently be either MEA or STD - measured or standard.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="MeasurementType">
 				<xs:attribute name="Type" type="xs:NCName" use="required"/>
 			</xs:extension>
 		</xs:complexContent>
@@ -279,18 +298,12 @@
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Fuel" type="FuelType" minOccurs="0"/>
-			<xs:element name="OperationalStatus" type="OperationalStatusType" nillable="true"
-				minOccurs="0" maxOccurs="5"/>
-			<xs:element name="PlannedArrivalAptHistory" type="PlannedArrivalAptHistoryType"
-				nillable="true" minOccurs="0" maxOccurs="10"/>
-			<xs:element name="AssociatedFlightLegAircraft" type="AssociatedFlightLegAircraftType"
-				nillable="true" minOccurs="0" maxOccurs="2"/>
-			<xs:element name="RemarkTextCode" type="RemarkTextCodeType" nillable="true"
-				minOccurs="0" maxOccurs="50"/>
-			<xs:element name="AirportResources" type="FuelAirportResourcesType" minOccurs="0"
-				maxOccurs="2"/>
-			<xs:element name="OperationTime" type="OperationTimeType" nillable="true" minOccurs="0"
-				maxOccurs="50"/>
+			<xs:element name="OperationalStatus" type="OperationalStatusType" nillable="true" minOccurs="0" maxOccurs="5"/>
+			<xs:element name="PlannedArrivalAptHistory" type="PlannedArrivalAptHistoryType" nillable="true" minOccurs="0" maxOccurs="10"/>
+			<xs:element name="AssociatedFlightLegAircraft" type="AssociatedFlightLegAircraftType" nillable="true" minOccurs="0" maxOccurs="2"/>
+			<xs:element name="RemarkTextCode" type="RemarkTextCodeType" nillable="true" minOccurs="0" maxOccurs="50"/>
+			<xs:element name="AirportResources" type="FuelAirportResourcesType" minOccurs="0" maxOccurs="2"/>
+			<xs:element name="OperationTime" type="OperationTimeType" nillable="true" minOccurs="0" maxOccurs="50"/>
 			<xs:element name="AircraftInfo" type="FuelAircraftInfoType" minOccurs="0"/>
 			<xs:element name="TPA_Extension" type="TPA_ExtensionsType" minOccurs="0">
 				<xs:annotation>
@@ -352,8 +365,7 @@
 		<xs:sequence>
 			<xs:element name="OrderId" type="OrderIdType" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="Quantity" type="QuantityType" minOccurs="1" maxOccurs="2"/>
-			<xs:element maxOccurs="1" minOccurs="0" name="AdditiveRequested"
-				type="StringLength0to50">
+			<xs:element name="AdditiveRequested" type="StringLength0to50" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Name of Additive desired</xs:documentation>
 				</xs:annotation>
@@ -366,8 +378,7 @@
 					<xs:documentation>Technical Acknowledgement - whether message was received and in a satisfactory condition</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element minOccurs="0" name="BusinessAcknowledgement"
-				type="BusinessAcknowledgementType">
+			<xs:element name="BusinessAcknowledgement" type="BusinessAcknowledgementType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Business Acknowledgement - whether message is acknowledged from a business process perspective</xs:documentation>
 				</xs:annotation>
@@ -390,23 +401,9 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="OrderId" type="OrderIdType" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="FuelEquipment" type="FuelEquipmentType" minOccurs="0"
-				maxOccurs="unbounded"/>
-			<xs:element name="FuelProgressTime" type="FuelProgressTimeType" minOccurs="0"
-				maxOccurs="unbounded"/>
-			<xs:element name="AtAdvertisedParkingPosition" type="AtAdvertisedParkingPositionType"
-				minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="FuelEquipment" type="FuelEquipmentType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="FuelProgressTime" type="FuelProgressTimeType" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="CurrVol" type="CurrVolType" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="ReadyToFuel" type="ReadyToFuelType" minOccurs="0"
-				maxOccurs="unbounded"/>
-			<xs:element name="NotReadyToFuel" type="NotReadyToFuelType" minOccurs="0"
-				maxOccurs="unbounded"/>
-			<xs:element name="FlowInterruption" type="FlowInterruptionType" minOccurs="0"
-				maxOccurs="unbounded"/>
-			<xs:element name="FlowRestart" type="FlowRestartType" minOccurs="0"
-				maxOccurs="unbounded"/>
-			<xs:element name="Obstruction" type="ObstructionType" minOccurs="0"
-				maxOccurs="unbounded"/>
 		</xs:sequence>
 		<xs:attribute name="RepeatIndex" type="Numeric1to99" use="optional">
 			<xs:annotation>
@@ -419,8 +416,7 @@
 			<xs:documentation>Summary of fuelling activity.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="FuelEquipment" type="FuelEquipmentType" minOccurs="0"
-				maxOccurs="unbounded"/>
+			<xs:element name="FuelEquipment" type="FuelEquipmentType" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="ReceiptID" type="ReceiptIDType"/>
 			<xs:element name="OrderId" type="OrderIdType" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="DeliveryDate" type="DateOrTimeOrDateTimeType"/>
@@ -429,12 +425,12 @@
 			<xs:element name="SupplierName" type="SupplierNameType" minOccurs="0"/>
 			<xs:element name="SupplierCode" type="SupplierCodeType"/>
 			<xs:element name="OrderCompleted" type="xs:boolean" minOccurs="0"/>
-			<xs:element minOccurs="0" name="FuelStartTime" type="DateOrDateTimeType">
+			<xs:element name="FuelStartTime" type="DateOrDateTimeType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Start of Fueling time - generally when fuel started flowing</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element minOccurs="0" name="FuelEndTime" type="DateOrDateTimeType">
+			<xs:element name="FuelEndTime" type="DateOrDateTimeType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>End of Fueling time - generally when the meter is closed for this fueling, so after disconnect</xs:documentation>
 				</xs:annotation>
@@ -442,7 +438,7 @@
 			<xs:element name="Density" type="DensityType"/>
 			<xs:element name="Temperature" type="TemperatureType" minOccurs="0"/>
 			<xs:element name="Quantity" type="QuantityType" minOccurs="1" maxOccurs="2"/>
-			<xs:element minOccurs="0" name="AdditiveDelivered" type="StringLength0to50">
+			<xs:element name="AdditiveDelivered" type="StringLength0to50" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Name of Fuel Additive Delivered </xs:documentation>
 				</xs:annotation>
@@ -453,8 +449,7 @@
 					<xs:documentation>Technical Acknowledgement - whether message was received and in a satisfactory condition</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element minOccurs="0" name="BusinessAcknowledgement"
-				type="BusinessAcknowledgementType">
+			<xs:element name="BusinessAcknowledgement" type="BusinessAcknowledgementType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Business Acknowledgement - whether message is acknowledged from a business process perspective</xs:documentation>
 				</xs:annotation>
@@ -473,13 +468,10 @@
 			<xs:documentation>The fuelling related components of the IATA AIDX pre-transaction fuel message type - as opposed to the flight leg key and flight operations elements imported from the AIDX schema - encapsulated here in case a different message 'wrapper' is required in future.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="FuelOnBoard" type="FuelOnBoardType" minOccurs="0"
-				maxOccurs="unbounded"/>
+			<xs:element name="FuelOnBoard" type="FuelOnBoardType" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="FuelOrder" type="FuelOrderType" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="FuelProgress" type="FuelProgressType" minOccurs="0"
-				maxOccurs="unbounded"/>
-			<xs:element name="FuelSummary" type="FuelSummaryType" minOccurs="0"
-				maxOccurs="unbounded"/>
+			<xs:element name="FuelProgress" type="FuelProgressType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="FuelSummary" type="FuelSummaryType" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="OrderIdType">
@@ -531,7 +523,7 @@
 			<xs:documentation>Fuel tank name, fuel quantity and whether it is full or should be filled (in the case of a fuel order the FillInd would mean the tank should be filled).</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Name" type="IATA_CodeType"/>
+			<xs:element name="Name" type="StringLenght1to35"/>
 			<xs:element name="Quantity" type="QuantityType" minOccurs="0"/>
 			<xs:element name="FillInd" type="xs:boolean" minOccurs="0"/>
 		</xs:sequence>
@@ -599,11 +591,9 @@
 				</xs:annotation>
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="AircraftParkingPosition"
-							type="AircraftParkingPositionType" nillable="true" minOccurs="0"/>
+						<xs:element name="AircraftParkingPosition" type="AircraftParkingPositionType" nillable="true" minOccurs="0"/>
 					</xs:sequence>
-					<xs:attribute name="DepartureOrArrival" type="DepartureArrivalType"
-						use="required">
+					<xs:attribute name="DepartureOrArrival" type="DepartureArrivalType" use="required">
 						<xs:annotation>
 							<xs:documentation xml:lang="en">Specifies if the resources are for a departure or arrival.</xs:documentation>
 						</xs:annotation>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns="http://www.iata.org/IATA/2007/00" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.iata.org/IATA/2007/00" elementFormDefault="qualified" version="1.000" id="IATA2020.1">
+<xs:schema xmlns="http://www.iata.org/IATA/2007/00" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.iata.org/IATA/2007/00" elementFormDefault="qualified" version="1.000" id="IATA2021.1">
 	<xs:include schemaLocation="IATA_CommonTypes.xsd"/>
 	<xs:include schemaLocation="IATA_SlotCommonTypes.xsd"/>
 	<xs:element name="IATA_SlotRestrictionCapacityRS">

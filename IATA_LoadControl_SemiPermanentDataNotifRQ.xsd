@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2020.2/IATA_LoadControl_SemiPermanentDataNotifRQ" targetNamespace="http://www.iata.org/IATA/2015/00/2020.2/IATA_LoadControl_SemiPermanentDataNotifRQ" elementFormDefault="qualified" version="1.005">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2021.1/IATA_LoadControl_SemiPermanentDataNotifRQ" targetNamespace="http://www.iata.org/IATA/2015/00/2021.1/IATA_LoadControl_SemiPermanentDataNotifRQ" elementFormDefault="qualified" version="1.005" id="IATA2021.1">
 	<xs:element name="IATA_LoadControl_SemiPermanentDataNotifRQ">
 		<xs:annotation>
 			<xs:documentation>Used to exchange semi-permanent data for weight and balance between the carrier owning the aircraft and airlines that operate the aircraft, handling agents and DCS providers.</xs:documentation>
