@@ -1,0 +1,2812 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://www.iata.org/IATA/2015/00/2018.2/IATA_BagEventNotif" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.iata.org/IATA/2015/00/2018.2/IATA_BagEventNotif" elementFormDefault="qualified" version="1.001" id="IATA2018.2">
+	<xs:element name="BagEventNotif">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Bag" type="BagType" minOccurs="1" maxOccurs="1"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="AgencyCodeContentType">
+		<xs:annotation>
+			<xs:documentation>The codelist contents of IATA handling agency organizations.
+                {codeListAgencyIdentifier}3{/codeListAgencyIdentifier}
+                {codeListAgencyName}IATA{/codeListAgencyName}
+                {codeListName}Handling Agency Coded{/codeListName}
+                {codeListIdentifier}BCL00AGT{/codeListIdentifier}</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:minLength value="2"/>
+			<xs:pattern value="[A-Z]{2,3}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AircraftParkingPositionID_Value">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="8"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AircraftRegistrationID_Value">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AirlineDesigCodeContentType">
+		<xs:annotation>
+			<xs:documentation>The codelist contents of IATA Resolution 762  airline codes, or of ICAO airline codes.
+                {codeListAgencyName}IATA or ICAO{/codeListAgencyName}
+                {codeListName}Resolution 762  Airline Codes or ICAO Airline Codes{/codeListName}</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:pattern value="([A-Z]{3}|[A-Z]{2})|([0-9][A-Z])|([A-Z][0-9])"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AllianceCodeContentType">
+		<xs:annotation>
+			<xs:documentation>Enumeration set for the Alliance Code BDT.
+                {codeListName}PADIS 9906{/codeListName}</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:length value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AuthenticationStatusCodeContentType">
+		<xs:annotation>
+			<xs:documentation>The codelist contents of IATA Recommendation 1745 Attachment a baggage authentication codes
+                {codeListAgencyIdentifier}3{/codeListAgencyIdentifier}
+                {codeListAgencyName}IATA{/codeListAgencyName}
+                {codeListName}Recommendation 1745 Attach A Baggage Authentication Codes{/codeListName}
+                {codeListIdentifier}BCL10046{/codeListIdentifier}</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="IDProduced">
+				<xs:annotation>
+					<xs:documentation>Identity Produced, bag identity has been produced</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Recognised">
+				<xs:annotation>
+					<xs:documentation>Recognised, bag has been recognised (Seen)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Identified">
+				<xs:annotation>
+					<xs:documentation>Identified, Bag has been identified against produced bag inventory</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Verified">
+				<xs:annotation>
+					<xs:documentation>Verified, bag has been verified against policies (max min height, weight, etc)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Qualified">
+				<xs:annotation>
+					<xs:documentation>Qualified, bag has been qualified against planned criteria and resource</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BagBasicCodeContentType">
+		<xs:annotation>
+			<xs:documentation>The codelist contents of IATA Resolution 743b Attachment a basic codes
+                {codeListAgencyIdentifier}3{/codeListAgencyIdentifier}
+                {codeListAgencyName}IATA{/codeListAgencyName}
+                {codeListName}Resolution 743b Attach A Basic Codes{/codeListName}
+                {codeListIdentifier}BCL10028{/codeListIdentifier}</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="B">
+				<xs:annotation>
+					<xs:documentation>Single Item in a box</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="K">
+				<xs:annotation>
+					<xs:documentation>Cabin sized baggage carry on.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BagColorCodeContentType">
+		<xs:annotation>
+			<xs:documentation>The codelist contents of IATA Resolution 743b Attachment a color codes
+                {codeListAgencyIdentifier}3{/codeListAgencyIdentifier}
+                {codeListAgencyName}IATA{/codeListAgencyName}
+                {codeListName}Resolution 743b Attach A Color Codes{/codeListName}
+                {codeListIdentifier}BCL10029{/codeListIdentifier}</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="WT">
+				<xs:annotation>
+					<xs:documentation>White Clear</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BK">
+				<xs:annotation>
+					<xs:documentation>Black</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GY">
+				<xs:annotation>
+					<xs:documentation>gray/silver/aluminum</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BU">
+				<xs:annotation>
+					<xs:documentation>Blue</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RD">
+				<xs:annotation>
+					<xs:documentation>Red/maroon/pink/burgundy</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="YW">
+				<xs:annotation>
+					<xs:documentation>yellow/orange/gold</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BE">
+				<xs:annotation>
+					<xs:documentation>Beige/Cream/Ivory</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BN">
+				<xs:annotation>
+					<xs:documentation>Brown/Tan/Taupe/Bronze/Silver/Copper</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="GN">
+				<xs:annotation>
+					<xs:documentation>Green/Olive/Jade</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MC">
+				<xs:annotation>
+					<xs:documentation>Two of more solid colors excluding trim.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PC">
+				<xs:annotation>
+					<xs:documentation>Print/Pattern/Floral/Spotted/Tapestry/Stripe/Plaid/Checked</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PU">
+				<xs:annotation>
+					<xs:documentation>Purple/Violet/Lilac</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ZZ">
+				<xs:annotation>
+					<xs:documentation>Color</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BagDescriptiveCodeContentType">
+		<xs:annotation>
+			<xs:documentation>The codelist contents of IATA Resolution 743b Attachment A : Categories 'Non-zippered Bags' to 'Items Not Shown Elsewhere'.
+                {codeListAgencyIdentifier}3{/codeListAgencyIdentifier}
+                {codeListAgencyName}IATA{/codeListAgencyName}
+                {codeListName}Reso 743b Attachment A Descriptive Codes{/codeListName}
+                {codeListIdentifier}BCL10030{/codeListIdentifier}</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token"/>
+	</xs:simpleType>
+	<xs:simpleType name="BagExternalFeatureCodeContentType">
+		<xs:annotation>
+			<xs:documentation>The codelist contents of IATA Resolution 743b Attachment a external feature codes
+                {codeListAgencyIdentifier}3{/codeListAgencyIdentifier}
+                {codeListAgencyName}IATA{/codeListAgencyName}
+                {codeListName}Resolution 743b Attach A External Feature Codes{/codeListName}
+                {codeListIdentifier}BCL10031{/codeListIdentifier}</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="C">
+				<xs:annotation>
+					<xs:documentation>Combination Locks</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="H">
+				<xs:annotation>
+					<xs:documentation>Retractable Handle</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="S">
+				<xs:annotation>
+					<xs:documentation>Straps to close secure</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="W">
+				<xs:annotation>
+					<xs:documentation>Wheels Rollers</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="X">
+				<xs:annotation>
+					<xs:documentation>No external descriptive elements</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BaggageActivityCodeContentType">
+		<xs:annotation>
+			<xs:documentation>The codelist contents of IATA Baggage XML Function Activity Codes
+                {codeListAgencyIdentifier}3{/codeListAgencyIdentifier}
+                {codeListAgencyName}IATA{/codeListAgencyName}
+                {codeListName}Recommendation 1745 Attach A Function Actvity Codes{/codeListName}
+                {codeListIdentifier}BCL90019{/codeListIdentifier}</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="IDProduction">
+				<xs:annotation>
+					<xs:documentation>Bag Identity Production</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Recognition">
+				<xs:annotation>
+					<xs:documentation>Bag Recognition</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Identification">
+				<xs:annotation>
+					<xs:documentation>Bag Identification</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Verification">
+				<xs:annotation>
+					<xs:documentation>Bag Verification</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Qualification">
+				<xs:annotation>
+					<xs:documentation>Bag Qualification</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Screening">
+				<xs:annotation>
+					<xs:documentation>Bag Screening</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Reconciliation">
+				<xs:annotation>
+					<xs:documentation>Bag Inventory Reconciliation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Acquisition">
+				<xs:annotation>
+					<xs:documentation>Bag Acquisition</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Routing">
+				<xs:annotation>
+					<xs:documentation>Bag Routing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Move">
+				<xs:annotation>
+					<xs:documentation>Bag Movement</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Delivery">
+				<xs:annotation>
+					<xs:documentation>Bag Delivery</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Reclaim">
+				<xs:annotation>
+					<xs:documentation>Bag Reclaim</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PutAway">
+				<xs:annotation>
+					<xs:documentation>Bag Put Away</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Receipt">
+				<xs:annotation>
+					<xs:documentation>Bag Receipting</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Withdraw">
+				<xs:annotation>
+					<xs:documentation>Bag Withdraw</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Sorting">
+				<xs:annotation>
+					<xs:documentation>Bag Sorting</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Loading">
+				<xs:annotation>
+					<xs:documentation>Bag Loading</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Removal">
+				<xs:annotation>
+					<xs:documentation>Bag Removal</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Offload">
+				<xs:annotation>
+					<xs:documentation>Bag Offloading</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BaggageClaimID_Value">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="6"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BaggageProcessCodeContentType">
+		<xs:annotation>
+			<xs:documentation>The codelist contents of IATA Recommendation 1745 Attachment A Process Source Indicator Codes
+                {codeListAgencyIdentifier}3{/codeListAgencyIdentifier}
+                {codeListAgencyName}IATA{/codeListAgencyName}
+                {codeListName}Recommendation 1745 Attach A Process Source Indicator Codes{/codeListName}
+                {codeListIdentifier}BCL10019{/codeListIdentifier}</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="L">
+				<xs:annotation>
+					<xs:documentation>Departing Process</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="T">
+				<xs:annotation>
+					<xs:documentation>Transfering Process</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="X">
+				<xs:annotation>
+					<xs:documentation>Arrivals (Terminating) Process</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BagMaterialCodeContentType">
+		<xs:annotation>
+			<xs:documentation>The codelist contents of IATA Resolution 743b Attachment a. material codes
+                {codeListAgencyIdentifier}3{/codeListAgencyIdentifier}
+                {codeListAgencyName}IATA{/codeListAgencyName}
+                {codeListName}Resolution 743b Attach A. Material Codes{/codeListName}
+                {codeListIdentifier}BCL10032{/codeListIdentifier}</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="D">
+				<xs:annotation>
+					<xs:documentation>Dual Combined hard and soft material.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="L">
+				<xs:annotation>
+					<xs:documentation>Leather</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="M">
+				<xs:annotation>
+					<xs:documentation>Metal - e.g. aluminum or sheet steel</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="R">
+				<xs:annotation>
+					<xs:documentation>Rigid - Durable, plastic, molded or formed.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="T">
+				<xs:annotation>
+					<xs:documentation>Tweed</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BagTagID_Value">
+		<xs:restriction base="xs:token">
+			<xs:length value="10"/>
+			<xs:pattern value="[0-9]{10}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BoardingGateID_Value">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="8"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BoardingStatusCodeContentType">
+		<xs:annotation>
+			<xs:documentation>The codelist contents of IATA Recommendation 1745 Attachment a baggage status codes.
+                {codeListAgencyIdentifier}3{/codeListAgencyIdentifier}
+                {codeListAgencyName}IATA{/codeListAgencyName}
+                {codeListName}Recommendation 1745 Attach A Pax Boarding Status Codes.{/codeListName}
+                {codeListIdentifier}BCL10045{/codeListIdentifier}</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="N">
+				<xs:annotation>
+					<xs:documentation>Passenger not checked-in.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="C">
+				<xs:annotation>
+					<xs:documentation>Passenger checked-in.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="S">
+				<xs:annotation>
+					<xs:documentation>Passenger on standby</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="B">
+				<xs:annotation>
+					<xs:documentation>Passenger boarded.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BookingRefCompanyCodeValue">
+		<xs:restriction base="xs:token">
+			<xs:maxLength value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BookingRefID_Value">
+		<xs:restriction base="xs:token">
+			<xs:maxLength value="6"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="BookingRefTypeCodeContentType">
+		<xs:annotation>
+			<xs:documentation>Booking Reference Type. Example: 6 (Passenger confirmation number)
+                {codeListAgencyName}PADIS{/codeListAgencyName}
+                {codeListName}Reference qualifier{/codeListName}
+                {codeListIdentifier}1153{/codeListIdentifier}</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token"/>
+	</xs:simpleType>
+	<xs:simpleType name="CabinTypeID_Value">
+		<xs:restriction base="xs:token">
+			<xs:maxLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CarriageMediumCodeContentType">
+		<xs:annotation>
+			<xs:documentation>The codelist contents of IATA Recommendation 1745 Attachment a carriage medium codes
+                {codeListAgencyIdentifier}3{/codeListAgencyIdentifier}
+                {codeListAgencyName}IATA{/codeListAgencyName}
+                {codeListName}Recommendation 1745 Attach A Carriage Medium Codes{/codeListName}
+                {codeListIdentifier}BCL10056{/codeListIdentifier}</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="AV">
+				<xs:annotation>
+					<xs:documentation>Airline VAN</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CR">
+				<xs:annotation>
+					<xs:documentation>Car Rental VAN</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CO">
+				<xs:annotation>
+					<xs:documentation>Courier Van</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CS">
+				<xs:annotation>
+					<xs:documentation>Cruise Ship</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HV">
+				<xs:annotation>
+					<xs:documentation>Hotel VAN</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="RA">
+				<xs:annotation>
+					<xs:documentation>Rail</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ChangeIndCodeContentType">
+		<xs:annotation>
+			<xs:documentation>The codelist contents of IATA RP 1745 Baggage Service Message Change Indicator Codes
+                {codeListAgencyIdentifier}3{/codeListAgencyIdentifier}
+                {codeListAgencyName}IATA{/codeListAgencyName}
+                {codeListName}RP 1745 Baggage Source Message Change Indicator Codes{/codeListName}
+                {codeListIdentifier}BCL20062{/codeListIdentifier}</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="NEW">
+				<xs:annotation>
+					<xs:documentation>This is a newly created bag movement (equivalent to .V (NEW) BSM</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CHG">
+				<xs:annotation>
+					<xs:documentation>This is a change to bag movement (e.g. equivalent to BSMCHG)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="DEL">
+				<xs:annotation>
+					<xs:documentation>This is a delete of a bag movement (e.g. equivalent to BSMDEL)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CheckInDeskID_Value">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="6"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CommodityCodeContentType">
+		<xs:annotation>
+			<xs:documentation>Code set used with ULDs for segregation of bags for efficient load and unload from the aircraft and subsequent ground operations.
+                {codeListAgencyName}IATA{/codeListAgencyName}
+                {codeListName}AHM240 Baggage Codes for Identifying ULD Contents{/codeListName}</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:length value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CompartmentID_Value">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ContainerizationStatusCodeContentType">
+		<xs:annotation>
+			<xs:documentation>The codelist contents of IATA Recommendation 1745 Attachment a baggage status codes.
+                {codeListAgencyIdentifier}3{/codeListAgencyIdentifier}
+                {codeListAgencyName}IATA{/codeListAgencyName}
+                {codeListName}Recommendation 1745 Attach A Baggage Containerization Status Codes.{/codeListName}
+                {codeListIdentifier}BCL10047{/codeListIdentifier}</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="LOD">
+				<xs:annotation>
+					<xs:documentation>Loaded, bag is authorised to load and loaded successfully.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NOF">
+				<xs:annotation>
+					<xs:documentation>Normal Offload, bag has been offloaded from inbound aircraft or ULD. E.g. when aircraft arrives at stand.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="UNS">
+				<xs:annotation>
+					<xs:documentation>Not Loaded, bag has not been seen.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NAL">
+				<xs:annotation>
+					<xs:documentation>Loaded, but bag is not authorized for loading.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="OND">
+				<xs:annotation>
+					<xs:documentation>Not Loaded, bag is on hand and not authorized for loading.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ONA">
+				<xs:annotation>
+					<xs:documentation>Not Loaded, bag is on hand and authorized to load.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="OFF">
+				<xs:annotation>
+					<xs:documentation>Removed, bag has been removed and offloaded on request.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CountryCodeContentType">
+		<xs:annotation>
+			<xs:documentation>The code list of ISO 3166 two-alpha Country Codes
+                {codeListAgencyName}ISO{/codeListAgencyName}
+                {codeListName}3166 two-alpha Country Codes{/codeListName}</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:pattern value="[A-Z]{2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CountrySubDivisionCodeContentType">
+		<xs:annotation>
+			<xs:documentation>The list of Country Sub-Division Codes in ISO 3166-2, or referenced from ISO 3166-2 for the specific countries. Max-3-char sub-division code without preceding country code.
+                {codeListAgencyName}ISO{/codeListAgencyName}
+                {codeListName}3166-2 Country Subdivision Codes{/codeListName}</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DateType">
+		<xs:restriction base="xs:date"/>
+	</xs:simpleType>
+	<xs:simpleType name="ExceptionCodeContentType">
+		<xs:annotation>
+			<xs:documentation>Enumeration of IATA RP 1745 Attachment A bag exception codes.
+                {codeListAgencyIdentifier}3{/codeListAgencyIdentifier}
+                {codeListAgencyName}IATA{/codeListAgencyName}
+                {codeListName}RP 1745 Attachment A Bag Exception Codes{/codeListName}
+                {codeListIdentifier}BCL10003{/codeListIdentifier}</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token"/>
+	</xs:simpleType>
+	<xs:simpleType name="FlightNumberTextValue">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]{1,4}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="GenderCodeContentType">
+		<xs:annotation>
+			<xs:documentation>Enumeration set for Gender Code.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="M">
+				<xs:annotation>
+					<xs:documentation>Male</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="F">
+				<xs:annotation>
+					<xs:documentation>Female</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="X">
+				<xs:annotation>
+					<xs:documentation>Unspecified</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HandlingBayID_Value">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="6"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HoldID_Value">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="IATAAircraftTypeCodeContentType">
+		<xs:annotation>
+			<xs:documentation>Enumeration set for the IATA Aircraft Type Code BDT.
+                {codeListAgencyName}IATA{/codeListAgencyName}
+                {codeListName}SSIM Appendix A Aircraft Type Code{/codeListName}</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:pattern value="[0-9A-Z]{3}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="IATALocationCodeContentType">
+		<xs:annotation>
+			<xs:documentation>Enumeration set for the Location Code BDT.
+                {codeListAgencyName}IATA{/codeListAgencyName}
+                {codeListName}Location code{/codeListName}
+                {enumerationURI}http://www.iata.org/publications/Pages/code-search.aspx{/enumerationURI}</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:length value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="IATATerminalCodeContentType">
+		<xs:annotation>
+			<xs:documentation>The code of the terminal infrastructure facility.
+                {codeListAgencyName}IATA{/codeListAgencyName}
+                {codeListName}SSIM Terminal Code (SSIM Appendix D){/codeListName}</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="4"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="IndType">
+		<xs:restriction base="xs:boolean"/>
+	</xs:simpleType>
+	<xs:simpleType name="LengthUnitCodeContentType">
+		<xs:annotation>
+			<xs:documentation>List of Length Unit Codes. Subset of UN/CEFACT Recommendation 20.
+                {codeListAgencyName}AIDM (extract from UN/CEFACT){/codeListAgencyName}</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CMT">
+				<xs:annotation>
+					<xs:documentation>Centimeter</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="FOT">
+				<xs:annotation>
+					<xs:documentation>Foot</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="INH">
+				<xs:annotation>
+					<xs:documentation>Inch</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="MTR">
+				<xs:annotation>
+					<xs:documentation>Meter</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MovementStatusCodeContentType">
+		<xs:annotation>
+			<xs:documentation>The codelist contents of IATA Recommendation 1745 Attachment a baggage movement status codes.
+                {codeListAgencyIdentifier}3{/codeListAgencyIdentifier}
+                {codeListAgencyName}IATA{/codeListAgencyName}
+                {codeListName}Recommendation 1745 Attach A Baggage Movement Status Codes.{/codeListName}
+                {codeListIdentifier}BCL10048{/codeListIdentifier}</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="Acquired">
+				<xs:annotation>
+					<xs:documentation>Acquired, bag has been acquired by a party or facility</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Routed">
+				<xs:annotation>
+					<xs:documentation>Routed, bag has been routed through a facility</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Delivered">
+				<xs:annotation>
+					<xs:documentation>Delivered, bag has been delivered by a party or facility</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Reclaimed">
+				<xs:annotation>
+					<xs:documentation>Reclaimed, bag has been reclaimed by (passenger) party.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NumberType">
+		<xs:restriction base="xs:decimal"/>
+	</xs:simpleType>
+	<xs:simpleType name="OperationalSuffixTextValue">
+		<xs:restriction base="xs:string">
+			<xs:length value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OrdinalType">
+		<xs:restriction base="xs:integer"/>
+	</xs:simpleType>
+	<xs:simpleType name="ProperNameValue">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ScreeningAlarmCodeContentType">
+		<xs:annotation>
+			<xs:documentation>The codelist contents of IATA Recommendation 1745 Attachment A Screening Alarm Reason Codes
+                {codeListAgencyIdentifier}3{/codeListAgencyIdentifier}
+                {codeListAgencyName}IATA{/codeListAgencyName}
+                {codeListName}Recommendation 1745 Attach A Screening Alarm Reason Codes{/codeListName}
+                {codeListIdentifier}BCL10014{/codeListIdentifier}</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="D">
+				<xs:annotation>
+					<xs:documentation>Dark alarm</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="E">
+				<xs:annotation>
+					<xs:documentation>Explosives</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="C">
+				<xs:annotation>
+					<xs:documentation>combination of dark alarm and explosives</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="N">
+				<xs:annotation>
+					<xs:documentation>no decision</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="T">
+				<xs:annotation>
+					<xs:documentation>time out</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ScreeningMethodCodeContentType">
+		<xs:annotation>
+			<xs:documentation>The codelist contents of IATA Recommendation 1745 Attachment A Screening Method Codes
+                {codeListAgencyIdentifier}3{/codeListAgencyIdentifier}
+                {codeListAgencyName}IATA{/codeListAgencyName}
+                {codeListName}Recommendation 1745 Attach A Screening Method Codes{/codeListName}
+                {codeListIdentifier}BCL10018{/codeListIdentifier}</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="XRAY">
+				<xs:annotation>
+					<xs:documentation>X-ray screening method</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="AT">
+				<xs:annotation>
+					<xs:documentation>Advanced Technology screening method</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HAND">
+				<xs:annotation>
+					<xs:documentation>Hand Search screening method</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ETD">
+				<xs:annotation>
+					<xs:documentation>Explosive trace detection screening method</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="EBD">
+				<xs:annotation>
+					<xs:documentation>Explosive bulk detection screening method</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SeatID_Value">
+		<xs:restriction base="xs:token">
+			<xs:pattern value="[0-9]{2,3}[A-Z]{1}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SecurityControlNumberType">
+		<xs:restriction base="xs:decimal">
+			<xs:maxInclusive value="999"/>
+			<xs:minInclusive value="0"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SecurityControlSeqNumberType">
+		<xs:restriction base="xs:decimal">
+			<xs:maxInclusive value="999"/>
+			<xs:minInclusive value="0"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SecurityProfileStatusCodeContentType">
+		<xs:annotation>
+			<xs:documentation>Indicates a passenger may be subject to more extensive security check and is at increased risk to no-show for flight. E.g. as per TSA regulations.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="3"/>
+			<xs:enumeration value="DEF">
+				<xs:annotation>
+					<xs:documentation>Clear</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SEL">
+				<xs:annotation>
+					<xs:documentation>Selected for increased security attention</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PRE">
+				<xs:annotation>
+					<xs:documentation>Member of a known traveler scheme</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SecurityScreeningInstructionCodeContentType">
+		<xs:annotation>
+			<xs:documentation>The codelist contents of IATA Recommendation 1745 Attachment a screening instruction codes
+                {codeListAgencyIdentifier}3{/codeListAgencyIdentifier}
+                {codeListAgencyName}IATA{/codeListAgencyName}
+                {codeListName}Recommendation 1745 Attach A Screening Instruction Codes{/codeListName}
+                {codeListIdentifier}BCL10004{/codeListIdentifier}</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="DEF">
+				<xs:annotation>
+					<xs:documentation>Default level of screening applies.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SEL">
+				<xs:annotation>
+					<xs:documentation>Selected for increased level of screening.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="NON">
+				<xs:annotation>
+					<xs:documentation>No screening required conditional to applicable regulations.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SecurityScreeningStatusCodeContentType">
+		<xs:annotation>
+			<xs:documentation>The codelist contents of IATA Recommendation 1745 Attachment a baggage security screening result codes
+                {codeListAgencyIdentifier}3{/codeListAgencyIdentifier}
+                {codeListAgencyName}IATA{/codeListAgencyName}
+                {codeListName}Recommendation 1745 Attach A Baggage Security Screening Result Codes{/codeListName}
+                {codeListIdentifier}BCL10049{/codeListIdentifier}</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="CLR">
+				<xs:annotation>
+					<xs:documentation>Cleared, bag is cleared according to applicable regulations</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="REJ">
+				<xs:annotation>
+					<xs:documentation>Rejected, bag is rejected due to detected weapons, explosives or other dangerous devices</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="UCL">
+				<xs:annotation>
+					<xs:documentation>Unclear, bag is unclear due to indeterminate screening result</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SortationStatusCodeContentType">
+		<xs:annotation>
+			<xs:documentation>The codelist contents of IATA Recommendation 1745 Attachment a baggage sortation status codes.
+                {codeListAgencyIdentifier}3{/codeListAgencyIdentifier}
+                {codeListAgencyName}IATA{/codeListAgencyName}
+                {codeListName}Recommendation 1745 Attach A Baggage Sortation Status Codes.{/codeListName}
+                {codeListIdentifier}BCL10050{/codeListIdentifier}</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="Not Sorted">
+				<xs:annotation>
+					<xs:documentation>Not Sorted, bag has not been sorted into a segragation.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Sorted">
+				<xs:annotation>
+					<xs:documentation>Sorted, bag has been sorted into a segragation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="StorageStatusCodeContentType">
+		<xs:annotation>
+			<xs:documentation>The codelist contents of IATA Recommendation 1745 Attachment a baggage storage status codes.
+                {codeListAgencyIdentifier}3{/codeListAgencyIdentifier}
+                {codeListAgencyName}IATA{/codeListAgencyName}
+                {codeListName}Recommendation 1745 Attach A Baggage Storage Status Codes{/codeListName}
+                {codeListIdentifier}BCL10051{/codeListIdentifier}</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="PutAway">
+				<xs:annotation>
+					<xs:documentation>PutAway, bag has been put away into storage.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Receipted">
+				<xs:annotation>
+					<xs:documentation>Receipted, bag has been receipted in storage location.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Withdrawn">
+				<xs:annotation>
+					<xs:documentation>Withdrawn, bag has been withdrawn from storage.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SupplementNameValue">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="16"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SurfaceTransportID_Value">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="12"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TerminalPierID_Value">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="6"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TerminalSatelliteID_Value">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="8"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ULD_ID_Value">
+		<xs:restriction base="xs:token">
+			<xs:pattern value="[A-Z0-9]{3}[0-9]{4,5}[A-Z0-9]{2,3}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ULD_LoadPositionID_Value">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="5"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ULD_TypeCodeValue">
+		<xs:restriction base="xs:token">
+			<xs:maxLength value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="URI_Type">
+		<xs:restriction base="xs:anyURI"/>
+	</xs:simpleType>
+	<xs:simpleType name="WeightUnitCodeContentType">
+		<xs:annotation>
+			<xs:documentation>List of Weight Unit Codes. Subset of UN/CEFACT Recommendation 20.
+                {codeListAgencyName}AIDM (extract from UN/CEFACT){/codeListAgencyName}</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="KGM">
+				<xs:annotation>
+					<xs:documentation>Kilogram</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="LBR">
+				<xs:annotation>
+					<xs:documentation>US Pound</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="AgencyCodeType">
+		<xs:annotation>
+			<xs:documentation>The agency operator code.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="AgencyCodeContentType">
+				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL00AGT"/>
+				<xs:attribute name="ListName" type="xs:string" use="optional" default="HandlingAgencyCoded"/>
+				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
+				<xs:attribute name="ListAgencyID" type="xs:string" use="optional" default="3"/>
+				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
+				<xs:attribute name="Name" type="xs:string" use="optional"/>
+				<xs:attribute name="LangID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="AgencyType">
+		<xs:annotation>
+			<xs:documentation>An organization which acts on behalf of another.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AgencyCode" type="AgencyCodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The code of the agency organization.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AgentID" type="ID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identifier of an agent as assigned by his/her agency.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Individual" type="IndividualType" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AircraftParkingPositionID_Type">
+		<xs:annotation>
+			<xs:documentation>The aircraft parking position identifier of the infrastructure facility</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="AircraftParkingPositionID_Value">
+				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
+				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeDataURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeURI" type="xs:anyURI" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="AircraftRegistrationID_Type">
+		<xs:annotation>
+			<xs:documentation>The complete alphanumeric identification assigned by the appropriate licensing authority to an individual aircraft. Hyphens contained within the registration shall not be included. E.g. G-BOAC, N46573, ZZ123.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="AircraftRegistrationID_Value">
+				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
+				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeDataURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeURI" type="xs:anyURI" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="AircraftType">
+		<xs:annotation>
+			<xs:documentation>A transport vehicle which is certified as airworthy by a competent aeronautical authority.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AircraftRegistrationID" type="AircraftRegistrationID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The complete alphanumeric identification assigned by the appropriate licensing authority to an individual aircraft. Hyphens contained within the registration shall not be included. E.g. GBOAC, N46573, ZZ123.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IATAAircraftTypeCode" type="IATAAircraftTypeCodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Code assigned to an aircraft type in IATA SSIM.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AirlineDesigCodeType">
+		<xs:annotation>
+			<xs:documentation>Either the IATA-defined 2-character code or the ICAO-defined 3-character code of an airline, as per the length of the value.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="AirlineDesigCodeContentType">
+				<xs:attribute name="ListID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListName" type="xs:string" use="optional"/>
+				<xs:attribute name="ListVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListAgencyName" type="xs:string" use="optional"/>
+				<xs:attribute name="Name" type="xs:string" use="optional"/>
+				<xs:attribute name="LangID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:anyURI" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="AirlineType">
+		<xs:annotation>
+			<xs:documentation>An enterprise operating aircrafts for commercial purposes (see more details in Glossary of Terms:- Airline).</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AirlineDesigCode" type="AirlineDesigCodeType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Airline code assigned to a carrier. Either IATA-defined 2-character code or ICAO-defined 3-character code.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AllianceCode" type="AllianceCodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Used to specify the alliance based on PADIS Code List (code list defined in BDT).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AllianceCodeType">
+		<xs:annotation>
+			<xs:documentation>Additional BDT to specify alliance codes.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="AllianceCodeContentType">
+				<xs:attribute name="ListID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListName" type="xs:string" use="optional"/>
+				<xs:attribute name="ListVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListAgencyName" type="xs:string" use="optional"/>
+				<xs:attribute name="Name" type="xs:string" use="optional"/>
+				<xs:attribute name="LangID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:anyURI" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="AuthenticationStatusCodeType">
+		<xs:annotation>
+			<xs:documentation>The authentication status code of the logistics item status</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="AuthenticationStatusCodeContentType">
+				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL10046"/>
+				<xs:attribute name="ListName" type="xs:string" use="optional" default="Recommendation1745AttachABaggageAuthenticationCodes"/>
+				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
+				<xs:attribute name="ListAgencyID" type="xs:string" use="optional" default="3"/>
+				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
+				<xs:attribute name="Name" type="xs:string" use="optional"/>
+				<xs:attribute name="LangID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="BagActivityType">
+		<xs:annotation>
+			<xs:documentation>The condition in which things are happening or being done to a bag, such as 'scan a bag'.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ActivityCode" type="BaggageActivityCodeType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The code of the activity.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ActualDateTime" type="DateTimeType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The actual date and time of the activity.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SeqOrdinal" type="OrdinalType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The sequence ordinal (number) of the activity.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OffStationInd" type="IndType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>If true, the current activity is carried out off station (also said remotely). E.g. hotel bag drop.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DescText" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The description of the activity.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ScreeningMethodCode" type="ScreeningMethodCodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The code of the function interaction screening method.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ScreeningDeviceID" type="ID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identifier, as defined by the manufacturer or airport, of the machine that has undertaken the screening activity and determined the screening result.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OperatingCarrier" type="AirlineType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="HandlingAgency" type="AgencyType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="HandlingStation" type="StationType" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BaggageProcess" type="BaggageProcessType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="BagStatus" type="BagStatusType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="PaxStatus" type="PaxStatusType" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BagBasicCodeType">
+		<xs:annotation>
+			<xs:documentation>The bag basic code of the physical property measurement</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="BagBasicCodeContentType">
+				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL10028"/>
+				<xs:attribute name="ListName" type="xs:string" use="optional" default="Resolution743bAttachABasicCodes"/>
+				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
+				<xs:attribute name="ListAgencyID" type="xs:string" use="optional" default="3"/>
+				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
+				<xs:attribute name="Name" type="xs:string" use="optional"/>
+				<xs:attribute name="LangID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="BagColorCodeType">
+		<xs:annotation>
+			<xs:documentation>The bag color code of the physical property measurement</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="BagColorCodeContentType">
+				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL10029"/>
+				<xs:attribute name="ListName" type="xs:string" use="optional" default="Resolution743bAttachAColorCodes"/>
+				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
+				<xs:attribute name="ListAgencyID" type="xs:string" use="optional" default="3"/>
+				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
+				<xs:attribute name="Name" type="xs:string" use="optional"/>
+				<xs:attribute name="LangID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="BagDescriptiveCodeType">
+		<xs:annotation>
+			<xs:documentation>The bag descriptive code of the physical property measurement</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="BagDescriptiveCodeContentType">
+				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL10030"/>
+				<xs:attribute name="ListName" type="xs:string" use="optional" default="Resolution743bAttachADescriptiveCodes"/>
+				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
+				<xs:attribute name="ListAgencyID" type="xs:string" use="optional" default="3"/>
+				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
+				<xs:attribute name="Name" type="xs:string" use="optional"/>
+				<xs:attribute name="LangID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="BagDimensionType">
+		<xs:annotation>
+			<xs:documentation>A measurable extent of a particular bag, such as length, or height.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="LengthMeasure" type="LengthMeasureType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A measurement or extent of something from end to end; the greater of two or the greatest of three dimensions of an object. Measure. Unit. Code must be CMT (centimeters).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="WidthMeasure" type="LengthMeasureType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A measurement or extent of the bag from side to side; the lesser of two or the least of three dimensions of the bag.  Unit must be CMT (centimeters).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HeightMeasure" type="LengthMeasureType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A measurement of someone or something from head to foot or from base to top. Measure. Unit. Code must be CMT (centimeters).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BagExceptionType">
+		<xs:annotation>
+			<xs:documentation>A bag that is excluded from a general statement or does not follow a rule. E.g. a bag that is too heavy for normal process.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ExceptionCode" type="ExceptionCodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The exception code of the exception control. An exception control is a bag that is excluded from a general statement or does not follow a rule.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BagExternalFeatureCodeType">
+		<xs:annotation>
+			<xs:documentation>The bag external feature code of the physical property measurement</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="BagExternalFeatureCodeContentType">
+				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL10031"/>
+				<xs:attribute name="ListName" type="xs:string" use="optional" default="Resolution743bAttachAExternalFeatureCodes"/>
+				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
+				<xs:attribute name="ListAgencyID" type="xs:string" use="optional" default="3"/>
+				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
+				<xs:attribute name="Name" type="xs:string" use="optional"/>
+				<xs:attribute name="LangID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="BaggageActivityCodeType">
+		<xs:annotation>
+			<xs:documentation>The baggage activity code of the process interaction</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="BaggageActivityCodeContentType">
+				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL10019"/>
+				<xs:attribute name="ListName" type="xs:string" use="optional" default="Recommendation1745AttachAFunctionActvityCodes"/>
+				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
+				<xs:attribute name="ListAgencyID" type="xs:string" use="optional" default="3"/>
+				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
+				<xs:attribute name="Name" type="xs:string" use="optional"/>
+				<xs:attribute name="LangID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="BaggageClaimID_Type">
+		<xs:annotation>
+			<xs:documentation>The baggage claim identifier of the infrastructure facility</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="BaggageClaimID_Value">
+				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
+				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeDataURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeURI" type="xs:anyURI" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="BaggageProcessCodeType">
+		<xs:annotation>
+			<xs:documentation>The baggage process code of the process interaction</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="BaggageProcessCodeContentType">
+				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL10019"/>
+				<xs:attribute name="ListName" type="xs:string" use="optional" default="Recommendation1745AttachAProcessSourceIndicatorCodes"/>
+				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
+				<xs:attribute name="ListAgencyID" type="xs:string" use="optional" default="3"/>
+				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
+				<xs:attribute name="Name" type="xs:string" use="optional"/>
+				<xs:attribute name="LangID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="BaggageProcessType">
+		<xs:annotation>
+			<xs:documentation>The (current) baggage process details. A process is a series of actions or steps taken in order to achieve a particular end.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="BaggageProcessCode" type="BaggageProcessCodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The code of the process interaction baggage code.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BagIncidentType">
+		<xs:annotation>
+			<xs:documentation>Event that occurs spontaneously about a bag, and to which the organization is required to respond.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="IncidentID" type="ID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The identifier of the incident.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ScreeningAlarmCode" type="ScreeningAlarmCodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The code of the screening alarm</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BagMaterialCodeType">
+		<xs:annotation>
+			<xs:documentation>The bag material code of the physical property measurement</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="BagMaterialCodeContentType">
+				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL10032"/>
+				<xs:attribute name="ListName" type="xs:string" use="optional" default="Resolution743bAttachAMaterialCodes"/>
+				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
+				<xs:attribute name="ListAgencyID" type="xs:string" use="optional" default="3"/>
+				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
+				<xs:attribute name="Name" type="xs:string" use="optional"/>
+				<xs:attribute name="LangID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="BagPhysicalPropertyType">
+		<xs:annotation>
+			<xs:documentation>A property used to characterize a bag, such as weight, color.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="WeightMeasure" type="WeightMeasureType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A measurement of the heaviness of a bag. Only checked weight supported. Unit must be KGT (kilograms).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ColorCode" type="BagColorCodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The color of the physical property measurement. Refer to resolution 743b color codes.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DescriptiveCode" type="BagDescriptiveCodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The descriptive code of the physical property measurement. Refer to resolution 743b description codes.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MaterialCode" type="BagMaterialCodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The material code of the physical property measurement. Refer to resolution 743b description codes.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BasicCode" type="BagBasicCodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The basic code of the physical property measurement. Refer to resolution 743b basic element codes.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ExternalFeatureCode" type="BagExternalFeatureCodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The external feature of the physical property measurement. Refer to resolution 743b external element codes.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DescriptivePictureURI" type="URI_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The descriptive picture of physical property measurement.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BagSegmentExceptionType">
+		<xs:annotation>
+			<xs:documentation>An exception for a bag on a particular segment of travel.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ExceptionCode" type="ExceptionCodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The exception code of the exception control. An exception control is a item that is excluded from a general statement or does not follow a rule.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BagSegmentType">
+		<xs:annotation>
+			<xs:documentation>The movement of a bag over a Dated Operating Segment.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="OperatingCarrierFlightNumberText" type="FlightNumberTextType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The numerical designation of a flight as it is operated by a carrier.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OperationalSuffixText" type="OperationalSuffixTextType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Used to distinguish two flights having the same flight number and departing from their respective Origin Stations on the same date.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AircraftScheduledDepDateTime" type="DateTimeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The Scheduled Date and Time of Departure of the aircraft at the terminal or departure gate at an airport.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AircraftScheduledArrivalDateTime" type="DateTimeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The Scheduled Date and Time of Arrival of the aircraft at the terminal or departure gate at an airport.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SeqOrdinal" type="OrdinalType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The sequence number of the bag segment within the segments transmitted in a given message. The sequence numbers are not necessarily contiguous.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CurrentSegmentInd" type="IndType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Indicates if this is the segment currently being flown, and for which bag events are being published. A segment is considered to open at check-in or at previous segment close, and to close when bags have arrived or moved to transfer.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ChangeIndCode" type="ChangeIndCodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The code of change indicator (NEW/CHG/DEL).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ServiceOffer" type="SegmentServiceOfferType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="Hold" type="HoldType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="Compartment" type="CompartmentType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="ULD" type="ULD_Type" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="BagSegmentException" type="BagSegmentExceptionType" minOccurs="0" maxOccurs="99"/>
+			<xs:element name="SegmentSecurity" type="SegmentSecurityControlType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="Aircraft" type="AircraftType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="SurfaceTransportVehicle" type="SurfaceTransportVehicleType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="OperatingCarrier" type="AirlineType" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="DepStation" type="StationType" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ArrivalStation" type="StationType" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BagStatusType">
+		<xs:annotation>
+			<xs:documentation>The status of a bag at a particular time in a process.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AuthenticationStatusCode" type="AuthenticationStatusCodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The code of the bag authentication status</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ScreeningResultStatusCode" type="SecurityScreeningStatusCodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The code of the bag screening result status</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MovementStatusCode" type="MovementStatusCodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The code of the bag movement status</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StorageStatusCode" type="StorageStatusCodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The code of the bag storage status.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SortationStatusCode" type="SortationStatusCodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The code of the bag sortation status</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ContainerizationStatusCode" type="ContainerizationStatusCodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The code of the bag containerization status. Includes bag irregularities in loading. A baggage irregularity is a (baggage process) that is irregular in form or nature.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ScreeningResultReason" type="BagIncidentType" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BagTagID_Type">
+		<xs:annotation>
+			<xs:documentation>The tag identifier of the label document</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="BagTagID_Value">
+				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
+				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeDataURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeURI" type="xs:anyURI" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="BagTagType">
+		<xs:annotation>
+			<xs:documentation>A small piece of paper, fabric, plastic or similar material attached to an bag and giving information about it.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="BagTagID" type="BagTagID_Type" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The identifier of bag tag.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TagFallbackInd" type="IndType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The indicator of whether this is a fallback tag.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TagInterlineInd" type="IndType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The indicator of whether this is a interline tag.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TagExpediteInd" type="IndType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The indicator of whether this is a expedite tag.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Printer" type="PrinterType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="Scanner" type="ScannerType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="IssuingAirline" type="AirlineType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="IssuingAgency" type="AgencyType" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BagType">
+		<xs:annotation>
+			<xs:documentation>A piece of luggage associated with a passenger, packed for traveling, and necessary or appropriate in connection with a journey.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="BagOwner" type="IndividualType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="BagLocation" type="GeopoliticalLocationType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="BagPosition" type="GeospatialLocationType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="BagTag" type="BagTagType" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="BagPhysicalProperty" type="BagPhysicalPropertyType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="BagDimension" type="BagDimensionType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="BagException" type="BagExceptionType" minOccurs="0" maxOccurs="99"/>
+			<xs:element name="BagSegment" type="BagSegmentType" minOccurs="0" maxOccurs="99"/>
+			<xs:element name="BagActivity" type="BagActivityType" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BoardingGateID_Type">
+		<xs:annotation>
+			<xs:documentation>The boarding gate identifier.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="BoardingGateID_Value">
+				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
+				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeDataURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeURI" type="xs:anyURI" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="BoardingStatusCodeType">
+		<xs:annotation>
+			<xs:documentation>The boarding status code of the individual party status</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="BoardingStatusCodeContentType">
+				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL10045"/>
+				<xs:attribute name="ListName" type="xs:string" use="optional" default="Recommendation1745AttachABaggageStatusCodes"/>
+				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
+				<xs:attribute name="ListAgencyID" type="xs:string" use="optional" default="3"/>
+				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
+				<xs:attribute name="Name" type="xs:string" use="optional"/>
+				<xs:attribute name="LangID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="BookingRefCompanyCodeType">
+		<xs:annotation>
+			<xs:documentation>Code of company having issued the booking reference identifier.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="BookingRefCompanyCodeValue">
+				<xs:attribute name="ListName" type="xs:string" use="optional"/>
+				<xs:attribute name="ListID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListAgencyName" type="xs:string" use="optional"/>
+				<xs:attribute name="Name" type="xs:string" use="optional"/>
+				<xs:attribute name="LangID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:anyURI" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="BookingRefID_Type">
+		<xs:annotation>
+			<xs:documentation>Booking reference Identifier, also called Record Locator (6 characters).</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="BookingRefID_Value">
+				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
+				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeDataURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeURI" type="xs:anyURI" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="BookingRefTypeCodeType">
+		<xs:simpleContent>
+			<xs:extension base="BookingRefTypeCodeContentType">
+				<xs:attribute name="ListID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListName" type="xs:string" use="optional"/>
+				<xs:attribute name="ListVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListAgencyName" type="xs:string" use="optional"/>
+				<xs:attribute name="Name" type="xs:string" use="optional"/>
+				<xs:attribute name="LangID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:anyURI" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="BookingType">
+		<xs:annotation>
+			<xs:documentation>A booking or reservation.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="BookingRefID" type="BookingRefID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Booking reference Identifier, also called Record Locator (6 characters).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BookingRefTypeCode" type="BookingRefTypeCodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Booking Reference Type. Example: 6 (Passenger confirmation number) Encoding Scheme: IATA Padis Codeset - List for data element [1153] Reference Qualifier</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BookingRefCompanyCode" type="BookingRefCompanyCodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Code of company having issued the booking reference identifier.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CabinTypeID_Type">
+		<xs:annotation>
+			<xs:documentation>Cabin Type Identifier. Contents to be defined by bilateral agreement. Field/BDT used in domains (e.g. Baggage Logistics) where the standard Cabin Type Codes may not be sufficient.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="CabinTypeID_Value">
+				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
+				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeDataURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeURI" type="xs:anyURI" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="CarriageMediumCodeType">
+		<xs:annotation>
+			<xs:documentation>The usage category code of the transport</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="CarriageMediumCodeContentType">
+				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL10056"/>
+				<xs:attribute name="ListName" type="xs:string" use="optional" default="Recommendation1745AttachACarriageMediumCodes"/>
+				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
+				<xs:attribute name="ListAgencyID" type="xs:string" use="optional" default="3"/>
+				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
+				<xs:attribute name="Name" type="xs:string" use="optional"/>
+				<xs:attribute name="LangID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="ChangeIndCodeType">
+		<xs:annotation>
+			<xs:documentation>The change indicator code of the bag movement</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="ChangeIndCodeContentType">
+				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL20062"/>
+				<xs:attribute name="ListName" type="xs:string" use="optional" default="RP1745BaggageServiceMessageChangeIndicatorCodes"/>
+				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
+				<xs:attribute name="ListAgencyID" type="xs:string" use="optional" default="3"/>
+				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
+				<xs:attribute name="Name" type="xs:string" use="optional"/>
+				<xs:attribute name="LangID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="CheckInDeskID_Type">
+		<xs:annotation>
+			<xs:documentation>The check-in desk identifier of the infrastructure facility</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="CheckInDeskID_Value">
+				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
+				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeDataURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeURI" type="xs:anyURI" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="CommodityCodeType">
+		<xs:annotation>
+			<xs:documentation>Code used with ULDs for segregation of bags for efficient load and unload from the aircraft and subsequent ground operations. Codes used for Baggage will start with a 'B' as first letter.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="CommodityCodeContentType">
+				<xs:attribute name="ListID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListName" type="xs:string" use="optional"/>
+				<xs:attribute name="ListVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListAgencyName" type="xs:string" use="optional"/>
+				<xs:attribute name="Name" type="xs:string" use="optional"/>
+				<xs:attribute name="LangID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:anyURI" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="CompartmentID_Type">
+		<xs:annotation>
+			<xs:documentation>Identifies a Compartment. As per AHM505, compartments are numbered from the rear of the aircraft in descending order from 6 to 1. A second figure can indicate a section in a compartment starting from the front to the back and from right to left.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="CompartmentID_Value">
+				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
+				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeDataURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeURI" type="xs:anyURI" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="CompartmentType">
+		<xs:annotation>
+			<xs:documentation>For Load Control, Compartment is a space designated within a hold that can be containerized/palletized or not.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CompartmentID" type="CompartmentID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identifies a compartment within a hold (compartment no). As per AHM505, compartments are numbered from 1 to 6. A second figure can indicate a section in a compartment starting from the front to the back and from right to left.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContainerizationStatusCodeType">
+		<xs:annotation>
+			<xs:documentation>The containerization status code of the logistics item status</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="ContainerizationStatusCodeContentType">
+				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL10047"/>
+				<xs:attribute name="ListName" type="xs:string" use="optional" default="Recommendation1745AttachABaggageStatusCodes"/>
+				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
+				<xs:attribute name="ListAgencyID" type="xs:string" use="optional" default="3"/>
+				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
+				<xs:attribute name="Name" type="xs:string" use="optional"/>
+				<xs:attribute name="LangID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="CountryCodeType">
+		<xs:annotation>
+			<xs:documentation>ISO Country Code.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="CountryCodeContentType">
+				<xs:attribute name="ListID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListName" type="xs:string" use="optional"/>
+				<xs:attribute name="ListVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListAgencyName" type="xs:string" use="optional"/>
+				<xs:attribute name="Name" type="xs:string" use="optional"/>
+				<xs:attribute name="LangID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:anyURI" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="CountrySubDivisionCodeType">
+		<xs:annotation>
+			<xs:documentation>ISO 3166-2 Country Sub-Division Code.  Max-3-char sub-division code without preceding country code.  E.g. 'AZ' for Arizona, 'BY' for Bavaria region in Germany.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="CountrySubDivisionCodeContentType">
+				<xs:attribute name="ListID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListName" type="xs:string" use="optional"/>
+				<xs:attribute name="ListVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListAgencyName" type="xs:string" use="optional"/>
+				<xs:attribute name="Name" type="xs:string" use="optional"/>
+				<xs:attribute name="LangID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:anyURI" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="CrewMemberType">
+		<xs:annotation>
+			<xs:documentation>Role of an individual person to be a member of a crew.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CrewMemberID" type="ID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identifier of a crew member as assigned by the airline.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Airline" type="AirlineType" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DateTimeType">
+		<xs:annotation>
+			<xs:documentation>A date time identifies a date and time of day to various common resolutions: year, month, week, day, hour, minute, second, and fraction of second.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="xs:dateTime">
+				<xs:attribute name="TimeZoneCode" type="xs:token" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="ExceptionCodeType">
+		<xs:annotation>
+			<xs:documentation>The code of the exception control</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="ExceptionCodeContentType">
+				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL10003"/>
+				<xs:attribute name="ListName" type="xs:string" use="optional" default="Recommendation1745AttachABagExceptionCodes"/>
+				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
+				<xs:attribute name="ListAgencyID" type="xs:string" use="optional" default="3"/>
+				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
+				<xs:attribute name="Name" type="xs:string" use="optional"/>
+				<xs:attribute name="LangID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="FlightNumberTextType">
+		<xs:annotation>
+			<xs:documentation>Identifies a flight number.  1 to 4 digits. May or may not have leading zeros when less than 4 digits. The use of leading zeros does not create a different Flight Number. For example, Flight Numbers 123 and 0123 are the same.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="FlightNumberTextValue">
+				<xs:attribute name="LangCode" type="xs:token" use="optional"/>
+				<xs:attribute name="LangLocaleID" type="xs:token" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="GenderCodeType">
+		<xs:annotation>
+			<xs:documentation>Additional BDT to specify Gender code.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="GenderCodeContentType">
+				<xs:attribute name="ListID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListName" type="xs:string" use="optional"/>
+				<xs:attribute name="ListVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListAgencyName" type="xs:string" use="optional"/>
+				<xs:attribute name="Name" type="xs:string" use="optional"/>
+				<xs:attribute name="LangID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:anyURI" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="GeopoliticalLocationType">
+		<xs:annotation>
+			<xs:documentation>A location which is defined based on politics. E.g. Country, State, City.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CountryCode" type="CountryCodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>ISO Country Code (can be extended by bilateral agreement in case of exceptions, e.g. Kosovo). Examples: US, FR.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CountrySubDivisionCode" type="CountrySubDivisionCodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The ISO code identifying this country sub-division within a given country. E.g. 'AZ' for state of Arizona (US), 'BY' for region of Bavaria (Germany).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IATALocationCode" type="IATALocationCodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>IATA defined code identifying a city or station.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GeospatialLocationType">
+		<xs:annotation>
+			<xs:documentation>A location with a spatial attribute, probably on the surface of the earth. For example: Longitude and Latitude</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="VolumeID" type="ID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The identifier of a volume/space relevant to the business. Convention on identifier defined by the sender of the message. Potential example: “ACS UPPER” for Upper Air Control Space.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AreaID" type="ID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The identifier of an area relevant to the business. Convention on identifier defined by the sender of the message. Potential example: “PCA AB” for Passenger Check-in Area AB.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LineID" type="ID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The identifier of a spatial line relevant to the business. Convention on identifier defined by the sender of the message. Potential example: “PAP KRIC BNTLY CAVLR3 KIAD” for Planned Airway Path VOR name KRIC etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PointID" type="ID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The identifier of a point relevant to the business, to be located. Convention on identifier defined by the sender of the message. Potential example: “BSP 123” for Bag Sortation Point 123.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PointLatitudeNumber" type="NumberType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The number of the spatial location point latitude.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PointLongitudeNumber" type="NumberType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The number of the spatial location point longitude.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PointElevationNumber" type="NumberType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The number of the spatial location point elevation.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HandlingBayID_Type">
+		<xs:annotation>
+			<xs:documentation>The handling bay identifier of the infrastructure facility.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="HandlingBayID_Value">
+				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
+				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeDataURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeURI" type="xs:anyURI" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="HoldID_Type">
+		<xs:annotation>
+			<xs:documentation>Specifies a Hold identifier (AFT, FWD, BULK)</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="HoldID_Value">
+				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
+				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeDataURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeURI" type="xs:anyURI" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="HoldType">
+		<xs:annotation>
+			<xs:documentation>A space confined by ceiling, floor, walls and bulkhead, used for carrying load.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="HoldID" type="HoldID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identifies a hold within a deck. Typical values include FWD (forward), AFT, BULK, MAIN (deck).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IATAAircraftTypeCodeType">
+		<xs:annotation>
+			<xs:documentation>Specifies the IATA defined code of an aircraft type.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="IATAAircraftTypeCodeContentType">
+				<xs:attribute name="ListID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListName" type="xs:string" use="optional"/>
+				<xs:attribute name="ListVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListAgencyName" type="xs:string" use="optional"/>
+				<xs:attribute name="Name" type="xs:string" use="optional"/>
+				<xs:attribute name="LangID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:anyURI" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="IATALocationCodeType">
+		<xs:annotation>
+			<xs:documentation>Additional BDT to specify the codeset which defines the IATA airport or city codes.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="IATALocationCodeContentType">
+				<xs:attribute name="ListID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListName" type="xs:string" use="optional"/>
+				<xs:attribute name="ListVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListAgencyName" type="xs:string" use="optional"/>
+				<xs:attribute name="Name" type="xs:string" use="optional"/>
+				<xs:attribute name="LangID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:anyURI" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="IATATerminalCodeType">
+		<xs:annotation>
+			<xs:documentation>The code of the terminal infrastructure facility, as defined by IATA SSIM Appendix D. Example: '2W'.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="IATATerminalCodeContentType">
+				<xs:attribute name="ListID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListName" type="xs:string" use="optional"/>
+				<xs:attribute name="ListVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListAgencyName" type="xs:string" use="optional"/>
+				<xs:attribute name="Name" type="xs:string" use="optional"/>
+				<xs:attribute name="LangID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:anyURI" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="ID_Type">
+		<xs:annotation>
+			<xs:documentation>An identifier is a character string used to uniquely identify one instance of an object within an identification scheme that is managed by an agency.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="xs:token">
+				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
+				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeDataURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeURI" type="xs:anyURI" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="IndividualType">
+		<xs:annotation>
+			<xs:documentation>A single human being as distinct from a group, class, or family.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="TitleName" type="SupplementNameType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A word such as Mr., Mrs., Miss or Dr that is used before an individual's name to indicate the gender, profession or marital status.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GivenName" type="ProperNameType" minOccurs="0" maxOccurs="5">
+				<xs:annotation>
+					<xs:documentation>A personal name given to the individual at birth and used before a family name. Also called first name. E.g. JOHN.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MiddleName" type="ProperNameType" minOccurs="0" maxOccurs="3">
+				<xs:annotation>
+					<xs:documentation>Individual's middle name or initial.  E.g. G, GEORGE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Surname" type="ProperNameType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Individual's hereditary name(s) common to all members of a family. Also known as family name or last name. E.g. SMITH. Excludes any potential suffix.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SuffixName" type="SupplementNameType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Individual's name suffixes and letters. Examples: Jr., Sr., III, Ret., Esq.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Birthdate" type="DateType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The date on which an individual was born.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GenderCode" type="GenderCodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Gender of the individual (M, F, or X for unspecified).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Pax" type="PaxType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="CrewMember" type="CrewMemberType" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LengthMeasureType">
+		<xs:annotation>
+			<xs:documentation>A numeric value determining a length (linear dimension) along with the specified unit of measure.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="xs:decimal">
+				<xs:attribute name="UnitCode" type="LengthUnitCodeContentType" use="optional"/>
+				<xs:attribute name="UnitCodeListVersionID" type="xs:token" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="MovementStatusCodeType">
+		<xs:annotation>
+			<xs:documentation>The movement status code of the logistics item status</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="MovementStatusCodeContentType">
+				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL10048"/>
+				<xs:attribute name="ListName" type="xs:string" use="optional" default="Recommendation1745AttachABaggageMovementStatusCodes"/>
+				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
+				<xs:attribute name="ListAgencyID" type="xs:string" use="optional" default="3"/>
+				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
+				<xs:attribute name="Name" type="xs:string" use="optional"/>
+				<xs:attribute name="LangID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="NetworkAddressType">
+		<xs:annotation>
+			<xs:documentation>A virtual address in an IT network.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="LNIATAAddressID" type="ID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The identifier of the LNIATA electronic address.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InternetProtocolV4ID" type="ID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The identifier of the ip version 4 electronic address.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InternetProtocolV6ID" type="ID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The identifier of the ip version 6 electronic address.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="URI" type="URI_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The URI of the electronic address.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OperationalSuffixTextType">
+		<xs:annotation>
+			<xs:documentation>Defines the Operational Suffix which is appended to a flight number.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="OperationalSuffixTextValue">
+				<xs:attribute name="LangCode" type="xs:token" use="optional"/>
+				<xs:attribute name="LangLocaleID" type="xs:token" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="PaxGroupNameType">
+		<xs:simpleContent>
+			<xs:extension base="xs:token">
+				<xs:attribute name="LangCode" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="PaxGroupType">
+		<xs:annotation>
+			<xs:documentation>A number of individual passengers traveling under one commercial name that associates them. E.g. a Tour group or a group for sales allotment from airline to agency.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PaxGroupName" type="PaxGroupNameType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The name of the group.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaxStatusType">
+		<xs:annotation>
+			<xs:documentation>The status of a passenger at a particular time during a process.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="BoardingStatusCode" type="BoardingStatusCodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The code of the passenger's boarding status.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SecurityProfileStatusCode" type="SecurityProfileStatusCodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Indicates a passenger may be subject to more extensive security check and is at increased risk to no-show for flight.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaxType">
+		<xs:annotation>
+			<xs:documentation>Any person except members of the crew carried or to be carried with the consent of the carrier, on board of any transport vehicle such as aircraft, train, bus, ship. Holds the attributes specific to a one booking, from shopping to f</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Booking" type="BookingType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="PaxGroup" type="PaxGroupType" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PrinterType">
+		<xs:annotation>
+			<xs:documentation>A device for printing text or pictures or barcodes, especially one linked to a computer.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PrinterDeviceID" type="ID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The identifier of the device.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NetworkAddress" type="NetworkAddressType" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProperNameType">
+		<xs:annotation>
+			<xs:documentation>BDT with value constraints for proper, regular names (e.g. Individual Surname, Individual First Name, Company Name, etc.).</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="ProperNameValue">
+				<xs:attribute name="LangCode" type="xs:token" use="optional"/>
+				<xs:attribute name="LangLocaleID" type="xs:token" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="ScannerType">
+		<xs:annotation>
+			<xs:documentation>A device that scans objects and converts them into or extracts digital data. E.g. document scanner, barcode reader, biometric scanner.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ScannerDeviceID" type="ID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The identifier of the technology device</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NetworkAddress" type="NetworkAddressType" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ScreeningAlarmCodeType">
+		<xs:annotation>
+			<xs:documentation>The screening alarm code of the bag incident</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="ScreeningAlarmCodeContentType">
+				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL10014"/>
+				<xs:attribute name="ListName" type="xs:string" use="optional" default="Recommendation1745AttachAScreeningAlarmReasonCodes"/>
+				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
+				<xs:attribute name="ListAgencyID" type="xs:string" use="optional" default="3"/>
+				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
+				<xs:attribute name="Name" type="xs:string" use="optional"/>
+				<xs:attribute name="LangID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="ScreeningInstructionCodeType">
+		<xs:annotation>
+			<xs:documentation>The screening instruction code of the security control</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="SecurityScreeningInstructionCodeContentType">
+				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL10004"/>
+				<xs:attribute name="ListName" type="xs:string" use="optional" default="Recommendation1745AttachAScreeningInstructionCodes"/>
+				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
+				<xs:attribute name="ListAgencyID" type="xs:string" use="optional" default="3"/>
+				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
+				<xs:attribute name="Name" type="xs:string" use="optional"/>
+				<xs:attribute name="LangID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="ScreeningMethodCodeType">
+		<xs:annotation>
+			<xs:documentation>The screening method code of the method interaction</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="ScreeningMethodCodeContentType">
+				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL10018"/>
+				<xs:attribute name="ListName" type="xs:string" use="optional" default="Recommendation1745AttachAScreeningMethodCodes"/>
+				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
+				<xs:attribute name="ListAgencyID" type="xs:string" use="optional" default="3"/>
+				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
+				<xs:attribute name="Name" type="xs:string" use="optional"/>
+				<xs:attribute name="LangID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="SeatID_Type">
+		<xs:annotation>
+			<xs:documentation>The seat identifier of the service offering</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="SeatID_Value">
+				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
+				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeDataURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeURI" type="xs:anyURI" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="SecurityProfileStatusCodeType">
+		<xs:annotation>
+			<xs:documentation>Indicates a passenger may be subject to more extensive security check and is at increased risk to no-show for flight. E.g. as per TSA regulations.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="SecurityProfileStatusCodeContentType">
+				<xs:attribute name="ListID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListName" type="xs:string" use="optional"/>
+				<xs:attribute name="ListVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListAgencyName" type="xs:string" use="optional"/>
+				<xs:attribute name="Name" type="xs:string" use="optional"/>
+				<xs:attribute name="LangID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:anyURI" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="SecurityScreeningStatusCodeType">
+		<xs:annotation>
+			<xs:documentation>The security screening status code of the bag status</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="SecurityScreeningStatusCodeContentType">
+				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL10049"/>
+				<xs:attribute name="ListName" type="xs:string" use="optional" default="Recommendation1745AttachABaggageSecurityScreeningResultCodes"/>
+				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
+				<xs:attribute name="ListAgencyID" type="xs:string" use="optional" default="3"/>
+				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
+				<xs:attribute name="Name" type="xs:string" use="optional"/>
+				<xs:attribute name="LangID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="SegmentSecurityControlType">
+		<xs:annotation>
+			<xs:documentation>A set of principles or procedures according to which something is done on a particular segment of travel.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SecurityNumber" type="SecurityControlNumberType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The number of the security control.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SeqNumber" type="SecurityControlSeqNumberType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The sequence number of the security control.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AuthorityToLoadInd" type="IndType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The authority to load indicator of the security control. An authority security control is an official permission; sanction from a security context.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AuthorityToTransportInd" type="IndType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The authority to transport indicator of the security control. An authority security control is an official permission; sanction from a security context.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ContainerSealedInd" type="IndType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The indicator of whether a container is sealed.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TagActiveInd" type="IndType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The indicator of whether the tag is active for use in all segments.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ScreeningInstructionCode" type="ScreeningInstructionCodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The Screening Instruction of the security control. Security instruction control is a security control or a direction or order in a security context.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SegmentServiceOfferType">
+		<xs:annotation>
+			<xs:documentation>An offer that applies to a particular segment of travel.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="PaxCabinTypeID" type="CabinTypeID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Cabin Type Identifier. Contents to be defined by bilateral agreement. Field/BDT used in domains (e.g. Baggage Logistics) where the standard Cabin Type Codes may not be sufficient.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BaggageCabinTypeID" type="CabinTypeID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Cabin Type Identifier. Contents to be defined by bilateral agreement. Field/BDT used in domains (e.g. Baggage Logistics) where the standard Cabin Type Codes may not be sufficient.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SeatID" type="SeatID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The seat number of this service offer. Not filled in when jump seat, which is identified through the Baggage Segment Exception.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SortationStatusCodeType">
+		<xs:annotation>
+			<xs:documentation>The sortation status code of the lbag status</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="SortationStatusCodeContentType">
+				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL10050"/>
+				<xs:attribute name="ListName" type="xs:string" use="optional" default="Recommendation1745AttachABaggageSortaionStatusCodes"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
+				<xs:attribute name="ListAgencyID" type="xs:string" use="optional" default="3"/>
+				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
+				<xs:attribute name="LangID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+				<xs:attribute name="Name" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="StationType">
+		<xs:annotation>
+			<xs:documentation>Location or facility where air or surface transportation originates, stops and/or terminates, and where passengers and/or cargo can be taken on or off.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="IATALocationCode" type="IATALocationCodeType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>IATA defined code identifying a city or station.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AircraftParkingPositionID" type="AircraftParkingPositionID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The identifier of the gate or hard stand where the aircraft is located. E.g. “C102”.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IATATerminalCode" type="IATATerminalCodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The code of the terminal infrastructure facility, as defined by IATA SSIM Appendix D. Example: '2W'.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TerminalSatelliteID" type="TerminalSatelliteID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The identifier of the terminal satellite infrastructure facility.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TerminalPierID" type="TerminalPierID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The identifier of the terminal pier infrastructure facility.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HandlingBayID" type="HandlingBayID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The identifier of the handling bay infrastructure facility.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CheckInDeskID" type="CheckInDeskID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The identifier of the check-in (desk) infrastructure facility.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BoardingGateID" type="BoardingGateID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identifier of the gate. E.g. “A5”.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BaggageClaimID" type="BaggageClaimID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The identifier of baggage reclaim unit. E.g. “T1A”.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StorageStatusCodeType">
+		<xs:annotation>
+			<xs:documentation>The storage status code of the logistics item status</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="StorageStatusCodeContentType">
+				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL10051"/>
+				<xs:attribute name="ListName" type="xs:string" use="optional" default="Recommendation1745AttachABaggageStorageStatusCodes"/>
+				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
+				<xs:attribute name="ListAgencyID" type="xs:string" use="optional" default="3"/>
+				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
+				<xs:attribute name="LangID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
+				<xs:attribute name="Name" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="SupplementNameType">
+		<xs:annotation>
+			<xs:documentation>BDT with value constraints for short supplements to proper names, such as Title, Suffix, etc.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="SupplementNameValue">
+				<xs:attribute name="LangCode" type="xs:token" use="optional"/>
+				<xs:attribute name="LangLocaleID" type="xs:token" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="SurfaceTransportID_Type">
+		<xs:annotation>
+			<xs:documentation>The identifier of a surface transport vehicle.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="SurfaceTransportID_Value">
+				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
+				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeDataURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeURI" type="xs:anyURI" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="SurfaceTransportVehicleType">
+		<xs:annotation>
+			<xs:documentation>A means used for transporting people or goods, on land or water. E.g. train, bus, van, ship.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SurfaceTransportID" type="SurfaceTransportID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The identifier of the surface transport vehicle.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CarriageMediumCode" type="CarriageMediumCodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The code of the carriage medium, i.e. type of transport vehicle.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TerminalPierID_Type">
+		<xs:annotation>
+			<xs:documentation>The terminal pier identifier of the infrastructure facility</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="TerminalPierID_Value">
+				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
+				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeDataURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeURI" type="xs:anyURI" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="TerminalSatelliteID_Type">
+		<xs:annotation>
+			<xs:documentation>The terminal Satellite identifier of the infrastructure facility</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="TerminalSatelliteID_Value">
+				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
+				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeDataURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeURI" type="xs:anyURI" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="TextType">
+		<xs:annotation>
+			<xs:documentation>Text is a character string such as a finite set of characters generally in the form of words of a language.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="LangCode" type="xs:token" use="optional"/>
+				<xs:attribute name="LangLocaleID" type="xs:token" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="ULD_ID_Type">
+		<xs:annotation>
+			<xs:documentation>The ULD identifier of a ULD</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="ULD_ID_Value">
+				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
+				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeDataURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeURI" type="xs:anyURI" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="ULD_LoadPositionID_Type">
+		<xs:annotation>
+			<xs:documentation>Specifies a ULD Load Position identifier.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="ULD_LoadPositionID_Value">
+				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
+				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeDataURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeURI" type="xs:anyURI" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="ULD_Type">
+		<xs:annotation>
+			<xs:documentation>A Unit Load Device is a load carrying device which interfaces directly with aircraft loading and restraint systems and meets all restraint requirements without the use of supplementary equipment. Examples include containers, pallets and pallet nets.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ULD_ID" type="ULD_ID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The identifier of the ULD marked on the ULD label document. e.g. AKE0001XH</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ULD_TypeCode" type="ULD_TypeCodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>ULD Type Code (Identifier) eg AKE, PAG etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CommodityCode" type="CommodityCodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Used with ULDs to segregate bags for efficient load and unload from the aircraft and subsequent ground operations. Recommended codes are listed in AHM240. Airlines who wish to use their own codes may do so. E.g. 'BY' for Economy Bags.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ULD_LoadPositionID" type="ULD_LoadPositionID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identifies a possible ULD position within the aircraft, using one of the patterns described in AHM505. E.g. A, BR, CDL, E3, 13,22L, 32P, 413, 1112O. May contain compartment number, row position, left-to-right position in a row.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ULD_TypeCodeType">
+		<xs:annotation>
+			<xs:documentation>Specifies ULD Type codes.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="ULD_TypeCodeValue">
+				<xs:attribute name="ListID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListName" type="xs:string" use="optional"/>
+				<xs:attribute name="ListVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListAgencyName" type="xs:string" use="optional"/>
+				<xs:attribute name="Name" type="xs:string" use="optional"/>
+				<xs:attribute name="LangID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="ListSchemeURI" type="xs:anyURI" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="WeightMeasureType">
+		<xs:annotation>
+			<xs:documentation>A numeric value determining a weight along with the specified unit of measure.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="xs:decimal">
+				<xs:attribute name="UnitCode" type="WeightUnitCodeContentType" use="optional"/>
+				<xs:attribute name="UnitCodeListVersionID" type="xs:token" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+</xs:schema>
