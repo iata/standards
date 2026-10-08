@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
-
-<xs:schema xmlns="http://www.iata.org/IATA/2015/00/2018.2/IATA_Acknowledgement" xmlns:k="http://www.iata.org/IATA/2015/00/2018.2/IATA_Acknowledgement" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.iata.org/IATA/2015/00/2018.2/IATA_Acknowledgement" elementFormDefault="qualified" version="4.000" id="IATA2018.2">
-	<xs:element name="IATA_Ack">
+<xs:schema xmlns="http://www.iata.org/IATA/2015/00/2019.1/IATA_Acknowledgement" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.iata.org/IATA/2015/00/2019.1/IATA_Acknowledgement" elementFormDefault="qualified" version="5.000">
+	<xs:element name="IATA_Acknowledgement">
 		<xs:annotation>
 			<xs:documentation>The Acknowledgement document is a simple notification from party to party acknowledging the receipt of another transaction such as an inventory release or an updated order
 
@@ -35,7 +34,7 @@ This document is used consistently as an optional response to a notification tra
 						<xs:documentation>Processing status information.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
-				<xs:element name="PayloadAttributes" type="IATAPayloadStandardAttributesType" minOccurs="0" maxOccurs="1">
+				<xs:element name="PayloadAttributes" type="IATA_PayloadStandardAttributesType" minOccurs="0" maxOccurs="1">
 					<xs:annotation>
 						<xs:documentation>IATA standard payload attributes.</xs:documentation>
 					</xs:annotation>
@@ -45,7 +44,7 @@ This document is used consistently as an optional response to a notification tra
 	</xs:element>
 	<xs:complexType name="AckType">
 		<xs:annotation>
-			<xs:documentation>The Acknowledgement document is a simple notification from party to party acknowledging the receipt of another transaction such as an inventory release or an updated order   It may also provide information indicating the status of the document.  This</xs:documentation>
+			<xs:documentation>The Acknowledgement document is a simple notification from party to party acknowledging the receipt of another transaction such as an inventory release or an updated order   It may also provide information indicating the status of the document.  This document is used consistently as an optional response to a notification transaction.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="StatusCode" type="CodeType" minOccurs="0" maxOccurs="1">
@@ -78,7 +77,7 @@ This document is used consistently as an optional response to a notification tra
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
-	<xs:complexType name="IATAPayloadStandardAttributesType">
+	<xs:complexType name="IATA_PayloadStandardAttributesType">
 		<xs:annotation>
 			<xs:documentation>The IATA_PayloadStdAttributes defines the standard attributes that appear on the root element for all IATA payloads.</xs:documentation>
 		</xs:annotation>
@@ -110,7 +109,7 @@ This document is used consistently as an optional response to a notification tra
 			</xs:element>
 			<xs:element name="SeqNumber" type="NumberType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Used to identify the sequence number of the transaction as assigned by the sending system; allows for an application to process messages in a certain order or to request a resynchronization of messages in the event that a system has been off-line and nee</xs:documentation>
+					<xs:documentation>Used to identify the sequence number of the transaction as assigned by the sending system; allows for an application to process messages in a certain order or to request a resynchronization of messages in the event that a system has been off-line and needs to retrieve messages that were missed.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Timestamp" type="DateTimeType" minOccurs="0" maxOccurs="1">

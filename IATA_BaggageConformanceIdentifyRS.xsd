@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- IATA Baggage Conformance Identify Response v1.1 - Implementation Guide can be found here: https://extranet2.iata.org/sites/pemg/common-use-wg/tsg-webservices/Implementation%20Guide/Forms/AllItems.aspx -->
-<xs:schema xmlns="http://www.iata.org/IATA/2007/00" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.iata.org/IATA/2007/00" elementFormDefault="qualified" version="1.002" id="IATA2018.2">
+<xs:schema xmlns="http://www.iata.org/IATA/2007/00" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.iata.org/IATA/2007/00" elementFormDefault="qualified" version="1.002" id="IATA2019.1">
 	<xs:include schemaLocation="IATA_PBCS_CommonTypes.xsd"/>
 	<xs:element name="IATA_BaggageConformanceIdentifyRS">
 		<xs:annotation>

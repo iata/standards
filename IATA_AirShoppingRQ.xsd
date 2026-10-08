@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<xs:schema xmlns="http://www.iata.org/IATA/2015/00/2018.2/IATA_AirShoppingRQ" xmlns:k="http://www.iata.org/IATA/2015/00/2018.2/IATA_AirShoppingRQ" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.iata.org/IATA/2015/00/2018.2/IATA_AirShoppingRQ" elementFormDefault="qualified" version="5.000" id="IATA2018.2">
+<xs:schema xmlns="http://www.iata.org/IATA/2015/00/2019.1/IATA_AirShoppingRQ" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.iata.org/IATA/2015/00/2019.1/IATA_AirShoppingRQ" elementFormDefault="qualified" version="6.000">
 	<xs:element name="IATA_AirShoppingRQ">
 		<xs:annotation>
 			<xs:documentation>The AirShopping transaction set supports both demanding and flexible shopping experiences for anonymous or personalized shopping.
@@ -37,12 +37,12 @@ The message also returns multi-media content at message level as well as media r
 						<xs:documentation>Party information.  This information is intended for business use, it is not intended for transaction authentication and routing of the message.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
-				<xs:element name="PayloadAttributes" type="IATAPayloadStandardAttributesType" minOccurs="0" maxOccurs="1">
+				<xs:element name="PayloadAttributes" type="IATA_PayloadStandardAttributesType" minOccurs="0" maxOccurs="1">
 					<xs:annotation>
 						<xs:documentation>IATA payload standard attributes.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
-				<xs:element name="PointOfSale" type="POS_Type" minOccurs="0" maxOccurs="1">
+				<xs:element name="POS" type="POS_Type" minOccurs="0" maxOccurs="1">
 					<xs:annotation>
 						<xs:documentation>Point of Sale Information</xs:documentation>
 					</xs:annotation>
@@ -55,16 +55,6 @@ The message also returns multi-media content at message level as well as media r
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	<xs:simpleType name="ActionCodeType">
-		<xs:restriction base="ActionContentType"/>
-	</xs:simpleType>
-	<xs:simpleType name="ActionContentType">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="Add"/>
-			<xs:enumeration value="Delete"/>
-			<xs:enumeration value="Update"/>
-		</xs:restriction>
-	</xs:simpleType>
 	<xs:complexType name="AffinityArrivalRequestType">
 		<xs:annotation>
 			<xs:documentation>Arrival information for affinity shopping requests.</xs:documentation>
@@ -154,7 +144,7 @@ The message also returns multi-media content at message level as well as media r
 					<xs:documentation>Departure information for affinity shopping requests.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="ConnectionPRefRefID" type="ID_Type" minOccurs="0">
+			<xs:element name="ConnectionPrefRefID" type="ID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Reference to a transfer preference ID.</xs:documentation>
 				</xs:annotation>
@@ -166,7 +156,7 @@ The message also returns multi-media content at message level as well as media r
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="AffinityRequestType">
+	<xs:complexType name="AffinityShoppingCriteriaType">
 		<xs:annotation>
 			<xs:documentation>Affinity search includes a wide range of criteria including generic origin/destination information, trip time periods, as well as travel budget.</xs:documentation>
 		</xs:annotation>
@@ -201,7 +191,7 @@ The message also returns multi-media content at message level as well as media r
 					<xs:documentation>Shopping session (message response) ID.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="StayPeriod" type="StayPeriodType" minOccurs="0">
+			<xs:element name="StayPeriod" type="StayPeriodType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Time constraints for an Affinity Shopping request including specific Dates, Seasons, Months, or Durations.</xs:documentation>
 				</xs:annotation>
@@ -210,10 +200,10 @@ The message also returns multi-media content at message level as well as media r
 	</xs:complexType>
 	<xs:complexType name="AggregatorType">
 		<xs:annotation>
-			<xs:documentation>An entity who distributes a SellerÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢s shopping request to multiple Airlines and aggregates subsequent responses.</xs:documentation>
+			<xs:documentation>An entity who distributes a Sellerâ€™s shopping request to multiple Airlines and aggregates subsequent responses.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="AggregatorID" type="xs:string" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="AggregatorID" type="ID_Type" minOccurs="1" maxOccurs="1"/>
 			<xs:element name="ContactInfo" type="ContactInfoType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>The electronic or geographic address which a party has provided as the contact channel. For example, contact email, contact postal address, contact phone number.</xs:documentation>
@@ -226,17 +216,23 @@ The message also returns multi-media content at message level as well as media r
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:simpleType name="AircraftRegistrationID_Type">
+		<xs:annotation>
+			<xs:documentation>The complete alphanumeric identification assigned by the appropriate licensing authority to an individual aircraft. Hyphens contained within the registration shall not be included. E.g. G-BOAC, N46573, ZZ123.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token"/>
+	</xs:simpleType>
 	<xs:complexType name="AircraftType">
 		<xs:annotation>
-			<xs:documentation>Any machine that can derive support in the atmosphere from the reactions of the air other than the reactions of the air against the earthÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢s surface. It must be certified as airworthy by a competent aeronautical authority.</xs:documentation>
+			<xs:documentation>Any machine that can derive support in the atmosphere from the reactions of the air other than the reactions of the air against the earthâ€™s surface. It must be certified as airworthy by a competent aeronautical authority.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="RegistrationNumberText" type="TextType" minOccurs="0" maxOccurs="1">
+			<xs:element name="AircraftRegistrationID" type="AircraftRegistrationID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>The complete alphanumeric identification assigned by the appropriate licensing authority to an individual aircraft.  Examples: ZZ123, N46573    </xs:documentation>
+					<xs:documentation>The complete alphanumeric identification assigned by the appropriate licensing authority to an individual aircraft. Hyphens contained within the registration shall not be included. E.g. GBOAC, N46573, ZZ123.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="TailNumberText" type="TextType" minOccurs="1" maxOccurs="1">
+			<xs:element name="TailNumberText" type="TextType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Abbreviated version of the unique aircraft registration code, such as without country code. Also called 'Tail Number'</xs:documentation>
 				</xs:annotation>
@@ -245,9 +241,9 @@ The message also returns multi-media content at message level as well as media r
 	</xs:complexType>
 	<xs:simpleType name="AirlineDesigCodeContentType">
 		<xs:annotation>
-			<xs:documentation>The codelist contents of IATA Resolution 762  airline codes, or of ICAO airline codes. </xs:documentation>
+			<xs:documentation>The codelist contents of IATA Resolution 762  airline codes, or of ICAO airline codes. {codeListAgencyName}IATA or ICAO{/codeListAgencyName} {codeListName}Resolution 762  Airline Codes or ICAO Airline Codes{/codeListName}</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string">
+		<xs:restriction base="xs:token">
 			<xs:pattern value="([A-Z]{3}|[A-Z]{2})|([0-9][A-Z])|([A-Z][0-9])"/>
 		</xs:restriction>
 	</xs:simpleType>
@@ -259,9 +255,9 @@ The message also returns multi-media content at message level as well as media r
 	</xs:simpleType>
 	<xs:simpleType name="AllianceCodeContentType">
 		<xs:annotation>
-			<xs:documentation>Enumeration set for the Alliance Code BDT.</xs:documentation>
+			<xs:documentation>Enumeration set for the Alliance Code BDT. {codeListName}PADIS 9906{/codeListName}</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string">
+		<xs:restriction base="xs:token">
 			<xs:length value="3"/>
 		</xs:restriction>
 	</xs:simpleType>
@@ -276,17 +272,17 @@ The message also returns multi-media content at message level as well as media r
 			<xs:documentation>Filtering criteria based on Alliance.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Alliance" type="AllianceType" minOccurs="0">
+			<xs:element name="Alliance" type="AllianceType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Two or more airlines participating in a commercial relationship or joint venture, where a joint and commonly identifiable product is marketed under a single commercial name or brand.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="FlightHaulTypeCode" type="xs:string" minOccurs="0" maxOccurs="1">
+			<xs:element name="FlightHaulTypeCode" type="FlightHaulCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Flight haul length type.  Example: LH (long haul 6 hrs plus).</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="GeographicalIndTypeCode" type="xs:string" minOccurs="0" maxOccurs="1">
+			<xs:element name="GeographicalIndTypeCode" type="ProductDetailsCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Geographical indicator type.  Example: DOM (Domestic)</xs:documentation>
 				</xs:annotation>
@@ -332,7 +328,7 @@ The message also returns multi-media content at message level as well as media r
 	</xs:complexType>
 	<xs:complexType name="BaggagePricingCriteriaType">
 		<xs:annotation>
-			<xs:documentation>Baggage pricing qualifiers.</xs:documentation>
+			<xs:documentation>Baggage pricing specific filter criteria for shopping requests, including baggage type, charges, and settlement information.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="BaggageOptionCode" type="BaggageTypeCodeType" minOccurs="0" maxOccurs="2">
@@ -365,7 +361,7 @@ The message also returns multi-media content at message level as well as media r
 					<xs:documentation>Allowance catalog requested.  Example: C (Catalog Only).</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="RequestedActionCode" type="xs:string" minOccurs="0" maxOccurs="1">
+			<xs:element name="RequestedActionCode" type="MessageFunctionCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Requested action to take for this information (example: 131 DISPLAY ONLY).</xs:documentation>
 				</xs:annotation>
@@ -389,9 +385,9 @@ The message also returns multi-media content at message level as well as media r
 	</xs:simpleType>
 	<xs:simpleType name="BagRuleCodeContentType">
 		<xs:annotation>
-			<xs:documentation>Enumeration set for the currency application code Type BDT.</xs:documentation>
+			<xs:documentation>Enumeration set for the currency application code Type BDT. {codeListAgencyIdentifier}PADIS 7365{/codeListAgencyIdentifier} {codeListAgencyName}PADIS{/codeListAgencyName}</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string">
+		<xs:restriction base="xs:token">
 			<xs:enumeration value="D">
 				<xs:annotation>
 					<xs:documentation>Disclosure with NO US DOT Reservation</xs:documentation>
@@ -420,19 +416,19 @@ The message also returns multi-media content at message level as well as media r
 		</xs:annotation>
 		<xs:restriction base="BagRuleCodeContentType"/>
 	</xs:simpleType>
-	<xs:simpleType name="BDCAnalysisResultCodeContentType">
+	<xs:simpleType name="BDC_AnalysisResultCodeContentType">
 		<xs:annotation>
-			<xs:documentation>Enumeration set for the BDC Analysis Result Code Type BDT.</xs:documentation>
+			<xs:documentation>Enumeration set for the BDC Analysis Result Code Type BDT. {codeListAgencyIdentifier}PADIS RES{/codeListAgencyIdentifier} {codeListAgencyName}PADIS{/codeListAgencyName}</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string"/>
+		<xs:restriction base="xs:token"/>
 	</xs:simpleType>
-	<xs:simpleType name="BDCAnalysisResultCodeType">
+	<xs:simpleType name="BDC_AnalysisResultCodeType">
 		<xs:annotation>
 			<xs:documentation>Additional BDT to specify BDC analysis result code.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="BDCAnalysisResultCodeContentType"/>
+		<xs:restriction base="BDC_AnalysisResultCodeContentType"/>
 	</xs:simpleType>
-	<xs:complexType name="BDCType">
+	<xs:complexType name="BDC_Type">
 		<xs:annotation>
 			<xs:documentation>The carrier whose baggage allowances and charges apply.</xs:documentation>
 		</xs:annotation>
@@ -442,12 +438,12 @@ The message also returns multi-media content at message level as well as media r
 					<xs:documentation>US Department of Transportation (DOT) Reservation or Disclosure baggage rule. Examples: Y, Disclosure AND US DOT Reservation</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="BDCAnalysisResultCode" type="BDCAnalysisResultCodeType" minOccurs="0" maxOccurs="1">
+			<xs:element name="BDC_AnalysisResultCode" type="BDC_AnalysisResultCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>In concert with BaggageDeterminingCarrier data field, specifies the reason for the carrier code in the AirlineID element.  Encoding Scheme: IATA PADIS Code List for data element RES.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="BDCReasonText" type="TextType" minOccurs="0" maxOccurs="1">
+			<xs:element name="BDC_ReasonText" type="TextType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Reason for selection of the Baggage Determining Carrier.  Examples: Regulatory (application of regulation or resolution), Deferral (deferral by ORA), Bilateral (bilateral agreement).</xs:documentation>
 				</xs:annotation>
@@ -464,11 +460,28 @@ The message also returns multi-media content at message level as well as media r
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:simpleType name="BoardingGateID_Type">
+		<xs:annotation>
+			<xs:documentation>The boarding gate identifier.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token"/>
+	</xs:simpleType>
 	<xs:complexType name="BookingEntityType">
 		<xs:annotation>
 			<xs:documentation>Airline or Organization assigning the booking information.</xs:documentation>
 		</xs:annotation>
-		<xs:choice/>
+		<xs:choice>
+			<xs:element name="Carrier" type="CarrierType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The organization which carries the passenger, baggage, or goods, and/or commits to delivering the carriage as well as any related services such as issuance of ticket, creation of Order, etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Org" type="OrgType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>An organized structure set up for a particular purpose, such as a business, government body, department, charity, or financial institution.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
 	</xs:complexType>
 	<xs:complexType name="BookingRefType">
 		<xs:annotation>
@@ -480,7 +493,7 @@ The message also returns multi-media content at message level as well as media r
 					<xs:documentation>Airline or Organization assigning the booking information.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="BookingID" type="ID_Type">
+			<xs:element name="BookingID" type="ID_Type" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Existing booking reference Identifier.</xs:documentation>
 				</xs:annotation>
@@ -494,16 +507,16 @@ The message also returns multi-media content at message level as well as media r
 	</xs:complexType>
 	<xs:simpleType name="BookingRefTypeCodeContentType">
 		<xs:annotation>
-			<xs:documentation>Booking Reference Type. Example: 6 (Passenger confirmation number)</xs:documentation>
+			<xs:documentation>Booking Reference Type. Example: 6 (Passenger confirmation number) {codeListAgencyName}PADIS{/codeListAgencyName} {codeListName}Reference qualifier{/codeListName} {codeListIdentifier}1153{/codeListIdentifier}</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string"/>
+		<xs:restriction base="xs:token"/>
 	</xs:simpleType>
 	<xs:simpleType name="BookingRefTypeCodeType">
 		<xs:restriction base="BookingRefTypeCodeContentType"/>
 	</xs:simpleType>
 	<xs:simpleType name="CabinTypeCodeType">
 		<xs:annotation>
-			<xs:documentation>Additional BDT to specify the Cabin Type Code as defined by PADIS. * TEMPORARY NOTE MT : NEED TO CREATE ENUM TO BE REFERENCED FROM BDT CON *</xs:documentation>
+			<xs:documentation>Additional BDT to specify the Cabin Type Code as defined by PADIS codeset 9873.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:token"/>
 	</xs:simpleType>
@@ -548,15 +561,15 @@ The message also returns multi-media content at message level as well as media r
 		<xs:sequence>
 			<xs:element name="Carrier" type="CarrierType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Includes the carrier issuing the ticket and all carriers that carry or undertake to carry the passenger and/or his baggage or to perform any other services related to such carriage.</xs:documentation>
+					<xs:documentation>The organization which carries the passenger, baggage, or goods, and/or commits to delivering the carriage as well as any related services such as issuance of ticket, creation of Order, etc.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="FlightHaulTypeCode" type="xs:string" minOccurs="0" maxOccurs="1">
+			<xs:element name="FlightHaulTypeCode" type="FlightHaulCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Flight haul length type.  Example: LH (long haul 6 hrs plus).</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="GeographicalIndTypeCode" type="xs:string" minOccurs="0" maxOccurs="1">
+			<xs:element name="GeographicalIndTypeCode" type="ProductDetailsCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Geographical indicator type.  Example: DOM (Domestic)</xs:documentation>
 				</xs:annotation>
@@ -570,20 +583,20 @@ The message also returns multi-media content at message level as well as media r
 	</xs:complexType>
 	<xs:complexType name="CarrierType">
 		<xs:annotation>
-			<xs:documentation>Includes the carrier issuing the ticket and all carriers that carry or undertake to carry the passenger and/or his baggage or to perform any other services related to such carriage.</xs:documentation>
+			<xs:documentation>The organization which carries the passenger, baggage, or goods, and/or commits to delivering the carriage as well as any related services such as issuance of ticket, creation of Order, etc.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="AirlineDesigCode" type="AirlineDesigCodeType">
+			<xs:element name="AirlineDesigCode" type="AirlineDesigCodeType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Airline code assigned to a carrier. Either ICAO-defined 3-character code or IATA-defined 2-character code.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="DuplicateDesigInd" type="IndType" minOccurs="0">
+			<xs:element name="DuplicateDesigInd" type="IndType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Indicates that the IATA Airline Designator is a duplicate code shared by multiple airlines. To identify the airline - in this case - its name must be specified in addition to the designator.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Name" type="NameType" minOccurs="0">
+			<xs:element name="Name" type="NameType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Commercial name of the carrier.</xs:documentation>
 				</xs:annotation>
@@ -600,7 +613,12 @@ The message also returns multi-media content at message level as well as media r
 					<xs:documentation>The name, expressed as text, of the city, town or village.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="IATALocationCode" type="IATALocationCodeType" minOccurs="0" maxOccurs="1">
+			<xs:element name="Country" type="CountryType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A nation with its own government, occupying a particular territory.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IATA_LocationCode" type="IATA_LocationCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>IATA defined code identifying a city or station.</xs:documentation>
 				</xs:annotation>
@@ -613,12 +631,14 @@ The message also returns multi-media content at message level as well as media r
 		</xs:annotation>
 		<xs:restriction base="xs:string"/>
 	</xs:simpleType>
-	<xs:simpleType name="CodeType">
+	<xs:complexType name="CodeType">
 		<xs:annotation>
 			<xs:documentation>A code is a character string of letters, numbers, special characters (except escape sequences), and symbols.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:token"/>
-	</xs:simpleType>
+		<xs:simpleContent>
+			<xs:extension base="xs:token"/>
+		</xs:simpleContent>
+	</xs:complexType>
 	<xs:complexType name="CollectionPointTaxType">
 		<xs:annotation>
 			<xs:documentation>Tax data breakdown by collection point for XF(Passenger Facility Fee) and ZP(federal tax segment) taxes.</xs:documentation>
@@ -642,7 +662,7 @@ The message also returns multi-media content at message level as well as media r
 			<xs:documentation>Customer's requested connection information.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="ConnectionPRefID" type="ID_Type" minOccurs="1" maxOccurs="1">
+			<xs:element name="ConnectionPrefID" type="ID_Type" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Unique identifier assigned to this connection preference.</xs:documentation>
 				</xs:annotation>
@@ -704,14 +724,19 @@ The message also returns multi-media content at message level as well as media r
 					<xs:documentation>The email address which should be used for contact purposes.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="Employer" type="Org1Type" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>An organized structure set up for a particular purpose, such as a business, government body, department, charity, or financial institution.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IndividualRefID" type="ID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Reference to Individual instance(s)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="Individual" type="IndividualType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>A single human being as distinct from a group, class, or family.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="IndividualRef" type="ID_Type" minOccurs="0" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>Reference to Individual instance(s)</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="OtherAddress" type="OtherAddressType" minOccurs="0" maxOccurs="unbounded">
@@ -721,7 +746,7 @@ The message also returns multi-media content at message level as well as media r
 			</xs:element>
 			<xs:element name="Phone" type="PhoneType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
-					<xs:documentation>A telephone number is a sequence of digits assigned to a fixed-line telephone subscriber station connected to a telephone line or to a wireless electronic telephony device, such as a radio telephone or a mobile telephone, or to other devices for data tra</xs:documentation>
+					<xs:documentation>A telephone number is a sequence of digits assigned to a fixed-line telephone subscriber station connected to a telephone line or to a wireless electronic telephony device, such as a radio telephone or a mobile telephone, or to other devices for data transmission via the public switched telephone network (PSTN) or other private networks.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="PostalAddress" type="PostalAddressType" minOccurs="0" maxOccurs="unbounded">
@@ -733,7 +758,7 @@ The message also returns multi-media content at message level as well as media r
 	</xs:complexType>
 	<xs:complexType name="CorporationType">
 		<xs:annotation>
-			<xs:documentation>Corporate party information.</xs:documentation>
+			<xs:documentation>A company or group of people authorized to act as a single entity (legally a person) and recognized as such in law.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="CorporateCodeText" type="TextType" minOccurs="0" maxOccurs="1">
@@ -746,12 +771,12 @@ The message also returns multi-media content at message level as well as media r
 					<xs:documentation>Unique identifier of this corporation.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="IATANumber" type="NumberType" minOccurs="0" maxOccurs="1">
+			<xs:element name="IATA_Number" type="NumberType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>IATA issued identification number.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Name" type="StationNameType" minOccurs="0" maxOccurs="1">
+			<xs:element name="Name" type="NameType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Corporation name</xs:documentation>
 				</xs:annotation>
@@ -760,9 +785,9 @@ The message also returns multi-media content at message level as well as media r
 	</xs:complexType>
 	<xs:simpleType name="CountryCodeContentType">
 		<xs:annotation>
-			<xs:documentation>The code list of ISO 3166 two-alpha Country Codes</xs:documentation>
+			<xs:documentation>The code list of ISO 3166 two-alpha Country Codes {codeListAgencyName}ISO{/codeListAgencyName} {codeListName}3166 two-alpha Country Codes{/codeListName}</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string">
+		<xs:restriction base="xs:token">
 			<xs:pattern value="[A-Z]{2}"/>
 		</xs:restriction>
 	</xs:simpleType>
@@ -774,21 +799,21 @@ The message also returns multi-media content at message level as well as media r
 	</xs:simpleType>
 	<xs:simpleType name="CountryDialingCodeContentType">
 		<xs:annotation>
-			<xs:documentation>Enumeration set for the Country Dialing Code BDT.</xs:documentation>
+			<xs:documentation>Enumeration set for the Country Dialing Code BDT. {codeListAgencyName}ITU{/codeListAgencyName} {enumerationURI}ITU-T in standards E.123 and E.164{/enumerationURI}</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string"/>
+		<xs:restriction base="xs:token"/>
 	</xs:simpleType>
 	<xs:simpleType name="CountryDialingCodeType">
 		<xs:annotation>
-			<xs:documentation>Additional BDT to specify the numeric telephone dialingÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â prefixes for the memberÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â countries of the International Telecommunication Union (ITU).</xs:documentation>
+			<xs:documentation>Additional BDT to specify the numeric telephone dialingÂ prefixes for the memberÂ countries of the International Telecommunication Union (ITU).</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="CountryDialingCodeContentType"/>
 	</xs:simpleType>
 	<xs:simpleType name="CountrySubDivisionCodeContentType">
 		<xs:annotation>
-			<xs:documentation>The list of Country Sub-Division Codes in ISO 3166-2, or referenced from ISO 3166-2 for the specific countries. Max-3-char sub-division code without preceding country code.</xs:documentation>
+			<xs:documentation>The list of Country Sub-Division Codes in ISO 3166-2, or referenced from ISO 3166-2 for the specific countries. Max-3-char sub-division code without preceding country code. {codeListAgencyName}ISO{/codeListAgencyName} {codeListName}3166-2 Country Subdivision Codes{/codeListName}</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string">
+		<xs:restriction base="xs:token">
 			<xs:minLength value="1"/>
 			<xs:maxLength value="3"/>
 		</xs:restriction>
@@ -850,6 +875,36 @@ The message also returns multi-media content at message level as well as media r
 		</xs:annotation>
 		<xs:restriction base="CreditCardVendorCodeContentType"/>
 	</xs:simpleType>
+	<xs:simpleType name="CurAppCodeContentType">
+		<xs:annotation>
+			<xs:documentation>Currency Application Code enumeration information.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Actual"/>
+			<xs:enumeration value="Conversion"/>
+			<xs:enumeration value="Display"/>
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="Requested"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CurAppCodeType">
+		<xs:annotation>
+			<xs:documentation>Additional BDT to specify the currency code application.  Examples: Actual, Display, Requested, Conversion, Other .</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CurAppCodeContentType"/>
+	</xs:simpleType>
+	<xs:simpleType name="CurCodeContentType">
+		<xs:annotation>
+			<xs:documentation>Currency Code enumeration information. {codeListAgencyName}ISO{/codeListAgencyName} {codeListIdentifier}4217{/codeListIdentifier}</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="CurCodeType">
+		<xs:annotation>
+			<xs:documentation>Additional BDT to specify a currency code.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="CurCodeContentType"/>
+	</xs:simpleType>
 	<xs:complexType name="CurConversionType">
 		<xs:annotation>
 			<xs:documentation>The result of converting one currency into another currency. E.g. local currency to USD, air miles to monetary.</xs:documentation>
@@ -877,7 +932,7 @@ The message also returns multi-media content at message level as well as media r
 			<xs:documentation>Requested search processing and results currency information.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="AppCode" type="xs:string" minOccurs="0" maxOccurs="1">
+			<xs:element name="AppCode" type="CurAppCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Currency code application.  Examples: Actual, Display, Requested, Conversion, Other</xs:documentation>
 				</xs:annotation>
@@ -892,7 +947,7 @@ The message also returns multi-media content at message level as well as media r
 					<xs:documentation>Currency name, e.g. US Dollars.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="RequestedCurCode" type="xs:string" minOccurs="1" maxOccurs="1">
+			<xs:element name="RequestedCurCode" type="CurCodeType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Currency Code as per ISO 4217.</xs:documentation>
 				</xs:annotation>
@@ -904,23 +959,23 @@ The message also returns multi-media content at message level as well as media r
 			<xs:documentation>The commercial designation under which a Dated Operating Segment can be booked, either under the operating carrier's designator or that of another carrier (codeshare).</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="CarrierDesigCode" type="AirlineDesigCodeType">
+			<xs:element name="CarrierDesigCode" type="AirlineDesigCodeType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Airline code assigned to a carrier. Either ICAO-defined 3-character code or IATA-defined 2-character code.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="CarrierName" type="NameType" minOccurs="0">
+			<xs:element name="CarrierName" type="NameType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Commercial name of the carrier.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="MarketingCarrierFlightNumberText" type="FlightNumberTextType">
+			<xs:element name="MarketingCarrierFlightNumberText" type="FlightNumberTextType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The numerical designation of a flight as it is marketed by a carrier.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="OperationalSuffixText" type="OperationalSuffixTextType" minOccurs="0"/>
-			<xs:element name="RBDCode" type="RBDCodeType" minOccurs="0">
+			<xs:element name="OperationalSuffixText" type="OperationalSuffixTextType" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="RBD_Code" type="RBD_CodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Code used to identify a particular RBD (e.g. P, J, W, M, etc.).</xs:documentation>
 				</xs:annotation>
@@ -932,39 +987,43 @@ The message also returns multi-media content at message level as well as media r
 			<xs:documentation>An operation between board point and any subsequent off point within the same flight designator. Could be one or more legs. Could also be used for other transport vehicles such as train or bus etc.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="CarrierDesigCode" type="AirlineDesigCodeType" minOccurs="0">
+			<xs:element name="CarrierDesigCode" type="AirlineDesigCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Airline code assigned to a carrier. Either ICAO-defined 3-character code or IATA-defined 2-character code.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="CarrierName" type="NameType" minOccurs="0">
+			<xs:element name="CarrierName" type="NameType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Commercial name of the carrier.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="OperatingCarrierFlightNumberText" type="FlightNumberTextType" minOccurs="0">
+			<xs:element name="OperatingCarrierFlightNumberText" type="FlightNumberTextType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The numerical designation of a flight as it is operated by a carrier.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="OperationalSuffixText" type="OperationalSuffixTextType" minOccurs="0">
+			<xs:element name="OperationalSuffixText" type="OperationalSuffixTextType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Used to distinguish two flights having the same flight number and departing from their respective Origin Stations on the same date.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="RBDCode" type="RBDCodeType" minOccurs="0">
+			<xs:element name="RBD_Code" type="RBD_CodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Code used to identify a particular RBD (e.g. P, J, W, M, etc.).</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:simpleType name="DateTimeType">
+	<xs:complexType name="DateTimeType">
 		<xs:annotation>
 			<xs:documentation>A date time identifies a date and time of day to various common resolutions: year, month, week, day, hour, minute, second, and fraction of second.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:dateTime"/>
-	</xs:simpleType>
+		<xs:simpleContent>
+			<xs:extension base="xs:dateTime">
+				<xs:attribute name="TimeZoneCode" type="xs:token" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
 	<xs:simpleType name="DateType">
 		<xs:annotation>
 			<xs:documentation>A date is a Gregorian calendar representation in various common resolutions: year, month, week, day.</xs:documentation>
@@ -976,9 +1035,9 @@ The message also returns multi-media content at message level as well as media r
 			<xs:documentation>A Customer's requested Destination arrival time and location.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="BoardingGateID" type="ID_Type" minOccurs="0">
+			<xs:element name="BoardingGateID" type="BoardingGateID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Identifier of the gate. E.g. A5</xs:documentation>
+					<xs:documentation>Identifier of the gate. E.g. â€œA5â€.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Date" type="DateType" minOccurs="0" maxOccurs="1">
@@ -986,17 +1045,17 @@ The message also returns multi-media content at message level as well as media r
 					<xs:documentation>The customer's requested departure date.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="IATALocationCode" type="IATALocationCodeType" minOccurs="1" maxOccurs="1">
+			<xs:element name="IATA_LocationCode" type="IATA_LocationCodeType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>IATA defined code identifying a city or station.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="StationName" type="NameType" minOccurs="0" maxOccurs="1">
+			<xs:element name="StationName" type="StationNameType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Name of the station. E.g. George Bush Intercontinental Airport</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="TerminalName" type="NameType" minOccurs="0">
+			<xs:element name="TerminalName" type="NameType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The name of the terminal.</xs:documentation>
 				</xs:annotation>
@@ -1051,12 +1110,12 @@ The message also returns multi-media content at message level as well as media r
 			<xs:documentation>The email address which should be used for contact purposes.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="EmailAddressValue" type="TextType" minOccurs="1" maxOccurs="1">
+			<xs:element name="EmailAddressText" type="TextType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The email address which should be used for contact purposes.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Label" type="TextType" minOccurs="0" maxOccurs="1">
+			<xs:element name="LabelText" type="TextType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Used to differentiate multiple email addresses of one contact.</xs:documentation>
 				</xs:annotation>
@@ -1084,10 +1143,10 @@ The message also returns multi-media content at message level as well as media r
 		<xs:sequence>
 			<xs:element name="Order" type="OrderType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>A uniquely identified record of the agreement of one party with another to receive products and services under specified terms and conditions. Order supports the sale of a flexible range of airline products and services that are not necessarily Journey b</xs:documentation>
+					<xs:documentation>A uniquely identified record of the agreement of one party with another to receive products and services under specified terms and conditions. Order supports the sale of a flexible range of airline products and services that are not necessarily Journey based (e.g. subscription services).</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="PaxRefID" type="ID_Type" maxOccurs="unbounded">
+			<xs:element name="PaxRefID" type="ID_Type" minOccurs="1" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Reference to a Passenger ID within this message.</xs:documentation>
 				</xs:annotation>
@@ -1096,7 +1155,7 @@ The message also returns multi-media content at message level as well as media r
 	</xs:complexType>
 	<xs:complexType name="FareCriteriaType">
 		<xs:annotation>
-			<xs:documentation>References to Orders that were created from Offers that have already been purchased, booked and/or are being held for a Passenger.</xs:documentation>
+			<xs:documentation>Fare criteria used to filter shopping results.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="FareBasisCode" type="CodeType" minOccurs="0" maxOccurs="unbounded">
@@ -1106,10 +1165,7 @@ The message also returns multi-media content at message level as well as media r
 			</xs:element>
 			<xs:element name="FareTypeCode" type="CodeType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
-					<xs:documentation>Fare type.  Examples: 70J-Published Fares, 749-Negotiated Fares, 756-One Way Fare, 
-758-Private Fares
-
-Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
+					<xs:documentation>Fare type.  Examples: 70J-Published Fares, 749-Negotiated Fares, 756-One Way Fare,  758-Private Fares  Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="GroupFareCriteria" type="GroupFareCriteriaType" minOccurs="0" maxOccurs="unbounded">
@@ -1117,39 +1173,58 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 					<xs:documentation>Group Fare preferences by passenger type</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="NoAdvancePurchaseInd" type="IndType" minOccurs="0">
+			<xs:element name="NoAdvancePurchaseInd" type="IndType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>When true, do not return fares with advance purchase restrictions.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="NoMaxStayInd" type="IndType" minOccurs="0">
+			<xs:element name="NoMaxStayInd" type="IndType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>When true, do not return fares with maximum stay restrictions.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="NoMinStayInd" type="IndType" minOccurs="0">
+			<xs:element name="NoMinStayInd" type="IndType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>When true, do not return fares with minimum stay restrictions.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="NoPenaltyInd" type="IndType" minOccurs="0">
+			<xs:element name="NoPenaltyInd" type="IndType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>When true, do not return fares with penalties.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="PrefLevel" type="PrefLevelType" minOccurs="0">
+			<xs:element name="PrefLevel" type="PrefLevelType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Information supporting some shopping filter criteria, including preference level code (e.g. Preferred, Exclude, etc.).</xs:documentation>
+					<xs:documentation>Information supporting a preference including preference level code (e.g. Preferred, Exclude, etc.).</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:simpleType name="FlightCharacteristicCodeContentType">
+		<xs:annotation>
+			<xs:documentation>Enumeration set for the flight characteristics code BDT.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AirportChange"/>
+			<xs:enumeration value="Direct"/>
+			<xs:enumeration value="NonStop"/>
+			<xs:enumeration value="OvernightStop"/>
+			<xs:enumeration value="RedEye"/>
+			<xs:enumeration value="WaitList"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FlightCharacteristicCodeType">
+		<xs:annotation>
+			<xs:documentation>Business data type for Flight Characteristics Code.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="FlightCharacteristicCodeContentType"/>
+	</xs:simpleType>
 	<xs:complexType name="FlightCharacteristicsCriteriaType">
 		<xs:annotation>
-			<xs:documentation>Flight characteristics preferences including non-stop, red eye, etc.</xs:documentation>
+			<xs:documentation>Flight characteristics filter criteria for shopping requests, including non-stop, red eye, etc.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="CharacteristicCode" type="xs:string" minOccurs="1" maxOccurs="1">
+			<xs:element name="CharacteristicsCode" type="FlightCharacteristicCodeType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Code to identify the type of flight characteristic (including non-stop, red eye, etc.)</xs:documentation>
 				</xs:annotation>
@@ -1163,12 +1238,12 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 	</xs:complexType>
 	<xs:complexType name="FlightCriteriaType">
 		<xs:annotation>
-			<xs:documentation>Flight preferences including aircraft features, Cabin Type, RBD, and Tail Number.</xs:documentation>
+			<xs:documentation>Flight filter criteria including aircraft features, Cabin Type, RBD, and Tail Number.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="Aircraft" type="AircraftType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
-					<xs:documentation>Any machine that can derive support in the atmosphere from the reactions of the air other than the reactions of the air against the earthÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢s surface. It must be certified as airworthy by a competent aeronautical authority.</xs:documentation>
+					<xs:documentation>Any machine that can derive support in the atmosphere from the reactions of the air other than the reactions of the air against the earthâ€™s surface. It must be certified as airworthy by a competent aeronautical authority.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="CabinType" type="CabinTypeType" minOccurs="0" maxOccurs="unbounded">
@@ -1178,17 +1253,17 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 			</xs:element>
 			<xs:element name="FlightCharacteristicsCriteria" type="FlightCharacteristicsCriteriaType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
-					<xs:documentation>Flight characteristics preferences including non-stop, red eye, etc.</xs:documentation>
+					<xs:documentation>Flight characteristics filter criteria for shopping requests, including non-stop, red eye, etc.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="IATAAircraftType" type="IATAAircraftTypeType" minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="IATA_AircraftType" type="IATA_AircraftTypeType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Grouping of aircrafts with the same form, function and specification, currently flown, or soon to be flown. Possible types are defined in the IATA SSIM.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="RBD" type="RBDType" minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="RBD" type="RBD_Type" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
-					<xs:documentation>Reservation Booking Designator.  A categorization used to facilitate access to inventory, application of filed fares, and to identify cabin entitlement. Identified using a single alpha character. E.g. 'J' for Business Class Premium, 'D' for Business Disc</xs:documentation>
+					<xs:documentation>Reservation Booking Designator.  A categorization used to facilitate access to inventory, application of filed fares, and to identify cabin entitlement. Identified using a single alpha character. E.g. 'J' for Business Class Premium, 'D' for Business Discounted.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="WaitListCriteria" type="PrefLevelType" minOccurs="0" maxOccurs="1">
@@ -1198,6 +1273,18 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:simpleType name="FlightHaulCodeType">
+		<xs:annotation>
+			<xs:documentation>Business data type for Flight Haul Code as per PADIS Codeset.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="FlightHaulTypeCodeContentType"/>
+	</xs:simpleType>
+	<xs:simpleType name="FlightHaulTypeCodeContentType">
+		<xs:annotation>
+			<xs:documentation>Codeset information for Flight Haul Type Code.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
 	<xs:simpleType name="FlightNumberTextType">
 		<xs:annotation>
 			<xs:documentation>Identifies a flight number.  1 to 4 digits. May or may not have leading zeros when less than 4 digits. The use of leading zeros does not create a different Flight Number. For example, Flight Numbers 123 and 0123 are the same.</xs:documentation>
@@ -1209,7 +1296,7 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 			<xs:documentation>Choice of Affinity, Origin Destination, or Journey flight information for this shopping request.</xs:documentation>
 		</xs:annotation>
 		<xs:choice>
-			<xs:element name="AffinityShoppingCriteria" type="AffinityRequestType" minOccurs="1" maxOccurs="1">
+			<xs:element name="AffinityShoppingCriteria" type="AffinityShoppingCriteriaType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Affinity search includes a wide range of criteria including generic origin/destination information, trip time periods, as well as travel budget.</xs:documentation>
 				</xs:annotation>
@@ -1236,9 +1323,9 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 			<xs:documentation>Form of identification.  Typically used to identify that the passenger is who he says he is.  This is the type of FOID as defined in AIRIMP (FF Number, Credit Card Number, etc.).</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="CreditCardVendorCode" type="CreditCardVendorCodeType" minOccurs="0" maxOccurs="1">
+			<xs:element name="CreditCardIssuerCode" type="CreditCardVendorCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>The CC vendor code in case FOID is a Credit Card.</xs:documentation>
+					<xs:documentation>The CC Issuer code in case FOID is a Credit Card.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="FOID_ID" type="ID_Type" minOccurs="1" maxOccurs="1">
@@ -1246,7 +1333,7 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 					<xs:documentation>FOID ID value. Example: NY122345</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="FOID_TypeText" type="TextType">
+			<xs:element name="FOID_TypeText" type="TextType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Form of identification type code used for booking/ticketing.  Examples: PP (passport), CC (credit card), FF (frequent flyer), DL (drivers license)</xs:documentation>
 				</xs:annotation>
@@ -1255,9 +1342,9 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 	</xs:complexType>
 	<xs:simpleType name="GenderCodeContentType">
 		<xs:annotation>
-			<xs:documentation>Enumeration set for Gender Code.</xs:documentation>
+			<xs:documentation>Enumeration set for Gender Code. {codeListAgencyName}ICAO{/codeListAgencyName} {codeListName}Document 9303 Sex of the holder{/codeListName}</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string">
+		<xs:restriction base="xs:token">
 			<xs:enumeration value="F">
 				<xs:annotation>
 					<xs:documentation>Female</xs:documentation>
@@ -1310,7 +1397,7 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 	</xs:complexType>
 	<xs:complexType name="GroupFareCriteriaType">
 		<xs:annotation>
-			<xs:documentation>References to Orders that were created from Offers that have already been purchased, booked and/or are being held for a Passenger.</xs:documentation>
+			<xs:documentation>Group Fare preferences by passenger type</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="FareBasisCode" type="CodeType" minOccurs="0" maxOccurs="unbounded">
@@ -1320,62 +1407,62 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 			</xs:element>
 			<xs:element name="PaxSegmentRefID" type="ID_Type" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
-					<xs:documentation>Fare basis code. Example: Y26</xs:documentation>
+					<xs:documentation>Reference to a Passenger Segment ID.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="PrefLevel" type="PrefLevelType" minOccurs="0">
+			<xs:element name="PrefLevel" type="PrefLevelType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Information supporting some shopping filter criteria, including preference level code (e.g. Preferred, Exclude, etc.).</xs:documentation>
+					<xs:documentation>Information supporting a preference including preference level code (e.g. Preferred, Exclude, etc.).</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="PTC" type="CodeType" minOccurs="0">
+			<xs:element name="PTC" type="IATA_PTC_CodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Type code applying to the Passenger which typically drives pricing (e.g. ADT, CHD, etc).</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:simpleType name="IATAAircraftTypeCodeContentType">
+	<xs:simpleType name="IATA_AircraftTypeCodeContentType">
 		<xs:annotation>
-			<xs:documentation>Enumeration set for the IATA Aircraft Type Code BDT.</xs:documentation>
+			<xs:documentation>Enumeration set for the IATA Aircraft Type Code BDT. {codeListAgencyName}IATA{/codeListAgencyName} {codeListName}SSIM Appendix A Aircraft Type Code{/codeListName}</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string">
+		<xs:restriction base="xs:token">
 			<xs:pattern value="[0-9A-Z]{3}"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="IATAAircraftTypeCodeType">
+	<xs:simpleType name="IATA_AircraftTypeCodeType">
 		<xs:annotation>
 			<xs:documentation>Specifies the IATA defined code of an aircraft type.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="IATAAircraftTypeCodeContentType"/>
+		<xs:restriction base="IATA_AircraftTypeCodeContentType"/>
 	</xs:simpleType>
-	<xs:complexType name="IATAAircraftTypeType">
+	<xs:complexType name="IATA_AircraftTypeType">
 		<xs:annotation>
 			<xs:documentation>Grouping of aircrafts with the same form, function and specification, currently flown, or soon to be flown. Possible types are defined in the IATA SSIM.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="IATAAircraftTypeCode" type="IATAAircraftTypeCodeType" minOccurs="1" maxOccurs="1">
+			<xs:element name="IATA_AircraftTypeCode" type="IATA_AircraftTypeCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Code assigned to an aircraft type in IATA SSIM.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:simpleType name="IATALocationCodeContentType">
+	<xs:simpleType name="IATA_LocationCodeContentType">
 		<xs:annotation>
-			<xs:documentation>Enumeration set for the Location Code BDT.</xs:documentation>
+			<xs:documentation>Enumeration set for the Location Code BDT. {codeListAgencyName}IATA{/codeListAgencyName} {codeListName}Location code{/codeListName} {enumerationURI}http://www.iata.org/publications/Pages/code-search.aspx{/enumerationURI}</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string">
+		<xs:restriction base="xs:token">
 			<xs:length value="3"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="IATALocationCodeType">
+	<xs:simpleType name="IATA_LocationCodeType">
 		<xs:annotation>
 			<xs:documentation>Additional BDT to specify the codeset which defines the IATA airport or city codes.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="IATALocationCodeContentType"/>
+		<xs:restriction base="IATA_LocationCodeContentType"/>
 	</xs:simpleType>
-	<xs:complexType name="IATAPayloadStandardAttributesType">
+	<xs:complexType name="IATA_PayloadStandardAttributesType">
 		<xs:annotation>
 			<xs:documentation>The IATA_PayloadStdAttributes defines the standard attributes that appear on the root element for all IATA payloads.</xs:documentation>
 		</xs:annotation>
@@ -1432,46 +1519,48 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:simpleType name="IATAPTC_CodeType">
+	<xs:simpleType name="IATA_PTC_CodeType">
 		<xs:annotation>
 			<xs:documentation>Additional BDT to specigy the type code codeset applying to a Passenger.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string"/>
 	</xs:simpleType>
-	<xs:simpleType name="ID_Type">
+	<xs:complexType name="ID_Type">
 		<xs:annotation>
 			<xs:documentation>An identifier is a character string used to uniquely identify one instance of an object within an identification scheme that is managed by an agency.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:token"/>
-	</xs:simpleType>
+		<xs:simpleContent>
+			<xs:extension base="xs:token"/>
+		</xs:simpleContent>
+	</xs:complexType>
 	<xs:complexType name="IdentityDocType">
 		<xs:annotation>
-			<xs:documentation>Any document which may be used to identify a person or verify aspects of a person's personal identity. If issued in a small, standard credit card size form, it is usually called an identity card. Some countries issue formal identity documents, while othe</xs:documentation>
+			<xs:documentation>Any document which may be used to identify a person or verify aspects of a person's personal identity. If issued in a small, standard credit card size form, it is usually called an identity card. Some countries issue formal identity documents, while others may require identity verification using informal documents. When the identity document incorporates a person's photograph, it may be called photo ID.  In the absence of a formal identity document, a driver's license may be accepted in many countries for identity verification. Most countries accept passports as a form of identification.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Birthdate" type="DateType" minOccurs="0">
+			<xs:element name="Birthdate" type="DateType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>HolderÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢s date of birth as written on the document.</xs:documentation>
+					<xs:documentation>Holderâ€™s date of birth as written on the document.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="BirthplaceText" type="TextType" minOccurs="0">
+			<xs:element name="BirthplaceText" type="TextType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Holder's birth location (e.g. city and/or country) as written on the  document.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="CitizenshipCountryCode" type="CountryCodeType" minOccurs="0">
+			<xs:element name="CitizenshipCountryCode" type="CountryCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>ISO Country Code (can be extended by bilateral agreement in case of exceptions, e.g. Kosovo). Examples: US, FR.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="ExpiryDate" type="DateType" minOccurs="0">
+			<xs:element name="ExpiryDate" type="DateType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The date the identity document expires.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="GenderCode" type="GenderCodeType" minOccurs="0">
+			<xs:element name="GenderCode" type="GenderCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>HolderÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢s gender as specified on the document (M, F, or X for unspecified).</xs:documentation>
+					<xs:documentation>Holderâ€™s gender as specified on the document (M, F, or X for unspecified).</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="GivenName" type="ProperNameType" minOccurs="0" maxOccurs="5">
@@ -1479,22 +1568,22 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 					<xs:documentation>Holder's first or given name, as written on the document. E.g. JOHN.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="IdentityDocID" type="ID_Type">
+			<xs:element name="IdentityDocID" type="ID_Type" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Uniquely identifies the document from all other identity documents issued by the state or organization. e.g. passport number, drivers license number.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="IdentityDocTypeCode" type="IdentityDocTypeCodeType">
+			<xs:element name="IdentityDocTypeCode" type="IdentityDocTypeCodeType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The type of passenger document.  Examples: PT (Passport)</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="IssueDate" type="DateType" minOccurs="0">
+			<xs:element name="IssueDate" type="DateType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The date the identity document was issued.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="IssuingCountryCode" type="CountryCodeType" minOccurs="0">
+			<xs:element name="IssuingCountryCode" type="CountryCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>ISO Country Code (can be extended by bilateral agreement in case of exceptions, e.g. Kosovo). Examples: US, FR.</xs:documentation>
 				</xs:annotation>
@@ -1504,22 +1593,22 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 					<xs:documentation>Holder's middle name or initial, as written on the document. E.g. G, GEORGE.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="ResidenceCountryCode" type="CountryCodeType" minOccurs="0">
+			<xs:element name="ResidenceCountryCode" type="CountryCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>ISO Country Code (can be extended by bilateral agreement in case of exceptions, e.g. Kosovo). Examples: US, FR.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="SuffixName" type="SupplementNameType" minOccurs="0">
+			<xs:element name="SuffixName" type="SupplementNameType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Holder's name suffixes and letters, as written on the document. E.g. Jr., Sr., III, Ret., Esq.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Surname" type="ProperNameType" minOccurs="0">
+			<xs:element name="Surname" type="ProperNameType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Holder's family name or last name, as written on the document. E.g. SMITH. Excludes any potential suffix.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="TitleName" type="SupplementNameType" minOccurs="0">
+			<xs:element name="TitleName" type="SupplementNameType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Holder's title as written on the document. E.g. Mr., Mrs., Miss, Dr.</xs:documentation>
 				</xs:annotation>
@@ -1533,15 +1622,23 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 	</xs:complexType>
 	<xs:simpleType name="IdentityDocTypeCodeContentType">
 		<xs:annotation>
-			<xs:documentation>Enumeration set for the Identity Document Type BDT.</xs:documentation>
+			<xs:documentation>Enumeration set for the Identity Document Type BDT. {codeListAgencyIdentifier}PADIS 7365{/codeListAgencyIdentifier} {codeListAgencyName}PADIS{/codeListAgencyName}</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string"/>
+		<xs:restriction base="xs:token"/>
 	</xs:simpleType>
 	<xs:simpleType name="IdentityDocTypeCodeType">
 		<xs:annotation>
 			<xs:documentation>Additional BDT to specify the type of passenger document.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="IdentityDocTypeCodeContentType"/>
+	</xs:simpleType>
+	<xs:simpleType name="IINNumberType">
+		<xs:annotation>
+			<xs:documentation>Issuer identification number.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer">
+			<xs:totalDigits value="6"/>
+		</xs:restriction>
 	</xs:simpleType>
 	<xs:complexType name="IndividualType">
 		<xs:annotation>
@@ -1565,7 +1662,7 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 			</xs:element>
 			<xs:element name="GivenName" type="ProperNameType" minOccurs="0" maxOccurs="5">
 				<xs:annotation>
-					<xs:documentation>A personal name given to the individual at birthÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â and used before aÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â family name. Also called first name. E.g. JOHN.</xs:documentation>
+					<xs:documentation>A personal name given to the individual at birthÂ and used before aÂ family name. Also called first name. E.g. JOHN.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="IndividualID" type="ID_Type" minOccurs="0" maxOccurs="1">
@@ -1583,9 +1680,9 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 					<xs:documentation>Individual's name suffixes and letters. Examples: Jr., Sr., III, Ret., Esq.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Surname" type="ProperNameType" minOccurs="0" maxOccurs="1">
+			<xs:element name="Surname" type="ProperNameType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Individual's hereditaryÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â name(s) common to all members of a family. Also known as family name or last name. E.g. SMITH. Excludes any potential suffix.</xs:documentation>
+					<xs:documentation>Individual's hereditaryÂ name(s) common to all members of a family. Also known as family name or last name. E.g. SMITH. Excludes any potential suffix.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="TitleName" type="SupplementNameType" minOccurs="0" maxOccurs="1">
@@ -1611,7 +1708,7 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 					<xs:documentation>Preferred distance for this Journey.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="PRefCode" type="xs:string" minOccurs="0" maxOccurs="1">
+			<xs:element name="PrefCode" type="PrefLevelCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Level of preference requested.  Examples: Preferred, Required, or Exclude.</xs:documentation>
 				</xs:annotation>
@@ -1628,7 +1725,7 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 					<xs:documentation>Preferred maximum time for this Journey.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="PRefCode" type="xs:string" minOccurs="0" maxOccurs="1">
+			<xs:element name="PrefCode" type="PrefLevelCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Level of preference requested.  Examples: Preferred, Required, or Exclude.</xs:documentation>
 				</xs:annotation>
@@ -1664,10 +1761,10 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 		<xs:sequence>
 			<xs:element name="LangCode" type="CodesetValueTextType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Language Code representation.  Notes: 1. Language code.  Example: en, en-US  2. Encoding Schemes: ISO 639-1 Code OR Microsoft National Language Support (NLS) Code  3. Supports ISO 639-1 (two alpha character) neutral language encoding indicated by</xs:documentation>
+					<xs:documentation>Language Code representation.  Notes: 1. Language code.  Example: en, en-US  2. Encoding Schemes: ISO 639-1 Code OR Microsoft National Language Support (NLS) Code  3. Supports ISO 639-1 (two alpha character) neutral language encoding indicated by a name such as 'en' for English.  4.  Supports MNLS geographically specific language encoding indicated by a name that includes both locale and country/region information. For example, the locale English (United States) has the language name 'en-US'</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="LangUsageType" type="TextType" minOccurs="0" maxOccurs="1">
+			<xs:element name="LangUsageText" type="TextType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Written or Spoken language.</xs:documentation>
 				</xs:annotation>
@@ -1723,7 +1820,7 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 			</xs:element>
 			<xs:element name="Carrier" type="CarrierType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Includes the carrier issuing the ticket and all carriers that carry or undertake to carry the passenger and/or his baggage or to perform any other services related to such carriage.</xs:documentation>
+					<xs:documentation>The organization which carries the passenger, baggage, or goods, and/or commits to delivering the carriage as well as any related services such as issuance of ticket, creation of Order, etc.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="ProgramCode" type="CodeType" minOccurs="0" maxOccurs="1">
@@ -1747,6 +1844,23 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="MeasurementSystemCodeContentType">
+		<xs:annotation>
+			<xs:documentation>Enumeration set for the measurement system code BDT. {codeListAgencyName}PADIS{/codeListAgencyName}</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="Imperial"/>
+			<xs:enumeration value="Metric"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="MeasurementSystemCodeType">
+		<xs:annotation>
+			<xs:documentation>BDT to represent measurement system codes (e.g. Imperial, Metric).</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="MeasurementSystemCodeContentType"/>
+		</xs:simpleContent>
 	</xs:complexType>
 	<xs:complexType name="MeasureType">
 		<xs:annotation>
@@ -1775,14 +1889,31 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="MetadataType">
-		<xs:sequence/>
-	</xs:complexType>
-	<xs:simpleType name="NameType">
+	<xs:simpleType name="MessageFunctionCodeContentType">
+		<xs:annotation>
+			<xs:documentation>PADIS defined list of message functions.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="MessageFunctionCodeType">
+		<xs:annotation>
+			<xs:documentation>PADIS defined list of message functions.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="MessageFunctionCodeContentType"/>
+	</xs:simpleType>
+	<xs:complexType name="NameType">
 		<xs:annotation>
 			<xs:documentation>A name is a word or phrase that constitutes the distinctive designation of a person, place, thing or concept</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:token"/>
+		<xs:simpleContent>
+			<xs:extension base="xs:token"/>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="NaturalNumberType">
+		<xs:annotation>
+			<xs:documentation>A mathematical number used for counting (positive whole number or integer).</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer"/>
 	</xs:simpleType>
 	<xs:simpleType name="NumberType">
 		<xs:annotation>
@@ -1805,6 +1936,11 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 					<xs:documentation>Airline code assigned to a carrier. Either ICAO-defined 3-character code or IATA-defined 2-character code.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="PriceGuaranteeTimeLimitDateTime" type="DateTimeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The length of time the price of an offer item is guaranteed.  In the absence of the price guarantee time limit, the price is not guaranteed.  Upon expiry, the price may no longer be guaranteed and either a new shopping process should begin, or the offer should be repriced resulting in a new Offer.    Should the price guarantee time limit extend beyond Order creation (or change), the remaining length of time persists into the corresponding Order Item.  At Order creation (or change) the airline can increase the remaining length of time beyond the original time limit should they wish to.  Note: Where a price guarantee time limit is applied, there is no guarantee that related inventory is guaranteed by the airline.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="Service" type="ServiceType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>The instance of a specific flight or Service Definition as it has been offered (and eventually ordered and consumed) in the context of a specific Offer and/or Order.</xs:documentation>
@@ -1818,42 +1954,14 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string"/>
 	</xs:simpleType>
-	<xs:simpleType name="OrderItemStatusCodeContentType">
-		<xs:annotation>
-			<xs:documentation>shows the current statuses of an Order Item</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="CANCELLEDBYCUSTOMER">
-				<xs:annotation>
-					<xs:documentation>The Order Item reservation is cancelled by the Customer. </xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="ENTITLED">
-				<xs:annotation>
-					<xs:documentation>Customer is entitled to receive the Order Item.</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="NOTENTITLED">
-				<xs:annotation>
-					<xs:documentation>Customer is not entitled to receive the Order Item until certain conditions are met. </xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:simpleType name="OrderItemStatusCodeType">
-		<xs:annotation>
-			<xs:documentation>represents the status of an Order Item</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="OrderItemStatusCodeContentType"/>
-	</xs:simpleType>
 	<xs:complexType name="OrderItemType">
 		<xs:annotation>
 			<xs:documentation>An individually priced item within an Order, made up of one or more Services. May or may not be a selected Offer Item (e.g. non-chargeable Services available on request such as a wheelchair).</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="OrderItemID" type="ID_Type" minOccurs="1" maxOccurs="1">
+			<xs:element name="OrderItemID" type="ID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Carrier assigned Order Item ID.</xs:documentation>
+					<xs:documentation>Carrier assigned ID which exists uniquely within an Order.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="OwnerCode" type="AirlineDesigCodeType" minOccurs="0" maxOccurs="1">
@@ -1871,11 +1979,6 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 					<xs:documentation>The instance of a specific flight or Service Definition as it has been offered (and eventually ordered and consumed) in the context of a specific Offer and/or Order.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="StatusCode" type="OrderItemStatusCodeType" minOccurs="0" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>Indicates the current status of an Order Item.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element name="WebAddressURI" type="UniformResourceID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Deep linking into another site to complete the transaction. E.g. to bring the customer directly to a page to continue with a purchase of a specific offer.</xs:documentation>
@@ -1885,7 +1988,7 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 	</xs:complexType>
 	<xs:complexType name="OrderType">
 		<xs:annotation>
-			<xs:documentation>A uniquely identified record of the agreement of one party with another to receive products and services under specified terms and conditions. Order supports the sale of a flexible range of airline products and services that are not necessarily Journey b</xs:documentation>
+			<xs:documentation>A uniquely identified record of the agreement of one party with another to receive products and services under specified terms and conditions. Order supports the sale of a flexible range of airline products and services that are not necessarily Journey based (e.g. subscription services).</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="BookingRef" type="BookingRefType" minOccurs="0" maxOccurs="unbounded">
@@ -1920,12 +2023,23 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:simpleType name="OrdinalType">
+	<xs:complexType name="Org1Type">
 		<xs:annotation>
-			<xs:documentation>An ordinal number is an assigned mathematical number that represents order or sequence.</xs:documentation>
+			<xs:documentation>An organized structure set up for a particular purpose, such as a business, government body, department, charity, or financial institution.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:integer"/>
-	</xs:simpleType>
+		<xs:sequence>
+			<xs:element name="Name" type="NameType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Name of the organization</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SalesTaxRegistration" type="SalesTaxRegistrationType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>The Identification and contact information of a party purchasing goods or services as registered with a Purchase Tax.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
 	<xs:complexType name="OrgType">
 		<xs:annotation>
 			<xs:documentation>An organized structure set up for a particular purpose, such as a business, government body, department, charity, or financial institution.</xs:documentation>
@@ -1953,9 +2067,9 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 			<xs:documentation>A Customer's requested Origin departure time and location.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="BoardingGateID" type="ID_Type" minOccurs="0">
+			<xs:element name="BoardingGateID" type="BoardingGateID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Identifier of the gate. E.g. A5</xs:documentation>
+					<xs:documentation>Identifier of the gate. E.g. â€œA5â€.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Date" type="DateType" minOccurs="1" maxOccurs="1">
@@ -1963,17 +2077,17 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 					<xs:documentation>The customer's requested departure date.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="IATALocationCode" type="IATALocationCodeType" minOccurs="1" maxOccurs="1">
+			<xs:element name="IATA_LocationCode" type="IATA_LocationCodeType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>IATA defined code identifying a city or station.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="StationName" type="NameType" minOccurs="0" maxOccurs="1">
+			<xs:element name="StationName" type="StationNameType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Name of the station. E.g. George Bush Intercontinental Airport</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="TerminalName" type="NameType" minOccurs="0">
+			<xs:element name="TerminalName" type="NameType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The name of the terminal.</xs:documentation>
 				</xs:annotation>
@@ -2005,7 +2119,7 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 					<xs:documentation>Requests the airline to additionally include a preview of the Offer price for the same Shopping Criteria for the specified date range.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="ConnectionPRefRefID" type="ID_Type" minOccurs="0">
+			<xs:element name="ConnectionPrefRefID" type="ID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Reference to a transfer preference ID.</xs:documentation>
 				</xs:annotation>
@@ -2042,17 +2156,22 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 			<xs:documentation>The Origin and Destination airport/city pair which confines a passenger journey or an aircraft flight.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="DestStationCode" type="IATALocationCodeType">
+			<xs:element name="DestStationCode" type="IATA_LocationCodeType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>IATA defined code identifying a city or station.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="OriginStationCode" type="IATALocationCodeType" maxOccurs="1">
+			<xs:element name="OriginStationCode" type="IATA_LocationCodeType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>IATA defined code identifying a city or station.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="PaxJourney" type="PaxJourneyType" minOccurs="1" maxOccurs="1">
+			<xs:element name="OriginDestID" type="ID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Uniquely identifies an Origin Destination within the context of one message.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PaxJourney" type="PaxJourneyType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>A collection of segments which satisfies transportation of a passenger for a given origin and destination.</xs:documentation>
 				</xs:annotation>
@@ -2064,12 +2183,12 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 			<xs:documentation>Other Contact Method information. E.g. web site URL, social media handle.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Label" type="NameType" minOccurs="0" maxOccurs="1">
+			<xs:element name="LabelText" type="TextType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Used to differentiate multiple Other Addresses of one contact.  (i.e. social media handle, website, etc.)</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="OtherAddressValue" type="TextType" minOccurs="0" maxOccurs="1">
+			<xs:element name="OtherAddressText" type="TextType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Other Contact Method Value. Example: www.marketingsite.com</xs:documentation>
 				</xs:annotation>
@@ -2078,9 +2197,9 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 	</xs:complexType>
 	<xs:simpleType name="OwnerTypeCodeContentType">
 		<xs:annotation>
-			<xs:documentation>Enumeration values for Owner Type BDT.</xs:documentation>
+			<xs:documentation>Enumeration values for Owner Type BDT. {codeListAgencyName}IATA AIDM{/codeListAgencyName}</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string">
+		<xs:restriction base="xs:token">
 			<xs:enumeration value="ORA">
 				<xs:annotation>
 					<xs:documentation>Offer Responsible Airline</xs:documentation>
@@ -2101,17 +2220,17 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 	</xs:simpleType>
 	<xs:complexType name="ParticipantType">
 		<xs:annotation>
-			<xs:documentation>Message Participant(s).</xs:documentation>
+			<xs:documentation>Information related to parties relevant to the contents of this message.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="Aggregator" type="AggregatorType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>An entity who distributes a SellerÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢s shopping request to multiple Airlines and aggregates subsequent responses.</xs:documentation>
+					<xs:documentation>An entity who distributes a Sellerâ€™s shopping request to multiple Airlines and aggregates subsequent responses.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Corporation" type="CorporationType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Corporate party information.</xs:documentation>
+					<xs:documentation>A company or group of people authorized to act as a single entity (legally a person) and recognized as such in law.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="EnabledSystem" type="EnabledSystemType" minOccurs="0" maxOccurs="1">
@@ -2121,22 +2240,22 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 			</xs:element>
 			<xs:element name="MarketingCarrier" type="CarrierType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Includes the carrier issuing the ticket and all carriers that carry or undertake to carry the passenger and/or his baggage or to perform any other services related to such carriage.</xs:documentation>
+					<xs:documentation>The organization which carries the passenger, baggage, or goods, and/or commits to delivering the carriage as well as any related services such as issuance of ticket, creation of Order, etc.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="OperatingCarrier" type="CarrierType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Includes the carrier issuing the ticket and all carriers that carry or undertake to carry the passenger and/or his baggage or to perform any other services related to such carriage.</xs:documentation>
+					<xs:documentation>The organization which carries the passenger, baggage, or goods, and/or commits to delivering the carriage as well as any related services such as issuance of ticket, creation of Order, etc.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="ORA" type="CarrierType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Includes the carrier issuing the ticket and all carriers that carry or undertake to carry the passenger and/or his baggage or to perform any other services related to such carriage.</xs:documentation>
+					<xs:documentation>The organization which carries the passenger, baggage, or goods, and/or commits to delivering the carriage as well as any related services such as issuance of ticket, creation of Order, etc.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="POA" type="CarrierType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Includes the carrier issuing the ticket and all carriers that carry or undertake to carry the passenger and/or his baggage or to perform any other services related to such carriage.</xs:documentation>
+					<xs:documentation>The organization which carries the passenger, baggage, or goods, and/or commits to delivering the carriage as well as any related services such as issuance of ticket, creation of Order, etc.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="RetailPartner" type="RetailPartnerType" minOccurs="0" maxOccurs="1">
@@ -2153,22 +2272,22 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 	</xs:complexType>
 	<xs:complexType name="PartyType">
 		<xs:annotation>
-			<xs:documentation>NDC Message/ Transaction Party(s) information. Note that information about parties is intended for business use, it is not intended for transaction authentication and routing of the message.</xs:documentation>
+			<xs:documentation>Message/ Transaction Party(s) information. Note that information about parties is intended for business use, it is not intended for transaction authentication and routing of the message.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Participant" type="ParticipantType" minOccurs="0" maxOccurs="1">
+			<xs:element name="Participant" type="ParticipantType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
-					<xs:documentation>Message Participant(s).</xs:documentation>
+					<xs:documentation>Information related to parties relevant to the contents of this message.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Recipient" type="RecipientType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Message recipient information.</xs:documentation>
+					<xs:documentation>Information related to the party receiving this message.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Sender" type="SenderType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Message sender information.</xs:documentation>
+					<xs:documentation>Information related to the party sending this message.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -2208,9 +2327,9 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 			<xs:documentation>A collection of segments which satisfies transportation of a passenger for a given origin and destination.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="DistanceMeasure" minOccurs="0">
+			<xs:element name="DistanceMeasure" type="MeasureType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Total Journey distance which includes the combined distances of all segments, measured by the great circle of the earth.</xs:documentation>
+					<xs:documentation>Total distance between the beginning and end stations of a leg, measured by the great circle of the earth.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Duration" type="DurationType" minOccurs="0" maxOccurs="1">
@@ -2235,27 +2354,27 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 			<xs:documentation>Transportation of a passenger on a Dated Operating Segment.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Arrival" type="TransportArrivalType">
+			<xs:element name="Arrival" type="TransportArrivalType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The action or process of arriving of a transport vehicle in any place or location.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Dep" type="TransportDepType">
+			<xs:element name="Dep" type="TransportDepType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The action or process of leaving of a transport vehicle from any place or location.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="MarketingCarrierInfo" type="DatedMarketingSegmentType">
+			<xs:element name="MarketingCarrierInfo" type="DatedMarketingSegmentType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The commercial designation under which a Dated Operating Segment can be booked, either under the operating carrier's designator or that of another carrier (codeshare).</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="OperatingCarrierInfo" type="DatedOperatingSegmentType" minOccurs="0">
+			<xs:element name="OperatingCarrierInfo" type="DatedOperatingSegmentType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>An operation between board point and any subsequent off point within the same flight designator. Could be one or more legs. Could also be used for other transport vehicles such as train or bus etc.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="PaxSegmentID" type="ID_Type" minOccurs="0">
+			<xs:element name="PaxSegmentID" type="ID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Uniquely identifies a Passenger Segment within the context of one message.</xs:documentation>
 				</xs:annotation>
@@ -2269,14 +2388,14 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 		<xs:sequence>
 			<xs:element name="Pax" type="PaxType" minOccurs="1" maxOccurs="unbounded">
 				<xs:annotation>
-					<xs:documentation>Any person except members of the crew carried or to be carried with the consent of the carrier, on board of any transport vehicle such as aircraft, train, bus, ship. Holds the attributes specific to a one booking, from shopping to f</xs:documentation>
+					<xs:documentation>Any person except members of the crew carried or to be carried with the consent of the carrier, on board of any transport vehicle such as aircraft, train, bus, ship. Holds the attributes specific to a one booking, from shopping to fulfillment.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="PaxType">
 		<xs:annotation>
-			<xs:documentation>Any person except members of the crew carried or to be carried with the consent of the carrier, on board of any transport vehicle such as aircraft, train, bus, ship. Holds the attributes specific to a one booking, from shopping to f</xs:documentation>
+			<xs:documentation>Any person except members of the crew carried or to be carried with the consent of the carrier, on board of any transport vehicle such as aircraft, train, bus, ship. Holds the attributes specific to a one booking, from shopping to fulfillment.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="AgeMeasure" type="MeasureType" minOccurs="0" maxOccurs="1">
@@ -2289,7 +2408,7 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 					<xs:documentation>The Date of Birth of the Passenger.  Intended to be used in NDC Anonymous Shopping requests. Example: 2017-01-13</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="CitizenshipCountryCode" type="CountryCodeType" minOccurs="0">
+			<xs:element name="CitizenshipCountryCode" type="CountryCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>ISO Country Code (can be extended by bilateral agreement in case of exceptions, e.g. Kosovo). Examples: US, FR.</xs:documentation>
 				</xs:annotation>
@@ -2299,14 +2418,14 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 					<xs:documentation>The electronic or geographic address which a party has provided as the contact channel. For example, contact email, contact postal address, contact phone number.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="FOID" type="FOID_Type" minOccurs="0">
+			<xs:element name="FOID" type="FOID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Form of identification.  Typically used to identify that the passenger is who he says he is.  This is the type of FOID as defined in AIRIMP (FF Number, Credit Card Number, etc.).</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="IdentityDoc" type="IdentityDocType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
-					<xs:documentation>Any document which may be used to identify a person or verify aspects of a person's personal identity. If issued in a small, standard credit card size form, it is usually called an identity card. Some countries issue formal identity documents, while othe</xs:documentation>
+					<xs:documentation>Any document which may be used to identify a person or verify aspects of a person's personal identity. If issued in a small, standard credit card size form, it is usually called an identity card. Some countries issue formal identity documents, while others may require identity verification using informal documents. When the identity document incorporates a person's photograph, it may be called photo ID.  In the absence of a formal identity document, a driver's license may be accepted in many countries for identity verification. Most countries accept passports as a form of identification.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Individual" type="IndividualType" minOccurs="0" maxOccurs="1">
@@ -2329,19 +2448,29 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 					<xs:documentation>Uniquely identifies a Passenger within the context of one message.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="PaxRefID" type="ID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Reference to a Passenger ID within this message, associating an infant on lap to this adult Passenger.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="ProfileConsentInd" type="IndType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>When TRUE, passenger authorizes the airline to share his/her profile information or send promotional emails.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="ProfileID" type="TextType" minOccurs="0" maxOccurs="1">
+			<xs:element name="ProfileID_Text" type="TextType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Passenger Profile ID</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="PTC" type="IATAPTC_CodeType" minOccurs="0" maxOccurs="1">
+			<xs:element name="PTC" type="IATA_PTC_CodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Type code applying to the Passenger which typically drives pricing (e.g. ADT, CHD, etc).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RedressCase" type="RedressCaseType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>A personâ€™s case of being registered with a countryâ€™s redress program, which can eliminate watch list misidentification and assist in identity verification.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="unbounded">
@@ -2349,7 +2478,7 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 					<xs:documentation>Additional, supplementary information about the document or service.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="ResidenceCountryCode" type="CountryCodeType" minOccurs="0">
+			<xs:element name="ResidenceCountryCode" type="CountryCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>ISO Country Code (can be extended by bilateral agreement in case of exceptions, e.g. Kosovo). Examples: US, FR.</xs:documentation>
 				</xs:annotation>
@@ -2381,7 +2510,7 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 					<xs:documentation>Percent of the total Offer price amount intended to be paid on this payment card type.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="IssuerIdentificationNumber" type="xs:string" minOccurs="0" maxOccurs="1">
+			<xs:element name="IssuerIdentificationNumber" type="IINNumberType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Payment card IIN/BIN number.  Example: 401123</xs:documentation>
 				</xs:annotation>
@@ -2390,9 +2519,9 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 	</xs:complexType>
 	<xs:simpleType name="PaymentMethodCodeContentType">
 		<xs:annotation>
-			<xs:documentation>The form of payment type. Examples: Credit Card, Cash.</xs:documentation>
+			<xs:documentation>The form of payment type. Examples: Credit Card, Cash. {codeListAgencyName}PADIS{/codeListAgencyName} {codeListName}Form of payment identification{/codeListName} {codeListIdentifier}9888{/codeListIdentifier}</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string"/>
+		<xs:restriction base="xs:token"/>
 	</xs:simpleType>
 	<xs:simpleType name="PaymentMethodCodeType">
 		<xs:annotation>
@@ -2410,59 +2539,54 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 					<xs:documentation>Reference to a Passenger ID.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="TypeCode" type="PaymentMethodCodeType" maxOccurs="unbounded">
+			<xs:element name="TypeCode" type="PaymentMethodCodeType" minOccurs="1" maxOccurs="unbounded">
 				<xs:annotation>
-					<xs:documentation>The form of payment type. Examples: Credit Card, Cash. Encoding Scheme: IATA PADIS code list data element [9888] Form of Payment Identification</xs:documentation>
+					<xs:documentation>The payment method type. Examples: Credit Card, Cash.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="PaymentMethodType">
-		<xs:annotation>
-			<xs:documentation>A form of procedure for the payment of goods or services, plus any transactional information specific to the payment method other than the amount.</xs:documentation>
-		</xs:annotation>
-		<xs:sequence/>
-	</xs:complexType>
-	<xs:simpleType name="PercentType">
+	<xs:complexType name="PercentType">
 		<xs:annotation>
 			<xs:documentation>A percent is a value representing a fraction of one hundred,expressed as a quotient.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:decimal"/>
-	</xs:simpleType>
+		<xs:simpleContent>
+			<xs:extension base="xs:decimal">
+				<xs:attribute name="Format" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
 	<xs:complexType name="PhoneType">
 		<xs:annotation>
-			<xs:documentation>A telephone number is a sequence of digits assigned to a fixed-line telephone subscriber station connected to a telephone line or to a wireless electronic telephony device, such as a radio telephone or a mobile telephone, or to other devices for data tra</xs:documentation>
+			<xs:documentation>A telephone number is a sequence of digits assigned to a fixed-line telephone subscriber station connected to a telephone line or to a wireless electronic telephony device, such as a radio telephone or a mobile telephone, or to other devices for data transmission via the public switched telephone network (PSTN) or other private networks.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="AreaCodeNumber" type="NumberType" minOccurs="0">
+			<xs:element name="AreaCodeNumber" type="TextType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Phone number area code.  Example: 813</xs:documentation>
+					<xs:documentation>Phone number area code.  Example: 813 Note: The phone number can be put unstructured into the phone element or can be put structured into country dialing code, area code, phone number and extension.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="CountryDialingCode" type="CountryDialingCodeType" minOccurs="0">
+			<xs:element name="CountryDialingCode" type="CountryDialingCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Numeric telephone dialingÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â prefixes for the memberÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â countries of the International Telecommunication Union (ITU).</xs:documentation>
+					<xs:documentation>Numeric telephone dialingÂ prefixes for the memberÂ countries of the International Telecommunication Union (ITU).</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="ExtensionNumber" type="NumberType" minOccurs="0">
+			<xs:element name="ExtensionNumber" type="TextType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Phone extension number.  Example: 1234</xs:documentation>
+					<xs:documentation>Phone extension number.  Example: 1234 Note: The phone number can be put unstructured into the phone element or can be put structured into countrydialing code, area code, phone number and extension.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="LabelText" type="TextType" minOccurs="0">
+			<xs:element name="LabelText" type="TextType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Used to differentiate multiple Phone numbers of one contact.  Examples: Work, Home, Mobile</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="PhoneNumber" type="NumberType" minOccurs="0">
+			<xs:element name="PhoneNumber" type="TextType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Phone number text. Examples: +1 999-999-9999 ext 1234,  617-9976 Note: This may be a simple, un-structured phone number, such as +01 999-999-9999 ext 1234 or combined with the additional attributes to create a structured phone number.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="PolicyType">
-		<xs:sequence/>
 	</xs:complexType>
 	<xs:complexType name="POS_Type">
 		<xs:annotation>
@@ -2501,42 +2625,42 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 			<xs:documentation>Natural or physical address used for postal service. May be a building address, airport address, etc.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="BuildingRoomText" type="TextType" minOccurs="0">
+			<xs:element name="BuildingRoomText" type="TextType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Additional address information including building name, room, apartment, or suite number.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="CityName" type="ProperNameType" minOccurs="0">
+			<xs:element name="CityName" type="NameType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The name, expressed as text, of the city, town or village.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="CountryCode" type="CountryCodeType" minOccurs="0">
+			<xs:element name="CountryCode" type="CountryCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>ISO Country Code. Examples: US, FR.</xs:documentation>
+					<xs:documentation>ISO Country Code (can be extended by bilateral agreement in case of exceptions, e.g. Kosovo). Examples: US, FR.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="CountryName" type="ProperNameType" minOccurs="0">
+			<xs:element name="CountryName" type="ProperNameType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The name, expressed as text, of the country.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="CountrySubdivisionName" type="ProperNameType" minOccurs="0">
+			<xs:element name="CountrySubDivisionName" type="ProperNameType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>The name, expressed as text, of the subdivision of a country.</xs:documentation>
+					<xs:documentation>The name, expressed as text, of the sub-division of a country.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="LabelText" type="TextType" minOccurs="0">
+			<xs:element name="LabelText" type="TextType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Used to differentiate multiple Postal Addresses of one contact.  Examples: AddressAtOrigin or AddressAtDestination</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="PO_BoxCode" type="CodeType" minOccurs="0">
+			<xs:element name="PO_BoxCode" type="CodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Post office box.  Example: P.O. Box 21</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="PostalCode" type="CodeType" minOccurs="0">
+			<xs:element name="PostalCode" type="CodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Postal code. Examples: 11001, 11001-2345</xs:documentation>
 				</xs:annotation>
@@ -2548,17 +2672,37 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:simpleType name="PrefLevelCodeContentType">
+		<xs:annotation>
+			<xs:documentation>Level of preference requested.  Examples: Preferred, Required, or Exclude.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Exclude"/>
+			<xs:enumeration value="Preferred"/>
+			<xs:enumeration value="Required">
+				<xs:annotation>
+					<xs:documentation>female description</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PrefLevelCodeType">
+		<xs:annotation>
+			<xs:documentation>Level of preference requested.  Examples: Preferred, Required, or Exclude.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="PrefLevelCodeContentType"/>
+	</xs:simpleType>
 	<xs:complexType name="PrefLevelType">
 		<xs:annotation>
 			<xs:documentation>Information supporting a preference including preference level code (e.g. Preferred, Exclude, etc.).</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="PRefContextText" type="xs:string" minOccurs="0" maxOccurs="1">
+			<xs:element name="PrefContextText" type="TextType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Preference level context. E.g. MyContext</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="PrefLevelCode" type="xs:string" minOccurs="0" maxOccurs="1">
+			<xs:element name="PrefLevelCode" type="PrefLevelCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Preference level code (e.g. Preferred, Required, Exclude, Other).</xs:documentation>
 				</xs:annotation>
@@ -2567,10 +2711,22 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 	</xs:complexType>
 	<xs:complexType name="PrePaidCertificateType">
 		<xs:sequence>
-			<xs:element name="AppText" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="AppText" type="TextType" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="EffectiveDateTime" type="DateTimeType" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="ExpiryDateTime" type="DateTimeType" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="Number" type="NumberType" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PricingMethodCriteriaType">
+		<xs:annotation>
+			<xs:documentation>Contains information to identify how reservation was re-priced to obtain best published fare (Eg. best fare in same cabin, best fare in all cabins, other parameters to select best fare).</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="BestPricingOptionText" type="TextType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Best Available Fare Pricing Method. Examples: Y (BEST FARE IN SAME CABIN CLASS) C (BEST FARE ACROSS ALL CABIN CLASSES) N (PRICE ACCORDINGLY TO OTHER DESIGNATED PRICING PARAMETERS)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="PricingParameterType">
@@ -2593,7 +2749,7 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 					<xs:documentation>When TRUE, only award eligible offers are requested.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="OverrideCurCode" type="xs:string" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="OverrideCurCode" type="CurCodeType" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="SimplePricingInd" type="IndType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>When TRUE, simple pricing is requested for returned offers.</xs:documentation>
@@ -2606,17 +2762,29 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:simpleType name="ProductDetailsCodeContentType">
+		<xs:annotation>
+			<xs:documentation>Enumeration set for the IATA Aircraft Type Code BDT.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="ProductDetailsCodeType">
+		<xs:annotation>
+			<xs:documentation>Business data type for Product Details as per PADIS Codeset.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="ProductDetailsCodeContentType"/>
+	</xs:simpleType>
 	<xs:complexType name="ProgamContractType">
 		<xs:annotation>
 			<xs:documentation>a written or spoken agreement, especially one concerning employment, sales, or tenancy, that is intended to be enforceable by law</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="ContractID" type="xs:string" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="ContractID" type="ID_Type" minOccurs="1" maxOccurs="1"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ProgramAccountType">
 		<xs:sequence>
-			<xs:element name="AccountID" type="xs:string" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="AccountID" type="ID_Type" minOccurs="1" maxOccurs="1"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ProgramCriteriaType">
@@ -2624,17 +2792,17 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 			<xs:documentation>Filtering criteria based on discount programs.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="CompanyIndexText" type="TextType" minOccurs="0">
+			<xs:element name="CompanyIndexText" type="TextType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Company profile index associated with this special fare. Example: COM1234</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="MemberStatusText" type="xs:string" minOccurs="0" maxOccurs="1">
+			<xs:element name="MemberStatusText" type="TextType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Member or participant status within the program (e.g. VP, Director, Exec).</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Name" type="xs:string" minOccurs="0" maxOccurs="1">
+			<xs:element name="Name" type="NameType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The name of the program.</xs:documentation>
 				</xs:annotation>
@@ -2646,31 +2814,34 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="ProgramAccount" type="ProgramAccountType" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="ProgramOwner">
+			<xs:element name="ProgramOwner" type="ProgramOwnerType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Program Owner information.</xs:documentation>
 				</xs:annotation>
-				<xs:complexType>
-					<xs:choice>
-						<xs:element name="Carrier" type="CarrierType" minOccurs="0">
-							<xs:annotation>
-								<xs:documentation>Includes the carrier issuing the ticket and all carriers that carry or undertake to carry the passenger and/or his baggage or to perform any other services related to such carriage.</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:element name="Org" type="OrgType" minOccurs="0">
-							<xs:annotation>
-								<xs:documentation>An organized structure set up for a particular purpose, such as a business, government body, department, charity, or financial institution.</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-					</xs:choice>
-				</xs:complexType>
 			</xs:element>
-			<xs:element name="TypeCode" type="xs:string" minOccurs="0" maxOccurs="1">
+			<xs:element name="TypeCode" type="CodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Program type code (e.g. Discount Program, Incentive Program, Pre-paid Program).</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProgramOwnerType">
+		<xs:annotation>
+			<xs:documentation>Program Owner information.</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="Carrier" type="CarrierType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The organization which carries the passenger, baggage, or goods, and/or commits to delivering the carriage as well as any related services such as issuance of ticket, creation of Order, etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Org" type="OrgType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>An organized structure set up for a particular purpose, such as a business, government body, department, charity, or financial institution.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
 	</xs:complexType>
 	<xs:complexType name="PromotionIssuerType">
 		<xs:annotation>
@@ -2679,12 +2850,17 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 		<xs:choice>
 			<xs:element name="Carrier" type="CarrierType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Includes the carrier issuing the ticket and all carriers that carry or undertake to carry the passenger and/or his baggage or to perform any other services related to such carriage.</xs:documentation>
+					<xs:documentation>The organization which carries the passenger, baggage, or goods, and/or commits to delivering the carriage as well as any related services such as issuance of ticket, creation of Order, etc.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Org" type="OrgType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>An organized structure set up for a particular purpose, such as a business, government body, department, charity, or financial institution.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TravelAgency" type="TravelAgencyType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A private retailer or public service that provides travel and tourism related services to the public on behalf of suppliers such as activities, airlines, car rentals, cruise lines, hotels, railways, travel insurance, and package tours.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:choice>
@@ -2732,7 +2908,9 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 			<xs:documentation>A quantity is a counted number of non-monetary units, possibly including fractions</xs:documentation>
 		</xs:annotation>
 		<xs:simpleContent>
-			<xs:extension base="xs:decimal"/>
+			<xs:extension base="xs:decimal">
+				<xs:attribute name="UnitCode" type="xs:token" use="optional"/>
+			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
 	<xs:complexType name="RateType">
@@ -2747,40 +2925,29 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 				<xs:attribute name="CurCode" type="xs:token" use="optional"/>
 				<xs:attribute name="Format" type="xs:string" use="optional"/>
 				<xs:attribute name="MultiplierValue" type="xs:decimal" use="optional"/>
-				<xs:attribute name="UnitCode" type="xs:token" use="optional"/>
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
-	<xs:simpleType name="RBDCodeContentType">
+	<xs:simpleType name="RBD_CodeContentType">
 		<xs:annotation>
-			<xs:documentation>Enumeration values of RBD Codes as per PADIS codeset 9800.</xs:documentation>
+			<xs:documentation>Enumeration values of RBD Codes as per PADIS codeset 9800. {codeListAgencyName}IATA{/codeListAgencyName} {codeListIdentifier}PADIS 9800{/codeListIdentifier}</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:token"/>
 	</xs:simpleType>
-	<xs:complexType name="RBDCodeType">
+	<xs:complexType name="RBD_CodeType">
 		<xs:annotation>
 			<xs:documentation>Additional BDT to specify the RBD as defined in AIRIMP and SSIM.</xs:documentation>
 		</xs:annotation>
 		<xs:simpleContent>
-			<xs:extension base="RBDCodeContentType">
-				<xs:attribute name="LangID" type="xs:token" use="optional"/>
-				<xs:attribute name="ListAgencyID" type="xs:token" use="optional"/>
-				<xs:attribute name="ListAgencyName" type="xs:string" use="optional"/>
-				<xs:attribute name="ListID" type="xs:token" use="optional"/>
-				<xs:attribute name="ListName" type="xs:string" use="optional"/>
-				<xs:attribute name="ListSchemeUniformResourceID" type="xs:anyURI" use="optional"/>
-				<xs:attribute name="ListUniformResourceID" type="xs:anyURI" use="optional"/>
-				<xs:attribute name="ListVersionID" type="xs:token" use="optional"/>
-				<xs:attribute name="Name" type="xs:string" use="optional"/>
-			</xs:extension>
+			<xs:extension base="RBD_CodeContentType"/>
 		</xs:simpleContent>
 	</xs:complexType>
-	<xs:complexType name="RBDType">
+	<xs:complexType name="RBD_Type">
 		<xs:annotation>
-			<xs:documentation>Reservation Booking Designator.  A categorization used to facilitate access to inventory, application of filed fares, and to identify cabin entitlement. Identified using a single alpha character. E.g. 'J' for Business Class Premium, 'D' for Business Disc</xs:documentation>
+			<xs:documentation>Reservation Booking Designator.  A categorization used to facilitate access to inventory, application of filed fares, and to identify cabin entitlement. Identified using a single alpha character. E.g. 'J' for Business Class Premium, 'D' for Business Discounted.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="RBDCode" type="RBDCodeType" minOccurs="1" maxOccurs="1">
+			<xs:element name="RBD_Code" type="RBD_CodeType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Code used to identify a particular RBD (e.g. P, J, W, M, etc.).</xs:documentation>
 				</xs:annotation>
@@ -2789,17 +2956,17 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 	</xs:complexType>
 	<xs:complexType name="RecipientType">
 		<xs:annotation>
-			<xs:documentation>Message recipient information.</xs:documentation>
+			<xs:documentation>Information related to the party receiving this message.</xs:documentation>
 		</xs:annotation>
 		<xs:choice>
 			<xs:element name="Aggregator" type="AggregatorType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>An entity who distributes a SellerÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢s shopping request to multiple Airlines and aggregates subsequent responses.</xs:documentation>
+					<xs:documentation>An entity who distributes a Sellerâ€™s shopping request to multiple Airlines and aggregates subsequent responses.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Corporation" type="CorporationType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Corporate party information.</xs:documentation>
+					<xs:documentation>A company or group of people authorized to act as a single entity (legally a person) and recognized as such in law.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="EnabledSystem" type="EnabledSystemType" minOccurs="1" maxOccurs="1">
@@ -2809,22 +2976,22 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 			</xs:element>
 			<xs:element name="MarketingCarrier" type="CarrierType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Includes the carrier issuing the ticket and all carriers that carry or undertake to carry the passenger and/or his baggage or to perform any other services related to such carriage.</xs:documentation>
+					<xs:documentation>The organization which carries the passenger, baggage, or goods, and/or commits to delivering the carriage as well as any related services such as issuance of ticket, creation of Order, etc.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="OperatingCarrier" type="CarrierType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Includes the carrier issuing the ticket and all carriers that carry or undertake to carry the passenger and/or his baggage or to perform any other services related to such carriage.</xs:documentation>
+					<xs:documentation>The organization which carries the passenger, baggage, or goods, and/or commits to delivering the carriage as well as any related services such as issuance of ticket, creation of Order, etc.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="ORA" type="CarrierType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Includes the carrier issuing the ticket and all carriers that carry or undertake to carry the passenger and/or his baggage or to perform any other services related to such carriage.</xs:documentation>
+					<xs:documentation>The organization which carries the passenger, baggage, or goods, and/or commits to delivering the carriage as well as any related services such as issuance of ticket, creation of Order, etc.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="POA" type="CarrierType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Includes the carrier issuing the ticket and all carriers that carry or undertake to carry the passenger and/or his baggage or to perform any other services related to such carriage.</xs:documentation>
+					<xs:documentation>The organization which carries the passenger, baggage, or goods, and/or commits to delivering the carriage as well as any related services such as issuance of ticket, creation of Order, etc.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="RetailPartner" type="RetailPartnerType" minOccurs="1" maxOccurs="1">
@@ -2839,6 +3006,23 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 			</xs:element>
 		</xs:choice>
 	</xs:complexType>
+	<xs:complexType name="RedressCaseType">
+		<xs:annotation>
+			<xs:documentation>A personâ€™s case of being registered with a countryâ€™s redress program, which can eliminate watch list misidentification and assist in identity verification.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ProgramName" type="NameType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The name of the redress program (e.g. Secure Flight Program).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RedressCaseID" type="ID_Type" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A unique government-issued identifier assigned to a redress case.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
 	<xs:complexType name="RemarkType">
 		<xs:annotation>
 			<xs:documentation>Additional, supplementary information about the document or service.</xs:documentation>
@@ -2846,7 +3030,7 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 		<xs:sequence>
 			<xs:element name="DisplayInd" type="IndType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>When TRUE, this remark should be displayed.  Notes: 1. This capability may not be supported by all NDC-enabled systems or may be supported by bilateral agreement only.  The technical implementation of this capability is not dictated by this specificat</xs:documentation>
+					<xs:documentation>When TRUE, this remark should be displayed.  Notes: 1. This capability may not be supported by all NDC-enabled systems or may be supported by bilateral agreement only.  The technical implementation of this capability is not dictated by this specification.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="RemarkText" type="TextType" minOccurs="0" maxOccurs="1">
@@ -2893,9 +3077,9 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 			<xs:documentation>Information related to how shopping results should be returned in the response.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="BDC" type="BDCType" minOccurs="0" maxOccurs="1">
+			<xs:element name="BDC" type="BDC_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Baggage Determining Carrier, analysis result, and reason information.</xs:documentation>
+					<xs:documentation>The carrier whose baggage allowances and charges apply.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="CurParameter" type="CurParameterType" minOccurs="0" maxOccurs="unbounded">
@@ -2913,7 +3097,7 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 					<xs:documentation>Language Code representation.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="MeasurementSystemCode" type="xs:string" minOccurs="0" maxOccurs="1">
+			<xs:element name="MeasurementSystemCode" type="MeasurementSystemCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Measurement system code.  Examples: Imperial, Metric</xs:documentation>
 				</xs:annotation>
@@ -2956,11 +3140,11 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 		<xs:annotation>
 			<xs:documentation>Additional BDT to specify the reason for issuance code.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string"/>
+		<xs:restriction base="RFIC_ContentType"/>
 	</xs:simpleType>
-	<xs:simpleType name="RFICContentType">
+	<xs:simpleType name="RFIC_ContentType">
 		<xs:annotation>
-			<xs:documentation>Enumeration values for Reason for Issuance codes.</xs:documentation>
+			<xs:documentation>Enumeration values for Reason for Issuance codes. {codeListAgencyName}PADIS{/codeListAgencyName} {codeListName}Special condition{/codeListName} {codeListIdentifier}4183{/codeListIdentifier}</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
 			<xs:pattern value="[0-9A-Z]{1,3}"/>
@@ -2968,15 +3152,7 @@ Encoding Scheme: PADIS codeset element 9910 - Fare Qualifier</xs:documentation>
 	</xs:simpleType>
 	<xs:simpleType name="RFISC_ContentType">
 		<xs:annotation>
-			<xs:documentation>Enumeration values for Reason for Issuance sub codes.
-
-Examples:
-0CC (First Checked Bag)
-0B1 (In-flight Entertainment)
-0BX (Lounge)
-0B3 (Meal/ Beverage)
-0B5 (Pre-reserved Seat Assignment)
-0G6 (Priority Boarding)</xs:documentation>
+			<xs:documentation>Enumeration values for Reason for Issuance sub codes.  Examples: 0CC (First Checked Bag) 0B1 (In-flight Entertainment) 0BX (Lounge) 0B3 (Meal/ Beverage) 0B5 (Pre-reserved Seat Assignment) 0G6 (Priority Boarding) {codeListAgencyName}ATPCo{/codeListAgencyName} {codeListName}Optional Services Industry Sub Codes{/codeListName}</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string"/>
 	</xs:simpleType>
@@ -2986,11 +3162,63 @@ Examples:
 		</xs:annotation>
 		<xs:restriction base="RFISC_ContentType"/>
 	</xs:simpleType>
+	<xs:complexType name="SalesTaxRegistrationType">
+		<xs:annotation>
+			<xs:documentation>The Identification and contact information of a party purchasing goods or services as registered with a Purchase Tax.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CityName" type="NameType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The name, expressed as text, of the city, town or village.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CountryCode" type="CountryCodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>ISO Country Code (can be extended by bilateral agreement in case of exceptions, e.g. Kosovo). Examples: US, FR.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CountryDialingCode" type="CountryDialingCodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Numeric telephone dialingÂ prefixes for the memberÂ countries of the International Telecommunication Union (ITU).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CountrySubDivisionName" type="ProperNameType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The name, expressed as text, of the sub-division of a country.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EmailAddressText" type="TextType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The email address which should be used for contact purposes.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PhoneNumber" type="TextType" minOccurs="0" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation>Phone number text. Examples: +1 999-999-9999 ext 1234,  617-9976 Note: This may be a simple, un-structured phone number, such as +01 999-999-9999 ext 1234 or combined with the additional attributes to create a structured phone number.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PostalCode" type="CodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Postal code. Examples: 11001, 11001-2345</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SalesTaxRegistrationID" type="ID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Registered identifier of the business purchasing the goods and services.  For example, a GST number in India XX.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StreetText" type="TextType" minOccurs="0" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation>Street name and number. Examples: Main Street, 100 Main Street</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
 	<xs:simpleType name="SeatCharacteristicCodeContentType">
 		<xs:annotation>
-			<xs:documentation>Refers to aircraft seat characteristic codes e.g. A (Aisle seat), E (Exit and emergency exit). See PADIS code list 9825.</xs:documentation>
+			<xs:documentation>Refers to aircraft seat characteristic codes e.g. A (Aisle seat), E (Exit and emergency exit). See PADIS code list 9825. {codeListAgencyName}PADIS{/codeListAgencyName} {codeListName}Seat characteristic,coded{/codeListName} {codeListIdentifier}9825{/codeListIdentifier}</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string"/>
+		<xs:restriction base="xs:token"/>
 	</xs:simpleType>
 	<xs:simpleType name="SeatCharacteristicCodeType">
 		<xs:annotation>
@@ -3010,6 +3238,18 @@ Examples:
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:simpleType name="SeatStatusCodeContentType">
+		<xs:annotation>
+			<xs:documentation>Seat status. Examples: SA (Seats are available) WO (Seats waitlist open for segment) WC (Seats waitlist closed for segment) OR (Seats on request only to airline) {codeListAgencyName}PADIS{/codeListAgencyName} {codeListName}Seat occupation{/codeListName} {codeListIdentifier}9865{/codeListIdentifier}</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token"/>
+	</xs:simpleType>
+	<xs:simpleType name="SeatStatusCodeType">
+		<xs:annotation>
+			<xs:documentation>Additional BDT to specify the seat status code.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="SeatStatusCodeContentType"/>
+	</xs:simpleType>
 	<xs:complexType name="SeatType">
 		<xs:annotation>
 			<xs:documentation>A sitting place for a passenger or crew in a cabin compartment on a transport vehicle.</xs:documentation>
@@ -3025,9 +3265,9 @@ Examples:
 					<xs:documentation>Alphabetic character identifying a seat within a row.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="OccupationStatusCode" type="CodeType" minOccurs="0">
+			<xs:element name="OccupationStatusCode" type="SeatStatusCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Seat occupation status code (Available, Occupied, etc.).</xs:documentation>
+					<xs:documentation>Information related to the availability of a particular Seat on Leg.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="SeatProfile" type="SeatProfileType" minOccurs="0" maxOccurs="unbounded">
@@ -3035,9 +3275,9 @@ Examples:
 					<xs:documentation>Airline defined group of seats sharing common characteristics.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="SeatRowNumber" type="NumberType" minOccurs="0">
+			<xs:element name="SeatRowNumber" type="NaturalNumberType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Number of the seat row (e.g. 1, 2, 3).</xs:documentation>
+					<xs:documentation>Ordinal number identifying a seat row in an aircraft.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -3052,38 +3292,26 @@ Examples:
 					<xs:documentation>Preferred maximum time for any Segment.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="PRefCode" type="xs:string" minOccurs="0" maxOccurs="1">
+			<xs:element name="PrefCode" type="PrefLevelCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Level of preference requested.  Examples: Preferred, Required, or Exclude.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:simpleType name="SegmentTypeCodeContentType">
-		<xs:annotation>
-			<xs:documentation>Flight segment type. Example: P (PASSIVE)</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:string"/>
-	</xs:simpleType>
-	<xs:simpleType name="SegmentTypeCodeType">
-		<xs:annotation>
-			<xs:documentation>BDT referencing the Segment Type as per PADIS codeset (Flight Segment Type).</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="SegmentTypeCodeContentType"/>
-	</xs:simpleType>
 	<xs:complexType name="SenderType">
 		<xs:annotation>
-			<xs:documentation>Message sender information.</xs:documentation>
+			<xs:documentation>Information related to the party sending this message.</xs:documentation>
 		</xs:annotation>
 		<xs:choice>
 			<xs:element name="Aggregator" type="AggregatorType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>An entity who distributes a SellerÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢s shopping request to multiple Airlines and aggregates subsequent responses.</xs:documentation>
+					<xs:documentation>An entity who distributes a Sellerâ€™s shopping request to multiple Airlines and aggregates subsequent responses.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Corporation" type="CorporationType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Corporate party information.</xs:documentation>
+					<xs:documentation>A company or group of people authorized to act as a single entity (legally a person) and recognized as such in law.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="EnabledSystem" type="EnabledSystemType" minOccurs="1" maxOccurs="1">
@@ -3093,22 +3321,22 @@ Examples:
 			</xs:element>
 			<xs:element name="MarketingCarrier" type="CarrierType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Includes the carrier issuing the ticket and all carriers that carry or undertake to carry the passenger and/or his baggage or to perform any other services related to such carriage.</xs:documentation>
+					<xs:documentation>The organization which carries the passenger, baggage, or goods, and/or commits to delivering the carriage as well as any related services such as issuance of ticket, creation of Order, etc.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="OperatingCarrier" type="CarrierType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Includes the carrier issuing the ticket and all carriers that carry or undertake to carry the passenger and/or his baggage or to perform any other services related to such carriage.</xs:documentation>
+					<xs:documentation>The organization which carries the passenger, baggage, or goods, and/or commits to delivering the carriage as well as any related services such as issuance of ticket, creation of Order, etc.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="ORA" type="CarrierType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Includes the carrier issuing the ticket and all carriers that carry or undertake to carry the passenger and/or his baggage or to perform any other services related to such carriage.</xs:documentation>
+					<xs:documentation>The organization which carries the passenger, baggage, or goods, and/or commits to delivering the carriage as well as any related services such as issuance of ticket, creation of Order, etc.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="POA" type="CarrierType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Includes the carrier issuing the ticket and all carriers that carry or undertake to carry the passenger and/or his baggage or to perform any other services related to such carriage.</xs:documentation>
+					<xs:documentation>The organization which carries the passenger, baggage, or goods, and/or commits to delivering the carriage as well as any related services such as issuance of ticket, creation of Order, etc.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="RetailPartner" type="RetailPartnerType" minOccurs="1" maxOccurs="1">
@@ -3123,29 +3351,6 @@ Examples:
 			</xs:element>
 		</xs:choice>
 	</xs:complexType>
-	<xs:simpleType name="ServiceBookingStatusCodeType">
-		<xs:annotation>
-			<xs:documentation>Represents the current status of a service item</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="ServiceBookingStatusContentType"/>
-	</xs:simpleType>
-	<xs:simpleType name="ServiceBookingStatusContentType">
-		<xs:annotation>
-			<xs:documentation>shows the possible statuses of a service item</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="CONFIRMED">
-				<xs:annotation>
-					<xs:documentation>Inventory owner confirms he is able to provide the Service.</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="REQUESTED">
-				<xs:annotation>
-					<xs:documentation>OM requests the Service from the Inventory owner.</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-		</xs:restriction>
-	</xs:simpleType>
 	<xs:complexType name="ServiceCriteriaType">
 		<xs:annotation>
 			<xs:documentation>Group and subgroup code(s) that specify the requested categories of Optional Services to be returned in the results.</xs:documentation>
@@ -3178,84 +3383,14 @@ Examples:
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:simpleType name="ServiceDeliveryStatusCodeType">
-		<xs:annotation>
-			<xs:documentation>Represents the current status of a service item</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="ServiceDeliveryStatusContentType"/>
-	</xs:simpleType>
-	<xs:simpleType name="ServiceDeliveryStatusContentType">
-		<xs:annotation>
-			<xs:documentation>shows the possible statuses of a service item</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="DELIVERED">
-				<xs:annotation>
-					<xs:documentation>Service has been successfully delivered.</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="EXPIRED">
-				<xs:annotation>
-					<xs:documentation>Service is no longer available for delivery.
-Service purchased with an associated time limit for consumption and Service was never claimed.
-Service having been at least Confirmed is no longer available as the Customer did not claim the Service within a specific time period, as dictated by the Airline.</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="FAILEDTODELIVER">
-				<xs:annotation>
-					<xs:documentation>Service could not be delivered due to AirlineÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â´s or provider limitations.</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="INPROGRESS">
-				<xs:annotation>
-					<xs:documentation>The DP is in the process of delivering the Service.
-There is a universal concept that the ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã¢â‚¬Å“In progressÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â status may block any further financial transactions; e.g. refund</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="NOTCLAIMED">
-				<xs:annotation>
-					<xs:documentation>The Service has not been claimed by the Passenger for reasons as a result of Passenger action or inaction. e.g. Passenger no-show, etc.</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="READYTODELIVER">
-				<xs:annotation>
-					<xs:documentation>Provider is in a position to start delivery of the Service.</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="READYTOPROCEED">
-				<xs:annotation>
-					<xs:documentation>OM is in a position to allow a DP to prepare the Service.
-Customer is entitled to receive the Service. This is typically a trigger for ORA to begin accounting process.</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="REMOVED">
-				<xs:annotation>
-					<xs:documentation>Service was deleted.</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="SUSPENDED">
-				<xs:annotation>
-					<xs:documentation>Delivery of the Service is suspended as a result of an Airline decision.  
-Can only revert back to the previous status.
-Exception is that Suspended may go to Removed. 
-This status may be used in case of fraud detection.</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="UNABLETODELIVER">
-				<xs:annotation>
-					<xs:documentation>It is not possible for the DP to deliver a Service. This could be for reasons of availability, legal or regulatory constraint.</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-		</xs:restriction>
-	</xs:simpleType>
 	<xs:complexType name="ServiceType">
 		<xs:annotation>
 			<xs:documentation>The instance of a specific flight or Service Definition as it has been offered (and eventually ordered and consumed) in the context of a specific Offer and/or Order.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="ServiceID" type="ID_Type" minOccurs="1" maxOccurs="1">
+			<xs:element name="ServiceID" type="ID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Service ID assigned by the carrier.</xs:documentation>
+					<xs:documentation>Uniquely Identifies a Service within the context of one message.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -3272,7 +3407,7 @@ This status may be used in case of fraud detection.</xs:documentation>
 			</xs:element>
 			<xs:element name="BaggagePricingCriteria" type="BaggagePricingCriteriaType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Baggage pricing qualifiers.</xs:documentation>
+					<xs:documentation>Baggage pricing specific filter criteria for shopping requests, including baggage type, charges, and settlement information.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="CabinTypeCriteria" type="CabinTypeType" minOccurs="0" maxOccurs="unbounded">
@@ -3302,7 +3437,7 @@ This status may be used in case of fraud detection.</xs:documentation>
 			</xs:element>
 			<xs:element name="FlightCriteria" type="FlightCriteriaType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Flight preferences including aircraft features, Cabin Type, RBD, and Tail Number.</xs:documentation>
+					<xs:documentation>Flight filter criteria including aircraft features, Cabin Type, RBD, and Tail Number.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="PaymentCardCriteria" type="PaymentCardCriteriaType" minOccurs="0" maxOccurs="unbounded">
@@ -3315,23 +3450,10 @@ This status may be used in case of fraud detection.</xs:documentation>
 					<xs:documentation>A form of procedure for the payment of goods or services, plus any transactional information specific to the payment method other than the amount.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="PricingMethodCriteria" minOccurs="0">
+			<xs:element name="PricingMethodCriteria" type="PricingMethodCriteriaType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Contains information to identify how reservation was re-priced to obtain best published fare (Eg. best fare in same cabin, best fare in all cabins, other parameters to select best fare).</xs:documentation>
 				</xs:annotation>
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="BestPricingOptionText" type="TextType">
-							<xs:annotation>
-								<xs:documentation>Best Available Fare Pricing Method.
-Examples:
-Y (BEST FARE IN SAME CABIN CLASS)
-C (BEST FARE ACROSS ALL CABIN CLASSES)
-N (PRICE ACCORDINGLY TO OTHER DESIGNATED PRICING PARAMETERS)</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-					</xs:sequence>
-				</xs:complexType>
 			</xs:element>
 			<xs:element name="ProgramCriteria" type="ProgramCriteriaType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
@@ -3358,7 +3480,7 @@ N (PRICE ACCORDINGLY TO OTHER DESIGNATED PRICING PARAMETERS)</xs:documentation>
 					<xs:documentation>Group and subgroup code(s) that specify the requested categories of Optional Services to be returned in the results.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="SpecialNeedsCriteria" type="SpecialServiceType" minOccurs="0">
+			<xs:element name="SpecialNeedsCriteria" type="SpecialServiceType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Passenger Special Needs Attributes.
 
@@ -3370,7 +3492,7 @@ Notes:
 3. Special Needs may be associated to flight segments but will apply to ALL flight segments if no associations are specified.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="TripPurposeCode" type="xs:string" minOccurs="0" maxOccurs="1">
+			<xs:element name="TripPurposeCode" type="TripPurposeCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Trip purpose information (e.g. Business, Leisure, etc.).</xs:documentation>
 				</xs:annotation>
@@ -3382,14 +3504,19 @@ Notes:
 			<xs:documentation>Shopping session (message response) ID.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
+			<xs:element name="OfferRefID" type="ID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Reference to an Offer ID for which this Payment applies.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="OwnerCode" type="AirlineDesigCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Airline code assigned to a carrier. Either ICAO-defined 3-character code or IATA-defined 2-character code.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="ShoppingResponseID" type="ID_Type" minOccurs="1" maxOccurs="1">
+			<xs:element name="ShoppingResponseRefID" type="ID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Unique shopping session response ID.</xs:documentation>
+					<xs:documentation>Reference to unique shopping session response ID, as provided in the airline's previous shopping response.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -3449,12 +3576,12 @@ Notes:
 			<xs:documentation>Location or facility where air or surface transportation originates, stops and/or terminates, and where passengers and/or cargo can be taken on or off.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="IATALocationCode" type="IATALocationCodeType" minOccurs="0" maxOccurs="1">
+			<xs:element name="IATA_LocationCode" type="IATA_LocationCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>IATA defined code identifying a city or station.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="StationName" type="NameType" minOccurs="0" maxOccurs="1">
+			<xs:element name="StationName" type="StationNameType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Name of the station. E.g. George Bush Intercontinental Airport</xs:documentation>
 				</xs:annotation>
@@ -3506,9 +3633,9 @@ Notes:
 	</xs:simpleType>
 	<xs:simpleType name="TaxCodeContentType">
 		<xs:annotation>
-			<xs:documentation>IATA TTBS codeset</xs:documentation>
+			<xs:documentation>IATA TTBS codeset {codeListAgencyName}IATA{/codeListAgencyName} {codeListName}TTBS{/codeListName} {enumerationURI}http://www.iata.org/services/finance/Pages/ttbs.aspx{/enumerationURI}</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string"/>
+		<xs:restriction base="xs:token"/>
 	</xs:simpleType>
 	<xs:simpleType name="TaxCodeType">
 		<xs:annotation>
@@ -3518,7 +3645,7 @@ Notes:
 	</xs:simpleType>
 	<xs:simpleType name="TaxQualifierCodeContentType">
 		<xs:annotation>
-			<xs:documentation>Tax qualifier codeset.</xs:documentation>
+			<xs:documentation>Tax qualifier codeset. {codeListAgencyIdentifier}IATA{/codeListAgencyIdentifier} {codeListAgencyName}PADIS{/codeListAgencyName} {codeListIdentifier}5305{/codeListIdentifier}</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string"/>
 	</xs:simpleType>
@@ -3548,9 +3675,19 @@ Notes:
 					<xs:documentation>When true, all specified tax breakdowns must be collected.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="RefundMethodText" type="NameType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Information from the Airline detailing to the Customer how the tax refund will be processed and what the Customer has to do for the refund.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="Tax" type="TaxType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>A compulsory contribution to state revenue, levied by the government on workers' income and business profits or added to the cost of some goods, services, and transactions.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TotalRefundableTaxAmount" type="AmountType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The total amount of all refundable taxes as calculated by the Airline.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="TotalTaxAmount" type="AmountType" minOccurs="0" maxOccurs="1">
@@ -3610,7 +3747,7 @@ Notes:
 					<xs:documentation>An area of land which is a sub-division within a country, such as a state, a county, a canton, a province, etc.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="CurConversion" type="CurConversionType" minOccurs="0">
+			<xs:element name="CurConversion" type="CurConversionType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The result of converting one currency into another currency. E.g. local currency to USD, air miles to monetary.</xs:documentation>
 				</xs:annotation>
@@ -3645,6 +3782,11 @@ Notes:
 					<xs:documentation>IATA TTBS Tax Code. Example: AY, GB</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="TaxName" type="NameType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The name given to describe the tax. For example, this name can be taken from the IATA TTBS</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="TaxTypeCode" type="TaxTypeCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Tax type code (e.g. Applied or Exempt).</xs:documentation>
@@ -3654,9 +3796,9 @@ Notes:
 	</xs:complexType>
 	<xs:simpleType name="TaxTypeCodeContentType">
 		<xs:annotation>
-			<xs:documentation>Applied or Exempt</xs:documentation>
+			<xs:documentation>Applied or Exempt {codeListAgencyName}IATA AIDM{/codeListAgencyName}</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string">
+		<xs:restriction base="xs:token">
 			<xs:enumeration value="Applied"/>
 			<xs:enumeration value="Exempt"/>
 		</xs:restriction>
@@ -3667,15 +3809,17 @@ Notes:
 		</xs:annotation>
 		<xs:restriction base="TaxTypeCodeContentType"/>
 	</xs:simpleType>
-	<xs:simpleType name="TextType">
+	<xs:complexType name="TextType">
 		<xs:annotation>
 			<xs:documentation>Text is a character string such as a finite set of characters generally in the form of words of a language.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string"/>
-	</xs:simpleType>
+		<xs:simpleContent>
+			<xs:extension base="xs:string"/>
+		</xs:simpleContent>
+	</xs:complexType>
 	<xs:simpleType name="TimeType">
 		<xs:annotation>
-			<xs:documentation>Time is a time of day to various common resolutions ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ hour, minute, second and fractions thereof.</xs:documentation>
+			<xs:documentation>Time is a time of day to various common resolutions â€“ hour, minute, second and fractions thereof.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:dateTime"/>
 	</xs:simpleType>
@@ -3702,27 +3846,27 @@ Notes:
 			<xs:documentation>The action or process of arriving of a transport vehicle in any place or location.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="AircraftScheduledDateTime" type="DateTimeType" minOccurs="0">
+			<xs:element name="AircraftScheduledDateTime" type="DateTimeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The Scheduled Date and Time of Arrival of the aircraft at the terminal or departure gate at an airport.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="BoardingGateID" type="ID_Type" minOccurs="0">
+			<xs:element name="BoardingGateID" type="BoardingGateID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Identifier of the gate. E.g. A5</xs:documentation>
+					<xs:documentation>Identifier of the gate. E.g. â€œA5â€.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="IATALocationCode" type="IATALocationCodeType" minOccurs="0">
+			<xs:element name="IATA_LocationCode" type="IATA_LocationCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>IATA defined code identifying a city or station.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="StationName" type="StationNameType" minOccurs="0">
+			<xs:element name="StationName" type="StationNameType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Name of the station. E.g. George Bush Intercontinental Airport</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="TerminalName" type="NameType" minOccurs="0">
+			<xs:element name="TerminalName" type="NameType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The name of the terminal.</xs:documentation>
 				</xs:annotation>
@@ -3734,27 +3878,27 @@ Notes:
 			<xs:documentation>The action or process of leaving of a transport vehicle from any place or location.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="AircraftScheduledDateTime" type="DateTimeType" minOccurs="0">
+			<xs:element name="AircraftScheduledDateTime" type="DateTimeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The Scheduled Date and Time of Departure of the aircraft at the terminal or departure gate at an airport.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="BoardingGateID" type="ID_Type" minOccurs="0">
+			<xs:element name="BoardingGateID" type="BoardingGateID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Identifier of the gate. E.g. A5</xs:documentation>
+					<xs:documentation>Identifier of the gate. E.g. â€œA5â€.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="IATA_LocationCode" type="IATALocationCodeType" minOccurs="0">
+			<xs:element name="IATA_LocationCode" type="IATA_LocationCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>IATA defined code identifying a city or station.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="StationName" type="StationNameType" minOccurs="0">
+			<xs:element name="StationName" type="StationNameType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Name of the station. E.g. George Bush Intercontinental Airport</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="TerminalName" type="NameType" minOccurs="0">
+			<xs:element name="TerminalName" type="NameType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The name of the terminal.</xs:documentation>
 				</xs:annotation>
@@ -3776,7 +3920,7 @@ Notes:
 					<xs:documentation>The electronic or geographic address which a party has provided as the contact channel. For example, contact email, contact postal address, contact phone number.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="IATANumber" type="NumberType" minOccurs="0" maxOccurs="1">
+			<xs:element name="IATA_Number" type="NumberType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>IATA-assigned agency number.  Example: 98417900</xs:documentation>
 				</xs:annotation>
@@ -3805,9 +3949,9 @@ Notes:
 	</xs:complexType>
 	<xs:simpleType name="TravelAgencyTypeCodeContentType">
 		<xs:annotation>
-			<xs:documentation>Agency/ Agent Identification Type.</xs:documentation>
+			<xs:documentation>Agency/ Agent Identification Type. {codeListAgencyName}PADIS{/codeListAgencyName} {codeListName}Identification type{/codeListName} {codeListIdentifier}9893{/codeListIdentifier}</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string">
+		<xs:restriction base="xs:token">
 			<xs:enumeration value="OnlineTravelAgency"/>
 			<xs:enumeration value="TravelAgency"/>
 			<xs:enumeration value="TravelManagementCompany"/>
@@ -3836,6 +3980,24 @@ Notes:
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:simpleType name="TripPurposeCodeContentType">
+		<xs:annotation>
+			<xs:documentation>Enumeration set for the trip purpose code Type BDT.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Business"/>
+			<xs:enumeration value="BusinessAndLeisure"/>
+			<xs:enumeration value="Leisure"/>
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="Unknown"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TripPurposeCodeType">
+		<xs:annotation>
+			<xs:documentation>Trip purpose code Type BDT.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="TripPurposeCodeContentType"/>
+	</xs:simpleType>
 	<xs:simpleType name="UniformResourceID_Type">
 		<xs:annotation>
 			<xs:documentation>A string of characters used to identify a resource. Such identification enables interaction with representations of the resource over a network, typically the World Wide Web, using specific protocols.</xs:documentation>
@@ -3847,37 +4009,32 @@ Notes:
 			<xs:documentation>An official entry in a Passport or other Travel Document made by an official of a government to indicate that the bearer has been granted authority to enter or re-enter the country or region concerned.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="CountrySubDivision" type="CountrySubDivisionType" minOccurs="0" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>An area of land which is a sub-division within a country, such as a state, a county, a canton, a province, etc.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="EnterBeforeDate" type="DateType" minOccurs="0">
+			<xs:element name="EnterBeforeDate" type="DateType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Date at which the visa expires and is no longer a valid entry document.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="EntryQty" type="QtyType" minOccurs="0">
+			<xs:element name="EntryQty" type="QtyType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Number of entries permitted by the visa into the host country.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="HostCountryCode" type="CountryCodeType" minOccurs="0">
+			<xs:element name="HostCountryCode" type="CountryCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>ISO Country Code where the visa is valid.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="StayDuration" type="DurationType" minOccurs="0">
+			<xs:element name="StayDuration" type="DurationType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Duration permitted of the Passenger's stay in the visa host country (in days).</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="VisaID" type="ID_Type" minOccurs="0">
+			<xs:element name="VisaID" type="ID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Visa ID value. Example: NY122345.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="VisaTypeCode" type="CodeType" minOccurs="0">
+			<xs:element name="VisaTypeCode" type="CodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The type of visa.</xs:documentation>
 				</xs:annotation>
