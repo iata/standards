@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<xs:schema xmlns:cns="http://www.iata.org/IATA/2015/00/2021.2/IATA_OffersAndOrdersCommonTypes" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2021.2/IATA_OffersAndOrdersMessage" targetNamespace="http://www.iata.org/IATA/2015/00/2021.2/IATA_OffersAndOrdersMessage" elementFormDefault="qualified" version="10.000" id="IATA2021.2">
-	<xs:import namespace="http://www.iata.org/IATA/2015/00/2021.2/IATA_OffersAndOrdersCommonTypes" schemaLocation="IATA_OffersAndOrdersCommonTypes.xsd"/>
+<xs:schema xmlns:cns="http://www.iata.org/IATA/2015/00/2021.1/IATA_OffersAndOrdersCommonTypes" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2021.1/IATA_OffersAndOrdersMessage" targetNamespace="http://www.iata.org/IATA/2015/00/2021.1/IATA_OffersAndOrdersMessage" elementFormDefault="qualified" version="10.000" id="IATA2021.1">
+	<xs:import namespace="http://www.iata.org/IATA/2015/00/2021.1/IATA_OffersAndOrdersCommonTypes" schemaLocation="IATA_OffersAndOrdersCommonTypes_SwO.xsd"/>
 	<xs:element name="IATA_OrderChangeRQ">
 		<xs:annotation>
 			<xs:documentation>The OrderChange/ OrderView transaction set requests modifications to an Order by specifying which order items to change and what to change them to. The updated view of the Order is returned.</xs:documentation>

@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2021.1/IATA_PaymentClearanceRQ" targetNamespace="http://www.iata.org/IATA/2015/00/2021.1/IATA_PaymentClearanceRQ" elementFormDefault="qualified" version="1.002" id="IATA2021.1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2021.2/IATA_PaymentClearanceRQ" targetNamespace="http://www.iata.org/IATA/2015/00/2021.2/IATA_PaymentClearanceRQ" elementFormDefault="qualified" version="1.002" id="IATA2021.2">
 	<xs:element name="IATA_PaymentClearanceRQ">
 		<xs:annotation>
 			<xs:documentation>the request to start the clearance for the amount agreed during the ordering process. This message is always sent by Offer Responsible Airline (ORA) to the settlement platform.

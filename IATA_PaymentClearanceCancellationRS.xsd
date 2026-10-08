@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2021.1/IATA_PaymentClearanceCancellationRS" targetNamespace="http://www.iata.org/IATA/2015/00/2021.1/IATA_PaymentClearanceCancellationRS" elementFormDefault="qualified" version="1.001" id="IATA2021.1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2021.2/IATA_PaymentClearanceCancellationRS" targetNamespace="http://www.iata.org/IATA/2015/00/2021.2/IATA_PaymentClearanceCancellationRS" elementFormDefault="qualified" version="1.001" id="IATA2021.2">
 	<xs:element name="PaymentClearanceCancellationRS">
 		<xs:annotation>
 			<xs:documentation>response to the request for canceling clearances identifying which clearances have been canceled and which clearances have not been canceled and providing the reason why the clearances could not be canceled. 

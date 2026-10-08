@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2021.1/IATA_PaymentClearanceCancellationRQ" targetNamespace="http://www.iata.org/IATA/2015/00/2021.1/IATA_PaymentClearanceCancellationRQ" elementFormDefault="qualified" version="1.001" id="IATA2021.1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2021.2/IATA_PaymentClearanceCancellationRQ" targetNamespace="http://www.iata.org/IATA/2015/00/2021.2/IATA_PaymentClearanceCancellationRQ" elementFormDefault="qualified" version="1.001" id="IATA2021.2">
 	<xs:element name="IATA_PaymentClearanceCancellationRQ">
 		<xs:annotation>
 			<xs:documentation>the request to cancel clearance by providing the ClearanceID of the clearance that needs to be canceled.  Only the entity who originated the clearance can cancell it and within the deadlines and guidelines provided by the Settlement Manager. 

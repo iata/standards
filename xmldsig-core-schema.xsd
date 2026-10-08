@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Mit XMLSpy v2008 rel. 2 (http://www.altova.com) von Roman Gerike (Informationsdesign AG) bearbeitet -->
 <!DOCTYPE schema PUBLIC "-//W3C//DTD XMLSchema 200102//EN" "http://www.w3.org/2001/XMLSchema.dtd" [
 	<!ATTLIST schema
 		xmlns:ds CDATA #FIXED "http://www.w3.org/2000/09/xmldsig#"
@@ -22,7 +23,7 @@
     [1] http://www.w3.org/Consortium/Legal/copyright-software-19980720
     [2] http://www.w3.org/Consortium/Legal/IPR-FAQ-20000620.html#DTD
 -->
-<ns1:schema xmlns:ns1="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="0.1">
+<ns1:schema xmlns="http://www.w3.org/2000/09/xmldsig#" xmlns:ns1="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" targetNamespace="http://www.w3.org/2000/09/xmldsig#" elementFormDefault="qualified" attributeFormDefault="unqualified" version="0.1">
 	<!-- Basic Types Defined for Signatures -->
 	<ns1:simpleType name="CryptoBinary">
 		<ns1:restriction base="ns1:base64Binary"/>

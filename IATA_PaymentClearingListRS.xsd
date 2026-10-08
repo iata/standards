@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2021.1/IATA_PaymentClearingListRS" targetNamespace="http://www.iata.org/IATA/2015/00/2021.1/IATA_PaymentClearingListRS" elementFormDefault="qualified" version="1.000" id="IATA2021.1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2021.2/IATA_PaymentClearingListRS" targetNamespace="http://www.iata.org/IATA/2015/00/2021.2/IATA_PaymentClearingListRS" elementFormDefault="qualified" version="1.000" id="IATA2021.2">
 	<xs:element name="IATA_PaymentClearingListRS">
 		<xs:annotation>
 			<xs:documentation>The ClearingList transaction set retrieves a list of Clearings that match one or more search criteria.

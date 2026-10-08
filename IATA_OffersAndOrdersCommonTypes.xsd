@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!-- edited with XMLSpy v2019 rel. 3 (x64) (http://www.altova.com) by Andrew Blake (IATA LOCATION GENEVA) -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2021.1/IATA_OffersAndOrdersCommonTypes" targetNamespace="http://www.iata.org/IATA/2015/00/2021.1/IATA_OffersAndOrdersCommonTypes" elementFormDefault="qualified" version="1.0" id="IATA2021.1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2021.2/IATA_OffersAndOrdersCommonTypes" targetNamespace="http://www.iata.org/IATA/2015/00/2021.2/IATA_OffersAndOrdersCommonTypes" elementFormDefault="qualified" version="1.0" id="IATA2021.2">
 	<xs:complexType name="AcceptedOrderItemType">
 		<xs:annotation>
 			<xs:documentation>Acceptance of Schedule Change. The Seller can accept a change to an Order so that the customer is in a 'ready to fly' state. The reference to the related Order Item IDs is shown in the attributes.</xs:documentation>

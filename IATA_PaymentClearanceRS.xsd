@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2021.1/IATA_PaymentClearanceRS" targetNamespace="http://www.iata.org/IATA/2015/00/2021.1/IATA_PaymentClearanceRS" elementFormDefault="qualified" version="1.002" id="IATA2021.1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2021.2/IATA_PaymentClearanceRS" targetNamespace="http://www.iata.org/IATA/2015/00/2021.2/IATA_PaymentClearanceRS" elementFormDefault="qualified" version="1.002" id="IATA2021.2">
 	<xs:element name="IATA_PaymentClearanceRS">
 		<xs:annotation>
 			<xs:documentation>this is the response sent by the Settlement Manager back to ORA as an acknowledgement of the Clearance Request. This response provides information of the settlement process status and the settlement and remittance dates.

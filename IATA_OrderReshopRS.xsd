@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<xs:schema xmlns:cns="http://www.iata.org/IATA/2015/00/2021.1/IATA_OffersAndOrdersCommonTypes" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2021.1/IATA_OffersAndOrdersMessage" targetNamespace="http://www.iata.org/IATA/2015/00/2021.1/IATA_OffersAndOrdersMessage" elementFormDefault="qualified" version="7.000" id="IATA2021.1">
-	<xs:import namespace="http://www.iata.org/IATA/2015/00/2021.1/IATA_OffersAndOrdersCommonTypes" schemaLocation="IATA_OffersAndOrdersCommonTypes.xsd"/>
+<xs:schema xmlns:cns="http://www.iata.org/IATA/2015/00/2021.2/IATA_OffersAndOrdersCommonTypes" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2021.2/IATA_OffersAndOrdersMessage" targetNamespace="http://www.iata.org/IATA/2015/00/2021.2/IATA_OffersAndOrdersMessage" elementFormDefault="qualified" version="7.000" id="IATA2021.2">
+	<xs:import namespace="http://www.iata.org/IATA/2015/00/2021.2/IATA_OffersAndOrdersCommonTypes" schemaLocation="IATA_OffersAndOrdersCommonTypes.xsd"/>
 	<xs:element name="IATA_OrderReshopRS">
 		<xs:annotation>
 			<xs:documentation>The OrderReshop transaction set passes new shopping requests to an airline to replace existing specified order or order items in an Order or for new shopping requests to add to an existing Order. Airline responds with product offers within the context of the existing Order.
