@@ -115,12 +115,7 @@
 											<xs:documentation>When true, the passenger failed to use reserved accommodation for reasons other than misconnections.</xs:documentation>
 										</xs:annotation>
 									</xs:attribute>
-									<xs:attributeGroup ref="CompanyID_AttributesGroup">
-									<xs:annotation>
-											<xs:documentation xml:lang="en">The billing airline accounting code.</xs:documentation>
-										</xs:annotation>
-									</xs:attributeGroup>
-								</xs:complexType>
+									</xs:complexType>
 							</xs:element>
 						</xs:sequence>
 						<xs:attribute name="TicketDocumentNbr" type="StringLength1to16" use="required">

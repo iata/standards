@@ -833,7 +833,7 @@
 			<xs:maxLength value="32"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="StringLenght1to35">
+	<xs:simpleType name="StringLength1to35">
 		<xs:annotation>
 			<xs:documentation>Used for strings, length 1 to 35</xs:documentation>
 		</xs:annotation>
