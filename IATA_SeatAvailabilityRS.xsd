@@ -1,209 +1,36 @@
-<?xml version="1.0"?>
-<xs:schema xmlns:cns="http://www.iata.org/IATA/2015/00/2021.2/IATA_OffersAndOrdersCommonTypes" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2021.2/IATA_OffersAndOrdersMessage" targetNamespace="http://www.iata.org/IATA/2015/00/2021.2/IATA_OffersAndOrdersMessage" elementFormDefault="qualified" version="10.000" id="IATA2021.2">
-	<xs:import namespace="http://www.iata.org/IATA/2015/00/2021.2/IATA_OffersAndOrdersCommonTypes" schemaLocation="IATA_OffersAndOrdersCommonTypes.xsd"/>
-	<xs:element name="IATA_SeatAvailabilityRS">
-		<xs:annotation>
-			<xs:documentation>The SeatAvailability transaction set returns data used to construct respective seat maps with fully integrated fees for any identified premium seats.
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.iata.org/IATA/2015/EASD/00/IATA_OffersAndOrdersMessage" elementFormDefault="qualified" version="11.001" xmlns:cns="http://www.iata.org/IATA/2015/EASD/00/IATA_OffersAndOrdersCommonTypes" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/EASD/00/IATA_OffersAndOrdersMessage" id="IATA2021.3.4"><xs:import namespace="http://www.iata.org/IATA/2015/EASD/00/IATA_OffersAndOrdersCommonTypes" schemaLocation="IATA_OffersAndOrdersCommonTypes.xsd"/>
+<xs:element name="IATA_SeatAvailabilityRS">
+<xs:annotation>
+<xs:documentation>The SeatAvailability transaction set returns data used to construct respective seat maps with fully integrated fees for any identified premium seats.
 
 The message also returns multi-media content at the message level with media content references at the individual service level.</xs:documentation>
-		</xs:annotation>
-		<xs:complexType>
-			<xs:sequence>
-				<xs:choice minOccurs="1" maxOccurs="1">
-					<xs:element name="Error" type="cns:ErrorType" minOccurs="1" maxOccurs="unbounded">
-						<xs:annotation>
-							<xs:documentation>Contains information related to errors detected during processing of the preceding request.</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="Response" type="cns:SeatAvailResponseType" minOccurs="1" maxOccurs="1">
-						<xs:annotation>
-							<xs:documentation>Seat Availability RS response information.</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-				</xs:choice>
-				<xs:element name="AugmentationPoint" type="AugmentationPoint" minOccurs="0" maxOccurs="1"/>
-				<xs:element name="PayloadAttributes" type="cns:IATA_PayloadStandardAttributesType" minOccurs="0" maxOccurs="1">
-					<xs:annotation>
-						<xs:documentation>IATA standard payload attributes.</xs:documentation>
-					</xs:annotation>
-				</xs:element>
-			</xs:sequence>
-		</xs:complexType>
-		<xs:key name="BaggageAllowanceIDKey">
-			<xs:selector xpath="./Response/DataLists/BaggageAllowanceList/BaggageAllowance"/>
-			<xs:field xpath="BaggageAllowanceID"/>
-		</xs:key>
-		<xs:key name="BaggageDisclosureIDKey">
-			<xs:selector xpath="./Response/DataLists/BaggageDisclosureList/BaggageDisclosure"/>
-			<xs:field xpath="BaggageDisclosureID"/>
-		</xs:key>
-		<xs:key name="DisclosureIDKey">
-			<xs:selector xpath="./Response/DataLists/DisclosureList/Disclosure"/>
-			<xs:field xpath="DisclosureID"/>
-		</xs:key>
-		<xs:key name="PaxJourneyIDKey">
-			<xs:selector xpath="./Response/DataLists/PaxJourneyList/PaxJourney"/>
-			<xs:field xpath="PaxJourneyID"/>
-		</xs:key>
-		<xs:key name="PaxIDKey">
-			<xs:selector xpath="./Response/DataLists/PaxList/Pax"/>
-			<xs:field xpath="PaxID"/>
-		</xs:key>
-		<xs:key name="DatedOperatingLegIDKey">
-			<xs:selector xpath="./Response/DataLists/PaxSegmentList/PaxSegment/DatedOperatingLeg"/>
-			<xs:field xpath="DatedOperatingLegID"/>
-		</xs:key>
-		<xs:key name="PaxSegmentIDKey">
-			<xs:selector xpath="./Response/DataLists/PaxSegmentList/PaxSegment"/>
-			<xs:field xpath="PaxSegmentID"/>
-		</xs:key>
-		<xs:key name="PenaltyIDKey">
-			<xs:selector xpath="./Response/DataLists/PenaltyList/Penalty"/>
-			<xs:field xpath="PenaltyID"/>
-		</xs:key>
-		<xs:key name="PriceClassIDKey">
-			<xs:selector xpath="./Response/DataLists/PriceClassList/PriceClass"/>
-			<xs:field xpath="PriceClassID"/>
-		</xs:key>
-		<xs:key name="SeatProfileIDKey">
-			<xs:selector xpath="./Response/DataLists/SeatProfileList/SeatProfile"/>
-			<xs:field xpath="SeatProfileID"/>
-		</xs:key>
-		<xs:key name="ServiceDefinitionIDKey">
-			<xs:selector xpath="./Response/DataLists/ServiceDefinitionList/ServiceDefinition"/>
-			<xs:field xpath="ServiceDefinitionID"/>
-		</xs:key>
-		<xs:keyref name="BaggageDisclosureIDKeyKeyRef1" refer="BaggageDisclosureIDKey">
-			<xs:selector xpath="./Response/ALaCarteOffer/BaggageDisclosureRefID"/>
-			<xs:field xpath=" ."/>
-		</xs:keyref>
-		<xs:keyref name="DisclosureIDKeyKeyRef1" refer="DisclosureIDKey">
-			<xs:selector xpath="./Response/ALaCarteOffer/DisclosureRefID"/>
-			<xs:field xpath=" ."/>
-		</xs:keyref>
-		<xs:keyref name="DatedOperatingLegIDKeyKeyRef1" refer="DatedOperatingLegIDKey">
-			<xs:selector xpath="./Response/ALaCarteOffer/OfferItem/Eligibility/OfferFlightAssociations/DatedOperatingLegRef/DatedOperatingLegRefID"/>
-			<xs:field xpath=" ."/>
-		</xs:keyref>
-		<xs:keyref name="PaxJourneyIDKeyKeyRef1" refer="PaxJourneyIDKey">
-			<xs:selector xpath="./Response/ALaCarteOffer/OfferItem/Eligibility/OfferFlightAssociations/PaxJourneyRef/PaxJourneyRefID"/>
-			<xs:field xpath=" ."/>
-		</xs:keyref>
-		<xs:keyref name="PaxSegmentIDKeyKeyRef1" refer="PaxSegmentIDKey">
-			<xs:selector xpath="./Response/ALaCarteOffer/OfferItem/Eligibility/OfferFlightAssociations/PaxSegmentReferences/PaxSegmentRefID"/>
-			<xs:field xpath=" ."/>
-		</xs:keyref>
-		<xs:keyref name="PaxIDKeyKeyRef1" refer="PaxIDKey">
-			<xs:selector xpath="./Response/ALaCarteOffer/OfferItem/Eligibility/PaxRefID"/>
-			<xs:field xpath=" ."/>
-		</xs:keyref>
-		<xs:keyref name="PaxSegmentIDKeyKeyRef2" refer="PaxSegmentIDKey">
-			<xs:selector xpath="./Response/ALaCarteOffer/OfferItem/Eligibility/PaxSegmentRef/PaxSegmentRefID"/>
-			<xs:field xpath=" ."/>
-		</xs:keyref>
-		<xs:keyref name="PriceClassIDKeyKeyRef1" refer="PriceClassIDKey">
-			<xs:selector xpath="./Response/ALaCarteOffer/OfferItem/Eligibility/PriceClassRefID"/>
-			<xs:field xpath=" ."/>
-		</xs:keyref>
-		<xs:keyref name="ServiceDefinitionIDKeyKeyRef1" refer="ServiceDefinitionIDKey">
-			<xs:selector xpath="./Response/ALaCarteOffer/OfferItem/Service/ServiceDefinitionRefID"/>
-			<xs:field xpath=" ."/>
-		</xs:keyref>
-		<xs:keyref name="PenaltyIDKeyKeyRef1" refer="PenaltyIDKey">
-			<xs:selector xpath="./Response/ALaCarteOffer/PenaltyRefID"/>
-			<xs:field xpath=" ."/>
-		</xs:keyref>
-		<xs:keyref name="PaxSegmentIDKeyKeyRef3" refer="PaxSegmentIDKey">
-			<xs:selector xpath="./Response/DataLists/ContactInfoList/ContactInfo/PaxSegmentRefID"/>
-			<xs:field xpath=" ."/>
-		</xs:keyref>
-		<xs:keyref name="PenaltyIDKeyKeyRef2" refer="PenaltyIDKey">
-			<xs:selector xpath="./Response/DataLists/FareList/FareGroup/FareDetail/FareComponent/FareRule/PenaltyRefID"/>
-			<xs:field xpath=" ."/>
-		</xs:keyref>
-		<xs:keyref name="PaxSegmentIDKeyKeyRef4" refer="PaxSegmentIDKey">
-			<xs:selector xpath="./Response/DataLists/FareList/FareGroup/FareDetail/FareComponent/PaxSegmentRefID"/>
-			<xs:field xpath=" ."/>
-		</xs:keyref>
-		<xs:keyref name="PriceClassIDKeyKeyRef2" refer="PriceClassIDKey">
-			<xs:selector xpath="./Response/DataLists/FareList/FareGroup/FareDetail/FareComponent/PriceClassRefID"/>
-			<xs:field xpath=" ."/>
-		</xs:keyref>
-		<xs:keyref name="PaxIDKeyKeyRef2" refer="PaxIDKey">
-			<xs:selector xpath="./Response/DataLists/FareList/FareGroup/FareDetail/PaxRefID"/>
-			<xs:field xpath=" ."/>
-		</xs:keyref>
-		<xs:keyref name="PaxJourneyIDKeyKeyRef2" refer="PaxJourneyIDKey">
-			<xs:selector xpath="./Response/DataLists/OriginDestList/OriginDest/PaxJourneyRefID"/>
-			<xs:field xpath=" ."/>
-		</xs:keyref>
-		<xs:keyref name="PaxSegmentIDKeyKeyRef5" refer="PaxSegmentIDKey">
-			<xs:selector xpath="./Response/DataLists/PaxJourneyList/PaxJourney/PaxSegmentRefID"/>
-			<xs:field xpath=" ."/>
-		</xs:keyref>
-		<xs:keyref name="PaxSegmentIDKeyKeyRef6" refer="PaxSegmentIDKey">
-			<xs:selector xpath="./Response/DataLists/PaxList/Pax/ContactInfo/PaxSegmentRefID"/>
-			<xs:field xpath=" ."/>
-		</xs:keyref>
-		<xs:keyref name="PaxIDKeyKeyRef3" refer="PaxIDKey">
-			<xs:selector xpath="./Response/DataLists/PaxList/Pax/PaxRefID"/>
-			<xs:field xpath=" ."/>
-		</xs:keyref>
-		<xs:keyref name="DisclosureIDKeyKeyRef2" refer="DisclosureIDKey">
-			<xs:selector xpath="./Response/DataLists/PaxSegmentList/PaxSegment/OperatingCarrierInfo/DisclosureRefID"/>
-			<xs:field xpath=" ."/>
-		</xs:keyref>
-		<xs:keyref name="PenaltyIDKeyKeyRef3" refer="PenaltyIDKey">
-			<xs:selector xpath="./Response/DataLists/PenaltyList/Penalty/FareDetail/FareComponent/FareRule/PenaltyRefID"/>
-			<xs:field xpath=" ."/>
-		</xs:keyref>
-		<xs:keyref name="PaxSegmentIDKeyKeyRef7" refer="PaxSegmentIDKey">
-			<xs:selector xpath="./Response/DataLists/PenaltyList/Penalty/FareDetail/FareComponent/PaxSegmentRefID"/>
-			<xs:field xpath=" ."/>
-		</xs:keyref>
-		<xs:keyref name="PriceClassIDKeyKeyRef3" refer="PriceClassIDKey">
-			<xs:selector xpath="./Response/DataLists/PenaltyList/Penalty/FareDetail/FareComponent/PriceClassRefID"/>
-			<xs:field xpath=" ."/>
-		</xs:keyref>
-		<xs:keyref name="PaxIDKeyKeyRef4" refer="PaxIDKey">
-			<xs:selector xpath="./Response/DataLists/PenaltyList/Penalty/FareDetail/PaxRefID"/>
-			<xs:field xpath=" ."/>
-		</xs:keyref>
-		<xs:keyref name="BaggageAllowanceIDKeyKeyRef1" refer="BaggageAllowanceIDKey">
-			<xs:selector xpath="./Response/DataLists/ServiceDefinitionList/ServiceDefinition/ServiceDefinitionAssociation/BaggageAllowanceRef/BaggageAllowanceRefID"/>
-			<xs:field xpath=" ."/>
-		</xs:keyref>
-		<xs:keyref name="SeatProfileIDKeyKeyRef1" refer="SeatProfileIDKey">
-			<xs:selector xpath="./Response/DataLists/ServiceDefinitionList/ServiceDefinition/ServiceDefinitionAssociation/SeatProfileRef/SeatProfileRefID"/>
-			<xs:field xpath=" ."/>
-		</xs:keyref>
-		<xs:keyref name="ServiceDefinitionIDKeyKeyRef2" refer="ServiceDefinitionIDKey">
-			<xs:selector xpath="./Response/DataLists/ServiceDefinitionList/ServiceDefinition/ServiceDefinitionAssociation/ServiceBundle/ServiceDefinitionRefID"/>
-			<xs:field xpath=" ."/>
-		</xs:keyref>
-		<xs:keyref name="PaxSegmentIDKeyKeyRef8" refer="PaxSegmentIDKey">
-			<xs:selector xpath="./Response/Processing/PaxGroup/ContactInfo/PaxSegmentRefID"/>
-			<xs:field xpath=" ."/>
-		</xs:keyref>
-		<xs:keyref name="SeatProfileIDKeyKeyRef2" refer="SeatProfileIDKey">
-			<xs:selector xpath="./Response/SeatMap/CabinCompartment/SeatRow/Seat/SeatProfileRefID"/>
-			<xs:field xpath=" ."/>
-		</xs:keyref>
-		<xs:keyref name="DatedOperatingLegIDKeyKeyRef2" refer="DatedOperatingLegIDKey">
-			<xs:selector xpath="./Response/SeatMap/DatedOperatingLegRefID"/>
-			<xs:field xpath=" ."/>
-		</xs:keyref>
-		<xs:keyref name="PaxSegmentIDKeyKeyRef9" refer="PaxSegmentIDKey">
-			<xs:selector xpath="./Response/SeatMap/PaxSegmentRefID"/>
-			<xs:field xpath=" ."/>
-		</xs:keyref>
-	</xs:element>
-	<xs:complexType name="AugmentationPoint">
-		<xs:annotation>
-			<xs:documentation>Implementer-Augmented Structure.</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:any namespace="##other" processContents="lax" minOccurs="1" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
+</xs:annotation>
+<xs:complexType>
+<xs:sequence>
+<xs:choice minOccurs="1" maxOccurs="1">
+<xs:element name="Error" type="cns:ErrorType" minOccurs="1" maxOccurs="unbounded">
+<xs:annotation>
+<xs:documentation>Contains information related to errors detected during processing of the preceding request.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="Response" type="cns:SeatAvailResponseType" minOccurs="1" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Seat Availability RS response information.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:choice>
+<xs:element name="AugmentationPoint" type="cns:AugmentationPointType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Implementer-Augmented Structure.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="PayloadAttributes" type="cns:IATA_PayloadStandardAttributesType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>IATA standard payload attributes.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
 </xs:schema>

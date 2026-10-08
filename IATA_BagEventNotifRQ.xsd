@@ -1,6 +1,9 @@
-<?xml version="1.0"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2021.2/IATA_BagEventNotifRQ" targetNamespace="http://www.iata.org/IATA/2015/00/2021.2/IATA_BagEventNotifRQ" elementFormDefault="qualified" version="2.003" id="IATA2021.2">
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2021.3/IATA_BagEventNotifRQ" targetNamespace="http://www.iata.org/IATA/2015/00/2021.3/IATA_BagEventNotifRQ" elementFormDefault="qualified" version="2.004">
 	<xs:element name="IATA_BagEventNotifRQ">
+		<xs:annotation>
+			<xs:documentation>Used to track baggage event notification message</xs:documentation>
+		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="Bag" type="BagType" minOccurs="1" maxOccurs="1"/>
@@ -124,13 +127,21 @@
 		</xs:annotation>
 		<xs:simpleContent>
 			<xs:extension base="AircraftParkingPositionID_Value">
-				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the agency that manages the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional">
 					<xs:annotation>
 						<xs:documentation>The Uniform Resource Identifier that identifies where the identification scheme data is located.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
-				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 				<xs:attribute name="SchemeName" type="xs:string" use="optional">
 					<xs:annotation>
 						<xs:documentation>The name of the identification scheme</xs:documentation>
@@ -141,7 +152,11 @@
 						<xs:documentation>The identification of the agency that maintains the identification scheme.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
-				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the version of the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
@@ -157,13 +172,21 @@
 		</xs:annotation>
 		<xs:simpleContent>
 			<xs:extension base="AircraftRegistrationID_Value">
-				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the agency that manages the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional">
 					<xs:annotation>
 						<xs:documentation>The Uniform Resource Identifier that identifies where the identification scheme data is located.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
-				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 				<xs:attribute name="SchemeName" type="xs:string" use="optional">
 					<xs:annotation>
 						<xs:documentation>The name of the identification scheme</xs:documentation>
@@ -174,7 +197,11 @@
 						<xs:documentation>The identification of the agency that maintains the identification scheme.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
-				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the version of the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
@@ -207,13 +234,21 @@
 		</xs:annotation>
 		<xs:simpleContent>
 			<xs:extension base="AirlineBagRefID_Value">
-				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the agency that manages the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional">
 					<xs:annotation>
 						<xs:documentation>The Uniform Resource Identifier that identifies where the identification scheme data is located.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
-				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 				<xs:attribute name="SchemeName" type="xs:string" use="optional">
 					<xs:annotation>
 						<xs:documentation>The name of the identification scheme</xs:documentation>
@@ -224,7 +259,11 @@
 						<xs:documentation>The identification of the agency that maintains the identification scheme.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
-				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the version of the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
@@ -308,7 +347,7 @@
 			</xs:element>
 			<xs:element name="AllianceCode" type="AllianceCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Used to specify the alliance based on PADIS Code List (code list defined in BDT).</xs:documentation>
+					<xs:documentation>Used to specify the alliance based on PADIS Code List 9906</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -323,7 +362,7 @@
 	</xs:simpleType>
 	<xs:complexType name="AllianceCodeType">
 		<xs:annotation>
-			<xs:documentation>Additional BDT to specify alliance codes.</xs:documentation>
+			<xs:documentation>Additional BDT to specify alliance codes, as defined in PADIS 9906</xs:documentation>
 		</xs:annotation>
 		<xs:simpleContent>
 			<xs:extension base="AllianceCodeContentType">
@@ -383,7 +422,7 @@
 			<xs:extension base="AreaID_Value">
 				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional">
 					<xs:annotation>
-						<xs:documentation>The identification of the agency that manages the identifier scheme</xs:documentation>
+						<xs:documentation>The identification of the agency that manages the identifier scheme.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
 				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional">
@@ -408,7 +447,7 @@
 				</xs:attribute>
 				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional">
 					<xs:annotation>
-						<xs:documentation>The identification of the version of the identifier scheme</xs:documentation>
+						<xs:documentation>The identification of the version of the identifier scheme.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
 			</xs:extension>
@@ -1414,13 +1453,21 @@
 		</xs:annotation>
 		<xs:simpleContent>
 			<xs:extension base="BaggageClaimID_Value">
-				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the agency that manages the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional">
 					<xs:annotation>
 						<xs:documentation>The Uniform Resource Identifier that identifies where the identification scheme data is located.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
-				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 				<xs:attribute name="SchemeName" type="xs:string" use="optional">
 					<xs:annotation>
 						<xs:documentation>The name of the identification scheme</xs:documentation>
@@ -1431,7 +1478,11 @@
 						<xs:documentation>The identification of the agency that maintains the identification scheme.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
-				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the version of the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
@@ -1763,7 +1814,7 @@
 					<xs:documentation>This is the sequence number in which the baggage item was loaded into the stowage device.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="LoyaltyProgramAccount" type="LoyaltyProgramAccountType" minOccurs="0" maxOccurs="1">
+			<xs:element name="LoyaltyProgramAccount" type="LoyaltyProgramAccountType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>An account set up for a customer within a rewards program which holds funds on behalf of that customer.</xs:documentation>
 				</xs:annotation>
@@ -1858,13 +1909,21 @@
 		</xs:annotation>
 		<xs:simpleContent>
 			<xs:extension base="BagTagID_Value">
-				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the agency that manages the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional">
 					<xs:annotation>
 						<xs:documentation>The Uniform Resource Identifier that identifies where the identification scheme data is located.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
-				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 				<xs:attribute name="SchemeName" type="xs:string" use="optional">
 					<xs:annotation>
 						<xs:documentation>The name of the identification scheme</xs:documentation>
@@ -1875,7 +1934,11 @@
 						<xs:documentation>The identification of the agency that maintains the identification scheme.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
-				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the version of the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
@@ -2015,13 +2078,21 @@
 		</xs:annotation>
 		<xs:simpleContent>
 			<xs:extension base="BoardingGateID_Value">
-				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the agency that manages the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional">
 					<xs:annotation>
 						<xs:documentation>The Uniform Resource Identifier that identifies where the identification scheme data is located.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
-				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 				<xs:attribute name="SchemeName" type="xs:string" use="optional">
 					<xs:annotation>
 						<xs:documentation>The name of the identification scheme</xs:documentation>
@@ -2032,7 +2103,11 @@
 						<xs:documentation>The identification of the agency that maintains the identification scheme.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
-				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the version of the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
@@ -2190,7 +2265,7 @@
 			<xs:extension base="BookingRefID_Value">
 				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional">
 					<xs:annotation>
-						<xs:documentation>The identification of the agency that manages the identifier scheme</xs:documentation>
+						<xs:documentation>The identification of the agency that manages the identifier scheme.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
 				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional">
@@ -2215,7 +2290,7 @@
 				</xs:attribute>
 				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional">
 					<xs:annotation>
-						<xs:documentation>The identification of the version of the identifier scheme</xs:documentation>
+						<xs:documentation>The identification of the version of the identifier scheme.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
 			</xs:extension>
@@ -2308,13 +2383,21 @@
 		</xs:annotation>
 		<xs:simpleContent>
 			<xs:extension base="CabinTypeID_Value">
-				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the agency that manages the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional">
 					<xs:annotation>
 						<xs:documentation>The Uniform Resource Identifier that identifies where the identification scheme data is located.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
-				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 				<xs:attribute name="SchemeName" type="xs:string" use="optional">
 					<xs:annotation>
 						<xs:documentation>The name of the identification scheme</xs:documentation>
@@ -2325,7 +2408,11 @@
 						<xs:documentation>The identification of the agency that maintains the identification scheme.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
-				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the version of the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
@@ -2508,13 +2595,21 @@
 		</xs:annotation>
 		<xs:simpleContent>
 			<xs:extension base="CheckInDeskID_Value">
-				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the agency that manages the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional">
 					<xs:annotation>
 						<xs:documentation>The Uniform Resource Identifier that identifies where the identification scheme data is located.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
-				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 				<xs:attribute name="SchemeName" type="xs:string" use="optional">
 					<xs:annotation>
 						<xs:documentation>The name of the identification scheme</xs:documentation>
@@ -2525,7 +2620,11 @@
 						<xs:documentation>The identification of the agency that maintains the identification scheme.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
-				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the version of the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
@@ -2599,7 +2698,8 @@
 	</xs:complexType>
 	<xs:simpleType name="ContainerizationStatusCodeContentType">
 		<xs:annotation>
-			<xs:documentation>The containerization status code of the logistics item status. The codelist contents of IATA Recommendation 1745 Attachment a baggage status codes for containerization status. {codeListAgencyIdentifier}3{/codeListAgencyIdentifier} {codeListAgencyName}IATA{/codeListAgencyName} {codeListName}Recommendation 1745 Attach A Baggage Containerization Status Codes.{/codeListName} {codeListIdentifier}BCL10047{/codeListIdentifier} </xs:documentation>
+			<xs:documentation>The containerization status code of the logistics item status
+ The codelist contents of IATA Recommendation 1745 Attachment a baggage status codes for containerization status. {codeListAgencyIdentifier}3{/codeListAgencyIdentifier} {codeListAgencyName}IATA{/codeListAgencyName} {codeListName}Recommendation 1745 Attach A Baggage Containerization Status Codes.{/codeListName} {codeListIdentifier}BCL10047{/codeListIdentifier} </xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:token">
 			<xs:enumeration value="LBA">
@@ -2868,13 +2968,21 @@
 		</xs:annotation>
 		<xs:simpleContent>
 			<xs:extension base="DeviceID_Value">
-				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the agency that manages the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional">
 					<xs:annotation>
 						<xs:documentation>The Uniform Resource Identifier that identifies where the identification scheme data is located.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
-				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 				<xs:attribute name="SchemeName" type="xs:string" use="optional">
 					<xs:annotation>
 						<xs:documentation>The name of the identification scheme</xs:documentation>
@@ -2885,7 +2993,11 @@
 						<xs:documentation>The identification of the agency that maintains the identification scheme.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
-				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the version of the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
@@ -2991,7 +3103,11 @@
 					<xs:documentation>Requires ground transportation connection</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="GRP"/>
+			<xs:enumeration value="GRP">
+				<xs:annotation>
+					<xs:documentation>GRP</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
 			<xs:enumeration value="HAJJ">
 				<xs:annotation>
 					<xs:documentation>Baggage of pilgrims to Mecca</xs:documentation>
@@ -3486,7 +3602,7 @@
 			<xs:extension base="HandlingAgentID_Value">
 				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional">
 					<xs:annotation>
-						<xs:documentation>The identification of the agency that manages the identifier scheme</xs:documentation>
+						<xs:documentation>The identification of the agency that manages the identifier scheme.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
 				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional">
@@ -3511,7 +3627,7 @@
 				</xs:attribute>
 				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional">
 					<xs:annotation>
-						<xs:documentation>The identification of the version of the identifier scheme</xs:documentation>
+						<xs:documentation>The identification of the version of the identifier scheme.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
 			</xs:extension>
@@ -3530,42 +3646,9 @@
 		</xs:annotation>
 		<xs:simpleContent>
 			<xs:extension base="HandlingBayID_Value">
-				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
-				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional">
-					<xs:annotation>
-						<xs:documentation>The Uniform Resource Identifier that identifies where the identification scheme data is located.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
-				<xs:attribute name="SchemeName" type="xs:string" use="optional">
-					<xs:annotation>
-						<xs:documentation>The name of the identification scheme</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-				<xs:attribute name="SchemeUniformResourceID" type="xs:anyURI" use="optional">
-					<xs:annotation>
-						<xs:documentation>The identification of the agency that maintains the identification scheme.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
-			</xs:extension>
-		</xs:simpleContent>
-	</xs:complexType>
-	<xs:simpleType name="HandlingBayID_Value">
-		<xs:restriction base="xs:token">
-			<xs:minLength value="1"/>
-			<xs:maxLength value="6"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:complexType name="HoldCompartmentID_Type">
-		<xs:annotation>
-			<xs:documentation>Identifies a Compartment. As per AHM505, compartments are numbered from the rear of the aircraft in descending order from 6 to 1. A second figure can indicate a section in a compartment starting from the front to the back and from right to left.</xs:documentation>
-		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="HoldCompartmentID_Value">
 				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional">
 					<xs:annotation>
-						<xs:documentation>The identification of the agency that manages the identifier scheme</xs:documentation>
+						<xs:documentation>The identification of the agency that manages the identifier scheme.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
 				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional">
@@ -3590,7 +3673,52 @@
 				</xs:attribute>
 				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional">
 					<xs:annotation>
-						<xs:documentation>The identification of the version of the identifier scheme</xs:documentation>
+						<xs:documentation>The identification of the version of the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="HandlingBayID_Value">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="6"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="HoldCompartmentID_Type">
+		<xs:annotation>
+			<xs:documentation>Identifies a Compartment. As per AHM505, compartments are numbered from the rear of the aircraft in descending order from 6 to 1. A second figure can indicate a section in a compartment starting from the front to the back and from right to left.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="HoldCompartmentID_Value">
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the agency that manages the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional">
+					<xs:annotation>
+						<xs:documentation>The Uniform Resource Identifier that identifies where the identification scheme data is located.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="SchemeID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="SchemeName" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation>The name of the identification scheme</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="SchemeUniformResourceID" type="xs:anyURI" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the agency that maintains the identification scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the version of the identifier scheme.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
 			</xs:extension>
@@ -3627,7 +3755,7 @@
 			<xs:extension base="HoldID_Value">
 				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional">
 					<xs:annotation>
-						<xs:documentation>The identification of the agency that manages the identifier scheme</xs:documentation>
+						<xs:documentation>The identification of the agency that manages the identifier scheme.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
 				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional">
@@ -3652,7 +3780,7 @@
 				</xs:attribute>
 				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional">
 					<xs:annotation>
-						<xs:documentation>The identification of the version of the identifier scheme</xs:documentation>
+						<xs:documentation>The identification of the version of the identifier scheme.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
 			</xs:extension>
@@ -3869,7 +3997,7 @@
 			<xs:extension base="xs:token">
 				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional">
 					<xs:annotation>
-						<xs:documentation>The identification of the agency that manages the identifier scheme</xs:documentation>
+						<xs:documentation>The identification of the agency that manages the identifier scheme.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
 				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional">
@@ -3894,7 +4022,7 @@
 				</xs:attribute>
 				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional">
 					<xs:annotation>
-						<xs:documentation>The identification of the version of the identifier scheme</xs:documentation>
+						<xs:documentation>The identification of the version of the identifier scheme.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
 			</xs:extension>
@@ -3956,7 +4084,7 @@
 			<xs:extension base="InternetAddressIPV4ID_Value">
 				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional">
 					<xs:annotation>
-						<xs:documentation>The identification of the agency that manages the identifier scheme</xs:documentation>
+						<xs:documentation>The identification of the agency that manages the identifier scheme.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
 				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional">
@@ -3981,7 +4109,7 @@
 				</xs:attribute>
 				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional">
 					<xs:annotation>
-						<xs:documentation>The identification of the version of the identifier scheme</xs:documentation>
+						<xs:documentation>The identification of the version of the identifier scheme.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
 			</xs:extension>
@@ -4000,7 +4128,7 @@
 			<xs:extension base="InternetAddressIPV6ID_Value">
 				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional">
 					<xs:annotation>
-						<xs:documentation>The identification of the agency that manages the identifier scheme</xs:documentation>
+						<xs:documentation>The identification of the agency that manages the identifier scheme.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
 				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional">
@@ -4025,7 +4153,7 @@
 				</xs:attribute>
 				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional">
 					<xs:annotation>
-						<xs:documentation>The identification of the version of the identifier scheme</xs:documentation>
+						<xs:documentation>The identification of the version of the identifier scheme.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
 			</xs:extension>
@@ -4082,15 +4210,15 @@
 			</xs:enumeration>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:complexType name="LNIATAAddressID_Type">
+	<xs:complexType name="LNIATA_AddressID_Type">
 		<xs:annotation>
 			<xs:documentation>The identifier of the electronic LNIATA Address Identifier</xs:documentation>
 		</xs:annotation>
 		<xs:simpleContent>
-			<xs:extension base="LNIATAAddressID_Value">
+			<xs:extension base="LNIATA_AddressID_Value">
 				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional">
 					<xs:annotation>
-						<xs:documentation>The identification of the agency that manages the identifier scheme</xs:documentation>
+						<xs:documentation>The identification of the agency that manages the identifier scheme.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
 				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional">
@@ -4115,13 +4243,13 @@
 				</xs:attribute>
 				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional">
 					<xs:annotation>
-						<xs:documentation>The identification of the version of the identifier scheme</xs:documentation>
+						<xs:documentation>The identification of the version of the identifier scheme.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
-	<xs:simpleType name="LNIATAAddressID_Value">
+	<xs:simpleType name="LNIATA_AddressID_Value">
 		<xs:restriction base="xs:token">
 			<xs:length value="6"/>
 			<xs:pattern value="[A-Z0-9]{6}"/>
@@ -4240,7 +4368,7 @@
 					<xs:documentation>The identifier of the ip version 6 electronic address.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="LNIATAAddressID" type="LNIATAAddressID_Type" minOccurs="0" maxOccurs="1">
+			<xs:element name="LNIATA_AddressID" type="LNIATA_AddressID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The identifier of the LNIATA electronic address.</xs:documentation>
 				</xs:annotation>
@@ -4290,7 +4418,7 @@
 	</xs:simpleType>
 	<xs:complexType name="PaxGroupNameType">
 		<xs:annotation>
-			<xs:documentation>The name of the group.</xs:documentation>
+			<xs:documentation>Specifies the Passenger Group Name.</xs:documentation>
 		</xs:annotation>
 		<xs:simpleContent>
 			<xs:extension base="xs:token">
@@ -4502,7 +4630,7 @@
 			<xs:extension base="ScreeningDeviceID_Value">
 				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional">
 					<xs:annotation>
-						<xs:documentation>The identification of the agency that manages the identifier scheme</xs:documentation>
+						<xs:documentation>The identification of the agency that manages the identifier scheme.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
 				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional">
@@ -4527,7 +4655,7 @@
 				</xs:attribute>
 				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional">
 					<xs:annotation>
-						<xs:documentation>The identification of the version of the identifier scheme</xs:documentation>
+						<xs:documentation>The identification of the version of the identifier scheme.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
 			</xs:extension>
@@ -4686,13 +4814,21 @@
 		</xs:annotation>
 		<xs:simpleContent>
 			<xs:extension base="SeatID_Value">
-				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the agency that manages the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional">
 					<xs:annotation>
 						<xs:documentation>The Uniform Resource Identifier that identifies where the identification scheme data is located.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
-				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 				<xs:attribute name="SchemeName" type="xs:string" use="optional">
 					<xs:annotation>
 						<xs:documentation>The name of the identification scheme</xs:documentation>
@@ -4703,7 +4839,11 @@
 						<xs:documentation>The identification of the agency that maintains the identification scheme.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
-				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the version of the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
@@ -5127,13 +5267,21 @@
 		</xs:annotation>
 		<xs:simpleContent>
 			<xs:extension base="SurfaceTransportID_Value">
-				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the agency that manages the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional">
 					<xs:annotation>
 						<xs:documentation>The Uniform Resource Identifier that identifies where the identification scheme data is located.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
-				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 				<xs:attribute name="SchemeName" type="xs:string" use="optional">
 					<xs:annotation>
 						<xs:documentation>The name of the identification scheme</xs:documentation>
@@ -5144,7 +5292,11 @@
 						<xs:documentation>The identification of the agency that maintains the identification scheme.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
-				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the version of the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
@@ -5177,13 +5329,21 @@
 		</xs:annotation>
 		<xs:simpleContent>
 			<xs:extension base="TerminalPierID_Value">
-				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the agency that manages the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional">
 					<xs:annotation>
 						<xs:documentation>The Uniform Resource Identifier that identifies where the identification scheme data is located.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
-				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 				<xs:attribute name="SchemeName" type="xs:string" use="optional">
 					<xs:annotation>
 						<xs:documentation>The name of the identification scheme</xs:documentation>
@@ -5194,7 +5354,11 @@
 						<xs:documentation>The identification of the agency that maintains the identification scheme.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
-				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the version of the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
@@ -5211,13 +5375,21 @@
 		</xs:annotation>
 		<xs:simpleContent>
 			<xs:extension base="TerminalSatelliteID_Value">
-				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the agency that manages the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional">
 					<xs:annotation>
 						<xs:documentation>The Uniform Resource Identifier that identifies where the identification scheme data is located.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
-				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 				<xs:attribute name="SchemeName" type="xs:string" use="optional">
 					<xs:annotation>
 						<xs:documentation>The name of the identification scheme</xs:documentation>
@@ -5228,7 +5400,11 @@
 						<xs:documentation>The identification of the agency that maintains the identification scheme.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
-				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the version of the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
@@ -5277,7 +5453,7 @@
 			<xs:extension base="TransponderID_Value">
 				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional">
 					<xs:annotation>
-						<xs:documentation>The identification of the agency that manages the identifier scheme</xs:documentation>
+						<xs:documentation>The identification of the agency that manages the identifier scheme.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
 				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional">
@@ -5302,7 +5478,7 @@
 				</xs:attribute>
 				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional">
 					<xs:annotation>
-						<xs:documentation>The identification of the version of the identifier scheme</xs:documentation>
+						<xs:documentation>The identification of the version of the identifier scheme.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
 			</xs:extension>
@@ -5310,8 +5486,7 @@
 	</xs:complexType>
 	<xs:simpleType name="TransponderID_Value">
 		<xs:restriction base="xs:token">
-			<xs:maxLength value="24"/>
-			<xs:pattern value="[0-9A-F]{24}"/>
+			<xs:pattern value="[0-9A-F]{24,48}"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:complexType name="ULD_ID_Type">
@@ -5320,13 +5495,21 @@
 		</xs:annotation>
 		<xs:simpleContent>
 			<xs:extension base="ULD_ID_Value">
-				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the agency that manages the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional">
 					<xs:annotation>
 						<xs:documentation>The Uniform Resource Identifier that identifies where the identification scheme data is located.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
-				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 				<xs:attribute name="SchemeName" type="xs:string" use="optional">
 					<xs:annotation>
 						<xs:documentation>The name of the identification scheme</xs:documentation>
@@ -5337,7 +5520,11 @@
 						<xs:documentation>The identification of the agency that maintains the identification scheme.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
-				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the version of the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
@@ -5354,7 +5541,7 @@
 			<xs:extension base="ULD_LoadPositionID_Value">
 				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional">
 					<xs:annotation>
-						<xs:documentation>The identification of the agency that manages the identifier scheme</xs:documentation>
+						<xs:documentation>The identification of the agency that manages the identifier scheme.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
 				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional">
@@ -5379,7 +5566,7 @@
 				</xs:attribute>
 				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional">
 					<xs:annotation>
-						<xs:documentation>The identification of the version of the identifier scheme</xs:documentation>
+						<xs:documentation>The identification of the version of the identifier scheme.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
 			</xs:extension>
@@ -5490,7 +5677,11 @@
 		</xs:annotation>
 		<xs:simpleContent>
 			<xs:extension base="UUID_ID_Value">
-				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional">
+					<xs:annotation>
+						<xs:documentation>The identification of the agency that manages the identifier scheme.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
 				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional">
 					<xs:annotation>
 						<xs:documentation>The Uniform Resource Identifier that identifies where the identification scheme data is located.</xs:documentation>
@@ -5513,7 +5704,7 @@
 				</xs:attribute>
 				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional">
 					<xs:annotation>
-						<xs:documentation>The identification of the version of the identifier scheme</xs:documentation>
+						<xs:documentation>The identification of the version of the identifier scheme.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
 			</xs:extension>

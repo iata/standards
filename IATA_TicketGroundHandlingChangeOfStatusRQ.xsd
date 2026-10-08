@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns="http://www.iata.org/IATA/2007/00" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.iata.org/IATA/2007/00" elementFormDefault="qualified" version="2.003" id="IATA2021.2">
+<!-- edited with XMLSpy v2018 rel. 2 (x64) (http://www.altova.com) by Alun Davies (IATA LOCATION GENEVA) -->
+<xs:schema xmlns="http://www.iata.org/IATA/2007/00" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.iata.org/IATA/2007/00" elementFormDefault="qualified" version="2.003" id="IATA2021.3">
 	<xs:include schemaLocation="IATA_SimpleTypes.xsd"/>
 	<xs:include schemaLocation="IATA_CommonTypes.xsd"/>
 	<xs:include schemaLocation="IATA_ET_CommonTypes.xsd"/>
@@ -115,11 +116,6 @@
 											<xs:documentation>When true, the passenger failed to use reserved accommodation for reasons other than misconnections.</xs:documentation>
 										</xs:annotation>
 									</xs:attribute>
-									<xs:attributeGroup ref="CompanyID_AttributesGroup">
-									<xs:annotation>
-											<xs:documentation xml:lang="en">The billing airline accounting code.</xs:documentation>
-										</xs:annotation>
-									</xs:attributeGroup>
 								</xs:complexType>
 							</xs:element>
 						</xs:sequence>

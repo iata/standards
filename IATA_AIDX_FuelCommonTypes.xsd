@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns="http://www.iata.org/IATA/2007/00" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.iata.org/IATA/2007/00" elementFormDefault="qualified" version="1.003" id="IATA2021.2">
+<xs:schema xmlns="http://www.iata.org/IATA/2007/00" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.iata.org/IATA/2007/00" elementFormDefault="qualified" version="1.003" id="IATA2021.3">
 	<xs:include schemaLocation="IATA_SimpleTypes.xsd"/>
 	<xs:include schemaLocation="IATA_CommonTypes.xsd"/>
 	<xs:include schemaLocation="IATA_AIDX_CommonTypes.xsd"/>
@@ -151,7 +151,7 @@
 				<xs:documentation>Identifies a repeating item.</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
-	</xs:complexType>	
+	</xs:complexType>
 	<xs:complexType name="DensityType">
 		<xs:annotation>
 			<xs:documentation>Fuel density measurement. Density Value is the mass unit (MeasurementUnit1) divided by the volume unit (MeasurementUnit2). The associated Type can be either MEA or STD - measured or standard</xs:documentation>
@@ -163,17 +163,19 @@
 						<xs:documentation>The unit used to measure the mass.
 						</xs:documentation>
 					</xs:annotation>
-				</xs:attribute>								
+				</xs:attribute>
 				<xs:attribute name="VolumeUnit" type="MeasurementUnitType" use="required">
 					<xs:annotation>
 						<xs:documentation>The unit used to measure the volume.
 						</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
-				<xs:attribute name="Type" type="xs:NCName" use="required"><xs:annotation>
-					<xs:documentation>either MEA or STD - measured or standard
+				<xs:attribute name="Type" type="xs:NCName" use="required">
+					<xs:annotation>
+						<xs:documentation>either MEA or STD - measured or standard
 					</xs:documentation>
-				</xs:annotation></xs:attribute>
+					</xs:annotation>
+				</xs:attribute>
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
@@ -515,7 +517,7 @@
 			<xs:documentation>Fuel tank name, fuel quantity and whether it is full or should be filled (in the case of a fuel order the FillInd would mean the tank should be filled).</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Name" type="StringLenght1to35"/>
+			<xs:element name="Name" type="StringLength1to35"/>
 			<xs:element name="Quantity" type="QuantityType" minOccurs="0"/>
 			<xs:element name="FillInd" type="xs:boolean" minOccurs="0"/>
 		</xs:sequence>
