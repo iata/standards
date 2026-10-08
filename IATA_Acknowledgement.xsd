@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<xs:schema xmlns="http://www.iata.org/IATA/2015/00/2019.2/IATA_Acknowledgement" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.iata.org/IATA/2015/00/2019.2/IATA_Acknowledgement" elementFormDefault="qualified" version=" 6.000" id="IATA2019.2">
-	<xs:element name="Acknowledgement">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2020.1/IATA_Acknowledgement" targetNamespace="http://www.iata.org/IATA/2015/00/2020.1/IATA_Acknowledgement" elementFormDefault="qualified" version="6.000">
+	<xs:element name="IATA_Acknowledgement">
 		<xs:annotation>
 			<xs:documentation>The Acknowledgement document is a simple notification from party to party acknowledging the receipt of another transaction such as an inventory release or an updated order
 
@@ -10,20 +10,6 @@ This document is used consistently as an optional response to a notification tra
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="AugmentationPoint" minOccurs="0">
-					<xs:annotation>
-						<xs:documentation>Implementer-Augmented Structure.</xs:documentation>
-					</xs:annotation>
-					<xs:complexType>
-						<xs:sequence>
-							<xs:any namespace="##other" processContents="lax" minOccurs="1" maxOccurs="unbounded">
-								<xs:annotation>
-									<xs:documentation source="description" xml:lang="en">Implementer-Augmented Structure.</xs:documentation>
-								</xs:annotation>
-							</xs:any>
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
 				<xs:element name="MessageDoc" type="MessageDocType" minOccurs="0" maxOccurs="1">
 					<xs:annotation>
 						<xs:documentation>Message document information including document name and version number.</xs:documentation>
@@ -44,7 +30,11 @@ This document is used consistently as an optional response to a notification tra
 	</xs:element>
 	<xs:complexType name="AckType">
 		<xs:annotation>
-			<xs:documentation>The Acknowledgement document is a simple notification from party to party acknowledging the receipt of another transaction such as an inventory release or an updated order   It may also provide information indicating the status of the document.  This document is used consistently as an optional response to a notification transaction.</xs:documentation>
+			<xs:documentation>The Acknowledgement document is a simple notification from party to party acknowledging the receipt of another transaction such as an inventory release or an updated order
+ 
+ It may also provide information indicating the status of the document.
+ 
+ This document is used consistently as an optional response to a notification transaction.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="StatusCode" type="CodeType" minOccurs="0" maxOccurs="1">
@@ -65,16 +55,12 @@ This document is used consistently as an optional response to a notification tra
 		</xs:annotation>
 		<xs:restriction base="xs:token"/>
 	</xs:simpleType>
-	<xs:complexType name="DateTimeType">
+	<xs:simpleType name="DateTimeType">
 		<xs:annotation>
 			<xs:documentation>A date time identifies a date and time of day to various common resolutions: year, month, week, day, hour, minute, second, and fraction of second.</xs:documentation>
 		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="xs:dateTime">
-				<xs:attribute name="TimeZoneCode" type="xs:token" use="optional"/>
-			</xs:extension>
-		</xs:simpleContent>
-	</xs:complexType>
+		<xs:restriction base="xs:dateTime"/>
+	</xs:simpleType>
 	<xs:complexType name="IATA_PayloadStandardAttributesType">
 		<xs:annotation>
 			<xs:documentation>The IATA_PayloadStdAttributes defines the standard attributes that appear on the root element for all IATA payloads.</xs:documentation>
@@ -151,7 +137,8 @@ This document is used consistently as an optional response to a notification tra
 		<xs:sequence>
 			<xs:element name="Name" type="NameType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Implementation Name. Example: ThisAirline Gateway</xs:documentation>
+					<xs:documentation>Implementation Name.
+ Example: ThisAirline Gateway</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="RefVersionNumber" type="NumberType" minOccurs="0" maxOccurs="1">

@@ -663,6 +663,15 @@
 			<xs:maxLength value="10"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:simpleType name="StringLength0to20">
+		<xs:annotation>
+			<xs:documentation>Used for strings, length 0 to 20.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="0"/>
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:simpleType name="StringLength0to13">
 		<xs:annotation>
 			<xs:documentation>Used for strings, length 0 to 13</xs:documentation>

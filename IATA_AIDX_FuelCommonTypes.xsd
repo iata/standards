@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<xs:schema xmlns="http://www.iata.org/IATA/2007/00" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.iata.org/IATA/2007/00" elementFormDefault="qualified" version="1.000" id="IATA2019.2">
+<xs:schema xmlns="http://www.iata.org/IATA/2007/00" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.iata.org/IATA/2007/00" elementFormDefault="qualified"
+	version="1.000" id="IATA2019.2">
 	<xs:include schemaLocation="IATA_SimpleTypes.xsd"/>
 	<xs:include schemaLocation="IATA_CommonTypes.xsd"/>
 	<xs:include schemaLocation="IATA_AIDX_CommonTypes.xsd"/>
@@ -36,13 +37,13 @@
 		<xs:annotation>
 			<xs:documentation>Code of into-plane-agent (not of fuel-supplier).</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:NCName"/>
+		<xs:restriction base="StringLength0to10"/>
 	</xs:simpleType>
 	<xs:simpleType name="IntoPlaneAgentNameType">
 		<xs:annotation>
-			<xs:documentation>Code of fuel-supplier (not of into-plane-agent).</xs:documentation>
+			<xs:documentation>Name of into-plane-agent.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:NCName"/>
+		<xs:restriction base="StringLength0to50"/>
 	</xs:simpleType>
 	<xs:simpleType name="ProductTypeType">
 		<xs:annotation>
@@ -59,25 +60,36 @@
 		<xs:annotation>
 			<xs:documentation>Identifier of the fuel receipt.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:NCName"/>
+		<xs:restriction base="StringLength0to50"/>
 	</xs:simpleType>
 	<xs:simpleType name="RevisionNumberType">
 		<xs:annotation>
 			<xs:documentation>Iterating revision of the fuel order - an individual order can go through several revisions while it is preliminary, before being finalised.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:NCName"/>
+		<xs:restriction base="StringLength0to50"/>
+	</xs:simpleType>
+	<xs:simpleType name="SignalSourceType">
+		<xs:annotation>
+			<xs:documentation>Identifies the origin of a timestamp or other signal.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Airline"/>
+			<xs:enumeration value="GroundHandler"/>
+			<xs:enumeration value="Refueller"/>
+			<xs:enumeration value="Unknown"/>
+		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="SupplierCodeType">
 		<xs:annotation>
 			<xs:documentation>Code of fuel-supplier (not of into-plane-agent).</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:NCName"/>
+		<xs:restriction base="StringLength0to10"/>
 	</xs:simpleType>
 	<xs:simpleType name="SupplierNameType">
 		<xs:annotation>
 			<xs:documentation>Name of fuel-supplier (not of into-plane-agent).</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:NCName"/>
+		<xs:restriction base="StringLength0to50"/>
 	</xs:simpleType>
 	<xs:simpleType name="TruckOnStandbyIndType">
 		<xs:annotation>
@@ -85,14 +97,28 @@
 		</xs:annotation>
 		<xs:restriction base="xs:boolean"/>
 	</xs:simpleType>
-	<xs:complexType name="AcknowledgementType">
+	<xs:complexType name="BusinessAcknowledgementType">
 		<xs:annotation>
-			<xs:documentation>Order acknowledgement from Into-Plane-Agent to Airline.</xs:documentation>
+			<xs:documentation>Business process acknowledgement</xs:documentation>
 		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="AcknowledgementType">
+				<xs:sequence>
+					<xs:element name="Entity" type="StringLength0to50" minOccurs="0"/>
+					<xs:element minOccurs="0" name="Signature" type="SignatureType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AcknowledgementType">
 		<xs:sequence>
 			<xs:element name="DateTime" type="DateOrTimeOrDateTimeType"/>
-			<xs:element name="Entity" type="xs:NCName" minOccurs="0"/>
-			<xs:element name="Remark" type="xs:NCName" minOccurs="0"/>
+			<xs:element minOccurs="1" name="Acknowledged" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Nature of acknowledgement:  True - yes this is acknowledged,  False - no this is not acknowledged.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Remark" type="StringLength0to255" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="AtAdvertisedParkingPositionType">
@@ -148,19 +174,73 @@
 			<xs:element name="Tank" type="TankType" maxOccurs="20"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="EquipmentIdType">
+	<xs:complexType name="FuelEquipmentType">
 		<xs:annotation>
-			<xs:documentation>Equipment used for fuelling.</xs:documentation>
+			<xs:documentation>Equipment with meter detail used for fuelling.</xs:documentation>
 		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="xs:NCName">
-				<xs:attribute name="RepeatIndex" type="Numeric1to99" use="optional">
-					<xs:annotation>
-						<xs:documentation>Identifies a repeating item.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-			</xs:extension>
-		</xs:simpleContent>
+		<xs:sequence>
+			<xs:element name="EquipmentId" type="StringLength0to50" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="MeterDetail" type="MeterDetailType" minOccurs="0" maxOccurs="10"/>
+		</xs:sequence>
+		<xs:attribute name="RepeatIndex" type="Numeric1to99" use="optional">
+			<xs:annotation>
+				<xs:documentation>Identifies a repeating item.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="MeterDetailType">
+		<xs:annotation>
+			<xs:documentation>Meter detail for uplift.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="MeterId" type="StringLength0to50" minOccurs="0" maxOccurs="1"/>
+			<xs:element name="MeterStart" type="QuantityType" minOccurs="0"/>
+			<xs:element name="MeterStartDateTime" type="DateOrTimeOrDateTimeType" minOccurs="0"/>
+			<xs:element name="MeterEnd" type="QuantityType" minOccurs="0"/>
+			<xs:element name="MeterEndDateTime" type="DateOrTimeOrDateTimeType" minOccurs="0"/>
+			<xs:element name="MeterUser" type="StringLength0to50" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="RepeatIndex" type="Numeric1to99" use="optional">
+			<xs:annotation>
+				<xs:documentation>Identifies a repeating item.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="ReadyToFuelType">
+		<xs:annotation>
+			<xs:documentation>Time aircraft is ready to fuel.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ReadyToFuelDateTime" type="DateOrTimeOrDateTimeType"/>
+		</xs:sequence>
+		<xs:attribute name="RepeatIndex" type="Numeric1to99" use="optional">
+			<xs:annotation>
+				<xs:documentation>Identifies a repeating item.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="SignalSource" type="SignalSourceType" use="optional">
+			<xs:annotation>
+				<xs:documentation>Identifies the origin of signal.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="NotReadyToFuelType">
+		<xs:annotation>
+			<xs:documentation>Time aircraft is not ready to fuel.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ReadyToFuelDateTime" type="DateOrTimeOrDateTimeType"/>
+		</xs:sequence>
+		<xs:attribute name="RepeatIndex" type="Numeric1to99" use="optional">
+			<xs:annotation>
+				<xs:documentation>Identifies a repeating item.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="SignalSource" type="SignalSourceType" use="optional">
+			<xs:annotation>
+				<xs:documentation>Identifies the origin of signal.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
 	</xs:complexType>
 	<xs:complexType name="FlowInterruptionType">
 		<xs:annotation>
@@ -199,12 +279,18 @@
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Fuel" type="FuelType" minOccurs="0"/>
-			<xs:element name="OperationalStatus" type="OperationalStatusType" nillable="true" minOccurs="0" maxOccurs="5"/>
-			<xs:element name="PlannedArrivalAptHistory" type="PlannedArrivalAptHistoryType" nillable="true" minOccurs="0" maxOccurs="10"/>
-			<xs:element name="AssociatedFlightLegAircraft" type="AssociatedFlightLegAircraftType" nillable="true" minOccurs="0" maxOccurs="2"/>
-			<xs:element name="RemarkTextCode" type="RemarkTextCodeType" nillable="true" minOccurs="0" maxOccurs="50"/>
-			<xs:element name="AirportResources" type="FuelAirportResourcesType" minOccurs="0" maxOccurs="2"/>
-			<xs:element name="OperationTime" type="OperationTimeType" nillable="true" minOccurs="0" maxOccurs="50"/>
+			<xs:element name="OperationalStatus" type="OperationalStatusType" nillable="true"
+				minOccurs="0" maxOccurs="5"/>
+			<xs:element name="PlannedArrivalAptHistory" type="PlannedArrivalAptHistoryType"
+				nillable="true" minOccurs="0" maxOccurs="10"/>
+			<xs:element name="AssociatedFlightLegAircraft" type="AssociatedFlightLegAircraftType"
+				nillable="true" minOccurs="0" maxOccurs="2"/>
+			<xs:element name="RemarkTextCode" type="RemarkTextCodeType" nillable="true"
+				minOccurs="0" maxOccurs="50"/>
+			<xs:element name="AirportResources" type="FuelAirportResourcesType" minOccurs="0"
+				maxOccurs="2"/>
+			<xs:element name="OperationTime" type="OperationTimeType" nillable="true" minOccurs="0"
+				maxOccurs="50"/>
 			<xs:element name="AircraftInfo" type="FuelAircraftInfoType" minOccurs="0"/>
 			<xs:element name="TPA_Extension" type="TPA_ExtensionsType" minOccurs="0">
 				<xs:annotation>
@@ -237,12 +323,22 @@
 			<xs:documentation>Fuel currently on board the aircraft - either just before fuelling or potentially at any other time.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Quantity" type="QuantityType"/>
+			<xs:element name="Quantity" type="QuantityType" minOccurs="1" maxOccurs="2"/>
 			<xs:element name="CaptureTime" type="DateOrTimeOrDateTimeType"/>
-			<xs:element name="CaptureEntity" type="xs:NCName" minOccurs="0"/>
+			<xs:element name="CaptureEntity" type="StringLength0to50" minOccurs="0"/>
 			<xs:element name="Distribution" type="DistributionType" minOccurs="0"/>
 		</xs:sequence>
 		<xs:attribute name="ProductType" type="ProductTypeType" use="optional"/>
+		<xs:attribute name="ValueType" type="IATA_CodeType">
+			<xs:annotation>
+				<xs:documentation>ValueType refers to nature of FuelOnBoard Quantity. Valid codes from IATA codeset 2005: EST or ACT, for estimated or actual</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="OperationQualifier" type="IATA_CodeType">
+			<xs:annotation>
+				<xs:documentation>Stage of operation associated with FuelOnBoard.  Suggested codes from IATA 9750 codeset: OFB, TKO, TDN, ONB</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
 		<xs:attribute name="RepeatIndex" type="Numeric1to99" use="optional">
 			<xs:annotation>
 				<xs:documentation>Identifies a repeating item.</xs:documentation>
@@ -255,11 +351,27 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="OrderId" type="OrderIdType" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="Quantity" type="QuantityType"/>
+			<xs:element name="Quantity" type="QuantityType" minOccurs="1" maxOccurs="2"/>
+			<xs:element maxOccurs="1" minOccurs="0" name="AdditiveRequested"
+				type="StringLength0to50">
+				<xs:annotation>
+					<xs:documentation>Name of Additive desired</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="TruckOnStandby" type="TruckOnStandbyIndType"/>
 			<xs:element name="Distribution" type="DistributionType" minOccurs="0"/>
 			<xs:element name="VehiclesOrderedQty" type="xs:integer" minOccurs="0"/>
-			<xs:element name="Acknowledgement" type="AcknowledgementType" minOccurs="0"/>
+			<xs:element name="Acknowledgement" type="AcknowledgementType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Technical Acknowledgement - whether message was received and in a satisfactory condition</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="BusinessAcknowledgement"
+				type="BusinessAcknowledgementType">
+				<xs:annotation>
+					<xs:documentation>Business Acknowledgement - whether message is acknowledged from a business process perspective</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="TargetFinishTime" type="DateOrTimeOrDateTimeType" minOccurs="0"/>
 		</xs:sequence>
 		<xs:attribute name="State" type="FuelOrderStateType" use="required"/>
@@ -278,13 +390,23 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="OrderId" type="OrderIdType" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="EquipmentId" type="EquipmentIdType" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="FuelProgressTime" type="FuelProgressTimeType" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="AtAdvertisedParkingPosition" type="AtAdvertisedParkingPositionType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="FuelEquipment" type="FuelEquipmentType" minOccurs="0"
+				maxOccurs="unbounded"/>
+			<xs:element name="FuelProgressTime" type="FuelProgressTimeType" minOccurs="0"
+				maxOccurs="unbounded"/>
+			<xs:element name="AtAdvertisedParkingPosition" type="AtAdvertisedParkingPositionType"
+				minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="CurrVol" type="CurrVolType" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="FlowInterruption" type="FlowInterruptionType" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="FlowRestart" type="FlowRestartType" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="Obstruction" type="ObstructionType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="ReadyToFuel" type="ReadyToFuelType" minOccurs="0"
+				maxOccurs="unbounded"/>
+			<xs:element name="NotReadyToFuel" type="NotReadyToFuelType" minOccurs="0"
+				maxOccurs="unbounded"/>
+			<xs:element name="FlowInterruption" type="FlowInterruptionType" minOccurs="0"
+				maxOccurs="unbounded"/>
+			<xs:element name="FlowRestart" type="FlowRestartType" minOccurs="0"
+				maxOccurs="unbounded"/>
+			<xs:element name="Obstruction" type="ObstructionType" minOccurs="0"
+				maxOccurs="unbounded"/>
 		</xs:sequence>
 		<xs:attribute name="RepeatIndex" type="Numeric1to99" use="optional">
 			<xs:annotation>
@@ -297,7 +419,8 @@
 			<xs:documentation>Summary of fuelling activity.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="EquipmentId" type="EquipmentIdType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="FuelEquipment" type="FuelEquipmentType" minOccurs="0"
+				maxOccurs="unbounded"/>
 			<xs:element name="ReceiptID" type="ReceiptIDType"/>
 			<xs:element name="OrderId" type="OrderIdType" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="DeliveryDate" type="DateOrTimeOrDateTimeType"/>
@@ -306,11 +429,36 @@
 			<xs:element name="SupplierName" type="SupplierNameType" minOccurs="0"/>
 			<xs:element name="SupplierCode" type="SupplierCodeType"/>
 			<xs:element name="OrderCompleted" type="xs:boolean" minOccurs="0"/>
+			<xs:element minOccurs="0" name="FuelStartTime" type="DateOrDateTimeType">
+				<xs:annotation>
+					<xs:documentation>Start of Fueling time - generally when fuel started flowing</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="FuelEndTime" type="DateOrDateTimeType">
+				<xs:annotation>
+					<xs:documentation>End of Fueling time - generally when the meter is closed for this fueling, so after disconnect</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="Density" type="DensityType"/>
 			<xs:element name="Temperature" type="TemperatureType" minOccurs="0"/>
-			<xs:element name="Quantity" type="QuantityType"/>
+			<xs:element name="Quantity" type="QuantityType" minOccurs="1" maxOccurs="2"/>
+			<xs:element minOccurs="0" name="AdditiveDelivered" type="StringLength0to50">
+				<xs:annotation>
+					<xs:documentation>Name of Fuel Additive Delivered </xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="Distribution" type="DistributionType" minOccurs="0"/>
-			<xs:element name="Acknowledgement" type="AcknowledgementType" minOccurs="0"/>
+			<xs:element name="Acknowledgement" type="AcknowledgementType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Technical Acknowledgement - whether message was received and in a satisfactory condition</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="BusinessAcknowledgement"
+				type="BusinessAcknowledgementType">
+				<xs:annotation>
+					<xs:documentation>Business Acknowledgement - whether message is acknowledged from a business process perspective</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 		<xs:attribute name="ActivityType" type="ActivityTypeType" use="required"/>
 		<xs:attribute name="ProductType" type="ProductTypeType" use="required"/>
@@ -325,10 +473,13 @@
 			<xs:documentation>The fuelling related components of the IATA AIDX pre-transaction fuel message type - as opposed to the flight leg key and flight operations elements imported from the AIDX schema - encapsulated here in case a different message 'wrapper' is required in future.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="FuelOnBoard" type="FuelOnBoardType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="FuelOnBoard" type="FuelOnBoardType" minOccurs="0"
+				maxOccurs="unbounded"/>
 			<xs:element name="FuelOrder" type="FuelOrderType" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="FuelProgress" type="FuelProgressType" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="FuelSummary" type="FuelSummaryType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="FuelProgress" type="FuelProgressType" minOccurs="0"
+				maxOccurs="unbounded"/>
+			<xs:element name="FuelSummary" type="FuelSummaryType" minOccurs="0"
+				maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="OrderIdType">
@@ -336,7 +487,7 @@
 			<xs:documentation>Fuel order identifier.</xs:documentation>
 		</xs:annotation>
 		<xs:simpleContent>
-			<xs:extension base="xs:NCName">
+			<xs:extension base="StringLength0to50">
 				<xs:attribute name="RepeatIndex" type="Numeric1to99" use="optional">
 					<xs:annotation>
 						<xs:documentation>Identifies a repeating item.</xs:documentation>
@@ -366,7 +517,13 @@
 	</xs:complexType>
 	<xs:complexType name="QuantityType">
 		<xs:complexContent>
-			<xs:extension base="MeasurementType"/>
+			<xs:extension base="MeasurementType">
+				<xs:attribute name="CalculatedMeasurement" type="xs:boolean" use="optional">
+					<xs:annotation>
+						<xs:documentation>Identifies whether the measurement was calculated or not</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
 	<xs:complexType name="TankType" mixed="true">
@@ -442,9 +599,11 @@
 				</xs:annotation>
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="AircraftParkingPosition" type="AircraftParkingPositionType" nillable="true" minOccurs="0"/>
+						<xs:element name="AircraftParkingPosition"
+							type="AircraftParkingPositionType" nillable="true" minOccurs="0"/>
 					</xs:sequence>
-					<xs:attribute name="DepartureOrArrival" type="DepartureArrivalType" use="required">
+					<xs:attribute name="DepartureOrArrival" type="DepartureArrivalType"
+						use="required">
 						<xs:annotation>
 							<xs:documentation xml:lang="en">Specifies if the resources are for a departure or arrival.</xs:documentation>
 						</xs:annotation>
@@ -481,133 +640,19 @@
 				</xs:attribute>
 				<xs:attribute name="TimeType" type="IATA_CodeType">
 					<xs:annotation>
-						<xs:documentation>Used to specify the type of operation time.  Refer to IATA PADIS Code List 9750 - e.g. EST or ACT.</xs:documentation>
+						<xs:documentation>Used to specify the type of operation time.  Refer to IATA PADIS Code List 2005 - e.g. EST or ACT, for estimated or actual</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
 	<!-- -->
-	<!-- copied AIDX definitions now set up here as types -->
+	<!-- copied AIDX definitions now removed as set up as types in IATA_AIDX_CommonTypes.xsd -->
 	<!-- -->
-	<xs:complexType name="AircraftParkingPositionType">
-		<xs:annotation>
-			<xs:documentation>Gate or hard stand where the aircraft is located.</xs:documentation>
-		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="xs:string">
-				<xs:attribute name="Qualifier" type="xs:NMTOKEN" use="required">
-					<xs:annotation>
-						<xs:documentation xml:lang="en">Used to specify the type of aircraft parking position.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-			</xs:extension>
-		</xs:simpleContent>
+	<xs:complexType name="SignatureType">
+		<xs:sequence minOccurs="0">
+			<xs:element name="SignatureString" type="StringLength0to50"/>
+			<xs:element name="ElectronicSignature" type="xs:base64Binary"/>
+		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="AssociatedFlightLegAircraftType">
-		<xs:annotation>
-			<xs:documentation>Associated flight leg routing for the physical aircraft.</xs:documentation>
-		</xs:annotation>
-		<xs:complexContent>
-			<xs:extension base="FlightLegIdentifierType">
-				<xs:attribute name="RepeatIndex" type="Numeric1to99" use="optional">
-					<xs:annotation>
-						<xs:documentation>Identifies a repeating item.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-			</xs:extension>
-		</xs:complexContent>
-	</xs:complexType>
-	<xs:complexType name="OperationTimeType">
-		<xs:annotation>
-			<xs:documentation>Time information related to an arrival or departure.</xs:documentation>
-		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="DateOrTimeOrDateTimeType">
-				<xs:attribute name="OperationQualifier" type="IATA_CodeType" use="required">
-					<xs:annotation>
-						<xs:documentation xml:lang="en">The type of time and date value.  Refer to IATA PADIS Code List for data element 2005 and 9750.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-				<xs:attribute name="CodeContext" type="xs:string" use="required">
-					<xs:annotation>
-						<xs:documentation xml:lang="en">Used to specify if the OperationQualifier is from IATA PADIS Code List 2005 or 9750.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-				<xs:attribute name="RepeatIndex" type="Numeric1to99" use="optional">
-					<xs:annotation>
-						<xs:documentation>Identifies a repeating item.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-				<xs:attribute name="TimeType" type="IATA_CodeType">
-					<xs:annotation>
-						<xs:documentation>Used to specify the type of operation time.  Refer to IATA PADIS Code List for data element 2005.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-			</xs:extension>
-		</xs:simpleContent>
-	</xs:complexType>
-	<xs:complexType name="OperationalStatusType">
-		<xs:annotation>
-			<xs:documentation>Used to inform the airline and airport operational staff concerning the status of a flight leg.  Refer to IATA PADIS Code List for data element 1245 and 2005</xs:documentation>
-		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="IATA_CodeType">
-				<xs:attribute name="RepeatIndex" type="Numeric1to99" use="optional">
-					<xs:annotation>
-						<xs:documentation>Identifies an order for a repdeating item.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-				<xs:attribute name="CodeContext" type="xs:string">
-					<xs:annotation>
-						<xs:documentation>Used to specify if the operational status code is from IATA PADIS Code List for data element 1245 or 2005.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-			</xs:extension>
-		</xs:simpleContent>
-	</xs:complexType>
-	<xs:complexType name="PlannedArrivalAptHistoryType">
-		<xs:annotation>
-			<xs:documentation>An airport where the leg has either arrived or is planned to arrive.</xs:documentation>
-		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="StationType">
-				<xs:attribute name="CodeContext" type="IATA_CodeType" use="optional">
-					<xs:annotation>
-						<xs:documentation xml:lang="en">Specifies the context of the airport code, such as IATA or ICAO.  Refer to IATA PADIS Code List for data element 3055.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-				<xs:attribute name="RepeatIndex" type="Numeric1to99" use="optional">
-					<xs:annotation>
-						<xs:documentation>Identifies an order for a repeating item.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-			</xs:extension>
-		</xs:simpleContent>
-	</xs:complexType>
-	<xs:complexType name="RemarkTextCodeType">
-		<xs:annotation>
-			<xs:documentation>A code specifying the remark.  Refer to IATA PADIS Code List for data element 9750 and 2005.</xs:documentation>
-		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="IATA_CodeType">
-				<xs:attribute name="Qualifier" type="IATA_CodeType" use="required">
-					<xs:annotation>
-						<xs:documentation xml:lang="en">Specifies the type of remark such as general public, staff breakroom, gate. Refer to IATA PADIS Code List for data element 9932.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-				<xs:attribute name="CodeContext" type="xs:string" use="required">
-					<xs:annotation>
-						<xs:documentation xml:lang="en">Used to specify if the remark text code is from IATA PADIS Code List 2005 or 9750.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-				<xs:attribute name="RepeatIndex" type="Numeric1to99" use="optional">
-					<xs:annotation>
-						<xs:documentation>Identifies a repeating item.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-			</xs:extension>
-		</xs:simpleContent>
-	</xs:complexType>
-	<!-- -->
 </xs:schema>

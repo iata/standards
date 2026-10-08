@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns="http://www.iata.org/IATA/2015/00/2019.2/IATA_OperationalAircraftRegistrationNotifRQ" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.iata.org/IATA/2015/00/2019.2/IATA_OperationalAircraftRegistrationNotifRQ" elementFormDefault="qualified" version="1.000" id="IATA2019.2">
-	<xs:element name="OperationalAircraftRegistrationNotifRQ">
+<xs:schema targetNamespace="http://www.iata.org/IATA/2015/00/2020.1/IATA_OperationalAircraftRegistrationNotifRQ" xmlns="http://www.iata.org/IATA/2015/00/2020.1/IATA_OperationalAircraftRegistrationNotifRQ" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.000">
+	<xs:element name="IATA_OperationalAircraftRegistrationNotifRQ">
 		<xs:annotation>
 			<xs:documentation>Used to exchange aircraft registration identifier for a flight for first information and in case of event/change.</xs:documentation>
 		</xs:annotation>
@@ -373,14 +373,14 @@
 					<xs:documentation>The (UTC) date of the scheduled aircraft departure from the station of origin.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="OnwardFlight" type="DatedOperatingFlight1Type" minOccurs="0" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>The next assigned flight on the same aircraft registration in the case of aircraft rotation.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element name="DatedOperatingLeg" type="DatedOperatingLegType" minOccurs="1" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>The nonstop operation of a transport vehicle between the departure station and the arrival station. Can be used for aircrafts as well as other transport vehicles such as train or bus etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OnwardFlight" type="DatedOperatingFlight1Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The next assigned flight on the same aircraft registration in the case of aircraft rotation.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -438,6 +438,9 @@
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="PayloadType">
+		<xs:annotation>
+			<xs:documentation>The IATA_PayloadStdAttributes defines the standard attributes that appear on the root element for all IATA payloads.</xs:documentation>
+		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="TimeModeCode" type="TimeModeCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
