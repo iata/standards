@@ -1,5 +1,5 @@
 <?xml  version="1.0" encoding="UTF-8" ?>
-<xs:schema targetNamespace="http://www.iata.org/IATA/2015/00/2025.2/IATA_Baggage_CartRQ" elementFormDefault="qualified" version="1.000" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2025.2/IATA_Baggage_CartRQ" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"><xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/>
+<xs:schema targetNamespace="http://www.iata.org/IATA/2015/00/2025.3/IATA_Baggage_CartRQ" elementFormDefault="qualified" version="1.002" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2025.3/IATA_Baggage_CartRQ" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"><xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/>
 <xs:element name="IATA_Baggage_CartRQ">
 <xs:annotation>
 <xs:documentation>Instructions to handle baggage cart from airline to handler</xs:documentation>
@@ -1291,9 +1291,10 @@
 </xs:complexType>
 <xs:simpleType name="ChangeIndCodeContentType">
 <xs:annotation>
-<xs:documentation>The codelist contents of IATA RP 1745 Baggage Service Message Change Indicator Codes {codeListAgencyIdentifier}3{/codeListAgencyIdentifier} {codeListAgencyName}IATA{/codeListAgencyName} {codeListName}RP 1745 Baggage Source Message Change Indicator Codes{/codeListName} {codeListIdentifier}BCL20062{/codeListIdentifier} </xs:documentation>
+<xs:documentation>The codelist contents of IATA RP 1745 Baggage Service Message Change Indicator Codes {codeListAgencyName}IATA{/codeListAgencyName} {codeListName}RP 1745 Baggage Source Message Change Indicator Codes{/codeListName} {codeListIdentifier}BCL20062{/codeListIdentifier} </xs:documentation>
 </xs:annotation>
 <xs:restriction base="xs:token">
+<xs:maxLength value="3"></xs:maxLength>
 <xs:enumeration value="CHG">
 <xs:annotation>
 <xs:documentation>This is a change to bag movement (e.g. equivalent to BSMCHG)</xs:documentation>
@@ -1849,7 +1850,6 @@
 <xs:simpleType name="LengthMeasureValue">
 <xs:restriction base="xs:integer">
 <xs:minExclusive value="0"></xs:minExclusive>
-<xs:maxInclusive value="2147483647"></xs:maxInclusive>
 </xs:restriction>
 </xs:simpleType>
 <xs:simpleType name="LengthUnitCodeContentType">
@@ -2897,12 +2897,6 @@
 <xs:element name="OnwardULD_Allocation" type="ULD_AllocationOnwardDaughterType" minOccurs="0" maxOccurs="unbounded">
 <xs:annotation>
 <xs:documentation>An anticipated allocation of a ULD to a specific set of legs and a load position in vehicle performing the legs
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="RecapInstructions" type="ULD_AllocationRecapType" minOccurs="0" maxOccurs="unbounded">
-<xs:annotation>
-<xs:documentation>Recap of relevant outcomes or instructions as posted to date on this ULD Allocation
  </xs:documentation>
 </xs:annotation>
 </xs:element>

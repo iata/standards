@@ -1,5 +1,5 @@
 <?xml  version="1.0" encoding="UTF-8" ?>
-<xs:schema targetNamespace="http://www.iata.org/IATA/2015/00/2025.2/IATA_Baggage_BagRS" elementFormDefault="qualified" version="1.001" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2025.2/IATA_Baggage_BagRS" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"><xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/>
+<xs:schema targetNamespace="http://www.iata.org/IATA/2015/00/2025.3/IATA_Baggage_BagRS" elementFormDefault="qualified" version="1.002" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2025.3/IATA_Baggage_BagRS" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"><xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/>
 <xs:element name="IATA_Baggage_BagRS">
 <xs:annotation>
 <xs:documentation>Result of bag handling from handler to airline</xs:documentation>
@@ -1747,7 +1747,6 @@
 <xs:simpleType name="LengthMeasureValue">
 <xs:restriction base="xs:integer">
 <xs:minExclusive value="0"></xs:minExclusive>
-<xs:maxInclusive value="2147483647"></xs:maxInclusive>
 </xs:restriction>
 </xs:simpleType>
 <xs:simpleType name="LengthUnitCodeContentType">
