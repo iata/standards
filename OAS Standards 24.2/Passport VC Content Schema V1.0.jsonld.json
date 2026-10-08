@@ -6,13 +6,10 @@
       "@id": "http://iata.org/iataCredentialDefinitions#passport",
       "@context": {
         "@protected": true,
-        "authorityDocName": {
-          "@id": "http://iata.org/iataCredentialDefinitions/passport#authorityDocName"
-        },
         "birthdate": {
           "@id": "http://iata.org/iataCredentialDefinitions/passport/dataGroup1#birthDate",
           "@type": "http://www.w3.org/2001/XMLSchema#date"
-        }
+        },
         "capturedBioPagePicture": {
           "@id": "http://iata.org/iataCredentialDefinitions/passport#capturedBioPagePicture",
           "@type": "@id"
@@ -24,17 +21,17 @@
           "@id": "http://iata.org/iataCredentialDefinitions/passport/dataGroup1#expiryDate",
           "@type": "http://www.w3.org/2001/XMLSchema#date"
         },
-        "genderCode": {
-          "@id": "http://iata.org/iataCredentialDefinitions/passport/dataGroup1#genderCode"
+        "sexCode": {
+          "@id": "http://iata.org/iataCredentialDefinitions/passport/dataGroup1#sexCode"
         },
         "holdersName": {
           "@id": "http://iata.org/iataCredentialDefinitions/passport/dataGroup1#holdersName"
         },
         "issuerCode": {
           "@id": "http://iata.org/iataCredentialDefinitions/passport/dataGroup1#issuerCode"
-        }
-        "natlText": {
-          "@id": "http://iata.org/iataCredentialDefinitions/passport/dataGroup1#natlText"
+        },
+        "natlCode": {
+          "@id": "http://iata.org/iataCredentialDefinitions/passport/dataGroup1#natlCode"
         },
         "passportNumberIdentifier": {
           "@id": "http://iata.org/iataCredentialDefinitions/passport/dataGroup1#passportNumberIdentifier"

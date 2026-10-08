@@ -1118,7 +1118,7 @@
 												<xs:extension base="Numeric0to99">
 													<xs:attribute name="Qualifier" type="IATA_CodeType" use="required">
 														<xs:annotation>
-															<xs:documentation xml:lang="en">The type of crew.  Refer to IATA PADIS Code List for data element 9873.</xs:documentation>
+															<xs:documentation xml:lang="en">The type of crew. Refer to IATA PADIS Code List for data element 9873 or DOW.</xs:documentation>
 														</xs:annotation>
 													</xs:attribute>
 													<xs:attribute name="RepeatIndex" type="Numeric1to99" use="optional">
