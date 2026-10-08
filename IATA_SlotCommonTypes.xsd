@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2007/00" targetNamespace="http://www.iata.org/IATA/2007/00" elementFormDefault="qualified" version="4.006" id="IATA2023.1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2007/00" targetNamespace="http://www.iata.org/IATA/2007/00" elementFormDefault="qualified" version="4.007" id="IATA2024.1">
 	<xs:include schemaLocation="IATA_SimpleTypes.xsd"/>
 	<xs:include schemaLocation="IATA_CommonTypes.xsd"/>
 	<xs:complexType name="BaseTransactionType">
@@ -221,6 +221,11 @@
 			<xs:enumeration value="InvalidData">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">One of the elements contains an invalid value.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Constraint">
+				<xs:annotation>
+					<xs:documentation xml:lang="en">This item breaks capacity constraints</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 		</xs:restriction>
@@ -904,6 +909,33 @@
 		<xs:attribute name="CoordComment" type="StringLength0to50" use="optional">
 			<xs:annotation>
 				<xs:documentation>Comment added by the coordinator</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="BrokenConstraintType">
+		<xs:sequence>
+			<xs:element name="ConstraintTimeRange" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>the time range over which the constraint has been exceeded.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="DateTimeSpanGroup"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ConstraintDate" type="DateOrDateTimeType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>The dates on which the constraint was exceeded.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="ConstraintName" type="UpperCaseAlphaNumericStringLength1to20" use="required">
+			<xs:annotation>
+				<xs:documentation>The name of the broken constrain as per SSIM, Appendix J or as bilaterally agreed.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ConstraintMovement" type="RunwayMovementType" use="required">
+			<xs:annotation>
+				<xs:documentation>Used to specify if the constraint relates to arrivals, departure or combined totals.</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
 	</xs:complexType>

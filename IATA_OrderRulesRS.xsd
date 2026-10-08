@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema targetNamespace="http://www.iata.org/IATA/2015/EASD/00/IATA_OffersAndOrdersMessage" elementFormDefault="qualified" version="6.000" xmlns:cns="http://www.iata.org/IATA/2015/EASD/00/IATA_OffersAndOrdersCommonTypes" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/EASD/00/IATA_OffersAndOrdersMessage" id="IATA2021.3.4"><xs:import namespace="http://www.iata.org/IATA/2015/EASD/00/IATA_OffersAndOrdersCommonTypes" schemaLocation="IATA_OffersAndOrdersCommonTypes.xsd"/>
+<xs:schema targetNamespace="http://www.iata.org/IATA/2015/EASD/00/IATA_OffersAndOrdersMessage" elementFormDefault="qualified" version="6.001" xmlns:cns="http://www.iata.org/IATA/2015/EASD/00/IATA_OffersAndOrdersCommonTypes" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/EASD/00/IATA_OffersAndOrdersMessage" id="IATA2024.1"><xs:import namespace="http://www.iata.org/IATA/2015/EASD/00/IATA_OffersAndOrdersCommonTypes" schemaLocation="IATA_OffersAndOrdersCommonTypes.xsd"/>
 <xs:element name="IATA_OrderRulesRS">
 <xs:annotation>
 <xs:documentation>The Rules transaction set returns rules associated with an Order, including filed details of a specific fare basis code (FBC).</xs:documentation>

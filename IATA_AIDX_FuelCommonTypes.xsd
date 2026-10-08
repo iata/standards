@@ -545,7 +545,7 @@
 			<xs:documentation>Fuel tank name, fuel quantity and whether it is full or should be filled (in the case of a fuel order the FillInd would mean the tank should be filled).</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Name" type="StringLenght1to35"/>
+			<xs:element name="Name" type="StringLength1to35"/>
 			<xs:element name="Quantity" type="QuantityType" minOccurs="0"/>
 			<xs:element name="FillInd" type="xs:boolean" minOccurs="0"/>
 		</xs:sequence>
