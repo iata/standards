@@ -1,19 +1,27 @@
 <?xml version="1.0"?>
-<xs:schema targetNamespace="http://www.iata.org/IATA/2015/00/2020.1/IATA_PaymentSettlementTransferNotif" elementFormDefault="qualified" version="1.001" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2020.1/IATA_PaymentSettlementTransferNotif">
-<xs:element name="IATA_PaymentSettlementTransferNotif">
+<xs:schema targetNamespace="http://www.iata.org/IATA/2015/00/2020.2/IATA_PaymentClearingListRS" elementFormDefault="qualified" version="1.000" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2020.2/IATA_PaymentClearingListRS">
+<xs:element name="IATA_PaymentClearingListRS">
 <xs:annotation>
-<xs:documentation>The Settlement Manager sends this notifications to the Payee. The Payee uses this information to identify the payment received in its bank account and to do accounting reconciliation. The information includes detailed data at transaction level and aggregate level data. This clearance related message is about the flow of money and it cannot, under any circumstances, be used, treated or considered as legal invoice.</xs:documentation>
+<xs:documentation>The ClearingList transaction set retrieves a list of Clearings that match one or more search criteria.
+This clearance related message is about the flow of money and it cannot, under any circumstances, be used, treated or considered as legal invoice. </xs:documentation>
 </xs:annotation>
 <xs:complexType>
 <xs:sequence>
+<xs:choice minOccurs="1" maxOccurs="1">
+<xs:element name="ClearingProcess" type="ClearingProcessType" minOccurs="1" maxOccurs="unbounded">
+<xs:annotation>
+<xs:documentation>the process that turns the promise of payment (for example, in the form of electronic clearance request) into the actual movement of money from one account to another</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="Error" type="ErrorType" minOccurs="1" maxOccurs="unbounded">
+<xs:annotation>
+<xs:documentation>Contains information related to errors detected during processing of the preceding request.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:choice>
 <xs:element name="PayloadStandardAttributes" type="IATA_PayloadStandardAttributesType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>The IATA_PayloadStdAttributes defines the standard attributes that appear on the root element for all IATA payloads.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="Settlement" type="SettlementType" minOccurs="1" maxOccurs="unbounded">
-<xs:annotation>
-<xs:documentation>an act that discharges obligations in respect of funds or securities transfers between two or more parties.</xs:documentation>
 </xs:annotation>
 </xs:element>
 </xs:sequence>
@@ -26,7 +34,7 @@
 <xs:sequence>
 <xs:element name="AgreementID" type="ID_Type" minOccurs="1" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>This is the identifier of the agreement that is the foundation for the clearance being processed. In One Order and NDC this is the 'Order ID'. Carrier assigned identifier, which uniquely identifies a specific Order across several messages. </xs:documentation>
+<xs:documentation>This is the identifier of the agreement that is the foundation for the settlement or clearance being processed. In One Order and NDC this is the 'Order ID'. Carrier assigned identifier, which uniquely identifies a specific Order across several messages.</xs:documentation>
 </xs:annotation>
 </xs:element>
 </xs:sequence>
@@ -61,7 +69,11 @@
 </xs:annotation>
 <xs:simpleContent>
 <xs:extension base="xs:decimal">
-<xs:attribute name="CurCode" type="xs:token" use="required"></xs:attribute>
+<xs:attribute name="CurCode" type="xs:token" use="required">
+<xs:annotation>
+<xs:documentation>The currency of the amount</xs:documentation>
+</xs:annotation>
+</xs:attribute>
 </xs:extension>
 </xs:simpleContent>
 </xs:complexType>
@@ -98,11 +110,6 @@
 <xs:documentation>The amount agreed to be cleared in the Agreement between the two parties to the Agreement. It is obtained from the Commitment in the Agreement. The value of the Net Clearance Amount in the Payment Commitment of the Agreement can be either positive [+] or negative [-]. If it is positive [+] then the party initiating the clearance request will be the Payee in the clearance, i.e. the initiator of the clearance is to receive funds. If it is negative [-] then the party initiating the clearance request will be the Payer in the clearance, i.e. the initiator of the clearance has to pay-out funds. It is the absolute value of the Net Clearance Amount that is used in the Clearance.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="RemittanceDate" type="DateType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>This is the date when the Payer will have to transfer the amount in the clearance request into the settlement manager's bank account. </xs:documentation>
-</xs:annotation>
-</xs:element>
 </xs:sequence>
 </xs:complexType>
 <xs:simpleType name="ClearanceID_Type">
@@ -114,9 +121,30 @@
 <xs:length value="15"></xs:length>
 </xs:restriction>
 </xs:simpleType>
+<xs:complexType name="ClearancePartyType">
+<xs:choice>
+<xs:element name="Carrier" type="CarrierType" minOccurs="1" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>The organization which carries the passenger, baggage, or goods, and/or commits to delivering the carriage as well as any related services such as issuance of ticket, creation of Order, etc.
+ </xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="Org" type="OrgType" minOccurs="1" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>An organized structure set up for a particular purpose, such as a business, government body, department, charity, or financial institution.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="TravelAgency" type="TravelAgencyType" minOccurs="1" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>A private retailer or public service that provides travel and tourism related services to the public on behalf of suppliers such as activities, airlines, car rentals, cruise lines, hotels, railways, travel insurance, and package tours.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:choice>
+</xs:complexType>
 <xs:simpleType name="ClearanceProcessRuleCodeType">
 <xs:annotation>
-<xs:documentation>Character string of letters and numbers to describe the governance for the Clearance process.</xs:documentation>
+<xs:documentation>Process Rule Code to select and define the governance for the Clearance process.
+ example: IATAC00 or BLTRL00</xs:documentation>
 </xs:annotation>
 <xs:restriction base="xs:token">
 <xs:pattern value="(IATAC|BLTRL)[A-Za-z0-9]{2}"></xs:pattern>
@@ -145,7 +173,7 @@
 </xs:element>
 <xs:element name="ClearanceID" type="ClearanceID_Type" minOccurs="1" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>this is an identifier, generated by the party requesting the clearance, which uniquely identifies the clearance transaction. It provides the necessary link for financial audit connecting the sale to the financial records. This field is required because no other existing data element could be used by the financial systems or could provide unique identification. The identifier is globally unique for the clearance by design.</xs:documentation>
+<xs:documentation>this is an identifier generated by the party requesting the clearance that uniquely identifies the clearance transaction. It provides the necessary link for financial audit connecting the sale to the financial records. This field is required because no other existing data elements could be used by the financial systems or could provide unique identification. The identifier is globally unique for the settlement by design.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="CommitmentToPay" type="CommitmentToPayType" minOccurs="1" maxOccurs="1">
@@ -160,12 +188,12 @@
  NonSettledAmount must be included in all messages where it is provided as an option when its value is neither 0 (zero) nor equal to NetClearanceAmount</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="Payee" type="PayeeType" minOccurs="0" maxOccurs="1">
+<xs:element name="Payee" type="ClearancePartyType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>the party receiving funds as a result of a clearance for a claim it has made.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="Payer" type="PayerType" minOccurs="0" maxOccurs="1">
+<xs:element name="Payer" type="ClearancePartyType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>the party paying funds to clear claims against itself.</xs:documentation>
 </xs:annotation>
@@ -179,6 +207,70 @@
 <xs:element name="StatusCode" type="ClearanceStatusCodeType" minOccurs="1" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>the progress of the individual transaction within the settlement process. Transaction is first acknowledged, then in process, then settled or could have status 'clawback', 'partially settled', 'final settlement' or 'write off'.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:simpleType name="ClearingID_Type">
+<xs:annotation>
+<xs:documentation>identifier provided by the Settlement Manager to identify the movement of money.</xs:documentation>
+</xs:annotation>
+<xs:restriction base="xs:token">
+<xs:pattern value="(SWS|SWR|BIL)[A-Za-z0-9]{7}"></xs:pattern>
+<xs:length value="10"></xs:length>
+</xs:restriction>
+</xs:simpleType>
+<xs:complexType name="ClearingPartyType">
+<xs:annotation>
+<xs:documentation>the party of the clearing process.</xs:documentation>
+</xs:annotation>
+<xs:choice>
+<xs:element name="RemittancePayer" type="ClearancePartyType" minOccurs="1" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>the party paying funds to perform remittance.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="SettlementPayee" type="ClearancePartyType" minOccurs="1" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>the party receiving funds from settlement.
+ </xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:choice>
+</xs:complexType>
+<xs:complexType name="ClearingProcessType">
+<xs:annotation>
+<xs:documentation>the process that turns the promise of payment (for example, in the form of electronic clearance request) into the actual movement of money from one account to another</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="Clearance" type="ClearanceType" minOccurs="1" maxOccurs="unbounded">
+<xs:annotation>
+<xs:documentation>the delivery of funds from one party - payer- to another party - the payee - to fulfill contractual obligations, i.e. commitment between the two parties.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="ClearingDate" type="DateType" minOccurs="1" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Date, as per SwO Schedule, when payment must be made by Remittance Payer or to Settlement Payee.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="ClearingID" type="ClearingID_Type" minOccurs="1" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>identifier provided by the Settlement Manager to identify the movement of money.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="ClearingParty" type="ClearingPartyType" minOccurs="1" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>the party of the clearing process.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="FundsTransfer" type="FundsTransferType" minOccurs="1" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Money moved from one financial account to another.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="TotalAmount" type="AmountType" minOccurs="1" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>the sum of the amounts of the next lower hierarchical level items that are being aggregated.</xs:documentation>
 </xs:annotation>
 </xs:element>
 </xs:sequence>
@@ -204,13 +296,13 @@
 <xs:element name="CommitmentID" type="ID_Type" minOccurs="1" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>this is the identifier of the payment commitment within the agreement. In One Order and NDC this is the 'PaymentID' of the 'PaymentProcessingSummary'. 
- In releases prior to 19.2 it is the 'PaymentInfoID' of the 'PaymentInfo', where it is available. </xs:documentation>
+ In releases prior to 19.2 it is the 'PaymentInfoID' of the 'PaymentInfo', where it is available.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="PaymentCommitmentDateTime" type="DateTimeType" minOccurs="1" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>defines the date when the PaymentProcessingSummary, with information about amount and payment method, is accepted by ORA to be sufficient to lead to successful payment.
- This is the date when the status in the 'Payment Status Code' is set to 'SUCCESSFUL' </xs:documentation>
+ This is the date when the status in the 'Payment Status Code' is set to 'SUCCESSFUL'</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="PaymentMethod" type="PaymentMethodType" minOccurs="1" maxOccurs="1">
@@ -225,12 +317,6 @@
 </xs:element>
 </xs:sequence>
 </xs:complexType>
-<xs:simpleType name="CountType">
-<xs:annotation>
-<xs:documentation>A total number of something.</xs:documentation>
-</xs:annotation>
-<xs:restriction base="xs:integer"></xs:restriction>
-</xs:simpleType>
 <xs:simpleType name="DateTimeType">
 <xs:annotation>
 <xs:documentation>A date time identifies a date and time of day to various common resolutions: year, month, week, day, hour, minute, second, and fraction of second.</xs:documentation>
@@ -243,14 +329,66 @@
 </xs:annotation>
 <xs:restriction base="xs:date"></xs:restriction>
 </xs:simpleType>
+<xs:complexType name="ErrorType">
+<xs:annotation>
+<xs:documentation>Error(s) that prevented message processing or response to be generated.</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="Code" type="CodeType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>The code corresponding to the processing error as defined by PADIS 9321.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="DescText" type="TextType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Free text description of the provided error.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="ErrorID" type="ID_Type" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Unique identifier for this error instance.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="LangCode" type="CodeType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Language code associated with the error response.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="OwnerName" type="ProperNameType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>The name of the organization owning the error codelist.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="StatusText" type="TextType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Document processing status. Recommended values are NotProcessed, Incomplete, Complete, Unknown.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="TagText" type="TextType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Identifies the tag/XPath which relates to the provided Error.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="TypeCode" type="CodeType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Uses a bilaterally agreed set of values to indicate the error type. The validating XSD can expect to accept values that it has not been explicitly coded for and process them by using Type = 'unknown'.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="URL" type="URI_Type" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Link to an online description of the provided Error.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
 <xs:complexType name="EWalletType">
 <xs:annotation>
 <xs:documentation>payment that is facilitated through virtual wallet, where the paying party has deposited funds and the payee is receiving the payment from the wallet rather than the party committing to the payment.</xs:documentation>
 </xs:annotation>
 <xs:sequence>
-<xs:element name="AuthorizationID" type="ID_Type" minOccurs="1" maxOccurs="1">
+<xs:element name="ApprovalCode" type="CodeType" minOccurs="1" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>Authorization string provided by a third party that is not a party to the Agreement or the Payment Commitment of the Agreement, confirming that the committed funds have been secured or will be secured from the payer.</xs:documentation>
+<xs:documentation>Authorization result Approval code</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="NetClearanceAmount" type="AmountType" minOccurs="1" maxOccurs="1">
@@ -262,7 +400,7 @@
 </xs:complexType>
 <xs:simpleType name="FundsTransferAccountCodeType">
 <xs:annotation>
-<xs:documentation>predefined account, provided as token, where the funds are being transferred to or taken out from. </xs:documentation>
+<xs:documentation>predefined account where the funds are being transferred to or taken out from. Provided as token that is understood only by the communicating parties.</xs:documentation>
 </xs:annotation>
 <xs:restriction base="xs:token">
 <xs:pattern value="([A-Za-z0-9]{4})"></xs:pattern>
@@ -271,7 +409,7 @@
 </xs:simpleType>
 <xs:simpleType name="FundsTransferMethodCodeType">
 <xs:annotation>
-<xs:documentation>describes how the funds were paid to the payee or paid by the payer. </xs:documentation>
+<xs:documentation>describes how the funds were paid to the payee or paid by the payer. Example: SWOBANK for bank related transfers.</xs:documentation>
 </xs:annotation>
 <xs:restriction base="xs:token">
 <xs:pattern value="[A-Z]{7}"></xs:pattern>
@@ -285,30 +423,30 @@
 <xs:sequence>
 <xs:element name="AccountCode" type="FundsTransferAccountCodeType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>predefined account where the funds are being transferred to or taken out from. Provided as token that is understood only by the communicating parties. </xs:documentation>
+<xs:documentation>predefined account where the funds are being transferred to or taken out from. Provided as token that is understood only by the communicating parties.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="MethodCode" type="FundsTransferMethodCodeType" minOccurs="1" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>a particular way of doing something. The value defines how the funds were paid to the payee or paid by the payer. </xs:documentation>
+<xs:documentation>a particular way of doing something. The value defines how the funds were paid to the payee or paid by the payer.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="TypeCode" type="FundsTransferTypeCodeType" minOccurs="1" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>Characterizes how the selected method was executed. For example payment from a payer can be executed either by using pre-authorized direct debit or by bank wire transfer order made by the payer. </xs:documentation>
+<xs:documentation>Characterizes how the selected method was executed. For example payment from a payer can be executed either by using pre-authorized direct debit or by bank wire transfer order made by the payer.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="ValueDate" type="DateType" minOccurs="1" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>The date on which a transaction actually takes place.
- This is the best estimate of the 'value date'.</xs:documentation>
+ This is the best estimate of the value date.</xs:documentation>
 </xs:annotation>
 </xs:element>
 </xs:sequence>
 </xs:complexType>
 <xs:simpleType name="FundsTransferTypeCodeType">
 <xs:annotation>
-<xs:documentation>characterizes how the selected method was executed.</xs:documentation>
+<xs:documentation>characterizes how the selected method was executed. Payment from a payer can be executed by using pre-authorized direct debit or by bank wire transfer order made by the payer.</xs:documentation>
 </xs:annotation>
 <xs:restriction base="xs:token">
 <xs:pattern value="[A-Z]{3}"></xs:pattern>
@@ -415,52 +553,6 @@
 </xs:element>
 </xs:sequence>
 </xs:complexType>
-<xs:complexType name="PayeeType">
-<xs:annotation>
-<xs:documentation>the party receiving funds as a result of a clearance for a claim it has made.</xs:documentation>
-</xs:annotation>
-<xs:choice>
-<xs:element name="Carrier" type="CarrierType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>The organization which carries the passenger, baggage, or goods, and/or commits to delivering the carriage as well as any related services such as issuance of ticket, creation of Order, etc.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="Org" type="OrgType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>An organized structure set up for a particular purpose, such as a business, government body, department, charity, or financial institution.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="TravelAgency" type="TravelAgencyType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A private retailer or public service that provides travel and tourism related services to the public on behalf of suppliers such as activities, airlines, car rentals, cruise lines, hotels, railways, travel insurance, and package tours.</xs:documentation>
-</xs:annotation>
-</xs:element>
-</xs:choice>
-</xs:complexType>
-<xs:complexType name="PayerType">
-<xs:annotation>
-<xs:documentation>the party paying funds to clear claims against itself.</xs:documentation>
-</xs:annotation>
-<xs:choice>
-<xs:element name="Carrier" type="CarrierType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>The organization which carries the passenger, baggage, or goods, and/or commits to delivering the carriage as well as any related services such as issuance of ticket, creation of Order, etc.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="Org" type="OrgType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>An organized structure set up for a particular purpose, such as a business, government body, department, charity, or financial institution.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="TravelAgency" type="TravelAgencyType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A private retailer or public service that provides travel and tourism related services to the public on behalf of suppliers such as activities, airlines, car rentals, cruise lines, hotels, railways, travel insurance, and package tours.</xs:documentation>
-</xs:annotation>
-</xs:element>
-</xs:choice>
-</xs:complexType>
 <xs:simpleType name="PaymentMethodCodeContentType">
 <xs:annotation>
 <xs:documentation>The form of payment type. Examples: Credit Card, Cash. {codeListAgencyName}PADIS{/codeListAgencyName} {codeListName}Form of payment identification{/codeListName} {codeListIdentifier}9888{/codeListIdentifier} </xs:documentation>
@@ -499,107 +591,6 @@
 <xs:maxLength value="64"></xs:maxLength>
 </xs:restriction>
 </xs:simpleType>
-<xs:simpleType name="SettleID_Type">
-<xs:annotation>
-<xs:documentation>identifier provided by the Settlement Manager to the Payee to identify the money transferred by the Settlement Manager to the Payee’s bank account.</xs:documentation>
-</xs:annotation>
-<xs:restriction base="xs:token">
-<xs:pattern value="(SWS|BIL)[A-Za-z0-9]{7}"></xs:pattern>
-<xs:length value="10"></xs:length>
-</xs:restriction>
-</xs:simpleType>
-<xs:complexType name="SettlementDataType">
-<xs:annotation>
-<xs:documentation>Amounts that define the funds to be cleared as a result of the payment commitment and the selected payment method, and the date when the funds must be remitted. </xs:documentation>
-</xs:annotation>
-<xs:sequence>
-<xs:element name="NetClearanceAmount" type="AmountType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>The amount agreed to be cleared in the Agreement between the two parties to the Agreement. It is obtained from the Commitment in the Agreement. The value of the Net Clearance Amount in the Payment Commitment of the Agreement can be either positive [+] or negative [-]. If it is positive [+] then the party initiating the clearance request will be the Payee in the clearance, i.e. the initiator of the clearance is to receive funds. If it is negative [-] then the party initiating the clearance request will be the Payer in the clearance, i.e. the initiator of the clearance has to pay-out funds. It is the absolute value of the Net Clearance Amount that is used in the Clearance.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="ORA_NetPayable" type="AmountType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Amount owned by ORA that has not yet been paid.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="ORA_NetReceivable" type="AmountType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Amount owned to ORA at a particular time and not yet paid.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="RemittanceDate" type="DateType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>This is the date when the Payer will have to transfer the amount in the clearance request into the settlement manager's bank account. </xs:documentation>
-</xs:annotation>
-</xs:element>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="SettlementPayeeType">
-<xs:annotation>
-<xs:documentation>the party receiving funds from settlement.</xs:documentation>
-</xs:annotation>
-<xs:choice>
-<xs:element name="Carrier" type="CarrierType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>The organization which carries the passenger, baggage, or goods, and/or commits to delivering the carriage as well as any related services such as issuance of ticket, creation of Order, etc.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="Org" type="OrgType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>An organized structure set up for a particular purpose, such as a business, government body, department, charity, or financial institution.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="TravelAgency" type="TravelAgencyType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A private retailer or public service that provides travel and tourism related services to the public on behalf of suppliers such as activities, airlines, car rentals, cruise lines, hotels, railways, travel insurance, and package tours.</xs:documentation>
-</xs:annotation>
-</xs:element>
-</xs:choice>
-</xs:complexType>
-<xs:complexType name="SettlementType">
-<xs:annotation>
-<xs:documentation>an act that discharges obligations in respect of funds or securities transfers between two or more parties.</xs:documentation>
-</xs:annotation>
-<xs:sequence>
-<xs:element name="Clearance" type="ClearanceType" minOccurs="1" maxOccurs="unbounded">
-<xs:annotation>
-<xs:documentation>the delivery of funds from one party - payer- to another party - the payee - to fulfill contractual obligations, i.e. commitment between the two parties.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="ClearanceCount" type="CountType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>count of the clearances that are part of the settlement or remittance money transfer, or transmitted in a batch.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="Date" type="DateType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>the date when the Settlement Manager will settle the funds to the Payee. This is the date when the Settlement Manager orders the bank transfer to the Payee's bank account.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="FundsTransfer" type="FundsTransferType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Money moved from one financial account to another.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="SettleID" type="SettleID_Type" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>identifier provided by the Settlement Manager to the Payee to identify the money transferred by the Settlement Manager to the Payee's bank account.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="SettlementPayee" type="SettlementPayeeType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>the party receiving funds from settlement.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="TotalAmount" type="AmountType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>the sum of the amounts of the next lower hierarchical level items that are being aggregated</xs:documentation>
-</xs:annotation>
-</xs:element>
-</xs:sequence>
-</xs:complexType>
 <xs:simpleType name="TextType">
 <xs:annotation>
 <xs:documentation>Text is a character string such as a finite set of characters generally in the form of words of a language.</xs:documentation>
@@ -623,4 +614,10 @@
 </xs:element>
 </xs:sequence>
 </xs:complexType>
+<xs:simpleType name="URI_Type">
+<xs:annotation>
+<xs:documentation>A string of characters used to identify a resource. Such identification enables interaction with representations of the resource over a network, typically the World Wide Web, using specific protocols.</xs:documentation>
+</xs:annotation>
+<xs:restriction base="xs:anyURI"></xs:restriction>
+</xs:simpleType>
 </xs:schema>

@@ -1,22 +1,22 @@
 <?xml version="1.0"?>
-<xs:schema targetNamespace="http://www.iata.org/IATA/2015/00/2020.1/IATA_PaymentSettlementListRQ" elementFormDefault="qualified" version="1.000" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2020.1/IATA_PaymentSettlementListRQ">
-<xs:element name="IATA_PaymentSettlementListRQ">
+<xs:schema targetNamespace="http://www.iata.org/IATA/2015/00/2020.2/IATA_PaymentClearingListRQ" elementFormDefault="qualified" version="1.000" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2020.2/IATA_PaymentClearingListRQ">
+<xs:element name="IATA_PaymentClearingListRQ">
 <xs:annotation>
-<xs:documentation>The SettlementListRQ retrieves one or a list of Settlement Transfer Notifications that match one or more search criteria.
-Search criteria may include SettleID or SettlementDate.
+<xs:documentation>Retrieves one or a list of Clearing Notifications that match one or more search criteria.
+Search criteria may include Clearing ID or SwO Schedule Date.
 This clearance related message is about the flow of money and it cannot, under any circumstances, be used, treated or considered as legal invoice. </xs:documentation>
 </xs:annotation>
 <xs:complexType>
 <xs:sequence>
 <xs:choice minOccurs="1" maxOccurs="1">
-<xs:element name="SettleID" type="SettleID_Type" minOccurs="1" maxOccurs="unbounded">
+<xs:element name="ClearingDate" type="ClearingDateType" minOccurs="1" maxOccurs="unbounded">
 <xs:annotation>
-<xs:documentation>identifier provided by the Settlement Manager to the Payee to identify the money transferred by the Settlement Manager to the Payee's bank account.</xs:documentation>
+<xs:documentation>Date, as per SwO Schedule, when payment must be made by Remittance Payer or to Settlement Payee.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="SettlementDate" type="SettlementDateType" minOccurs="1" maxOccurs="unbounded">
+<xs:element name="ClearingID" type="ClearingID_Type" minOccurs="1" maxOccurs="unbounded">
 <xs:annotation>
-<xs:documentation>the date when the Settlement Manager will settle the funds to the Payee. This is the date when the Settlement Manager orders the bank transfer to the Payee's bank account.</xs:documentation>
+<xs:documentation>identifier provided by the Settlement Manager to identify the movement of money.</xs:documentation>
 </xs:annotation>
 </xs:element>
 </xs:choice>
@@ -28,6 +28,44 @@ This clearance related message is about the flow of money and it cannot, under a
 </xs:sequence>
 </xs:complexType>
 </xs:element>
+<xs:complexType name="ClearingDateType">
+<xs:annotation>
+<xs:documentation>Date, as per SwO Schedule, when payment must be made by Remittance Payer or to Settlement Payee.</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="FromDate" type="DateType" minOccurs="1" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>the start date for the search period based on remittance date</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="ToDate" type="DateType" minOccurs="1" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>the end date for the search period based on remittance date</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:simpleType name="ClearingID_Type">
+<xs:annotation>
+<xs:documentation>identifier provided by the Settlement Manager to identify the movement of money.</xs:documentation>
+</xs:annotation>
+<xs:restriction base="xs:token">
+<xs:pattern value="(SWS|SWR|BIL)[A-Za-z0-9]{7}"></xs:pattern>
+<xs:length value="10"></xs:length>
+</xs:restriction>
+</xs:simpleType>
+<xs:complexType name="ClearingProcessType">
+<xs:annotation>
+<xs:documentation>the process that turns the promise of payment (for example, in the form of electronic clearance request) into the actual movement of money from one account to another</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="ClearingID" type="ClearingID_Type" minOccurs="1" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>identifier provided by the Settlement Manager to identify the movement of money.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
 <xs:simpleType name="CodeType">
 <xs:annotation>
 <xs:documentation>A code is a character string of letters, numbers, special characters (except escape sequences), and symbols.</xs:documentation>
@@ -125,45 +163,6 @@ This clearance related message is about the flow of money and it cannot, under a
 </xs:annotation>
 <xs:restriction base="xs:decimal"></xs:restriction>
 </xs:simpleType>
-<xs:simpleType name="SettleID_Type">
-<xs:annotation>
-<xs:documentation>identifier provided by the Settlement Manager to the Payee to identify the money transferred by the Settlement Manager to the Payee's bank account.</xs:documentation>
-</xs:annotation>
-<xs:restriction base="xs:token">
-<xs:pattern value="(SWS|BIL)[A-Za-z0-9]{7}"></xs:pattern>
-<xs:length value="10"></xs:length>
-</xs:restriction>
-</xs:simpleType>
-<xs:complexType name="SettlementDateType">
-<xs:annotation>
-<xs:documentation>the date when the Settlement Manager will settle the funds to the Payee. This is the date when the Settlement Manager orders the bank transfer to the Payee's bank account.
- </xs:documentation>
-</xs:annotation>
-<xs:sequence>
-<xs:element name="FromDate" type="DateType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>the start date for the search period based on settlement date</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="ToDate" type="DateType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>the end date for the search period based on settlement date</xs:documentation>
-</xs:annotation>
-</xs:element>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="SettlementType">
-<xs:annotation>
-<xs:documentation>an act that discharges obligations in respect of funds or securities transfers between two or more parties.</xs:documentation>
-</xs:annotation>
-<xs:sequence>
-<xs:element name="SettleID" type="SettleID_Type" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>identifier provided by the Settlement Manager to the Payee to identify the money transferred by the Settlement Manager to the Payee's bank account.</xs:documentation>
-</xs:annotation>
-</xs:element>
-</xs:sequence>
-</xs:complexType>
 <xs:simpleType name="TextType">
 <xs:annotation>
 <xs:documentation>Text is a character string such as a finite set of characters generally in the form of words of a language.</xs:documentation>
