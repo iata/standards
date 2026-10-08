@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema targetNamespace="http://www.iata.org/IATA/2015/00/2021.3/IATA_PaymentClearanceNotif" elementFormDefault="qualified" version="2.000" xmlns:cns="http://www.iata.org/IATA/2015/00/2021.3/IATA_PaymentClearanceCommonTypes" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2021.3/IATA_PaymentClearanceNotif" id="IATA2021.3"><xs:import namespace="http://www.iata.org/IATA/2015/00/2021.3/IATA_PaymentClearanceCommonTypes" schemaLocation="IATA_PaymentClearanceCommonTypes.xsd"/>
+<xs:schema targetNamespace="http://www.iata.org/IATA/2015/00/2021.4/IATA_PaymentClearanceNotif" elementFormDefault="qualified" version="2.000" xmlns:cns="http://www.iata.org/IATA/2015/00/2021.4/IATA_PaymentClearanceCommonTypes" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2021.4/IATA_PaymentClearanceNotif" id="IATA2021.4"><xs:import namespace="http://www.iata.org/IATA/2015/00/2021.4/IATA_PaymentClearanceCommonTypes" schemaLocation="IATA_PaymentClearanceCommonTypes.xsd"/>
 <xs:element name="IATA_PaymentClearanceNotif">
 <xs:annotation>
 <xs:documentation>this is unsolicited notification that provides information about upcoming clearance (date of remittance, date of settlement, amount, form of payment, remit ID, currency etc). 

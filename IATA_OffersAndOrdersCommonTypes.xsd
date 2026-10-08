@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<xs:schema targetNamespace="http://www.iata.org/IATA/2015/EASD/00/IATA_OffersAndOrdersCommonTypes"  xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"  elementFormDefault="qualified" version="1.3" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/EASD/00/IATA_OffersAndOrdersCommonTypes"> <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/> 
+<?xml version="1.0"?>
+<xs:schema targetNamespace="http://www.iata.org/IATA/2015/EASD/00/IATA_OffersAndOrdersCommonTypes"  xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"  elementFormDefault="qualified" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/EASD/00/IATA_OffersAndOrdersCommonTypes"> <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/> 
 <xs:complexType name="AcceptanceRuleType">
 <xs:annotation>
 <xs:documentation>A rule which is an account or representation of the certain or major aspects, characteristics, or features of a person, object, or event.</xs:documentation>
@@ -91,276 +91,6 @@
 </xs:element>
 </xs:sequence>
 </xs:complexType>
-<xs:complexType name="AccountedDifferentialFareDetailType">
-<xs:annotation>
-<xs:documentation>The amount charged by the carrier for the carriage of a passenger and his allowable free baggage.</xs:documentation>
-</xs:annotation>
-<xs:sequence>
-<xs:element name="AccountCode" type="CodeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Corporate ID used for pricing special fares. Example: 675124</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="DifferentialFarePriceType" type="DifferentialFarePriceTypeType" minOccurs="0" maxOccurs="3">
-<xs:annotation>
-<xs:documentation>A differential specialization of an additional specified fare pricing such as 'Net' and 'Filed'. 
- For 'Sell' or public amounts, use the Price in Fare Details.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="FareCalculationInfo" type="FareCalculationInfoType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Information related to the calculation of the Fare amount by applying various rules to determine a final fare for an airline ticket.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="FareComponent" type="AccountedFareComponentType" minOccurs="0" maxOccurs="unbounded">
-<xs:annotation>
-<xs:documentation>A portion of an itinerary between two consecutive fare construction points. If the journey has only one fare component, the points of origin and destination are the only fare construction points</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="FareIndCode" type="CodeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Fare indicator code. Example: 1 (SYSTEM PRICED WITHOUT MANUAL INTERVENTION)
- 
- Encoding Scheme: IATA PADIS Code List for data element 5387 - Price Type Qualifier</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="FareRefText" type="TextType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Fare reference key, ex: PQ123456</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="FareWaiver" type="FareWaiverType" minOccurs="0" maxOccurs="5">
-<xs:annotation>
-<xs:documentation>Validating carrier-assigned fare rule modification or override information.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="FiledFareInd" type="IndType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>When TRUE, a component of this fare has been priced using filed fare data. If FALSE, dynamic pricing has been applied.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="NetReportingCodeText" type="TextType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Code indicating if the transaction is subject to a net reporting arrangement.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="PaxRefID" type="ID_Type" minOccurs="0" maxOccurs="unbounded">
-<xs:annotation>
-<xs:documentation>Reference to a Passenger ID</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="PenaltyRefID" type="ID_Type" minOccurs="0" maxOccurs="unbounded">
-<xs:annotation>
-<xs:documentation>Reference to a Penalty ID.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="Price" type="DifferentialPriceType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A specialization of price used for price differentials. Price is the amount of money expected, required, or given in payment for something.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="PricingSystemCodeText" type="TextType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>IATA assigned code identifying the system used to price the itinerary for the document being issued.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="StatisticalCodeText" type="TextType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Code used for domestic or international sales differentiation.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="TourCode" type="CodeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Tour Code. Example: ITGF12</xs:documentation>
-</xs:annotation>
-</xs:element>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="AccountedDiffPriceAndFareDetailsType">
-<xs:annotation>
-<xs:documentation>A specialization of a container for Price and Fare detail information.</xs:documentation>
-</xs:annotation>
-<xs:sequence>
-<xs:element name="FareDetail" type="AccountedDifferentialFareDetailType" minOccurs="0" maxOccurs="unbounded">
-<xs:annotation>
-<xs:documentation>The amount charged by the carrier for the carriage of a passenger and his allowable free baggage.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="Price" type="DifferentialPriceType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A specialization of price used for price differentials. Price is the amount of money expected, required, or given in payment for something.</xs:documentation>
-</xs:annotation>
-</xs:element>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="AccountedFareComponentType">
-<xs:annotation>
-<xs:documentation>A portion of an itinerary between two consecutive fare construction points. If the journey has only one fare component, the points of origin and destination are the only fare construction points</xs:documentation>
-</xs:annotation>
-<xs:sequence>
-<xs:element name="CabinType" type="CabinTypeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Type of compartment of an aircraft, offering specific services (e.g. business class, economy).
- Business Identifier Fields:
- - Cabin Type Code</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="CancelRestrictions" type="CancelRestrictionsType" minOccurs="0" maxOccurs="unbounded">
-<xs:annotation>
-<xs:documentation>These are a set of qualifying conditions/rules/restrictions that are related to a constrained priced grouping of services for the Cancellation action.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="ChangeRestrictions" type="ChangeRestrictionsType" minOccurs="0" maxOccurs="unbounded">
-<xs:annotation>
-<xs:documentation>These are a set of qualifying conditions/rules/restriction that are related to a constrained priced grouping of services for a Change/modification action.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="FareBasisAppCode" type="CodeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Indicates how the fare basis was applied. E.g. Requested, Ticketed, Other.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="FareBasisCityPairText" type="TextType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Identified published fare. Origin and destination city codes and two character designator of fare owning airline associated with Fare Basis Code. Example: MIANCEDL</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="FareBasisCode" type="CodeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Fare basis code. Example: Y26</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="FareRule" type="FareRuleType" minOccurs="0" maxOccurs="unbounded">
-<xs:annotation>
-<xs:documentation>Special purchasing rules and restrictions used to differentiate fare levels from one another.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="FareTypeCode" type="CodeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Fare Amount Type Code, ex: ADC (Additional Charge), IT (Tour Inclusive), NOADC (No additional charge).</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="NegotiatedCode" type="CodeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Identifies the Negotiated code/fare qualifier
- PADIS codeset 9910</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="PaxSegmentRefID" type="ID_Type" minOccurs="0" maxOccurs="unbounded">
-<xs:annotation>
-<xs:documentation>Reference to a Pax Segment ID.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="Price" type="AccountedPriceType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>An amount of money expected, required, or given in payment for something.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="PriceClassRefID" type="ID_Type" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A price point within a particular Cabin Type (sometimes referred to as 'Fare Families').</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="RBD" type="RBD_Type" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Reservation Booking Designator. A categorization used to facilitate access to inventory, application of filed fares, and to identify cabin entitlement. Identified using a single alpha character. E.g. 'J' for Business Class Premium, 'D' for Business Discounted.
- There will typically be several RBDs defined for a given Cabin Type.
- Business Identifier Fields:
- - RBD Code</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="TicketDesigCode" type="TextType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>The Fare Basis Code Designator shall be placed within this element and removed from the Fare Basis Code element. For example, if the Airline has a fare basis code with a designator like 'JFBC/WO'. The Fare basis Code element should contain 'JFBC' and this element should contain'WO'.</xs:documentation>
-</xs:annotation>
-</xs:element>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="AccountedFareDetailType">
-<xs:annotation>
-<xs:documentation>The amount charged by the carrier for the carriage of a passenger and his allowable free baggage.</xs:documentation>
-</xs:annotation>
-<xs:sequence>
-<xs:element name="AccountCode" type="CodeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Corporate ID used for pricing special fares. Example: 675124</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="FareCalculationInfo" type="FareCalculationInfoType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Information related to the calculation of the Fare amount by applying various rules to determine a final fare for an airline ticket.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="FareComponent" type="AccountedFareComponentType" minOccurs="0" maxOccurs="unbounded">
-<xs:annotation>
-<xs:documentation>A portion of an itinerary between two consecutive fare construction points. If the journey has only one fare component, the points of origin and destination are the only fare construction points</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="FareIndCode" type="CodeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Fare indicator code. Example: 1 (SYSTEM PRICED WITHOUT MANUAL INTERVENTION)
- 
- Encoding Scheme: IATA PADIS Code List for data element 5387 - Price Type Qualifier</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="FarePriceType" type="AccountingFarePriceTypeType" minOccurs="0" maxOccurs="2">
-<xs:annotation>
-<xs:documentation>An additional specified fare pricing such as 'Net' and 'Filed'. 
- For 'Sell' or public amounts, use the Price in Fare Details.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="FareRefText" type="TextType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Fare reference key, ex: PQ123456</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="FareWaiver" type="FareWaiverType" minOccurs="0" maxOccurs="5">
-<xs:annotation>
-<xs:documentation>Validating carrier-assigned fare rule modification or override information.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="FiledFareInd" type="IndType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>When TRUE, a component of this fare has been priced using filed fare data. If FALSE, dynamic pricing has been applied.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="NetReportingCodeText" type="TextType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Code indicating if the transaction is subject to a net reporting arrangement.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="PaxRefID" type="ID_Type" minOccurs="0" maxOccurs="unbounded">
-<xs:annotation>
-<xs:documentation>Reference to a Passenger ID</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="PenaltyRefID" type="ID_Type" minOccurs="0" maxOccurs="unbounded">
-<xs:annotation>
-<xs:documentation>Reference to a Penalty ID.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="Price" type="AccountedPriceType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>An amount of money expected, required, or given in payment for something.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="PricingSystemCodeText" type="TextType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>IATA assigned code identifying the system used to price the itinerary for the document being issued.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="StatisticalCodeText" type="TextType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Code used for domestic or international sales differentiation.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="TourCode" type="CodeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Tour Code. Example: ITGF12</xs:documentation>
-</xs:annotation>
-</xs:element>
-</xs:sequence>
-</xs:complexType>
 <xs:complexType name="AccountedOrderInstructionType">
 <xs:annotation>
 <xs:documentation>Accounted Order Instruction</xs:documentation>
@@ -394,6 +124,11 @@
 <xs:element name="AccountedOrderInstruction" type="AccountedOrderInstructionType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Accounted Order Instruction</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="AccountedPrice" type="AccountedPriceType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>An amount of money expected, required, or given in payment for something.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="BilateralTimeLimit" type="BilateralTimeLimitType" minOccurs="0" maxOccurs="unbounded">
@@ -432,7 +167,7 @@
 <xs:documentation>References a Disclosure ID.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="FareDetail" type="AccountedFareDetailType" minOccurs="0" maxOccurs="unbounded">
+<xs:element name="FareDetail" type="FareDetailType" minOccurs="0" maxOccurs="unbounded">
 <xs:annotation>
 <xs:documentation>The amount charged by the carrier for the carriage of a passenger and his allowable free baggage.</xs:documentation>
 </xs:annotation>
@@ -483,16 +218,6 @@
 <xs:element name="PenaltyRefID" type="ID_Type" minOccurs="0" maxOccurs="unbounded">
 <xs:annotation>
 <xs:documentation>Reference to a Penalty ID.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="Price" type="AccountedPriceType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>An amount of money expected, required, or given in payment for something.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="PriceDifferential" type="AccountedPriceDifferentialType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>For each OfferItem, this function allows the airline to inform the seller about amount differential type if this OfferItem is chosen.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="PriceGuaranteeTimeLimitDateTime" type="DateTimeType" minOccurs="0" maxOccurs="1">
@@ -589,11 +314,6 @@
  An Order may support non-homogeneity, i.e. each passenger in an Order may hold different sets of order items at different prices.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="OrderVersionNumber" type="OrderVersionNumberType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Version of the Order used to track the evolution of an Order and the changes made to it.</xs:documentation>
-</xs:annotation>
-</xs:element>
 <xs:element name="OriginalOrderID" type="ID_Type" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Carrier assigned ID which uniquely identifies a specific Order across several messages.</xs:documentation>
@@ -628,33 +348,6 @@
 <xs:element name="WebAddressURI" type="URI_Type" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Deep linking into another site to complete the transaction. E.g. to bring the customer directly to a page to continue with a purchase of a specific offer.</xs:documentation>
-</xs:annotation>
-</xs:element>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="AccountedPriceDifferentialType">
-<xs:annotation>
-<xs:documentation>For each OfferItem, this function allows the airline to inform the seller about amount differential type if this OfferItem is chosen.</xs:documentation>
-</xs:annotation>
-<xs:sequence>
-<xs:element name="DifferentialTypeCode" type="DifferentialTypeCodeType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Several types of action are possible when the customer selects a reshopped offer-</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="DiffPrice" type="AccountedDiffPriceAndFareDetailsType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A specialization of a container for Price and Fare detail information.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="NewPrice" type="AccountingPriceAndFareDetailsType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A container for Price and Fare detail information.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="OldPrice" type="AccountingPriceAndFareDetailsType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A container for Price and Fare detail information.</xs:documentation>
 </xs:annotation>
 </xs:element>
 </xs:sequence>
@@ -838,24 +531,6 @@
 </xs:element>
 </xs:sequence>
 </xs:complexType>
-<xs:complexType name="AccountingFarePriceTypeType">
-<xs:annotation>
-<xs:documentation>An additional specified fare pricing such as 'Net' and 'Filed'. 
- For 'Sell' or public amounts, use the Price in Fare Details.</xs:documentation>
-</xs:annotation>
-<xs:sequence>
-<xs:element name="FarePriceTypeCode" type="FarePriceTypeCodeType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Indicates if the fare price provided is a filed amount, net amount, or a sell amount.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="Price" type="AccountedPriceType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>An amount of money expected, required, or given in payment for something.</xs:documentation>
-</xs:annotation>
-</xs:element>
-</xs:sequence>
-</xs:complexType>
 <xs:complexType name="AccountingIATA_EasyPayType">
 <xs:annotation>
 <xs:documentation>Specialization for Payment Information accounting. IATA EasyPay is a payment instrument with a specific remittance mechanism.
@@ -941,23 +616,6 @@
 </xs:annotation>
 </xs:element>
 </xs:choice>
-</xs:complexType>
-<xs:complexType name="AccountingPriceAndFareDetailsType">
-<xs:annotation>
-<xs:documentation>A container for Price and Fare detail information.</xs:documentation>
-</xs:annotation>
-<xs:sequence>
-<xs:element name="FareDetail" type="AccountedFareDetailType" minOccurs="0" maxOccurs="unbounded">
-<xs:annotation>
-<xs:documentation>The amount charged by the carrier for the carriage of a passenger and his allowable free baggage.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="Price" type="AccountedPriceType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>An amount of money expected, required, or given in payment for something.</xs:documentation>
-</xs:annotation>
-</xs:element>
-</xs:sequence>
 </xs:complexType>
 <xs:complexType name="AccountingTrxPaymentCardType">
 <xs:annotation>
@@ -1336,7 +994,7 @@
 </xs:element>
 <xs:element name="ResponseParameters" type="ResponseParametersRequestType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>A set of Information related to how response results should be returned.</xs:documentation>
+<xs:documentation>Information related to how response results should be returned.</xs:documentation>
 </xs:annotation>
 </xs:element>
 </xs:sequence>
@@ -1467,9 +1125,9 @@
  - Cabin Type Code</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="ConnectionCriteriaRefID" type="ID_Type" minOccurs="0" maxOccurs="1">
+<xs:element name="ConnectionPrefRefID" type="ID_Type" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>Reference to a unique identifier assigned to this transfer preference.</xs:documentation>
+<xs:documentation>Reference to a transfer preference ID.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="JourneyDurationCriteria" type="JourneyDurationCriteriaType" minOccurs="0" maxOccurs="1">
@@ -1551,10 +1209,9 @@
 </xs:annotation>
 <xs:sequence>
 <xs:element name="ActionTypeCode" type="CodeType" minOccurs="0" maxOccurs="1"></xs:element>
-<xs:element name="OfferFilterCriteria" type="OfferFilterCriteriaType" minOccurs="0" maxOccurs="unbounded">
+<xs:element name="OfferFilterCriteria" type="OfferFilterCriteriaType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>A set of filter criteria based on offer preferences/criteria.
- Technical specialized to use a choice.</xs:documentation>
+<xs:documentation>Filters results based on offer preferences/criteria.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="POS_FilterCriteria" type="POS_FilterCriteriaType" minOccurs="0" maxOccurs="unbounded">
@@ -1796,7 +1453,7 @@
 </xs:element>
 <xs:element name="ResponseParameters" type="ResponseParametersRequestType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>A set of Information related to how response results should be returned.</xs:documentation>
+<xs:documentation>Information related to how response results should be returned.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="SeatProfileList" type="SeatProfileListType" minOccurs="0" maxOccurs="1">
@@ -1838,7 +1495,7 @@
 </xs:element>
 <xs:element name="Processing" type="ResponseParametersResponseType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>A set of Information related to how response results should be returned.</xs:documentation>
+<xs:documentation>Information related to how response results should be returned.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="Promotion" type="PromotionType" minOccurs="0" maxOccurs="unbounded">
@@ -2386,7 +2043,7 @@
 </xs:element>
 <xs:element name="BDC" type="BDC_Type" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>A carrier whose baggage allowances and charges apply.</xs:documentation>
+<xs:documentation>For use in NDC Interline: The carrier whose baggage allowances and charges apply.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="DescText" type="TextType" minOccurs="0" maxOccurs="unbounded">
@@ -2477,7 +2134,7 @@
 </xs:element>
 <xs:element name="BDC" type="BDC_Type" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>A carrier whose baggage allowances and charges apply.</xs:documentation>
+<xs:documentation>For use in NDC Interline: The carrier whose baggage allowances and charges apply.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="CheckInChargesInd" type="IndType" minOccurs="0" maxOccurs="1">
@@ -2750,7 +2407,7 @@
 </xs:simpleType>
 <xs:complexType name="BDC_Type">
 <xs:annotation>
-<xs:documentation>A carrier whose baggage allowances and charges apply.</xs:documentation>
+<xs:documentation>For use in NDC Interline: The carrier whose baggage allowances and charges apply.</xs:documentation>
 </xs:annotation>
 <xs:sequence>
 <xs:element name="BagRuleCode" type="BagRuleCodeType" minOccurs="0" maxOccurs="1">
@@ -3296,7 +2953,7 @@
 </xs:element>
 <xs:element name="SelectedOrderItem" type="SelectedOrderItemType" minOccurs="0" maxOccurs="unbounded">
 <xs:annotation>
-<xs:documentation>Identifies the list of order items selected.</xs:documentation>
+<xs:documentation>Acceptance of Schedule Change. The Seller can accept a change to an Order so that the customer is in a 'ready to fly' state. The reference to the related Order Item IDs is shown in the attributes.</xs:documentation>
 </xs:annotation>
 </xs:element>
 </xs:sequence>
@@ -4655,6 +4312,11 @@
 <xs:documentation>Unique identifier assigned to this transfer preference.</xs:documentation>
 </xs:annotation>
 </xs:element>
+<xs:element name="ConnectionPrefID" type="ID_Type" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Unique identifier assigned to this connection preference.</xs:documentation>
+</xs:annotation>
+</xs:element>
 <xs:element name="InterlineInd" type="IndType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>When true, specifies the preference for a protected transfer (interline connection), as oppose to a self/non protected transfer.</xs:documentation>
@@ -5721,7 +5383,7 @@
 <xs:documentation>Reference to a Penalty ID.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="Price" type="PriceType" minOccurs="0" maxOccurs="1">
+<xs:element name="Price" type="PriceType" minOccurs="1" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>The amount of money expected, required, or given in payment for something.</xs:documentation>
 </xs:annotation>
@@ -6902,9 +6564,9 @@
 <xs:documentation>Existing Service node provides Information about current and future statuses of the referred persistent service Ids in the Order</xs:documentation>
 </xs:annotation>
 <xs:sequence>
-<xs:element name="FutureStatusCode" type="OrderServiceStatusCodeType" minOccurs="0" maxOccurs="1">
+<xs:element name="FutureStatusCode" type="CodeType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>Status of the Order Service Status instance. See ATSB Codeset OrderService for possible values.</xs:documentation>
+<xs:documentation>Status of the Service instance. See PADIS Codelist 4405 for possible values.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="ServiceRefID" type="ID_Type" minOccurs="1" maxOccurs="1">
@@ -8026,7 +7688,9 @@
 <xs:annotation>
 <xs:documentation>Additional BDT to specify the type code codeset applying to a Passenger.</xs:documentation>
 </xs:annotation>
-<xs:restriction base="xs:string"></xs:restriction>
+<xs:restriction base="xs:string">
+<xs:pattern value="[A-Z]{3}"></xs:pattern>
+</xs:restriction>
 </xs:simpleType>
 <xs:simpleType name="IATA_StationCodeContentType">
 <xs:annotation>
@@ -8157,14 +7821,6 @@
 <xs:documentation>Additional BDT to specify the type of passenger document.</xs:documentation>
 </xs:annotation>
 <xs:restriction base="IdentityDocTypeCodeContentType"></xs:restriction>
-</xs:simpleType>
-<xs:simpleType name="IIN_NumberType">
-<xs:annotation>
-<xs:documentation>Issuer identification number.</xs:documentation>
-</xs:annotation>
-<xs:restriction base="xs:string">
-<xs:pattern value="[0-9]{1,8}"></xs:pattern>
-</xs:restriction>
 </xs:simpleType>
 <xs:complexType name="IndividualType">
 <xs:annotation>
@@ -8760,9 +8416,9 @@
  - Cabin Type Code</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="ConnectionCriteriaRefID" type="ID_Type" minOccurs="0" maxOccurs="1">
+<xs:element name="ConnectionPrefRefID" type="ID_Type" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>Reference to a unique identifier assigned to this transfer preference.</xs:documentation>
+<xs:documentation>Reference to a transfer preference ID.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="DepCriteria" type="OriginDepCriteriaType" minOccurs="1" maxOccurs="1">
@@ -8855,7 +8511,7 @@
 <xs:sequence>
 <xs:element name="BDC" type="BDC_Type" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>A carrier whose baggage allowances and charges apply.</xs:documentation>
+<xs:documentation>For use in NDC Interline: The carrier whose baggage allowances and charges apply.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="CurParameter" type="CurParameterType" minOccurs="0" maxOccurs="unbounded">
@@ -9059,9 +8715,9 @@
 <xs:documentation>Information related to the value of a product or service as it pertains to interline transactions.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="StatusCode" type="OrderServiceStatusCodeType" minOccurs="0" maxOccurs="1">
+<xs:element name="StatusCode" type="CodeType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>Status of the Order Service Status instance. See ATSB Codeset OrderService for possible values.</xs:documentation>
+<xs:documentation>Status of the Service instance. See PADIS Codelist 4405 for possible values.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="UnchangedInd" type="IndType" minOccurs="0" maxOccurs="1">
@@ -10163,7 +9819,7 @@
 </xs:complexType>
 <xs:simpleType name="OfferedServiceStatusCodeContentType">
 <xs:annotation>
-<xs:documentation>The possible statuses of an Offered Service {codeListAgencyName}IATA Code List{/codeListAgencyName} {codeListName}Offer Service Status, coded{/codeListName} {codeListIdentifier}OFFEREDSERVICE{/codeListIdentifier} </xs:documentation>
+<xs:documentation>Enumeration of Seller Offered Service used across Enhanced and Simplified Distribution Standards are listed below, see IATA codeset Offered Service category. {codeListAgencyName}IATA Code List{/codeListAgencyName} {codeListName}Offer Service Status, coded{/codeListName} {codeListIdentifier}OFFEREDSERVICE{/codeListIdentifier} </xs:documentation>
 </xs:annotation>
 <xs:restriction base="xs:token"></xs:restriction>
 </xs:simpleType>
@@ -10242,48 +9898,14 @@
 </xs:element>
 </xs:sequence>
 </xs:complexType>
-<xs:complexType name="OfferFilterCriteriaChoiceType">
+<xs:complexType name="OfferFilterCriteriaType">
 <xs:annotation>
 <xs:documentation>Filters results based on offer preferences/criteria.</xs:documentation>
 </xs:annotation>
 <xs:choice>
-<xs:element name="OfferFilterCriteriawithOriginandDest" type="OfferFilterCriteriawithOriginandDestType" minOccurs="1" maxOccurs="1">
+<xs:element name="DirectionalInd" type="DirectionalIndType" minOccurs="1" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>A set of filter criteria based on offer preferences/criteria.
- Technical specialized to use just origin and destination points.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="TravelWithin" type="GeographicFilterCriteriaType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Criteria used to filter results based on geographic preferences, including Area, State, City, Airport, or Geospatial information.</xs:documentation>
-</xs:annotation>
-</xs:element>
-</xs:choice>
-</xs:complexType>
-<xs:complexType name="OfferFilterCriteriaType">
-<xs:annotation>
-<xs:documentation>A set of filter criteria based on offer preferences/criteria.
- Technical specialized to use a choice.</xs:documentation>
-</xs:annotation>
-<xs:sequence>
-<xs:element name="OfferFilterCriteriaChoice" type="OfferFilterCriteriaChoiceType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Filters results based on offer preferences/criteria.</xs:documentation>
-</xs:annotation>
-</xs:element>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="OfferFilterCriteriawithOriginandDestType">
-<xs:annotation>
-<xs:documentation>A set of filter criteria based on offer preferences/criteria.
- Technical specialized to use just origin and destination points.
- </xs:documentation>
-</xs:annotation>
-<xs:sequence>
-<xs:element name="DirectionalIndText" type="TextType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>1 = From LOC 1 to LOC 2 2 = To LOC 1 from LOC 2 3 = Both</xs:documentation>
+<xs:documentation>Directional Indicator container</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="OfferDestPoint" type="GeographicFilterCriteriaType" minOccurs="1" maxOccurs="1">
@@ -10296,7 +9918,12 @@
 <xs:documentation>Criteria used to filter results based on geographic preferences, including Area, State, City, Airport, or Geospatial information.</xs:documentation>
 </xs:annotation>
 </xs:element>
-</xs:sequence>
+<xs:element name="TravelWithin" type="GeographicFilterCriteriaType" minOccurs="1" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Criteria used to filter results based on geographic preferences, including Area, State, City, Airport, or Geospatial information.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:choice>
 </xs:complexType>
 <xs:complexType name="OfferFlightAssociationsType">
 <xs:annotation>
@@ -10426,7 +10053,7 @@
 </xs:element>
 <xs:element name="ResponseParameters" type="ResponseParametersRequestType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>A set of Information related to how response results should be returned.</xs:documentation>
+<xs:documentation>Information related to how response results should be returned.</xs:documentation>
 </xs:annotation>
 </xs:element>
 </xs:sequence>
@@ -10474,7 +10101,7 @@
 </xs:element>
 <xs:element name="Processing" type="ResponseParametersResponseType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>A set of Information related to how response results should be returned.</xs:documentation>
+<xs:documentation>Information related to how response results should be returned.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="Promotion" type="PromotionType" minOccurs="0" maxOccurs="unbounded">
@@ -10899,7 +10526,7 @@
 </xs:element>
 <xs:element name="OrderChangeParameters" type="ResponseParametersOrderChangeType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>A set of Information related to how response results should be returned.</xs:documentation>
+<xs:documentation>Information related to how response results should be returned.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="PaxGroup" type="PaxGroupType" minOccurs="0" maxOccurs="unbounded">
@@ -11003,7 +10630,7 @@
 </xs:element>
 <xs:element name="ResponseParameters" type="ResponseParametersRequestType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>A set of Information related to how response results should be returned.</xs:documentation>
+<xs:documentation>Information related to how response results should be returned.</xs:documentation>
 </xs:annotation>
 </xs:element>
 </xs:sequence>
@@ -11414,9 +11041,9 @@
 <xs:documentation>Reference to another service instance.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="StatusCode" type="OrderServiceStatusCodeType" minOccurs="0" maxOccurs="1">
+<xs:element name="StatusCode" type="OrderStatusCodeType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>Status of the Order Service Status instance. See ATSB Codeset OrderService for possible values.</xs:documentation>
+<xs:documentation>Status of the Order Status instance. See ATSB Codeset OrderStatus for possible values.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="UnchangedInd" type="IndType" minOccurs="0" maxOccurs="1">
@@ -11492,7 +11119,7 @@
 </xs:element>
 <xs:element name="ResponseParameters" type="ResponseParametersRequestType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>A set of Information related to how response results should be returned.</xs:documentation>
+<xs:documentation>Information related to how response results should be returned.</xs:documentation>
 </xs:annotation>
 </xs:element>
 </xs:sequence>
@@ -11595,7 +11222,7 @@
 </xs:complexType>
 <xs:simpleType name="OrderItemStatusCodeContentType">
 <xs:annotation>
-<xs:documentation>The possible statuses of an Order Item {codeListAgencyName}IATA Code List{/codeListAgencyName} {codeListName}Ordered Item Status, Coded.{/codeListName} {codeListIdentifier}ORDERITEM{/codeListIdentifier} </xs:documentation>
+<xs:documentation>shows the current statuses of an Order Item {codeListAgencyName}IATA Code List{/codeListAgencyName} {codeListName}Ordered Item Status, Coded.{/codeListName} {codeListIdentifier}ORDERITEM{/codeListIdentifier} </xs:documentation>
 </xs:annotation>
 <xs:restriction base="xs:token"></xs:restriction>
 </xs:simpleType>
@@ -11687,7 +11314,7 @@
 </xs:element>
 <xs:element name="Processing" type="ResponseParametersResponseType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>A set of Information related to how response results should be returned.</xs:documentation>
+<xs:documentation>Information related to how response results should be returned.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="Warning" type="WarningType" minOccurs="0" maxOccurs="unbounded">
@@ -11742,7 +11369,7 @@
 </xs:element>
 <xs:element name="ResponseParameters" type="ResponseParametersRequestType" minOccurs="0" maxOccurs="unbounded">
 <xs:annotation>
-<xs:documentation>A set of Information related to how response results should be returned.</xs:documentation>
+<xs:documentation>Information related to how response results should be returned.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="SelectedOffers" type="SelectedOfferType" minOccurs="0" maxOccurs="unbounded">
@@ -11816,7 +11443,7 @@
 </xs:element>
 <xs:element name="ResponseParameters" type="ResponseParametersRequestType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>A set of Information related to how response results should be returned.</xs:documentation>
+<xs:documentation>Information related to how response results should be returned.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="UpdateOrder" type="UpdateOrderType" minOccurs="1" maxOccurs="1">
@@ -11867,7 +11494,7 @@
 </xs:element>
 <xs:element name="Processing" type="ResponseParametersResponseType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>A set of Information related to how response results should be returned.</xs:documentation>
+<xs:documentation>Information related to how response results should be returned.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="ReshopResults" type="ReshopResultsType" minOccurs="1" maxOccurs="1">
@@ -11894,7 +11521,7 @@
 </xs:element>
 <xs:element name="ResponseParameters" type="ResponseParametersRequestType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>A set of Information related to how response results should be returned.</xs:documentation>
+<xs:documentation>Information related to how response results should be returned.</xs:documentation>
 </xs:annotation>
 </xs:element>
 </xs:sequence>
@@ -11916,7 +11543,7 @@
 </xs:element>
 <xs:element name="ResponseParameters" type="ResponseParametersRequestType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>A set of Information related to how response results should be returned.</xs:documentation>
+<xs:documentation>Information related to how response results should be returned.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="RulesCoreRequest" type="RulesCoreRequestType" minOccurs="1" maxOccurs="1">
@@ -11943,7 +11570,7 @@
 </xs:element>
 <xs:element name="Processing" type="ResponseParametersResponseType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>A set of Information related to how response results should be returned.</xs:documentation>
+<xs:documentation>Information related to how response results should be returned.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="Rules" type="RulesType" minOccurs="0" maxOccurs="unbounded">
@@ -11986,9 +11613,19 @@
  An Order may support non-homogeneity, i.e. each passenger in an Order may hold different sets of order items at different prices.</xs:documentation>
 </xs:annotation>
 </xs:element>
+<xs:element name="PaymentInfoList" type="PaymentInfoListType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Information related to the settlement of a transaction through monetary or other compensations. For example, a payment may be applied to an entire Order or individual Order Items.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="PromotionList" type="PromotionListType" minOccurs="0" maxOccurs="unbounded">
+<xs:annotation>
+<xs:documentation>Information related to publicizing a product, organization, or venture so as to increase sales or public awareness.</xs:documentation>
+</xs:annotation>
+</xs:element>
 <xs:element name="ResponseParameters" type="ResponseParametersRequestType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>A set of Information related to how response results should be returned.</xs:documentation>
+<xs:documentation>Information related to how response results should be returned.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="TicketDocInfo" type="TicketDocInfoType" minOccurs="0" maxOccurs="unbounded">
@@ -12033,7 +11670,7 @@
 </xs:element>
 <xs:element name="ResponseParameters" type="ResponseParametersRequestType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>A set of Information related to how response results should be returned.</xs:documentation>
+<xs:documentation>Information related to how response results should be returned.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="Warning" type="WarningType" minOccurs="0" maxOccurs="unbounded">
@@ -12168,7 +11805,7 @@
 </xs:complexType>
 <xs:simpleType name="OrderServiceStatusCodeContentType">
 <xs:annotation>
-<xs:documentation>The possible statuses of an Order Service {codeListAgencyName}IATA Code List{/codeListAgencyName} {codeListName}Ordered Service Status,coded{/codeListName} {codeListIdentifier}ORDERSERVICE{/codeListIdentifier} </xs:documentation>
+<xs:documentation>shows the possible statuses of an Order {codeListAgencyName}IATA Code List{/codeListAgencyName} {codeListName}Ordered Service Status,coded{/codeListName} {codeListIdentifier}ORDERSERVICE{/codeListIdentifier} </xs:documentation>
 </xs:annotation>
 <xs:restriction base="xs:token"></xs:restriction>
 </xs:simpleType>
@@ -12219,7 +11856,7 @@
 </xs:complexType>
 <xs:simpleType name="OrderStatusCodeContentType">
 <xs:annotation>
-<xs:documentation>The possible statuses of an Order {codeListAgencyName}IATA Code List{/codeListAgencyName} {codeListName}Ordered Status, coded{/codeListName} {codeListIdentifier}ORDERSTATUS{/codeListIdentifier} </xs:documentation>
+<xs:documentation>shows the possible statuses of an Order {codeListAgencyName}IATA Code List{/codeListAgencyName} {codeListName}Ordered Status, coded{/codeListName} {codeListIdentifier}ORDERSTATUS{/codeListIdentifier} </xs:documentation>
 </xs:annotation>
 <xs:restriction base="xs:token"></xs:restriction>
 </xs:simpleType>
@@ -12325,7 +11962,7 @@
 </xs:element>
 <xs:element name="Processing" type="ResponseParametersResponseType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>A set of Information related to how response results should be returned.</xs:documentation>
+<xs:documentation>Information related to how response results should be returned.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="PromotionList" type="PromotionListType" minOccurs="0" maxOccurs="1">
@@ -12494,9 +12131,9 @@
 <xs:documentation>Requests the airline to additionally include a preview of the Offer price for the same Shopping Criteria for the specified date range.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="ConnectionCriteriaRefID" type="ID_Type" minOccurs="0" maxOccurs="1">
+<xs:element name="ConnectionPrefRefID" type="ID_Type" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>Reference to a unique identifier assigned to this transfer preference.</xs:documentation>
+<xs:documentation>Reference to a transfer preference ID.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="DestArrivalCriteria" type="DestArrivalCriteriaType" minOccurs="1" maxOccurs="1">
@@ -13052,11 +12689,6 @@
 <xs:documentation>Any person except members of the crew carried or to be carried with the consent of the carrier, on board of any transport vehicle such as aircraft, train, bus, ship. Holds the attributes specific to a one booking, from shopping to fulfillment.</xs:documentation>
 </xs:annotation>
 <xs:sequence>
-<xs:element name="AgeMeasure" type="MeasureType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>The Age of the Passenger. To be used in NDC Anonymous Shopping requests or when the birthdate (in Individual) is not known.</xs:documentation>
-</xs:annotation>
-</xs:element>
 <xs:element name="Birthdate" type="DateType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>The Date of Birth of the Passenger. Intended to be used in NDC Anonymous Shopping requests. Example: 2017-01-13</xs:documentation>
@@ -13480,12 +13112,6 @@
 <xs:documentation>Additional description for the magnetic stripe card type (debit card, credit card, prepaid card, etc.)</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="IIN_IINNumber" type="IIN_NumberType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Payment card IIN/BIN number. Example: 401123
- </xs:documentation>
-</xs:annotation>
-</xs:element>
 <xs:element name="SecurePaymentAuthenticationVersion" type="SecurePaymentAuthenticationVersionType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Used by Seller if 3D-Secure is supported. Seller can specify which version of 3D-Secure is supported. Note: 3D-Secure context should be used when the Customer-Seller interaction type is web and/or mobile.</xs:documentation>
@@ -13511,12 +13137,6 @@
 <xs:element name="CardTypeText" type="TextType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Additional description for the magnetic stripe card type (debit card, credit card, prepaid card, etc.)</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="IIN_IINNumber" type="IIN_NumberType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Payment card IIN/BIN number. Example: 401123
- </xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="SecurePaymentAuthenticationVersion" type="SecurePaymentAuthenticationVersionType" minOccurs="0" maxOccurs="1">
@@ -16590,12 +16210,12 @@
 </xs:complexType>
 <xs:complexType name="ResponseParametersOrderChangeType">
 <xs:annotation>
-<xs:documentation>A set of Information related to how response results should be returned.</xs:documentation>
+<xs:documentation>Information related to how response results should be returned.</xs:documentation>
 </xs:annotation>
 <xs:sequence>
 <xs:element name="BDC" type="BDC_Type" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>A carrier whose baggage allowances and charges apply.</xs:documentation>
+<xs:documentation>For use in NDC Interline: The carrier whose baggage allowances and charges apply.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="CurParameter" type="CurParameterType" minOccurs="0" maxOccurs="unbounded">
@@ -16654,12 +16274,12 @@
 </xs:complexType>
 <xs:complexType name="ResponseParametersRequestType">
 <xs:annotation>
-<xs:documentation>A set of Information related to how response results should be returned.</xs:documentation>
+<xs:documentation>Information related to how response results should be returned.</xs:documentation>
 </xs:annotation>
 <xs:sequence>
 <xs:element name="BDC" type="BDC_Type" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>A carrier whose baggage allowances and charges apply.</xs:documentation>
+<xs:documentation>For use in NDC Interline: The carrier whose baggage allowances and charges apply.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="CurParameter" type="CurParameterType" minOccurs="0" maxOccurs="unbounded">
@@ -16717,12 +16337,12 @@
 </xs:complexType>
 <xs:complexType name="ResponseParametersResponseType">
 <xs:annotation>
-<xs:documentation>A set of Information related to how response results should be returned.</xs:documentation>
+<xs:documentation>Information related to how response results should be returned.</xs:documentation>
 </xs:annotation>
 <xs:sequence>
 <xs:element name="BDC" type="BDC_Type" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>A carrier whose baggage allowances and charges apply.</xs:documentation>
+<xs:documentation>For use in NDC Interline: The carrier whose baggage allowances and charges apply.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="CurParameter" type="CurParameterType" minOccurs="0" maxOccurs="unbounded">
@@ -17272,9 +16892,9 @@
 </xs:element>
 </xs:sequence>
 </xs:complexType>
-<xs:complexType name="SeatAvailCoreRequestType">
+<xs:complexType name="SeatAvailibilityCoreRequestType">
 <xs:annotation>
-<xs:documentation>Seat Availability Core Request</xs:documentation>
+<xs:documentation>Seat Availibility Core Request</xs:documentation>
 </xs:annotation>
 <xs:choice>
 <xs:element name="OfferRequest" type="SeatAvailOfferRequestType" minOccurs="1" maxOccurs="1">
@@ -17424,7 +17044,7 @@
 <xs:documentation>Carrier assigned ID which exists uniquely within an Order.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="OwnerCode" type="AirlineDesigCodeType" minOccurs="0" maxOccurs="1">
+<xs:element name="OwnerCode" type="AirlineDesigCodeType" minOccurs="1" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Airline code assigned to a carrier. Either ICAO-defined 3-character code or IATA-defined 2-character code.</xs:documentation>
 </xs:annotation>
@@ -17540,12 +17160,12 @@
 </xs:element>
 <xs:element name="ResponseParameters" type="ResponseParametersRequestType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>A set of Information related to how response results should be returned.</xs:documentation>
+<xs:documentation>Information related to how response results should be returned.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="SeatAvailCoreRequest" type="SeatAvailCoreRequestType" minOccurs="1" maxOccurs="1">
+<xs:element name="SeatAvailibilityCoreRequest" type="SeatAvailibilityCoreRequestType" minOccurs="1" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>Seat Availability Core Request</xs:documentation>
+<xs:documentation>Seat Availibility Core Request</xs:documentation>
 </xs:annotation>
 </xs:element>
 </xs:sequence>
@@ -17588,7 +17208,7 @@
 </xs:element>
 <xs:element name="Processing" type="ResponseParametersResponseType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>A set of Information related to how response results should be returned.</xs:documentation>
+<xs:documentation>Information related to how response results should be returned.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="SeatMap" type="SeatMapType" minOccurs="1" maxOccurs="unbounded">
@@ -18261,7 +17881,7 @@
 </xs:complexType>
 <xs:complexType name="SelectedOrderItemType">
 <xs:annotation>
-<xs:documentation>Identifies the list of order items selected.</xs:documentation>
+<xs:documentation>Acceptance of Schedule Change. The Seller can accept a change to an Order so that the customer is in a 'ready to fly' state. The reference to the related Order Item IDs is shown in the attributes.</xs:documentation>
 </xs:annotation>
 <xs:sequence>
 <xs:element name="OrderItemRefID" type="ID_Type" minOccurs="1" maxOccurs="unbounded">
@@ -19101,7 +18721,7 @@
 </xs:element>
 <xs:element name="ResponseParameters" type="ResponseParametersRequestType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>A set of Information related to how response results should be returned.</xs:documentation>
+<xs:documentation>Information related to how response results should be returned.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="ServiceListCoreRequest" type="ServiceListCoreRequestType" minOccurs="1" maxOccurs="1">
@@ -19145,7 +18765,7 @@
 </xs:element>
 <xs:element name="Processing" type="ResponseParametersResponseType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>A set of Information related to how response results should be returned.</xs:documentation>
+<xs:documentation>Information related to how response results should be returned.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="Warning" type="WarningType" minOccurs="0" maxOccurs="unbounded">
@@ -19202,7 +18822,7 @@
 <xs:documentation>Carrier assigned ID which exists uniquely within an Order.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="OwnerCode" type="AirlineDesigCodeType" minOccurs="0" maxOccurs="1">
+<xs:element name="OwnerCode" type="AirlineDesigCodeType" minOccurs="1" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Airline code assigned to a carrier. Either ICAO-defined 3-character code or IATA-defined 2-character code.</xs:documentation>
 </xs:annotation>
@@ -19824,11 +19444,6 @@
 <xs:documentation>A date/time by which settlement must occur.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="SettlementValue" type="SupplierPriceType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>The amount of money expected, required, or given in payment for something.</xs:documentation>
-</xs:annotation>
-</xs:element>
 <xs:element name="ValidatingCarrier" type="CarrierType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>The organization which carries the passenger, baggage, or goods, and/or commits to delivering the carriage as well as any related services such as issuance of ticket, creation of Order, etc.
@@ -19923,11 +19538,6 @@
 <xs:element name="StopOverRestrictions" type="StopOverRestrictionsType" minOccurs="0" maxOccurs="unbounded">
 <xs:annotation>
 <xs:documentation>Additional information supplied by the Airline for the current Itinerary to advise the Seller that additional options could be available (if the Seller changes the request) to add Stop Overs within the itinerary.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="TotalPrice" type="SupplierPriceType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>The amount of money expected, required, or given in payment for something.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="WebAddressURI" type="URI_Type" minOccurs="0" maxOccurs="1">
@@ -20032,11 +19642,6 @@
  The New Offer Item assigns a total price for all included services for all passengers and all segments referenced. Once constructed, the OfferItem cannot be modified.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="TotalPrice" type="SupplierPriceType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>The amount of money expected, required, or given in payment for something.</xs:documentation>
-</xs:annotation>
-</xs:element>
 <xs:element name="WebAddressURI" type="URI_Type" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Deep linking into another site to complete the transaction. E.g. to bring the customer directly to a page to continue with a purchase of a specific offer.</xs:documentation>
@@ -20106,7 +19711,7 @@
 <xs:documentation>A date/time by which settlement must occur.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="SettlementValue" type="SupplierPriceType" minOccurs="0" maxOccurs="1">
+<xs:element name="SettlementValue" type="PriceType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>The amount of money expected, required, or given in payment for something.</xs:documentation>
 </xs:annotation>
@@ -20221,7 +19826,7 @@
 <xs:documentation>Reference to a Penalty ID.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="Price" type="SupplierPriceType" minOccurs="0" maxOccurs="1">
+<xs:element name="Price" type="PriceType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>The amount of money expected, required, or given in payment for something.</xs:documentation>
 </xs:annotation>
@@ -20311,7 +19916,7 @@
 <xs:documentation>Status of the Order Status instance. See ATSB Codeset OrderStatus for possible values.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="TotalPrice" type="SupplierPriceType" minOccurs="0" maxOccurs="1">
+<xs:element name="TotalPrice" type="PriceType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>The amount of money expected, required, or given in payment for something.</xs:documentation>
 </xs:annotation>
@@ -20319,48 +19924,6 @@
 <xs:element name="WebAddressURI" type="URI_Type" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Deep linking into another site to complete the transaction. E.g. to bring the customer directly to a page to continue with a purchase of a specific offer.</xs:documentation>
-</xs:annotation>
-</xs:element>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="SupplierPriceType">
-<xs:annotation>
-<xs:documentation>The amount of money expected, required, or given in payment for something.</xs:documentation>
-</xs:annotation>
-<xs:sequence>
-<xs:element name="BaseAmount" type="AmountType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Total Base Fare Amount. Example: 200000</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="CurConversion" type="CurConversionType" minOccurs="0" maxOccurs="unbounded">
-<xs:annotation>
-<xs:documentation>The result of converting one currency into another currency. E.g. local currency to USD, air miles to monetary.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="Discount" type="DiscountType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Deduction from the price amount, made in advance of its payment.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="Fee" type="FeeType" minOccurs="0" maxOccurs="unbounded">
-<xs:annotation>
-<xs:documentation>Amount added on to a charge for a specific product, purpose, or service.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="Surcharge" type="SurchargeType" minOccurs="0" maxOccurs="unbounded">
-<xs:annotation>
-<xs:documentation>Amount added on to a usual charge for a specific product, purpose, or service.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="TaxSummary" type="TaxSummaryType" minOccurs="0" maxOccurs="unbounded">
-<xs:annotation>
-<xs:documentation>Tax summary information.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="TotalAmount" type="AmountType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Total monetary price amount, including all tax, surcharge, and fee amounts.</xs:documentation>
 </xs:annotation>
 </xs:element>
 </xs:sequence>

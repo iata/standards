@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2021.3/IATA_LoadControl_SemiPermanentDataNotifRQ" targetNamespace="http://www.iata.org/IATA/2015/00/2021.3/IATA_LoadControl_SemiPermanentDataNotifRQ" elementFormDefault="qualified" version="1.005" id="IATA2021.3">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2021.4/IATA_LoadControl_SemiPermanentDataNotifRQ" targetNamespace="http://www.iata.org/IATA/2015/00/2021.4/IATA_LoadControl_SemiPermanentDataNotifRQ" elementFormDefault="qualified" version="1.006" id="IATA2021.4">
 	<xs:element name="IATA_LoadControl_SemiPermanentDataNotifRQ">
 		<xs:annotation>
 			<xs:documentation>Used to exchange semi-permanent data for weight and balance between the carrier owning the aircraft and airlines that operate the aircraft, handling agents and DCS providers.</xs:documentation>
@@ -9,12 +9,12 @@
 				<xs:documentation>Remark</xs:documentation>
 			</xs:annotation>
 			<xs:sequence minOccurs="0" maxOccurs="1">
-				<xs:element name="Carrier" type="CarrierType" minOccurs="1" maxOccurs="unbounded">
+				<xs:element name="Carrier" type="CarrierType" minOccurs="1" maxOccurs="99">
 					<xs:annotation>
 						<xs:documentation>Carrier</xs:documentation>
 					</xs:annotation>
 				</xs:element>
-				<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="1">
+				<xs:element name="Remark" type="RemarkType" minOccurs="1" maxOccurs="1">
 					<xs:annotation>
 						<xs:documentation>Remarks</xs:documentation>
 					</xs:annotation>
@@ -186,10 +186,11 @@
 			</xs:element>
 			<xs:element name="OperatingCarrier" type="Carrier1Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Daughter ABIE of Carrier (ABIE) to display only the selected Business Identifier Fields :
+					<xs:documentation>Daughter ABIE of Carrier (ABIE) to display only the selected Business Identifier Fields:
  - Airline Designator Code
  - Duplicate Designator Indicator
- - Name</xs:documentation>
+ - Name
+ </xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="PantryDistribution" type="PantryDistributionType" minOccurs="0" maxOccurs="unbounded">
@@ -615,7 +616,9 @@
 		<xs:annotation>
 			<xs:documentation>Implementer-Augmented Structure.</xs:documentation>
 		</xs:annotation>
-		<xs:sequence/>
+		<xs:sequence>
+			<xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="BaggageStandardWeightsType">
 		<xs:annotation>
@@ -857,7 +860,7 @@
 			</xs:element>
 			<xs:element name="ULD_LoadPosition" type="ULD_LoadPosition1Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Daughter ABIE of ULD Load Position (ABIE) to display only the selected Business Identifier Fields :
+					<xs:documentation>Daughter ABIE of ULD Load Position (ABIE) to display only the selected Business Identifier Fields:
  - ULD Load Position ID
  - Balance Arm Forward Measure
  - Balance Arm Aft Measure</xs:documentation>
@@ -960,7 +963,7 @@
 		<xs:sequence>
 			<xs:element name="BaggageLocation" type="ULD_LoadPosition1Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Daughter ABIE of ULD Load Position (ABIE) to display only the selected Business Identifier Fields :
+					<xs:documentation>Daughter ABIE of ULD Load Position (ABIE) to display only the selected Business Identifier Fields:
  - ULD Load Position ID
  - Balance Arm Forward Measure
  - Balance Arm Aft Measure</xs:documentation>
@@ -1231,10 +1234,11 @@
 	</xs:complexType>
 	<xs:complexType name="Carrier1Type">
 		<xs:annotation>
-			<xs:documentation>Daughter ABIE of Carrier (ABIE) to display only the selected Business Identifier Fields :
+			<xs:documentation>Daughter ABIE of Carrier (ABIE) to display only the selected Business Identifier Fields:
  - Airline Designator Code
  - Duplicate Designator Indicator
- - Name</xs:documentation>
+ - Name
+ </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="AirlineDesigCode" type="AirlineDesigCodeType" minOccurs="1" maxOccurs="1">
@@ -1519,7 +1523,7 @@
 			</xs:element>
 			<xs:element name="ULD_LoadPosition" type="ULD_LoadPosition1Type" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
-					<xs:documentation>Daughter ABIE of ULD Load Position (ABIE) to display only the selected Business Identifier Fields :
+					<xs:documentation>Daughter ABIE of ULD Load Position (ABIE) to display only the selected Business Identifier Fields:
  - ULD Load Position ID
  - Balance Arm Forward Measure
  - Balance Arm Aft Measure</xs:documentation>
@@ -1537,7 +1541,6 @@
 					<xs:documentation>Condition indicating to which Departure Control System the information applies.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:any processContents="lax" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ContactInfoType">
@@ -2206,7 +2209,7 @@
 		<xs:sequence>
 			<xs:element name="BaggageLocation" type="ULD_LoadPosition1Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Daughter ABIE of ULD Load Position (ABIE) to display only the selected Business Identifier Fields :
+					<xs:documentation>Daughter ABIE of ULD Load Position (ABIE) to display only the selected Business Identifier Fields:
  - ULD Load Position ID
  - Balance Arm Forward Measure
  - Balance Arm Aft Measure</xs:documentation>
@@ -2405,7 +2408,7 @@
 			</xs:element>
 			<xs:element name="StepName" type="NameType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Name describing the step in the fueling sequence, e.g. 'Fill Wings First', 'Partially Fill Tank A', 'Fill Center Until Full', 'Fill Tank C &amp; D Evenly Until Full'.</xs:documentation>
+					<xs:documentation>Name describing the step in the fueling sequence, e.g. 'Fill Wings First', 'Partially Fill Tank A', 'Fill Center Until Full', 'Fill Tank C and D Evenly Until Full'.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="StepNumber" type="NaturalNumberType" minOccurs="1" maxOccurs="1">
@@ -3099,8 +3102,8 @@
 	</xs:simpleType>
 	<xs:complexType name="Lock1Type">
 		<xs:annotation>
-			<xs:documentation>Daughter ABIE of Lock (ABIE) to display only the selected Business Identifier Fields :
- - Lock ID</xs:documentation>
+			<xs:documentation>Daughter ABIE of Lock (ABIE) to display only the selected 
+ </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="LockID" type="ID_Type" minOccurs="1" maxOccurs="1">
@@ -3152,8 +3155,8 @@
 		<xs:sequence>
 			<xs:element name="AdjacentLock" type="Lock1Type" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
-					<xs:documentation>Daughter ABIE of Lock (ABIE) to display only the selected Business Identifier Fields :
- - Lock ID</xs:documentation>
+					<xs:documentation>Daughter ABIE of Lock (ABIE) to display only the selected 
+ </xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="BalanceArmMeasure" type="LengthMeasureType" minOccurs="1" maxOccurs="1">
@@ -3428,8 +3431,8 @@
 			</xs:element>
 			<xs:element name="Lock" type="Lock1Type" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
-					<xs:documentation>Daughter ABIE of Lock (ABIE) to display only the selected Business Identifier Fields :
- - Lock ID</xs:documentation>
+					<xs:documentation>Daughter ABIE of Lock (ABIE) to display only the selected 
+ </xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="MissingRestraintRule" type="MissingRestraintRuleType" minOccurs="1" maxOccurs="unbounded">
@@ -3440,7 +3443,7 @@
 			</xs:element>
 			<xs:element name="ULD_LoadPosition" type="ULD_LoadPosition1Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Daughter ABIE of ULD Load Position (ABIE) to display only the selected Business Identifier Fields :
+					<xs:documentation>Daughter ABIE of ULD Load Position (ABIE) to display only the selected Business Identifier Fields:
  - ULD Load Position ID
  - Balance Arm Forward Measure
  - Balance Arm Aft Measure</xs:documentation>
@@ -3466,8 +3469,8 @@
 			</xs:element>
 			<xs:element name="FailedLock" type="Lock1Type" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
-					<xs:documentation>Daughter ABIE of Lock (ABIE) to display only the selected Business Identifier Fields :
- - Lock ID</xs:documentation>
+					<xs:documentation>Daughter ABIE of Lock (ABIE) to display only the selected 
+ </xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="MissingLockCondition" type="MissingLockConditionType" minOccurs="0" maxOccurs="unbounded">
@@ -3652,6 +3655,17 @@
 			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Additional, supplementary information about the document or service.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="UndisclosedGenderWeightMeasure" type="WeightMeasureType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Standard weight of an undisclosed gender</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="UnspecifiedGenderWeightMeasure" type="WeightMeasureType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Standard weight of an unspecified gender
+ </xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="VariationCode" type="VariationForWeightsCodeType" minOccurs="1" maxOccurs="1">
@@ -4242,7 +4256,7 @@
 			</xs:element>
 			<xs:element name="ULD_LoadPosition" type="ULD_LoadPosition1Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Daughter ABIE of ULD Load Position (ABIE) to display only the selected Business Identifier Fields :
+					<xs:documentation>Daughter ABIE of ULD Load Position (ABIE) to display only the selected Business Identifier Fields:
  - ULD Load Position ID
  - Balance Arm Forward Measure
  - Balance Arm Aft Measure</xs:documentation>
@@ -4669,7 +4683,7 @@
 	</xs:complexType>
 	<xs:complexType name="ULD_LoadPosition1Type">
 		<xs:annotation>
-			<xs:documentation>Daughter ABIE of ULD Load Position (ABIE) to display only the selected Business Identifier Fields :
+			<xs:documentation>Daughter ABIE of ULD Load Position (ABIE) to display only the selected Business Identifier Fields:
  - ULD Load Position ID
  - Balance Arm Forward Measure
  - Balance Arm Aft Measure</xs:documentation>
