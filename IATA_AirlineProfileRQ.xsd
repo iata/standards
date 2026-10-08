@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<xs:schema xmlns="http://www.iata.org/IATA/2015/00/2019.1/IATA_AirlineProfileRQ" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.iata.org/IATA/2015/00/2019.1/IATA_AirlineProfileRQ" elementFormDefault="qualified" version=" 3.000">
+<xs:schema xmlns="http://www.iata.org/IATA/2015/00/2019.2/IATA_AirlineProfileRQ" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.iata.org/IATA/2015/00/2019.2/IATA_AirlineProfileRQ" elementFormDefault="qualified" version="4.000" id="IATA2019.2">
 	<xs:element name="IATA_AirlineProfileRQ">
 		<xs:complexType>
 			<xs:sequence>
@@ -9,7 +9,7 @@
 					</xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
-							<xs:any namespace="##other" processContents="lax">
+							<xs:any namespace="##other" processContents="lax" minOccurs="1" maxOccurs="unbounded">
 								<xs:annotation>
 									<xs:documentation source="description" xml:lang="en">Implementer-Augmented Structure.</xs:documentation>
 								</xs:annotation>
@@ -17,7 +17,7 @@
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
-				<xs:element name="MessageDoc" type="MessageDocType" minOccurs="0" maxOccurs="1">
+				<xs:element name="MessageDoc" type="MessageDocType" minOccurs="0">
 					<xs:annotation>
 						<xs:documentation>Message document information including document name and version number.</xs:documentation>
 					</xs:annotation>
@@ -39,7 +39,7 @@
 				</xs:element>
 				<xs:element name="Request" type="RequestType" minOccurs="1" maxOccurs="1">
 					<xs:annotation>
-						<xs:documentation>Message payload information.</xs:documentation>
+						<xs:documentation>AirlineProfileRQ request information.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 			</xs:sequence>
@@ -62,14 +62,14 @@
 			</xs:element>
 			<xs:element name="Name" type="ProperNameType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Aggregator Name.  Example: Farelogix.</xs:documentation>
+					<xs:documentation>Aggregator Name. Example: Farelogix.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:simpleType name="AirlineDesigCodeContentType">
 		<xs:annotation>
-			<xs:documentation>The codelist contents of IATA Resolution 762  airline codes, or of ICAO airline codes. {codeListAgencyName}IATA or ICAO{/codeListAgencyName} {codeListName}Resolution 762  Airline Codes or ICAO Airline Codes{/codeListName}</xs:documentation>
+			<xs:documentation>The codelist contents of IATA Resolution 762 airline codes, or of ICAO airline codes. {codeListAgencyName}IATA or ICAO{/codeListAgencyName} {codeListName}Resolution 762  Airline Codes or ICAO Airline Codes{/codeListName}</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:token">
 			<xs:pattern value="([A-Z]{3}|[A-Z]{2})|([0-9][A-Z])|([A-Z][0-9])"/>
@@ -108,9 +108,9 @@
 			<xs:documentation>Distribution profile of an airline which describes which types of shopping requests may be processed by a particular carrier.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="AirlineProfileURL" type="UniformResourceID_Type" minOccurs="0" maxOccurs="1">
+			<xs:element name="AirlineProfileURL" type="URI_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Link to Airline Profile Source File. Alows a large Airline Profile file to be distributed over FTP, FTPS, as agreed bilaterally with Profile Owner.  Note, this element should not be used if explicitly providing the Airline Profile Data Items.</xs:documentation>
+					<xs:documentation>Link to Airline Profile Source File. Alows a large Airline Profile file to be distributed over FTP, FTPS, as agreed bilaterally with Profile Owner. Note, this element should not be used if explicitly providing the Airline Profile Data Items.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="OwnerCode" type="AirlineDesigCodeType" minOccurs="1" maxOccurs="1">
@@ -164,14 +164,12 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="CodeType">
+	<xs:simpleType name="CodeType">
 		<xs:annotation>
 			<xs:documentation>A code is a character string of letters, numbers, special characters (except escape sequences), and symbols.</xs:documentation>
 		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="xs:token"/>
-		</xs:simpleContent>
-	</xs:complexType>
+		<xs:restriction base="xs:token"/>
+	</xs:simpleType>
 	<xs:complexType name="ContactInfoType">
 		<xs:annotation>
 			<xs:documentation>The electronic or geographic address which a party has provided as the contact channel. For example, contact email, contact postal address, contact phone number.</xs:documentation>
@@ -182,24 +180,29 @@
 					<xs:documentation>Uniquely Identifies a set of Contact Information, within the context of one message.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="ContactPurposeText" type="TextType" minOccurs="0" maxOccurs="99">
+				<xs:annotation>
+					<xs:documentation>to identify the contact purpose (PADIS code list 3299)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="ContactRefusedInd" type="IndType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>When TRUE, Contact Information was refused to be provided.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="ContactType" type="TextType" minOccurs="0" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>Classification for a particular set of contact information (e.g. Primary, Payment, etc.)</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="Employer" type="Org1Type" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>An organized structure set up for a particular purpose, such as a business, government body, department, charity, or financial institution.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element name="IndividualRefID" type="ID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Reference to Individual instance(s)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PaxSegmentRefID" type="ID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Uniquely identifies a Passenger Segment within the context of one message.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RelationshipToPax" type="TextType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Relationship to the passenger e.g. used for when this individual is an emergency contact</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -301,12 +304,12 @@
 			</xs:element>
 			<xs:element name="DeviceName" type="NameType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Named Device ID.  Example: Johns IPAD</xs:documentation>
+					<xs:documentation>Named Device ID. Example: Johns IPAD</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="GeospatialLocation" type="GeospatialLocationType" minOccurs="0" maxOccurs="1">
+			<xs:element name="DeviceOwnerTypeCode" type="OwnershipTypeCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>A location with a spatial attribute, probably on the surface of the earth. For example: Longitude and Latitude</xs:documentation>
+					<xs:documentation>Specifies the type of Owner.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="IPAddressText" type="TextType" minOccurs="0" maxOccurs="1">
@@ -319,9 +322,14 @@
 					<xs:documentation>Device MAC Address. Example: 00:0a:95:9d:68:16</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="PresenceTypeCode" type="PresenceTypeCodeType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Specifies the Presence of a customer and its payment card.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="TouchPointTrxCode" type="CodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>The travel event that triggered the request.  Example: Order/buy, Check-In, In Flight.  PADIS codeset TTT</xs:documentation>
+					<xs:documentation>The travel event that triggered the request. Example: Order/buy, Check-In, In Flight. PADIS codeset TTT</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -355,7 +363,7 @@
 		<xs:sequence>
 			<xs:element name="NaturalAreaGeocode" type="CodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Natural Area Geocode as defined by NAC Geographic Products Inc.  Ex: 8KDB PGFD</xs:documentation>
+					<xs:documentation>Natural Area Geocode as defined by NAC Geographic Products Inc. Ex: 8KDB PGFD</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="PointElevationNumber" type="NumberType" minOccurs="0" maxOccurs="1">
@@ -411,7 +419,7 @@
 			</xs:element>
 			<xs:element name="PrimaryLangID" type="ID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Identifes the primary language preference for the message.  The human language is identified by ISO 639 codes.</xs:documentation>
+					<xs:documentation>Identifes the primary language preference for the message. The human language is identified by ISO 639 codes.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="RetransmissionInd" type="IndType" minOccurs="0" maxOccurs="1">
@@ -446,14 +454,12 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="ID_Type">
+	<xs:simpleType name="ID_Type">
 		<xs:annotation>
 			<xs:documentation>An identifier is a character string used to uniquely identify one instance of an object within an identification scheme that is managed by an agency.</xs:documentation>
 		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="xs:token"/>
-		</xs:simpleContent>
-	</xs:complexType>
+		<xs:restriction base="xs:token"/>
+	</xs:simpleType>
 	<xs:simpleType name="IndType">
 		<xs:annotation>
 			<xs:documentation>An indicator is a list of two mutually exclusive Boolean values that express the only possible states of a property.</xs:documentation>
@@ -477,14 +483,12 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="NameType">
+	<xs:simpleType name="NameType">
 		<xs:annotation>
 			<xs:documentation>A name is a word or phrase that constitutes the distinctive designation of a person, place, thing or concept</xs:documentation>
 		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="xs:token"/>
-		</xs:simpleContent>
-	</xs:complexType>
+		<xs:restriction base="xs:token"/>
+	</xs:simpleType>
 	<xs:simpleType name="NumberType">
 		<xs:annotation>
 			<xs:documentation>A mathematical number that is assigned or is determined by calculation.</xs:documentation>
@@ -508,6 +512,29 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:simpleType name="OwnershipTypeCodeContentType">
+		<xs:annotation>
+			<xs:documentation>Ownership Type Code</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="CS">
+				<xs:annotation>
+					<xs:documentation>Customer</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SL">
+				<xs:annotation>
+					<xs:documentation>Seller</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OwnershipTypeCodeType">
+		<xs:annotation>
+			<xs:documentation>Ownership Type Code</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="OwnershipTypeCodeContentType"/>
+	</xs:simpleType>
 	<xs:complexType name="ParticipantType">
 		<xs:annotation>
 			<xs:documentation>Information related to parties relevant to the contents of this message.</xs:documentation>
@@ -602,18 +629,46 @@
 					<xs:documentation>A nation with its own government, occupying a particular territory.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Device" type="DeviceType" minOccurs="0" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>Device upon which the secure transaction will occur.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element name="RequestTime" type="DateTimeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Point of sale timestamp value.  Example: 2017-01-13T13:59:38Z  Note: This may be used if the point of sale time zone differs from the message creation timestamp.</xs:documentation>
+					<xs:documentation>Point of sale timestamp value. Example: 2017-01-13T13:59:38Z  Note: This may be used if the point of sale time zone differs from the message creation timestamp.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:simpleType name="PresenceTypeCodeContentType">
+		<xs:annotation>
+			<xs:documentation>Presence Type Code</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="CN">
+				<xs:annotation>
+					<xs:documentation>Customer not present</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CP">
+				<xs:annotation>
+					<xs:documentation>Customer present -&gt; (e.g. for non-PaymentCard payment methods)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CPCN">
+				<xs:annotation>
+					<xs:documentation>Customer present and card not present</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CPCP">
+				<xs:annotation>
+					<xs:documentation>Customer present and card present</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PresenceTypeCodeType">
+		<xs:annotation>
+			<xs:documentation>Presence Type Code</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="PresenceTypeCodeContentType"/>
+	</xs:simpleType>
 	<xs:simpleType name="ProperNameType">
 		<xs:annotation>
 			<xs:documentation>BDT with value constraints for proper, regular names (e.g. Individual Surname, Individual First Name, Company Name, etc.).</xs:documentation>
@@ -748,7 +803,7 @@
 			</xs:element>
 			<xs:element name="SalesTaxRegistrationID" type="ID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Registered identifier of the business purchasing the goods and services.  For example, a GST number in India XX.</xs:documentation>
+					<xs:documentation>Registered identifier of the business purchasing the goods and services. For example, a GST number in India XX.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="StreetText" type="TextType" minOccurs="0" maxOccurs="2">
@@ -810,14 +865,12 @@
 			</xs:element>
 		</xs:choice>
 	</xs:complexType>
-	<xs:complexType name="TextType">
+	<xs:simpleType name="TextType">
 		<xs:annotation>
 			<xs:documentation>Text is a character string such as a finite set of characters generally in the form of words of a language.</xs:documentation>
 		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="xs:string"/>
-		</xs:simpleContent>
-	</xs:complexType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
 	<xs:complexType name="TravelAgencyType">
 		<xs:annotation>
 			<xs:documentation>A private retailer or public service that provides travel and tourism related services to the public on behalf of suppliers such as activities, airlines, car rentals, cruise lines, hotels, railways, travel insurance, and package tours.</xs:documentation>
@@ -835,12 +888,12 @@
 			</xs:element>
 			<xs:element name="IATA_Number" type="NumberType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>IATA-assigned agency number.  Example: 98417900</xs:documentation>
+					<xs:documentation>IATA-assigned agency number. Example: 98417900</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Name" type="ProperNameType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Agency name.  Example: Carson Travel</xs:documentation>
+					<xs:documentation>Agency name. Example: Carson Travel</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="PseudoCityID" type="ID_Type" minOccurs="0" maxOccurs="1">
@@ -855,7 +908,7 @@
 			</xs:element>
 			<xs:element name="TypeCode" type="TravelAgencyTypeCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Agency type code.  Examples TravelAgency, OnlineTravelAgency, or TravelManagementCompany.</xs:documentation>
+					<xs:documentation>Agency type code. Examples TravelAgency, OnlineTravelAgency, or TravelManagementCompany.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -893,7 +946,7 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:simpleType name="UniformResourceID_Type">
+	<xs:simpleType name="URI_Type">
 		<xs:annotation>
 			<xs:documentation>A string of characters used to identify a resource. Such identification enables interaction with representations of the resource over a network, typically the World Wide Web, using specific protocols.</xs:documentation>
 		</xs:annotation>

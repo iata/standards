@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<xs:schema xmlns="http://www.iata.org/IATA/2015/00/2019.1/IATA_Acknowledgement" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.iata.org/IATA/2015/00/2019.1/IATA_Acknowledgement" elementFormDefault="qualified" version="5.000">
-	<xs:element name="IATA_Acknowledgement">
+<xs:schema xmlns="http://www.iata.org/IATA/2015/00/2019.2/IATA_Acknowledgement" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.iata.org/IATA/2015/00/2019.2/IATA_Acknowledgement" elementFormDefault="qualified" version=" 6.000" id="IATA2019.2">
+	<xs:element name="Acknowledgement">
 		<xs:annotation>
 			<xs:documentation>The Acknowledgement document is a simple notification from party to party acknowledging the receipt of another transaction such as an inventory release or an updated order
 
@@ -16,7 +16,7 @@ This document is used consistently as an optional response to a notification tra
 					</xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
-							<xs:any namespace="##other" processContents="lax">
+							<xs:any namespace="##other" processContents="lax" minOccurs="1" maxOccurs="unbounded">
 								<xs:annotation>
 									<xs:documentation source="description" xml:lang="en">Implementer-Augmented Structure.</xs:documentation>
 								</xs:annotation>
@@ -59,14 +59,12 @@ This document is used consistently as an optional response to a notification tra
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="CodeType">
+	<xs:simpleType name="CodeType">
 		<xs:annotation>
 			<xs:documentation>A code is a character string of letters, numbers, special characters (except escape sequences), and symbols.</xs:documentation>
 		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="xs:token"/>
-		</xs:simpleContent>
-	</xs:complexType>
+		<xs:restriction base="xs:token"/>
+	</xs:simpleType>
 	<xs:complexType name="DateTimeType">
 		<xs:annotation>
 			<xs:documentation>A date time identifies a date and time of day to various common resolutions: year, month, week, day, hour, minute, second, and fraction of second.</xs:documentation>
@@ -99,7 +97,7 @@ This document is used consistently as an optional response to a notification tra
 			</xs:element>
 			<xs:element name="PrimaryLangID" type="ID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Identifes the primary language preference for the message.  The human language is identified by ISO 639 codes.</xs:documentation>
+					<xs:documentation>Identifes the primary language preference for the message. The human language is identified by ISO 639 codes.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="RetransmissionInd" type="IndType" minOccurs="0" maxOccurs="1">
@@ -134,14 +132,12 @@ This document is used consistently as an optional response to a notification tra
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="ID_Type">
+	<xs:simpleType name="ID_Type">
 		<xs:annotation>
 			<xs:documentation>An identifier is a character string used to uniquely identify one instance of an object within an identification scheme that is managed by an agency.</xs:documentation>
 		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="xs:token"/>
-		</xs:simpleContent>
-	</xs:complexType>
+		<xs:restriction base="xs:token"/>
+	</xs:simpleType>
 	<xs:simpleType name="IndType">
 		<xs:annotation>
 			<xs:documentation>An indicator is a list of two mutually exclusive Boolean values that express the only possible states of a property.</xs:documentation>
@@ -165,26 +161,22 @@ This document is used consistently as an optional response to a notification tra
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="NameType">
+	<xs:simpleType name="NameType">
 		<xs:annotation>
 			<xs:documentation>A name is a word or phrase that constitutes the distinctive designation of a person, place, thing or concept</xs:documentation>
 		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="xs:token"/>
-		</xs:simpleContent>
-	</xs:complexType>
+		<xs:restriction base="xs:token"/>
+	</xs:simpleType>
 	<xs:simpleType name="NumberType">
 		<xs:annotation>
 			<xs:documentation>A mathematical number that is assigned or is determined by calculation.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:decimal"/>
 	</xs:simpleType>
-	<xs:complexType name="TextType">
+	<xs:simpleType name="TextType">
 		<xs:annotation>
 			<xs:documentation>Text is a character string such as a finite set of characters generally in the form of words of a language.</xs:documentation>
 		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="xs:string"/>
-		</xs:simpleContent>
-	</xs:complexType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
 </xs:schema>

@@ -1,9 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns="http://www.iata.org/IATA/2015/00/2019.1/IATA_SeamlessAvailabilityRS" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.iata.org/IATA/2015/00/2019.1/IATA_SeamlessAvailabilityRS" elementFormDefault="qualified" version=" 1.000">
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.iata.org/IATA/2015/00/2019.2/IATA_SeamlessAvailabilityRS" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.iata.org/IATA/2015/00/2019.2/IATA_SeamlessAvailabilityRS" elementFormDefault="qualified" version=" 1.0" id="IATA2019.2">
+	<xs:annotation>
+		<xs:documentation>This message enables airlines/airline service suppliers to receive availability for one or more specified date(s)
+and journey.</xs:documentation>
+	</xs:annotation>
 	<xs:element name="IATA_SeamlessAvailabilityRS">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="PayloadAttributes" type="IATA_PayloadStandardAttributesType" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="PayloadAttributes" type="IATA_PayloadStandardAttributesType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>IATA standard payload attributes</xs:documentation>
+					</xs:annotation>
+				</xs:element>
 				<xs:choice>
 					<xs:element name="Error" type="ErrorType" maxOccurs="5"/>
 					<xs:element name="Response" type="ResponseType"/>
@@ -122,23 +130,11 @@
 		</xs:annotation>
 		<xs:restriction base="xs:anyURI"/>
 	</xs:simpleType>
-	<xs:complexType name="CarrierType">
-		<xs:annotation>
-			<xs:documentation>The organization which carries the passenger, baggage, or goods, and/or commits to delivering the carriage as well as any related services such as issuance of ticket, creation of Order, etc...</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="AirlineDesigCode" type="AirlineDesigCodeType" minOccurs="0" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>Airline code assigned to a carrier. Either ICAO-defined 3-character code or IATA-defined 2-character code.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-		</xs:sequence>
-	</xs:complexType>
 	<xs:complexType name="DatedMarketingSegmentRBD_Type">
 		<xs:annotation>
 			<xs:documentation>Provides RBD information for a given Dated Marketing Segment</xs:documentation>
 		</xs:annotation>
-		<xs:choice>
+		<xs:sequence>
 			<xs:element name="RBD_Code" type="RBD_CodeType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Code used to identify a particular RBD (e.g. P, J, W, M, etc.).</xs:documentation>
@@ -154,7 +150,7 @@
 					<xs:documentation>Provides information regarding an RBD availability for a given dated marketing segment.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-		</xs:choice>
+		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="DatedMarketingSegmentType">
 		<xs:annotation>
@@ -181,6 +177,16 @@
 					<xs:documentation>The Scheduled Date and Time of Departure of the aircraft at the terminal at an airport.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="DatedMarketingSegmentRBD_" type="DatedMarketingSegmentRBD_Type" minOccurs="0" maxOccurs="26">
+				<xs:annotation>
+					<xs:documentation>Provides RBD information for a given Dated Marketing Segment</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DatedOperatingSegment" type="DatedOperatingSegmentType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>An operation between board point and any subsequent off point within the same flight designator. Could be one or more legs. Could also be used for other transport vehicles such as train or bus etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="OriginStation" type="StationType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Location or facility where air or surface transportation originates, stops and/or terminates, and where passengers and/or cargo can be taken on or off.</xs:documentation>
@@ -191,23 +197,11 @@
 					<xs:documentation>Location or facility where air or surface transportation originates, stops and/or terminates, and where passengers and/or cargo can be taken on or off.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="DatedOperatingSegment" type="DatedOperatingSegmentType" minOccurs="0" maxOccurs="1">
+			<xs:element name="Warning" type="WarningType" minOccurs="0" maxOccurs="5">
 				<xs:annotation>
-					<xs:documentation>An operation between board point and any subsequent off point within the same flight designator. Could be one or more legs. Could also be used for other transport vehicles such as train or bus etc.</xs:documentation>
+					<xs:documentation>Contains information related to potential business errors detected during processing of the preceding request.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:choice>
-				<xs:element name="Warning" type="WarningType" minOccurs="0" maxOccurs="5">
-					<xs:annotation>
-						<xs:documentation>Contains information related to potential business errors detected during processing of the preceding request.</xs:documentation>
-					</xs:annotation>
-				</xs:element>
-				<xs:element name="DatedMarketingSegmentRBD_" type="DatedMarketingSegmentRBD_Type" minOccurs="0" maxOccurs="26">
-					<xs:annotation>
-						<xs:documentation>Provides RBD information for a given Dated Marketing Segment</xs:documentation>
-					</xs:annotation>
-				</xs:element>
-			</xs:choice>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="DatedOperatingSegmentType">
@@ -218,11 +212,6 @@
 			<xs:element name="AirlineDesigCode" type="AirlineDesigCodeType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Airline code assigned to a carrier. Either ICAO-defined 3-character code or IATA-defined 2-character code.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="DatedOperatingSegmentID" type="ID_Type" minOccurs="0" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>Identifier of a Dated Operating Segment.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="OperatingCarrierFlightNumber" type="FlightNumberTextType" minOccurs="1" maxOccurs="1">
@@ -264,7 +253,7 @@
 			</xs:element>
 			<xs:element name="StatusText" type="TextType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Document processing status.  Recommended values are NotProcessed, Incomplete, Complete, Unknown.</xs:documentation>
+					<xs:documentation>Document processing status. Recommended values are NotProcessed, Incomplete, Complete, Unknown.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="TagText" type="TextType" minOccurs="0" maxOccurs="1">
@@ -274,7 +263,7 @@
 			</xs:element>
 			<xs:element name="TypeCode" type="CodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Uses a bilaterally agreed set of values to indicate the error type.  The validating XSD can expect to accept values that it has not been explicitly coded for and process them by using Type = 'unknown'.</xs:documentation>
+					<xs:documentation>Uses a bilaterally agreed set of values to indicate the error type. The validating XSD can expect to accept values that it has not been explicitly coded for and process them by using Type = 'unknown'.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="URL" type="UniformResourceID_Type" minOccurs="0" maxOccurs="1">
@@ -321,7 +310,7 @@
 			</xs:element>
 			<xs:element name="PrimaryLangCode" type="CodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Identifes the primary language preference for the message.  The human language is identified by ISO 639 codes.</xs:documentation>
+					<xs:documentation>Identifes the primary language preference for the message. The human language is identified by ISO 639 codes.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="AltLangCode" type="CodeType" minOccurs="0" maxOccurs="1">
@@ -351,7 +340,7 @@
 					<xs:documentation>Uniquely identifies an Origin Destination within the context of one message.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="OriginStation" type="StationType" minOccurs="1" maxOccurs="1">
+			<xs:element name="OriginStation" type="StationType">
 				<xs:annotation>
 					<xs:documentation>Location or facility where air or surface transportation originates, stops and/or terminates, and where passengers and/or cargo can be taken on or off.</xs:documentation>
 				</xs:annotation>
@@ -424,7 +413,7 @@
 			<xs:documentation>Location or facility where air or surface transportation originates, stops and/or terminates, and where passengers and/or cargo can be taken on or off.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="IATA_LocationCode" type="IATA_LocationCodeType" minOccurs="0" maxOccurs="1">
+			<xs:element name="IATA_LocationCode" type="IATA_LocationCodeType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>IATA defined code identifying a city or station.</xs:documentation>
 				</xs:annotation>
@@ -470,7 +459,7 @@
 			</xs:element>
 			<xs:element name="StatusText" type="TextType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Document processing status.  Recommended values are NotProcessed, Incomplete, Complete, Unknown.</xs:documentation>
+					<xs:documentation>Document processing status. Recommended values are NotProcessed, Incomplete, Complete, Unknown.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="TagText" type="TextType" minOccurs="0" maxOccurs="1">
@@ -480,7 +469,7 @@
 			</xs:element>
 			<xs:element name="TypeCode" type="CodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Uses a bilaterally agreed set of values to indicate the warning type.  The validating XSD can expect to accept values that it has not been explicitly coded for and process them by using Type = 'unknown'.</xs:documentation>
+					<xs:documentation>Uses a bilaterally agreed set of values to indicate the warning type. The validating XSD can expect to accept values that it has not been explicitly coded for and process them by using Type = 'unknown'.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="URL" type="UniformResourceID_Type" minOccurs="0" maxOccurs="1">

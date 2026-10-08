@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<xs:schema targetNamespace="http://www.iata.org/IATA/2015/00/2019.1/IATA_AirlineProfileNotifRQ" elementFormDefault="qualified" version="3.000" xmlns="http://www.iata.org/IATA/2015/00/2019.1/IATA_AirlineProfileNotifRQ" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema xmlns="http://www.iata.org/IATA/2015/00/2019.2/IATA_AirlineProfileNotifRQ" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.iata.org/IATA/2015/00/2019.2/IATA_AirlineProfileNotifRQ" elementFormDefault="qualified" version="4.000"  id="IATA2019.2">
 	<xs:element name="IATA_AirlineProfileNotifRQ">
 		<xs:annotation>
 			<xs:documentation>Airline Profile Sender pushes Airline Profile or link to Airline Profile Receivers that have been activated/authorized, including Profile version number.                
@@ -13,7 +13,7 @@ The message also returns multi-media content at the message level with media con
 					</xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
-							<xs:any namespace="##other" processContents="lax">
+							<xs:any namespace="##other" processContents="lax" minOccurs="1" maxOccurs="unbounded">
 								<xs:annotation>
 									<xs:documentation source="description" xml:lang="en">Implementer-Augmented Structure.</xs:documentation>
 								</xs:annotation>
@@ -21,7 +21,7 @@ The message also returns multi-media content at the message level with media con
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
-				<xs:element name="MessageDoc" type="MessageDocType" minOccurs="0" maxOccurs="1">
+				<xs:element name="MessageDoc" type="MessageDocType" minOccurs="0">
 					<xs:annotation>
 						<xs:documentation>Message document information including document name and version number.</xs:documentation>
 					</xs:annotation>
@@ -61,42 +61,42 @@ The message also returns multi-media content at the message level with media con
 			</xs:element>
 			<xs:element name="Name" type="ProperNameType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Aggregator Name.  Example: Farelogix.</xs:documentation>
+					<xs:documentation>Aggregator Name. Example: Farelogix.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:simpleType name="AirlineDesigCodeContentType">
 		<xs:annotation>
-			<xs:documentation>The codelist contents of IATA Resolution 762  airline codes, or of ICAO airline codes. {codeListAgencyName}IATA or ICAO{/codeListAgencyName} {codeListName}Resolution 762  Airline Codes or ICAO Airline Codes{/codeListName}</xs:documentation>
+			<xs:documentation>The codelist contents of IATA Resolution 762 airline codes, or of ICAO airline codes. {codeListAgencyName}IATA or ICAO{/codeListAgencyName} {codeListName}Resolution 762  Airline Codes or ICAO Airline Codes{/codeListName}</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:token">
-			<xs:pattern value="([A-Z]{3}|[A-Z]{2})|([0-9][A-Z])|([A-Z][0-9])"></xs:pattern>
+			<xs:pattern value="([A-Z]{3}|[A-Z]{2})|([0-9][A-Z])|([A-Z][0-9])"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="AirlineDesigCodeType">
 		<xs:annotation>
 			<xs:documentation>Either the IATA-defined 2-character code or the ICAO-defined 3-character code of an airline, as per the length of the value.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="AirlineDesigCodeContentType"></xs:restriction>
+		<xs:restriction base="AirlineDesigCodeContentType"/>
 	</xs:simpleType>
 	<xs:complexType name="AirlineProfileDataItemType">
 		<xs:annotation>
 			<xs:documentation>Single set of data elements contained within the airline profile.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="ActionTypeCode" type="CodeType" minOccurs="0" maxOccurs="1"></xs:element>
+			<xs:element name="ActionTypeCode" type="CodeType" minOccurs="0" maxOccurs="1"/>
 			<xs:element name="OfferFilterCriteria" type="OfferFilterCriteriaType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Filters results based on offer preferences/criteria.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="PointofSaleFilterCriteria" type="PointofSaleFilterCriteriaType" minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="POS_FilterCriteria" type="POS_FilterCriteriaType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Criteria used to filter results based on point of sale information.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="POSGeographicFilterCriteria" type="GeographicFilterCriteriaType" minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="POS_GeographicFilterCriteria" type="GeographicFilterCriteriaType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Criteria used to filter results based on geographic preferences, including Area, State, City, Airport, or Geospatial information.</xs:documentation>
 				</xs:annotation>
@@ -123,19 +123,19 @@ The message also returns multi-media content at the message level with media con
 					<xs:documentation>Single set of data elements contained within the airline profile.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="AirlineProfileURL" type="UniformResourceID_Type" minOccurs="0" maxOccurs="1">
+			<xs:element name="AirlineProfileURL" type="URI_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Link to Airline Profile Source File. Alows a large Airline Profile file to be distributed over FTP, FTPS, as agreed bilaterally with Profile Owner.  Note, this element should not be used if explicitly providing the Airline Profile Data Items.</xs:documentation>
+					<xs:documentation>Link to Airline Profile Source File. Alows a large Airline Profile file to be distributed over FTP, FTPS, as agreed bilaterally with Profile Owner. Note, this element should not be used if explicitly providing the Airline Profile Data Items.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="AssociatedMediaURL" type="UniformResourceID_Type" minOccurs="0" maxOccurs="1">
+			<xs:element name="AssociatedMediaURL" type="URI_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>URL used to retrieve media associated with the airline profile, including the airline logo.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="AssociationMembershipText" type="TextType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Free text description of group or alliance for which the profile is related.  E.g. 'Member of Star Alliance'.</xs:documentation>
+					<xs:documentation>Free text description of group or alliance for which the profile is related. E.g. 'Member of Star Alliance'.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="ProfileOwner" type="CarrierType" minOccurs="1" maxOccurs="1">
@@ -143,11 +143,11 @@ The message also returns multi-media content at the message level with media con
 					<xs:documentation>The organization which carries the passenger, baggage, or goods, and/or commits to delivering the carriage as well as any related services such as issuance of ticket, creation of Order, etc.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-		<xs:element name="SupportedMessageInfo" type="KeyValuePropertyType" minOccurs="0" maxOccurs="unbounded">
-			<xs:annotation>
-				<xs:documentation>List of supported messages and respective versions.</xs:documentation>
-			</xs:annotation>
-		</xs:element>
+			<xs:element name="SupportedMessageInfo" type="KeyValuePropertyType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Contextual information to further describe something using a key-value pair.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="CarrierType">
@@ -177,14 +177,12 @@ The message also returns multi-media content at the message level with media con
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="CodeType">
+	<xs:simpleType name="CodeType">
 		<xs:annotation>
 			<xs:documentation>A code is a character string of letters, numbers, special characters (except escape sequences), and symbols.</xs:documentation>
 		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="xs:token"></xs:extension>
-		</xs:simpleContent>
-	</xs:complexType>
+		<xs:restriction base="xs:token"/>
+	</xs:simpleType>
 	<xs:complexType name="ContactInfoType">
 		<xs:annotation>
 			<xs:documentation>The electronic or geographic address which a party has provided as the contact channel. For example, contact email, contact postal address, contact phone number.</xs:documentation>
@@ -195,14 +193,14 @@ The message also returns multi-media content at the message level with media con
 					<xs:documentation>Uniquely Identifies a set of Contact Information, within the context of one message.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="ContactPurposeText" type="TextType" minOccurs="0" maxOccurs="99">
+				<xs:annotation>
+					<xs:documentation>to identify the contact purpose (PADIS code list 3299)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="ContactRefusedInd" type="IndType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>When TRUE, Contact Information was refused to be provided.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="ContactType" type="TextType" minOccurs="0" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>Classification for a particular set of contact information (e.g. Primary, Payment, etc.)</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="EmailAddress" type="EmailAddressType" minOccurs="0" maxOccurs="unbounded">
@@ -210,9 +208,9 @@ The message also returns multi-media content at the message level with media con
 					<xs:documentation>The email address which should be used for contact purposes.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Employer" type="Org1Type" minOccurs="0">
+			<xs:element name="Individual" type="IndividualType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>An organized structure set up for a particular purpose, such as a business, government body, department, charity, or financial institution.</xs:documentation>
+					<xs:documentation>A single human being as distinct from a group, class, or family.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="IndividualRefID" type="ID_Type" minOccurs="0" maxOccurs="1">
@@ -220,14 +218,14 @@ The message also returns multi-media content at the message level with media con
 					<xs:documentation>Reference to Individual instance(s)</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Individual" type="IndividualType" minOccurs="0" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>A single human being as distinct from a group, class, or family.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element name="OtherAddress" type="OtherAddressType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Other Contact Method information. E.g. web site URL, social media handle.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PaxSegmentRefID" type="ID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Uniquely identifies a Passenger Segment within the context of one message.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Phone" type="PhoneType" minOccurs="0" maxOccurs="unbounded">
@@ -238,6 +236,11 @@ The message also returns multi-media content at the message level with media con
 			<xs:element name="PostalAddress" type="PostalAddressType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Natural or physical address used for postal service. May be a building address, airport address, etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RelationshipToPax" type="TextType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Relationship to the passenger e.g. used for when this individual is an emergency contact</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -279,41 +282,41 @@ The message also returns multi-media content at the message level with media con
 			<xs:documentation>The code list of ISO 3166 two-alpha Country Codes {codeListAgencyName}ISO{/codeListAgencyName} {codeListName}3166 two-alpha Country Codes{/codeListName}</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:token">
-			<xs:pattern value="[A-Z]{2}"></xs:pattern>
+			<xs:pattern value="[A-Z]{2}"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="CountryCodeType">
 		<xs:annotation>
 			<xs:documentation>ISO Country Code.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="CountryCodeContentType"></xs:restriction>
+		<xs:restriction base="CountryCodeContentType"/>
 	</xs:simpleType>
 	<xs:simpleType name="CountryDialingCodeContentType">
 		<xs:annotation>
 			<xs:documentation>Enumeration set for the Country Dialing Code BDT. {codeListAgencyName}ITU{/codeListAgencyName} {enumerationURI}ITU-T in standards E.123 and E.164{/enumerationURI}</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:token"></xs:restriction>
+		<xs:restriction base="xs:token"/>
 	</xs:simpleType>
 	<xs:simpleType name="CountryDialingCodeType">
 		<xs:annotation>
 			<xs:documentation>Additional BDT to specify the numeric telephone dialingÂ prefixes for the memberÂ countries of the International Telecommunication Union (ITU).</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="CountryDialingCodeContentType"></xs:restriction>
+		<xs:restriction base="CountryDialingCodeContentType"/>
 	</xs:simpleType>
 	<xs:simpleType name="CountrySubDivisionCodeContentType">
 		<xs:annotation>
 			<xs:documentation>The list of Country Sub-Division Codes in ISO 3166-2, or referenced from ISO 3166-2 for the specific countries. Max-3-char sub-division code without preceding country code. {codeListAgencyName}ISO{/codeListAgencyName} {codeListName}3166-2 Country Subdivision Codes{/codeListName}</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:token">
-			<xs:minLength value="1"></xs:minLength>
-			<xs:maxLength value="3"></xs:maxLength>
+			<xs:minLength value="1"/>
+			<xs:maxLength value="3"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="CountrySubDivisionCodeType">
 		<xs:annotation>
-			<xs:documentation>ISO 3166-2 Country Sub-Division Code.  Max-3-char sub-division code without preceding country code.  E.g. 'AZ' for Arizona, 'BY' for Bavaria region in Germany.</xs:documentation>
+			<xs:documentation>ISO 3166-2 Country Sub-Division Code. Max-3-char sub-division code without preceding country code. E.g. 'AZ' for Arizona, 'BY' for Bavaria region in Germany.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string"></xs:restriction>
+		<xs:restriction base="xs:string"/>
 	</xs:simpleType>
 	<xs:complexType name="DateTimeType">
 		<xs:annotation>
@@ -321,7 +324,7 @@ The message also returns multi-media content at the message level with media con
 		</xs:annotation>
 		<xs:simpleContent>
 			<xs:extension base="xs:dateTime">
-				<xs:attribute name="TimeZoneCode" type="xs:token" use="optional"></xs:attribute>
+				<xs:attribute name="TimeZoneCode" type="xs:token" use="optional"/>
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
@@ -329,21 +332,21 @@ The message also returns multi-media content at the message level with media con
 		<xs:annotation>
 			<xs:documentation>A date is a Gregorian calendar representation in various common resolutions: year, month, week, day.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:date"></xs:restriction>
+		<xs:restriction base="xs:date"/>
 	</xs:simpleType>
 	<xs:complexType name="EmailAddressType">
 		<xs:annotation>
 			<xs:documentation>The email address which should be used for contact purposes.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
+			<xs:element name="ContactTypeText" type="TextType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>PADIS code list: Contact Type (to identify the technical contact type information)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="EmailAddressText" type="TextType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The email address which should be used for contact purposes.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="LabelText" type="TextType" minOccurs="0" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>Used to differentiate multiple email addresses of one contact.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -396,7 +399,7 @@ The message also returns multi-media content at the message level with media con
 		<xs:annotation>
 			<xs:documentation>Additional BDT to specify Gender code.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="GenderCodeContentType"></xs:restriction>
+		<xs:restriction base="GenderCodeContentType"/>
 	</xs:simpleType>
 	<xs:complexType name="GeographicFilterCriteriaType">
 		<xs:annotation>
@@ -442,7 +445,7 @@ The message also returns multi-media content at the message level with media con
 		<xs:sequence>
 			<xs:element name="NaturalAreaGeocode" type="CodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Natural Area Geocode as defined by NAC Geographic Products Inc.  Ex: 8KDB PGFD</xs:documentation>
+					<xs:documentation>Natural Area Geocode as defined by NAC Geographic Products Inc. Ex: 8KDB PGFD</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="PointElevationNumber" type="NumberType" minOccurs="0" maxOccurs="1">
@@ -467,14 +470,14 @@ The message also returns multi-media content at the message level with media con
 			<xs:documentation>Enumeration set for the Location Code BDT. {codeListAgencyName}IATA{/codeListAgencyName} {codeListName}Location code{/codeListName} {enumerationURI}http://www.iata.org/publications/Pages/code-search.aspx{/enumerationURI}</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:token">
-			<xs:length value="3"></xs:length>
+			<xs:length value="3"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="IATA_LocationCodeType">
 		<xs:annotation>
 			<xs:documentation>Additional BDT to specify the codeset which defines the IATA airport or city codes.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="IATA_LocationCodeContentType"></xs:restriction>
+		<xs:restriction base="IATA_LocationCodeContentType"/>
 	</xs:simpleType>
 	<xs:complexType name="IATA_PayloadStandardAttributesType">
 		<xs:annotation>
@@ -498,7 +501,7 @@ The message also returns multi-media content at the message level with media con
 			</xs:element>
 			<xs:element name="PrimaryLangID" type="ID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Identifes the primary language preference for the message.  The human language is identified by ISO 639 codes.</xs:documentation>
+					<xs:documentation>Identifes the primary language preference for the message. The human language is identified by ISO 639 codes.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="RetransmissionInd" type="IndType" minOccurs="0" maxOccurs="1">
@@ -533,14 +536,12 @@ The message also returns multi-media content at the message level with media con
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="ID_Type">
+	<xs:simpleType name="ID_Type">
 		<xs:annotation>
 			<xs:documentation>An identifier is a character string used to uniquely identify one instance of an object within an identification scheme that is managed by an agency.</xs:documentation>
 		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="xs:token"></xs:extension>
-		</xs:simpleContent>
-	</xs:complexType>
+		<xs:restriction base="xs:token"/>
+	</xs:simpleType>
 	<xs:complexType name="IndividualType">
 		<xs:annotation>
 			<xs:documentation>A single human being as distinct from a group, class, or family.</xs:documentation>
@@ -553,7 +554,7 @@ The message also returns multi-media content at the message level with media con
 			</xs:element>
 			<xs:element name="Birthplace" type="TextType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Country Code where the Passenger was born (ISO 3166).  For example: DE</xs:documentation>
+					<xs:documentation>Country Code where the Passenger was born (ISO 3166). For example: DE</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="GenderCode" type="GenderCodeType" minOccurs="0" maxOccurs="1">
@@ -573,7 +574,7 @@ The message also returns multi-media content at the message level with media con
 			</xs:element>
 			<xs:element name="MiddleName" type="ProperNameType" minOccurs="0" maxOccurs="3">
 				<xs:annotation>
-					<xs:documentation>Individual's middle name or initial.  E.g. G, GEORGE.</xs:documentation>
+					<xs:documentation>Individual's middle name or initial. E.g. G, GEORGE.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="SuffixName" type="SupplementNameType" minOccurs="0" maxOccurs="1">
@@ -597,7 +598,7 @@ The message also returns multi-media content at the message level with media con
 		<xs:annotation>
 			<xs:documentation>An indicator is a list of two mutually exclusive Boolean values that express the only possible states of a property.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:boolean"></xs:restriction>
+		<xs:restriction base="xs:boolean"/>
 	</xs:simpleType>
 	<xs:complexType name="KeyValuePropertyType">
 		<xs:annotation>
@@ -622,7 +623,7 @@ The message also returns multi-media content at the message level with media con
 		</xs:annotation>
 		<xs:simpleContent>
 			<xs:extension base="xs:decimal">
-				<xs:attribute name="UnitCode" type="xs:token" use="optional"></xs:attribute>
+				<xs:attribute name="UnitCode" type="xs:token" use="optional"/>
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
@@ -643,14 +644,12 @@ The message also returns multi-media content at the message level with media con
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="NameType">
+	<xs:simpleType name="NameType">
 		<xs:annotation>
 			<xs:documentation>A name is a word or phrase that constitutes the distinctive designation of a person, place, thing or concept</xs:documentation>
 		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="xs:token"></xs:extension>
-		</xs:simpleContent>
-	</xs:complexType>
+		<xs:restriction base="xs:token"/>
+	</xs:simpleType>
 	<xs:complexType name="NotifType">
 		<xs:annotation>
 			<xs:documentation>Airline Profile notif payload information.</xs:documentation>
@@ -667,7 +666,7 @@ The message also returns multi-media content at the message level with media con
 		<xs:annotation>
 			<xs:documentation>A mathematical number that is assigned or is determined by calculation.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:decimal"></xs:restriction>
+		<xs:restriction base="xs:decimal"/>
 	</xs:simpleType>
 	<xs:complexType name="OfferFilterCriteriaType">
 		<xs:annotation>
@@ -676,7 +675,7 @@ The message also returns multi-media content at the message level with media con
 		<xs:sequence>
 			<xs:element name="DirectionalIndText" type="TextType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>1 = From LOC 1 to LOC 2   2 = To LOC 1 from LOC 2    3 = Both</xs:documentation>
+					<xs:documentation>1 = From LOC 1 to LOC 2 2 = To LOC 1 from LOC 2 3 = Both</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="OfferDestPoint" type="GeographicFilterCriteriaType" minOccurs="0" maxOccurs="1">
@@ -718,9 +717,9 @@ The message also returns multi-media content at the message level with media con
 			<xs:documentation>Other Contact Method information. E.g. web site URL, social media handle.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="LabelText" type="TextType" minOccurs="1" maxOccurs="1">
+			<xs:element name="ContactTypeText" type="TextType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Used to differentiate multiple Other Addresses of one contact.  (i.e. social media handle, website, etc.)</xs:documentation>
+					<xs:documentation>PADIS code list: Contact Type (to identify the technical contact type information)</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="OtherAddressText" type="TextType" minOccurs="1" maxOccurs="1">
@@ -811,7 +810,12 @@ The message also returns multi-media content at the message level with media con
 		<xs:sequence>
 			<xs:element name="AreaCodeNumber" type="TextType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Phone number area code.  Example: 813 Note: The phone number can be put unstructured into the phone element or can be put structured into country dialing code, area code, phone number and extension.</xs:documentation>
+					<xs:documentation>Phone number area code. Example: 813 Note: The phone number can be put unstructured into the phone element or can be put structured into country dialing code, area code, phone number and extension.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ContactTypeText" type="TextType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>PADIS code list: Contact Type (to identify the technical contact type information)</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="CountryDialingCode" type="CountryDialingCodeType" minOccurs="0" maxOccurs="1">
@@ -821,12 +825,7 @@ The message also returns multi-media content at the message level with media con
 			</xs:element>
 			<xs:element name="ExtensionNumber" type="TextType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Phone extension number.  Example: 1234 Note: The phone number can be put unstructured into the phone element or can be put structured into countrydialing code, area code, phone number and extension.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="LabelText" type="TextType" minOccurs="0" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>Used to differentiate multiple Phone numbers of one contact.  Examples: Work, Home, Mobile</xs:documentation>
+					<xs:documentation>Phone extension number. Example: 1234 Note: The phone number can be put unstructured into the phone element or can be put structured into countrydialing code, area code, phone number and extension.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="PhoneNumber" type="TextType" minOccurs="0" maxOccurs="1">
@@ -836,7 +835,7 @@ The message also returns multi-media content at the message level with media con
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="PointofSaleFilterCriteriaType">
+	<xs:complexType name="POS_FilterCriteriaType">
 		<xs:annotation>
 			<xs:documentation>Criteria used to filter results based on point of sale information.</xs:documentation>
 		</xs:annotation>
@@ -846,20 +845,20 @@ The message also returns multi-media content at the message level with media con
 					<xs:documentation>An entity who distributes a Sellerâ€™s shopping request to multiple Airlines and aggregates subsequent responses.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="PointofSaleCodeText" type="TextType" minOccurs="1" maxOccurs="1">
+			<xs:element name="POS_CodeText" type="TextType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The code or identifier of the entity defined by the Point of Sale Type Code (e.g. CRS code, Airline specific code, etc.).</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="PointofSaleTypeCode" type="PointofSaleTypeCodeType" minOccurs="1" maxOccurs="1">
+			<xs:element name="POS_TypeCode" type="POS_TypeCodeType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Further defines the types of Point of Sale</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="TravelAgencyInd" type="IndType" minOccurs="1" maxOccurs="1"></xs:element>
+			<xs:element name="TravelAgencyInd" type="IndType" minOccurs="1" maxOccurs="1"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:simpleType name="PointofSaleTypeCodeContentType">
+	<xs:simpleType name="POS_TypeCodeContentType">
 		<xs:annotation>
 			<xs:documentation>Enumeration values of Point of Sale Code. {codeListAgencyName}IATA{/codeListAgencyName} {codeListIdentifier}PADIS 9800{/codeListIdentifier}</xs:documentation>
 		</xs:annotation>
@@ -906,11 +905,11 @@ The message also returns multi-media content at the message level with media con
 			</xs:enumeration>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="PointofSaleTypeCodeType">
+	<xs:simpleType name="POS_TypeCodeType">
 		<xs:annotation>
 			<xs:documentation>Further defines the type of PointOfSaleCode.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="PointofSaleTypeCodeContentType"></xs:restriction>
+		<xs:restriction base="POS_TypeCodeContentType"/>
 	</xs:simpleType>
 	<xs:complexType name="PostalAddressType">
 		<xs:annotation>
@@ -925,6 +924,11 @@ The message also returns multi-media content at the message level with media con
 			<xs:element name="CityName" type="NameType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The name, expressed as text, of the city, town or village.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ContactTypeText" type="TextType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>PADIS code list: Contact Type (to identify the technical contact type information)</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="CountryCode" type="CountryCodeType" minOccurs="0" maxOccurs="1">
@@ -942,14 +946,9 @@ The message also returns multi-media content at the message level with media con
 					<xs:documentation>The name, expressed as text, of the sub-division of a country.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="LabelText" type="TextType" minOccurs="0" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>Used to differentiate multiple Postal Addresses of one contact.  Examples: AddressAtOrigin or AddressAtDestination</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element name="PO_BoxCode" type="CodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Post office box.  Example: P.O. Box 21</xs:documentation>
+					<xs:documentation>Post office box. Example: P.O. Box 21</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="PostalCode" type="CodeType" minOccurs="0" maxOccurs="1">
@@ -968,33 +967,33 @@ The message also returns multi-media content at the message level with media con
 		<xs:annotation>
 			<xs:documentation>BDT with value constraints for proper, regular names (e.g. Individual Surname, Individual First Name, Company Name, etc.).</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:token"></xs:restriction>
+		<xs:restriction base="xs:token"/>
 	</xs:simpleType>
 	<xs:simpleType name="RFIC_ContentType">
 		<xs:annotation>
 			<xs:documentation>Enumeration values for Reason for Issuance codes. {codeListAgencyName}PADIS{/codeListAgencyName} {codeListName}Special condition{/codeListName} {codeListIdentifier}4183{/codeListIdentifier}</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:string">
-			<xs:pattern value="[0-9A-Z]{1,3}"></xs:pattern>
+			<xs:pattern value="[0-9A-Z]{1,3}"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="RFIC_Type">
 		<xs:annotation>
 			<xs:documentation>Additional BDT to specify the reason for issuance code.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="RFIC_ContentType"></xs:restriction>
+		<xs:restriction base="RFIC_ContentType"/>
 	</xs:simpleType>
 	<xs:simpleType name="RFISC_ContentType">
 		<xs:annotation>
 			<xs:documentation>Enumeration values for Reason for Issuance sub codes.  Examples: 0CC (First Checked Bag) 0B1 (In-flight Entertainment) 0BX (Lounge) 0B3 (Meal/ Beverage) 0B5 (Pre-reserved Seat Assignment) 0G6 (Priority Boarding) {codeListAgencyName}ATPCo{/codeListAgencyName} {codeListName}Optional Services Industry Sub Codes{/codeListName}</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string"></xs:restriction>
+		<xs:restriction base="xs:string"/>
 	</xs:simpleType>
 	<xs:simpleType name="RFISC_Type">
 		<xs:annotation>
 			<xs:documentation>Additional BDT to specify the reason for issuance sub code.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="RFISC_ContentType"></xs:restriction>
+		<xs:restriction base="RFISC_ContentType"/>
 	</xs:simpleType>
 	<xs:complexType name="RecipientType">
 		<xs:annotation>
@@ -1112,7 +1111,7 @@ The message also returns multi-media content at the message level with media con
 			</xs:element>
 			<xs:element name="SalesTaxRegistrationID" type="ID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Registered identifier of the business purchasing the goods and services.  For example, a GST number in India XX.</xs:documentation>
+					<xs:documentation>Registered identifier of the business purchasing the goods and services. For example, a GST number in India XX.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="StreetText" type="TextType" minOccurs="0" maxOccurs="2">
@@ -1181,7 +1180,7 @@ The message also returns multi-media content at the message level with media con
 		<xs:sequence>
 			<xs:element name="IncludeInd" type="IndType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>When TRUE, specified service should be included in search results.  When FALSE, exclude shopping results including the specified service.</xs:documentation>
+					<xs:documentation>When TRUE, specified service should be included in search results. When FALSE, exclude shopping results including the specified service.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="RFIC" type="RFIC_Type" minOccurs="0" maxOccurs="1">
@@ -1194,22 +1193,25 @@ The message also returns multi-media content at the message level with media con
 					<xs:documentation>Reason For Issuance Sub Code. Examples: 0CC (First Checked Bag) 0B1 (In-flight Entertainment) 0BX (Lounge)</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="TaxonomyCode" type="CodeType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Used  for  defining  a  product  or  service within  the Shared Industry Taxonomy or bilaterally.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:simpleType name="SupplementNameType">
 		<xs:annotation>
 			<xs:documentation>BDT with value constraints for short supplements to proper names, such as Title, Suffix, etc.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:token"></xs:restriction>
+		<xs:restriction base="xs:token"/>
 	</xs:simpleType>
-	<xs:complexType name="TextType">
+	<xs:simpleType name="TextType">
 		<xs:annotation>
 			<xs:documentation>Text is a character string such as a finite set of characters generally in the form of words of a language.</xs:documentation>
 		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="xs:string"></xs:extension>
-		</xs:simpleContent>
-	</xs:complexType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
 	<xs:complexType name="TravelAgencyType">
 		<xs:annotation>
 			<xs:documentation>A private retailer or public service that provides travel and tourism related services to the public on behalf of suppliers such as activities, airlines, car rentals, cruise lines, hotels, railways, travel insurance, and package tours.</xs:documentation>
@@ -1227,12 +1229,12 @@ The message also returns multi-media content at the message level with media con
 			</xs:element>
 			<xs:element name="IATA_Number" type="NumberType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>IATA-assigned agency number.  Example: 98417900</xs:documentation>
+					<xs:documentation>IATA-assigned agency number. Example: 98417900</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Name" type="ProperNameType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Agency name.  Example: Carson Travel</xs:documentation>
+					<xs:documentation>Agency name. Example: Carson Travel</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="PseudoCityID" type="ID_Type" minOccurs="0" maxOccurs="1">
@@ -1247,7 +1249,7 @@ The message also returns multi-media content at the message level with media con
 			</xs:element>
 			<xs:element name="TypeCode" type="TravelAgencyTypeCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Agency type code.  Examples TravelAgency, OnlineTravelAgency, or TravelManagementCompany.</xs:documentation>
+					<xs:documentation>Agency type code. Examples TravelAgency, OnlineTravelAgency, or TravelManagementCompany.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -1257,16 +1259,16 @@ The message also returns multi-media content at the message level with media con
 			<xs:documentation>Agency/ Agent Identification Type. {codeListAgencyName}PADIS{/codeListAgencyName} {codeListName}Identification type{/codeListName} {codeListIdentifier}9893{/codeListIdentifier}</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:token">
-			<xs:enumeration value="OnlineTravelAgency"></xs:enumeration>
-			<xs:enumeration value="TravelAgency"></xs:enumeration>
-			<xs:enumeration value="TravelManagementCompany"></xs:enumeration>
+			<xs:enumeration value="OnlineTravelAgency"/>
+			<xs:enumeration value="TravelAgency"/>
+			<xs:enumeration value="TravelManagementCompany"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="TravelAgencyTypeCodeType">
 		<xs:annotation>
 			<xs:documentation>Additional BDT to specify travel agency type codes.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="TravelAgencyTypeCodeContentType"></xs:restriction>
+		<xs:restriction base="TravelAgencyTypeCodeContentType"/>
 	</xs:simpleType>
 	<xs:complexType name="TravelAgentType">
 		<xs:annotation>
@@ -1285,10 +1287,10 @@ The message also returns multi-media content at the message level with media con
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:simpleType name="UniformResourceID_Type">
+	<xs:simpleType name="URI_Type">
 		<xs:annotation>
 			<xs:documentation>A string of characters used to identify a resource. Such identification enables interaction with representations of the resource over a network, typically the World Wide Web, using specific protocols.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:anyURI"></xs:restriction>
+		<xs:restriction base="xs:anyURI"/>
 	</xs:simpleType>
 </xs:schema>

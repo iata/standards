@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<xs:schema xmlns="http://www.iata.org/IATA/2015/00/2019.1/IATA_InvGuaranteeRS" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.iata.org/IATA/2015/00/2019.1/IATA_InvGuaranteeRS" elementFormDefault="qualified" version=" 8.000">
+<xs:schema xmlns="http://www.iata.org/IATA/2015/00/2019.2/IATA_InvGuaranteeRS" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.iata.org/IATA/2015/00/2019.2/IATA_InvGuaranteeRS" elementFormDefault="qualified" version="9.000" id="IATA2019.2">
 	<xs:element name="IATA_InvGuaranteeRS">
 		<xs:annotation>
 			<xs:documentation>The InventoryGuarantee transaction set requests that inventory is guaranteed for specified Offers, pending their conversion into a completed Order.
@@ -26,7 +26,7 @@ The response returns an indication if the inventory has been guaranteed, and if 
 					</xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
-							<xs:any namespace="##other" processContents="lax">
+							<xs:any namespace="##other" processContents="lax" minOccurs="1" maxOccurs="unbounded">
 								<xs:annotation>
 									<xs:documentation source="description" xml:lang="en">Implementer-Augmented Structure.</xs:documentation>
 								</xs:annotation>
@@ -49,7 +49,7 @@ The response returns an indication if the inventory has been guaranteed, and if 
 	</xs:element>
 	<xs:simpleType name="AirlineDesigCodeContentType">
 		<xs:annotation>
-			<xs:documentation>The codelist contents of IATA Resolution 762  airline codes, or of ICAO airline codes. {codeListAgencyName}IATA or ICAO{/codeListAgencyName} {codeListName}Resolution 762  Airline Codes or ICAO Airline Codes{/codeListName}</xs:documentation>
+			<xs:documentation>The codelist contents of IATA Resolution 762 airline codes, or of ICAO airline codes. {codeListAgencyName}IATA or ICAO{/codeListAgencyName} {codeListName}Resolution 762  Airline Codes or ICAO Airline Codes{/codeListName}</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:token">
 			<xs:pattern value="([A-Z]{3}|[A-Z]{2})|([0-9][A-Z])|([A-Z][0-9])"/>
@@ -103,19 +103,17 @@ The response returns an indication if the inventory has been guaranteed, and if 
 				<xs:attribute name="EncodingCode" type="xs:token" use="optional"/>
 				<xs:attribute name="FileName" type="xs:token" use="optional"/>
 				<xs:attribute name="Format" type="xs:string" use="optional"/>
-				<xs:attribute name="MIMECode" type="xs:token" use="optional"/>
+				<xs:attribute name="MIME_Code" type="xs:token" use="optional"/>
 				<xs:attribute name="UniformResourceID" type="xs:anyURI" use="optional"/>
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
-	<xs:complexType name="CodeType">
+	<xs:simpleType name="CodeType">
 		<xs:annotation>
 			<xs:documentation>A code is a character string of letters, numbers, special characters (except escape sequences), and symbols.</xs:documentation>
 		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="xs:token"/>
-		</xs:simpleContent>
-	</xs:complexType>
+		<xs:restriction base="xs:token"/>
+	</xs:simpleType>
 	<xs:simpleType name="CurAppCodeContentType">
 		<xs:annotation>
 			<xs:documentation>Currency Application Code enumeration information.</xs:documentation>
@@ -130,7 +128,7 @@ The response returns an indication if the inventory has been guaranteed, and if 
 	</xs:simpleType>
 	<xs:simpleType name="CurAppCodeType">
 		<xs:annotation>
-			<xs:documentation>Additional BDT to specify the currency code application.  Examples: Actual, Display, Requested, Conversion, Other .</xs:documentation>
+			<xs:documentation>Additional BDT to specify the currency code application. Examples: Actual, Display, Requested, Conversion, Other .</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="CurAppCodeContentType"/>
 	</xs:simpleType>
@@ -153,7 +151,7 @@ The response returns an indication if the inventory has been guaranteed, and if 
 		<xs:sequence>
 			<xs:element name="AppCode" type="CurAppCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Currency code application.  Examples: Actual, Display, Requested, Conversion, Other</xs:documentation>
+					<xs:documentation>Currency code application. Examples: Actual, Display, Requested, Conversion, Other</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="CurCode" type="CurCodeType" minOccurs="0" maxOccurs="1">
@@ -188,6 +186,11 @@ The response returns an indication if the inventory has been guaranteed, and if 
 			<xs:documentation>An account or representation of the certain or major aspects, characteristics, or features of a person, object, or event.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
+			<xs:element name="CategorizationText" type="TextType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>This will contain at present an  undefined list of informational types. E,G  passport and visa information Airport information Airline information General travel. etc,</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="DescText" type="TextType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Description text value.</xs:documentation>
@@ -203,7 +206,7 @@ The response returns an indication if the inventory has been guaranteed, and if 
 					<xs:documentation>Electronic documents, images, and other files which accompany and support some information.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="URL" type="UniformResourceID_Type" minOccurs="0" maxOccurs="1">
+			<xs:element name="URL" type="URI_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>URL to description information source.</xs:documentation>
 				</xs:annotation>
@@ -242,7 +245,7 @@ The response returns an indication if the inventory has been guaranteed, and if 
 			</xs:element>
 			<xs:element name="StatusText" type="TextType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Document processing status.  Recommended values are NotProcessed, Incomplete, Complete, Unknown.</xs:documentation>
+					<xs:documentation>Document processing status. Recommended values are NotProcessed, Incomplete, Complete, Unknown.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="TagText" type="TextType" minOccurs="0" maxOccurs="1">
@@ -252,10 +255,10 @@ The response returns an indication if the inventory has been guaranteed, and if 
 			</xs:element>
 			<xs:element name="TypeCode" type="CodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Uses a bilaterally agreed set of values to indicate the error type.  The validating XSD can expect to accept values that it has not been explicitly coded for and process them by using Type = 'unknown'.</xs:documentation>
+					<xs:documentation>Uses a bilaterally agreed set of values to indicate the error type. The validating XSD can expect to accept values that it has not been explicitly coded for and process them by using Type = 'unknown'.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="URL" type="UniformResourceID_Type" minOccurs="0" maxOccurs="1">
+			<xs:element name="URL" type="URI_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Link to an online description of the provided Error.</xs:documentation>
 				</xs:annotation>
@@ -284,7 +287,7 @@ The response returns an indication if the inventory has been guaranteed, and if 
 			</xs:element>
 			<xs:element name="PrimaryLangID" type="ID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Identifes the primary language preference for the message.  The human language is identified by ISO 639 codes.</xs:documentation>
+					<xs:documentation>Identifes the primary language preference for the message. The human language is identified by ISO 639 codes.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="RetransmissionInd" type="IndType" minOccurs="0" maxOccurs="1">
@@ -319,14 +322,12 @@ The response returns an indication if the inventory has been guaranteed, and if 
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="ID_Type">
+	<xs:simpleType name="ID_Type">
 		<xs:annotation>
 			<xs:documentation>An identifier is a character string used to uniquely identify one instance of an object within an identification scheme that is managed by an agency.</xs:documentation>
 		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="xs:token"/>
-		</xs:simpleContent>
-	</xs:complexType>
+		<xs:restriction base="xs:token"/>
+	</xs:simpleType>
 	<xs:simpleType name="IndType">
 		<xs:annotation>
 			<xs:documentation>An indicator is a list of two mutually exclusive Boolean values that express the only possible states of a property.</xs:documentation>
@@ -398,14 +399,12 @@ The response returns an indication if the inventory has been guaranteed, and if 
 		</xs:annotation>
 		<xs:restriction base="xs:string"/>
 	</xs:simpleType>
-	<xs:complexType name="LangCodeType">
+	<xs:simpleType name="LangCodeType">
 		<xs:annotation>
 			<xs:documentation>BDT to represent ISO language code list.</xs:documentation>
 		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="LangCodeContentType"/>
-		</xs:simpleContent>
-	</xs:complexType>
+		<xs:restriction base="LangCodeContentType"/>
+	</xs:simpleType>
 	<xs:complexType name="LangUsageType">
 		<xs:annotation>
 			<xs:documentation>Language Code representation.</xs:documentation>
@@ -440,7 +439,7 @@ The response returns an indication if the inventory has been guaranteed, and if 
 		<xs:sequence>
 			<xs:element name="BinaryObject" type="BinaryObjectType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Binary Object Information.  Supplementary attributes include character set code, MIME code, encoding information, file name, format, and URI</xs:documentation>
+					<xs:documentation>Binary Object Information. Supplementary attributes include character set code, MIME code, encoding information, file name, format, and URI</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="DescText" type="TextType" minOccurs="0" maxOccurs="1">
@@ -475,7 +474,7 @@ The response returns an indication if the inventory has been guaranteed, and if 
 			</xs:element>
 			<xs:element name="RenderingMethodText" type="TextType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Rendering Method name.  E.g. Narrative, XSLT, etc.</xs:documentation>
+					<xs:documentation>Rendering Method name. E.g. Narrative, XSLT, etc.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="RenderingOutputFormatText" type="TextType" minOccurs="0" maxOccurs="1">
@@ -512,14 +511,12 @@ The response returns an indication if the inventory has been guaranteed, and if 
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="NameType">
+	<xs:simpleType name="NameType">
 		<xs:annotation>
 			<xs:documentation>A name is a word or phrase that constitutes the distinctive designation of a person, place, thing or concept</xs:documentation>
 		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="xs:token"/>
-		</xs:simpleContent>
-	</xs:complexType>
+		<xs:restriction base="xs:token"/>
+	</xs:simpleType>
 	<xs:simpleType name="NumberType">
 		<xs:annotation>
 			<xs:documentation>A mathematical number that is assigned or is determined by calculation.</xs:documentation>
@@ -536,6 +533,11 @@ The response returns an indication if the inventory has been guaranteed, and if 
 					<xs:documentation>Carrier assigned ID which exists uniquely within an Offer.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="OfferItemTypeCode" type="CodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Specify the type of Offer Item being presented to the Customer.    Using new  PADIS codeset -initial content -RET - Retail -WHO - Wholesale -COR - Corporate</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="OwnerCode" type="AirlineDesigCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Airline code assigned to a carrier. Either ICAO-defined 3-character code or IATA-defined 2-character code.</xs:documentation>
@@ -546,15 +548,19 @@ The response returns an indication if the inventory has been guaranteed, and if 
 					<xs:documentation>Indicates whether or not the owner is the ORA or POA.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="PriceGuaranteeTimeLimitDateTime" type="DateTimeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The length of time the price of an offer item is guaranteed. In the absence of the price guarantee time limit, the price is not guaranteed. Upon expiry, the price may no longer be guaranteed and either a new shopping process should begin, or the offer should be repriced resulting in a new Offer.   Should the price guarantee time limit extend beyond Order creation (or change), the remaining length of time persists into the corresponding Order Item. At Order creation (or change) the airline can increase the remaining length of time beyond the original time limit should they wish to.  Note: Where a price guarantee time limit is applied, there is no guarantee that related inventory is guaranteed by the airline.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="Service" type="ServiceType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The instance of a specific flight or Service Definition as it has been offered (and eventually ordered and consumed) in the context of a specific Offer and/or Order.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="WebAddressURI" type="UniformResourceID_Type" minOccurs="0" maxOccurs="1">
+			<xs:element name="WebAddressURL" type="URI_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Deep linking into another site to complete the transaction. E.g. to bring the customer directly to a page to continue with a purchase of a specific offer.</xs:documentation>
-
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -584,7 +590,7 @@ The response returns an indication if the inventory has been guaranteed, and if 
 					<xs:documentation>Indicates whether or not the owner of this Order is the ORA or POA.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="WebAddressURL" type="UniformResourceID_Type" minOccurs="0" maxOccurs="1">
+			<xs:element name="WebAddressURL" type="URI_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Deep linking into another site to complete the transaction. E.g. to bring the customer directly to a page to continue with a purchase of a specific offer.</xs:documentation>
 				</xs:annotation>
@@ -596,9 +602,19 @@ The response returns an indication if the inventory has been guaranteed, and if 
 			<xs:documentation>An individually priced item within an Order, made up of one or more Services. May or may not be a selected Offer Item (e.g. non-chargeable Services available on request such as a wheelchair).</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
+			<xs:element name="GrandTotalAmount" type="AmountType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Reflects the Differential Total Amount and the Penalty Total Amount, if netted.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="OrderItemID" type="ID_Type" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Carrier assigned ID which exists uniquely within an Order.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OrderItemTypeCode" type="CodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Specify the type of Order Item being presented to the Customer.    Using new  PADIS codeset -initial content -RET - Retail -WHO - Wholesale -COR - Corporate</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="OwnerCode" type="AirlineDesigCodeType" minOccurs="0" maxOccurs="1">
@@ -611,12 +627,17 @@ The response returns an indication if the inventory has been guaranteed, and if 
 					<xs:documentation>Indicates whether or not the owner is the ORA or POA.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="ReusableInd" type="IndType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>If Reusable = true, indicates that part of the value of the OrderItem may be reused for reshopping or refund. Exact reusable amount is unknown until Seller requests to reshop or to process a refund for this OrderItem.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="Service" type="ServiceType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The instance of a specific flight or Service Definition as it has been offered (and eventually ordered and consumed) in the context of a specific Offer and/or Order.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="WebAddressURI" type="UniformResourceID_Type" minOccurs="0" maxOccurs="1">
+			<xs:element name="WebAddressURI" type="URI_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Deep linking into another site to complete the transaction. E.g. to bring the customer directly to a page to continue with a purchase of a specific offer.</xs:documentation>
 				</xs:annotation>
@@ -638,6 +659,11 @@ The response returns an indication if the inventory has been guaranteed, and if 
 					<xs:documentation>An individually priced item within an Order, made up of one or more Services. May or may not be a selected Offer Item (e.g. non-chargeable Services available on request such as a wheelchair).</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="OrderVersionNumber" type="OrderVersionNumberType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Version of the Order used to track the evolution of an Order and the changes made to it.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="OwnerCode" type="AirlineDesigCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Airline code assigned to a carrier. Either ICAO-defined 3-character code or IATA-defined 2-character code.</xs:documentation>
@@ -648,13 +674,19 @@ The response returns an indication if the inventory has been guaranteed, and if 
 					<xs:documentation>Indicates whether the owner is the ORA or POA.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="WebAddressURI" type="UniformResourceID_Type" minOccurs="0" maxOccurs="1">
+			<xs:element name="WebAddressURI" type="URI_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Deep linking into another site to complete the transaction. E.g. to bring the customer directly to a page to continue with a purchase of a specific offer.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:simpleType name="OrderVersionNumberType">
+		<xs:annotation>
+			<xs:documentation>Order version number BDT.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer"/>
+	</xs:simpleType>
 	<xs:simpleType name="OwnerTypeCodeContentType">
 		<xs:annotation>
 			<xs:documentation>Enumeration values for Owner Type BDT. {codeListAgencyName}IATA AIDM{/codeListAgencyName}</xs:documentation>
@@ -722,7 +754,7 @@ The response returns an indication if the inventory has been guaranteed, and if 
 			</xs:element>
 			<xs:element name="VersionNumber" type="NumberType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Policy version number.  Example: 2.17</xs:documentation>
+					<xs:documentation>Policy version number. Example: 2.17</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -743,7 +775,7 @@ The response returns an indication if the inventory has been guaranteed, and if 
 		<xs:sequence>
 			<xs:element name="DisplayInd" type="IndType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>When TRUE, this remark should be displayed.  Notes: 1. This capability may not be supported by all NDC-enabled systems or may be supported by bilateral agreement only.  The technical implementation of this capability is not dictated by this specification.</xs:documentation>
+					<xs:documentation>When TRUE, this remark should be displayed.  Notes: 1. This capability may not be supported by all NDC-enabled systems or may be supported by bilateral agreement only. The technical implementation of this capability is not dictated by this specification.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="RemarkText" type="TextType" minOccurs="0" maxOccurs="1">
@@ -790,9 +822,19 @@ The response returns an indication if the inventory has been guaranteed, and if 
 			<xs:documentation>The instance of a specific flight or Service Definition as it has been offered (and eventually ordered and consumed) in the context of a specific Offer and/or Order.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
+			<xs:element name="InventoryGuaranteeDateTime" type="DateTimeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The length of time inventory against a given Service is guaranteed. If inventory is not guaranteed, the Order creation (or change) may fail. In the absence of a time limit, no inventory is guaranteed.   Notes:  The presence of an inventory guarantee does not assume a guarantee of price. For the price to be guaranteed against a given Offer Item, the Price Guarantee Time Limit must also be present.  The assumption is that inventory is held when an Order is created (or changed), so this time limit only applies in the context of an Offer.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="ServiceID" type="ID_Type" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Uniquely Identifies a Service within the context of one message.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="UnchangedInd" type="IndType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Indicated that this service is unchanged after reshopping.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -814,15 +856,13 @@ The response returns an indication if the inventory has been guaranteed, and if 
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="TextType">
+	<xs:simpleType name="TextType">
 		<xs:annotation>
 			<xs:documentation>Text is a character string such as a finite set of characters generally in the form of words of a language.</xs:documentation>
 		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="xs:string"/>
-		</xs:simpleContent>
-	</xs:complexType>
-	<xs:simpleType name="UniformResourceID_Type">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="URI_Type">
 		<xs:annotation>
 			<xs:documentation>A string of characters used to identify a resource. Such identification enables interaction with representations of the resource over a network, typically the World Wide Web, using specific protocols.</xs:documentation>
 		</xs:annotation>
@@ -855,7 +895,7 @@ The response returns an indication if the inventory has been guaranteed, and if 
 			</xs:element>
 			<xs:element name="StatusText" type="TextType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Document processing status.  Recommended values are NotProcessed, Incomplete, Complete, Unknown.</xs:documentation>
+					<xs:documentation>Document processing status. Recommended values are NotProcessed, Incomplete, Complete, Unknown.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="TagText" type="TextType" minOccurs="0" maxOccurs="1">
@@ -865,10 +905,10 @@ The response returns an indication if the inventory has been guaranteed, and if 
 			</xs:element>
 			<xs:element name="TypeCode" type="CodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Uses a bilaterally agreed set of values to indicate the warning type.  The validating XSD can expect to accept values that it has not been explicitly coded for and process them by using Type = 'unknown'.</xs:documentation>
+					<xs:documentation>Uses a bilaterally agreed set of values to indicate the warning type. The validating XSD can expect to accept values that it has not been explicitly coded for and process them by using Type = 'unknown'.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="URL" type="UniformResourceID_Type" minOccurs="0" maxOccurs="1">
+			<xs:element name="URL" type="URI_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Link to an online description of the provided warning.</xs:documentation>
 				</xs:annotation>

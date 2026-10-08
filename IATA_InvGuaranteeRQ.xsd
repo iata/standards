@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<xs:schema xmlns="http://www.iata.org/IATA/2015/00/2019.1/IATA_InvGuaranteeRQ" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.iata.org/IATA/2015/00/2019.1/IATA_InvGuaranteeRQ" elementFormDefault="qualified" version=" 6.000">
+<xs:schema xmlns="http://www.iata.org/IATA/2015/00/2019.2/IATA_InvGuaranteeRQ" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.iata.org/IATA/2015/00/2019.2/IATA_InvGuaranteeRQ" elementFormDefault="qualified" version="7.000" id="IATA2019.2">
 	<xs:element name="IATA_InvGuaranteeRQ">
 		<xs:complexType>
 			<xs:sequence>
@@ -9,7 +9,7 @@
 					</xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
-							<xs:any namespace="##other" processContents="lax">
+							<xs:any namespace="##other" processContents="lax" minOccurs="1" maxOccurs="unbounded">
 								<xs:annotation>
 									<xs:documentation source="description" xml:lang="en">Implementer-Augmented Structure.</xs:documentation>
 								</xs:annotation>
@@ -17,7 +17,7 @@
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
-				<xs:element name="MessageDoc" type="MessageDocType" minOccurs="0" maxOccurs="1">
+				<xs:element name="MessageDoc" type="MessageDocType" minOccurs="0">
 					<xs:annotation>
 						<xs:documentation>Message document information including document name and version number.</xs:documentation>
 					</xs:annotation>
@@ -57,14 +57,14 @@
 			</xs:element>
 			<xs:element name="Name" type="ProperNameType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Aggregator Name.  Example: Farelogix.</xs:documentation>
+					<xs:documentation>Aggregator Name. Example: Farelogix.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:simpleType name="AirlineDesigCodeContentType">
 		<xs:annotation>
-			<xs:documentation>The codelist contents of IATA Resolution 762  airline codes, or of ICAO airline codes. {codeListAgencyName}IATA or ICAO{/codeListAgencyName} {codeListName}Resolution 762  Airline Codes or ICAO Airline Codes{/codeListName}</xs:documentation>
+			<xs:documentation>The codelist contents of IATA Resolution 762 airline codes, or of ICAO airline codes. {codeListAgencyName}IATA or ICAO{/codeListAgencyName} {codeListName}Resolution 762  Airline Codes or ICAO Airline Codes{/codeListName}</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:token">
 			<xs:pattern value="([A-Z]{3}|[A-Z]{2})|([0-9][A-Z])|([A-Z][0-9])"/>
@@ -121,7 +121,7 @@
 					<xs:documentation>Airline or Organization assigning the booking information.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="BookingID" type="BookingRefID_Type" minOccurs="1" maxOccurs="1">
+			<xs:element name="BookingRefID" type="BookingRefID_Type" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Existing booking reference Identifier.</xs:documentation>
 				</xs:annotation>
@@ -169,14 +169,12 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="CodeType">
+	<xs:simpleType name="CodeType">
 		<xs:annotation>
 			<xs:documentation>A code is a character string of letters, numbers, special characters (except escape sequences), and symbols.</xs:documentation>
 		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="xs:token"/>
-		</xs:simpleContent>
-	</xs:complexType>
+		<xs:restriction base="xs:token"/>
+	</xs:simpleType>
 	<xs:simpleType name="ColumnID_Type">
 		<xs:annotation>
 			<xs:documentation>Specifies a column (e.g. A, B, C, etc.).</xs:documentation>
@@ -196,14 +194,14 @@
 					<xs:documentation>Uniquely Identifies a set of Contact Information, within the context of one message.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="ContactPurposeText" type="TextType" minOccurs="0" maxOccurs="99">
+				<xs:annotation>
+					<xs:documentation>to identify the contact purpose (PADIS code list 3299)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="ContactRefusedInd" type="IndType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>When TRUE, Contact Information was refused to be provided.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="ContactTypeText" type="TextType" minOccurs="0" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>Classification for a particular set of contact information (e.g. Primary, Payment, etc.)</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="EmailAddress" type="EmailAddressType" minOccurs="0" maxOccurs="unbounded">
@@ -211,9 +209,9 @@
 					<xs:documentation>The email address which should be used for contact purposes.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Employer" type="Org1Type" minOccurs="0">
+			<xs:element name="Individual" type="IndividualType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>An organized structure set up for a particular purpose, such as a business, government body, department, charity, or financial institution.</xs:documentation>
+					<xs:documentation>A single human being as distinct from a group, class, or family.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="IndividualRefID" type="ID_Type" minOccurs="0" maxOccurs="1">
@@ -221,14 +219,14 @@
 					<xs:documentation>Reference to Individual instance(s)</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Individual" type="IndividualType" minOccurs="0" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>A single human being as distinct from a group, class, or family.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element name="OtherAddress" type="OtherAddressType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Other Contact Method information. E.g. web site URL, social media handle.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PaxSegmentRefID" type="ID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Uniquely identifies a Passenger Segment within the context of one message.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Phone" type="PhoneType" minOccurs="0" maxOccurs="unbounded">
@@ -239,6 +237,11 @@
 			<xs:element name="PostalAddress" type="PostalAddressType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Natural or physical address used for postal service. May be a building address, airport address, etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RelationshipToPax" type="TextType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Relationship to the passenger e.g. used for when this individual is an emergency contact</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -336,14 +339,14 @@
 			<xs:documentation>The email address which should be used for contact purposes.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
+			<xs:element name="ContactTypeText" type="TextType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>PADIS code list: Contact Type (to identify the technical contact type information)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="EmailAddressText" type="TextType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The email address which should be used for contact purposes.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="LabelText" type="TextType" minOccurs="0" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>Used to differentiate multiple email addresses of one contact.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -434,7 +437,7 @@
 			</xs:element>
 			<xs:element name="PrimaryLangID" type="ID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Identifes the primary language preference for the message.  The human language is identified by ISO 639 codes.</xs:documentation>
+					<xs:documentation>Identifes the primary language preference for the message. The human language is identified by ISO 639 codes.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="RetransmissionInd" type="IndType" minOccurs="0" maxOccurs="1">
@@ -469,20 +472,18 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="ID_Type">
+	<xs:simpleType name="ID_Type">
 		<xs:annotation>
 			<xs:documentation>An identifier is a character string used to uniquely identify one instance of an object within an identification scheme that is managed by an agency.</xs:documentation>
 		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="xs:token"/>
-		</xs:simpleContent>
-	</xs:complexType>
-	<xs:simpleType name="IINNumberType">
+		<xs:restriction base="xs:token"/>
+	</xs:simpleType>
+	<xs:simpleType name="IIN_NumberType">
 		<xs:annotation>
 			<xs:documentation>Issuer identification number.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:integer">
-			<xs:totalDigits value="6"/>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]{1,8}"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:complexType name="IndividualType">
@@ -497,7 +498,7 @@
 			</xs:element>
 			<xs:element name="BirthplaceText" type="TextType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Country Code where the Passenger was born (ISO 3166).  For example: DE</xs:documentation>
+					<xs:documentation>Country Code where the Passenger was born (ISO 3166). For example: DE</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="GenderCode" type="GenderCodeType" minOccurs="0" maxOccurs="1">
@@ -517,7 +518,7 @@
 			</xs:element>
 			<xs:element name="MiddleName" type="ProperNameType" minOccurs="0" maxOccurs="3">
 				<xs:annotation>
-					<xs:documentation>Individual's middle name or initial.  E.g. G, GEORGE.</xs:documentation>
+					<xs:documentation>Individual's middle name or initial. E.g. G, GEORGE.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="SuffixName" type="SupplementNameType" minOccurs="0" maxOccurs="1">
@@ -543,37 +544,6 @@
 		</xs:annotation>
 		<xs:restriction base="xs:boolean"/>
 	</xs:simpleType>
-	<xs:element name="InvGuaranteeRQ">
-		<xs:annotation>
-			<xs:documentation>The InventoryGuarantee transaction set requests that inventory is guaranteed for specified Offers, pending their conversion into a completed Order.
-
-The response returns an indication if the inventory has been guaranteed, and if so, the associated inventory guarantee time limit and a unique inventory guarantee reference ID.</xs:documentation>
-		</xs:annotation>
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="MessageDoc" type="xs:string" minOccurs="0" maxOccurs="1">
-					<xs:annotation>
-						<xs:documentation>Message document information including document name and version number.</xs:documentation>
-					</xs:annotation>
-				</xs:element>
-				<xs:element name="Party" type="xs:string" minOccurs="0" maxOccurs="1">
-					<xs:annotation>
-						<xs:documentation>NDC Message/ Transaction Party(s) information. Note that information about parties is intended for business use, it is not intended for transaction authentication and routing of the message.</xs:documentation>
-					</xs:annotation>
-				</xs:element>
-				<xs:element name="PayloadAttributes" type="xs:string" minOccurs="0" maxOccurs="1">
-					<xs:annotation>
-						<xs:documentation>IATA standard payload attributes</xs:documentation>
-					</xs:annotation>
-				</xs:element>
-				<xs:element name="Request" type="xs:string" minOccurs="1" maxOccurs="1">
-					<xs:annotation>
-						<xs:documentation>Message request criteria.</xs:documentation>
-					</xs:annotation>
-				</xs:element>
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
 	<xs:complexType name="MeasureType">
 		<xs:annotation>
 			<xs:documentation>A measure is a numeric value determined by measuring an object along with the specified unit of measure.</xs:documentation>
@@ -601,14 +571,12 @@ The response returns an indication if the inventory has been guaranteed, and if 
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="NameType">
+	<xs:simpleType name="NameType">
 		<xs:annotation>
 			<xs:documentation>A name is a word or phrase that constitutes the distinctive designation of a person, place, thing or concept</xs:documentation>
 		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="xs:token"/>
-		</xs:simpleContent>
-	</xs:complexType>
+		<xs:restriction base="xs:token"/>
+	</xs:simpleType>
 	<xs:simpleType name="NaturalNumberType">
 		<xs:annotation>
 			<xs:documentation>A mathematical number used for counting (positive whole number or integer).</xs:documentation>
@@ -633,24 +601,46 @@ The response returns an indication if the inventory has been guaranteed, and if 
 					<xs:documentation>Carrier assigned ID which exists uniquely within an Offer.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="OfferItemTypeCode" type="CodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Specify the type of Offer Item being presented to the Customer.    Using new  PADIS codeset -initial content -RET - Retail -WHO - Wholesale -COR - Corporate</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="OwnerCode" type="AirlineDesigCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Airline code assigned to a carrier. Either ICAO-defined 3-character code or IATA-defined 2-character code.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="PriceGuaranteeTimeLimitDateTime" type="DateTimeType" minOccurs="0" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>The length of time the price of an offer item is guaranteed.  In the absence of the price guarantee time limit, the price is not guaranteed.  Upon expiry, the price may no longer be guaranteed and either a new shopping process should begin, or the offer should be repriced resulting in a new Offer.    Should the price guarantee time limit extend beyond Order creation (or change), the remaining length of time persists into the corresponding Order Item.  At Order creation (or change) the airline can increase the remaining length of time beyond the original time limit should they wish to.  Note: Where a price guarantee time limit is applied, there is no guarantee that related inventory is guaranteed by the airline.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element name="OwnerTypeCode" type="OwnerTypeCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Indicates whether or not the owner is the ORA or POA.</xs:documentation>
+					<xs:documentation>Indicates whether or not the owner of this Order is the ORA or POA.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="WebAddressURI" type="UniformResourceID_Type" minOccurs="0" maxOccurs="1">
+			<xs:element name="PriceGuaranteeTimeLimitDateTime" type="DateTimeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The length of time the price of an offer item is guaranteed. In the absence of the price guarantee time limit, the price is not guaranteed. Upon expiry, the price may no longer be guaranteed and either a new shopping process should begin, or the offer should be repriced resulting in a new Offer.   Should the price guarantee time limit extend beyond Order creation (or change), the remaining length of time persists into the corresponding Order Item. At Order creation (or change) the airline can increase the remaining length of time beyond the original time limit should they wish to.  Note: Where a price guarantee time limit is applied, there is no guarantee that related inventory is guaranteed by the airline.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="relatedtoexistingOrderItem" type="OrderItemType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>An individually priced item within an Order, made up of one or more Services. May or may not be a selected Offer Item (e.g. non-chargeable Services available on request such as a wheelchair).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="WebAddressURL" type="URI_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Deep linking into another site to complete the transaction. E.g. to bring the customer directly to a page to continue with a purchase of a specific offer.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OfferItemTypeCriteriaType">
+		<xs:annotation>
+			<xs:documentation>Filters results based on offer Item Type code</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="OfferItemTypeCode" type="CodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Specify the type of Offer Item being presented to the Customer.    Using new  PADIS codeset -initial content -RET - Retail -WHO - Wholesale -COR - Corporate</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -680,7 +670,7 @@ The response returns an indication if the inventory has been guaranteed, and if 
 					<xs:documentation>Indicates whether or not the owner of this Order is the ORA or POA.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="WebAddressURL" type="UniformResourceID_Type" minOccurs="0" maxOccurs="1">
+			<xs:element name="WebAddressURL" type="URI_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Deep linking into another site to complete the transaction. E.g. to bring the customer directly to a page to continue with a purchase of a specific offer.</xs:documentation>
 				</xs:annotation>
@@ -692,9 +682,19 @@ The response returns an indication if the inventory has been guaranteed, and if 
 			<xs:documentation>An individually priced item within an Order, made up of one or more Services. May or may not be a selected Offer Item (e.g. non-chargeable Services available on request such as a wheelchair).</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
+			<xs:element name="GrandTotalAmount" type="AmountType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Reflects the Differential Total Amount and the Penalty Total Amount, if netted.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="OrderItemID" type="ID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Carrier assigned ID which exists uniquely within an Order.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OrderItemTypeCode" type="CodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Specify the type of Order Item being presented to the Customer.    Using new  PADIS codeset -initial content -RET - Retail -WHO - Wholesale -COR - Corporate</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="OwnerCode" type="AirlineDesigCodeType" minOccurs="0" maxOccurs="1">
@@ -707,7 +707,12 @@ The response returns an indication if the inventory has been guaranteed, and if 
 					<xs:documentation>Indicates whether or not the owner is the ORA or POA.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="WebAddressURI" type="UniformResourceID_Type" minOccurs="0" maxOccurs="1">
+			<xs:element name="ReusableInd" type="IndType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>If Reusable = true, indicates that part of the value of the OrderItem may be reused for reshopping or refund. Exact reusable amount is unknown until Seller requests to reshop or to process a refund for this OrderItem.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="WebAddressURI" type="URI_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Deep linking into another site to complete the transaction. E.g. to bring the customer directly to a page to continue with a purchase of a specific offer.</xs:documentation>
 				</xs:annotation>
@@ -729,6 +734,11 @@ The response returns an indication if the inventory has been guaranteed, and if 
 					<xs:documentation>An individually priced item within an Order, made up of one or more Services. May or may not be a selected Offer Item (e.g. non-chargeable Services available on request such as a wheelchair).</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="OrderVersionNumber" type="OrderVersionNumberType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Version of the Order used to track the evolution of an Order and the changes made to it.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="OwnerCode" type="AirlineDesigCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Airline code assigned to a carrier. Either ICAO-defined 3-character code or IATA-defined 2-character code.</xs:documentation>
@@ -739,13 +749,19 @@ The response returns an indication if the inventory has been guaranteed, and if 
 					<xs:documentation>Indicates whether the owner is the ORA or POA.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="WebAddressURI" type="UniformResourceID_Type" minOccurs="0" maxOccurs="1">
+			<xs:element name="WebAddressURI" type="URI_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Deep linking into another site to complete the transaction. E.g. to bring the customer directly to a page to continue with a purchase of a specific offer.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:simpleType name="OrderVersionNumberType">
+		<xs:annotation>
+			<xs:documentation>Order version number BDT.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer"/>
+	</xs:simpleType>
 	<xs:complexType name="Org1Type">
 		<xs:annotation>
 			<xs:documentation>An organized structure set up for a particular purpose, such as a business, government body, department, charity, or financial institution.</xs:documentation>
@@ -785,9 +801,9 @@ The response returns an indication if the inventory has been guaranteed, and if 
 			<xs:documentation>Other Contact Method information. E.g. web site URL, social media handle.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="LabelText" type="TextType" minOccurs="1" maxOccurs="1">
+			<xs:element name="ContactTypeText" type="TextType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Used to differentiate multiple Other Addresses of one contact.  (i.e. social media handle, website, etc.)</xs:documentation>
+					<xs:documentation>PADIS code list: Contact Type (to identify the technical contact type information)</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="OtherAddressText" type="TextType" minOccurs="1" maxOccurs="1">
@@ -899,9 +915,19 @@ The response returns an indication if the inventory has been guaranteed, and if 
 			<xs:documentation>Payment card specific filter criteria for shopping requests, including card issuer type and identification number.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
+			<xs:element name="CardBrandCode" type="CreditCardVendorCodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A two-letter code assigned according to IATA Resolution 728. Example: VI for Visa</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="CardIssuingCountryCode" type="CountryCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Payment Card issuing country code.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CardProductTypeCode" type="CodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Used to specify whether the card is a Consumer (personal) or Commercial (corporate) card.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="CardTypeCode" type="CreditCardVendorCodeType" minOccurs="1" maxOccurs="1">
@@ -909,32 +935,12 @@ The response returns an indication if the inventory has been guaranteed, and if 
 					<xs:documentation>The two letter payment card type (examples: MC, VI).</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="ChargeAmount" type="AmountType" minOccurs="0" maxOccurs="1">
+			<xs:element name="IssuerIdentificationNumber" type="IIN_NumberType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Monetary amount intended to be paid on this payment card type.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="ChargePercent" type="PercentType" minOccurs="0" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>Percent of the total Offer price amount intended to be paid on this payment card type.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="IssuerIdentificationNumber" type="IINNumberType" minOccurs="0" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>Payment card IIN/BIN number.  Example: 401123</xs:documentation>
+					<xs:documentation>Payment card IIN/BIN number. Example: 401123</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="PercentType">
-		<xs:annotation>
-			<xs:documentation>A percent is a value representing a fraction of one hundred,expressed as a quotient.</xs:documentation>
-		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="xs:decimal">
-				<xs:attribute name="Format" type="xs:string" use="optional"/>
-			</xs:extension>
-		</xs:simpleContent>
 	</xs:complexType>
 	<xs:complexType name="PhoneType">
 		<xs:annotation>
@@ -943,7 +949,12 @@ The response returns an indication if the inventory has been guaranteed, and if 
 		<xs:sequence>
 			<xs:element name="AreaCodeNumber" type="TextType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Phone number area code.  Example: 813 Note: The phone number can be put unstructured into the phone element or can be put structured into country dialing code, area code, phone number and extension.</xs:documentation>
+					<xs:documentation>Phone number area code. Example: 813 Note: The phone number can be put unstructured into the phone element or can be put structured into country dialing code, area code, phone number and extension.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ContactTypeText" type="TextType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>PADIS code list: Contact Type (to identify the technical contact type information)</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="CountryDialingCode" type="CountryDialingCodeType" minOccurs="0" maxOccurs="1">
@@ -953,12 +964,7 @@ The response returns an indication if the inventory has been guaranteed, and if 
 			</xs:element>
 			<xs:element name="ExtensionNumber" type="TextType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Phone extension number.  Example: 1234 Note: The phone number can be put unstructured into the phone element or can be put structured into countrydialing code, area code, phone number and extension.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="LabelText" type="TextType" minOccurs="0" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>Used to differentiate multiple Phone numbers of one contact.  Examples: Work, Home, Mobile</xs:documentation>
+					<xs:documentation>Phone extension number. Example: 1234 Note: The phone number can be put unstructured into the phone element or can be put structured into countrydialing code, area code, phone number and extension.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="PhoneNumber" type="TextType" minOccurs="0" maxOccurs="1">
@@ -983,6 +989,11 @@ The response returns an indication if the inventory has been guaranteed, and if 
 					<xs:documentation>The name, expressed as text, of the city, town or village.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="ContactTypeText" type="TextType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>PADIS code list: Contact Type (to identify the technical contact type information)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="CountryCode" type="CountryCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>ISO Country Code (can be extended by bilateral agreement in case of exceptions, e.g. Kosovo). Examples: US, FR.</xs:documentation>
@@ -998,14 +1009,9 @@ The response returns an indication if the inventory has been guaranteed, and if 
 					<xs:documentation>The name, expressed as text, of the sub-division of a country.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="LabelText" type="TextType" minOccurs="0" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>Used to differentiate multiple Postal Addresses of one contact.  Examples: AddressAtOrigin or AddressAtDestination</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element name="PO_BoxCode" type="CodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Post office box.  Example: P.O. Box 21</xs:documentation>
+					<xs:documentation>Post office box. Example: P.O. Box 21</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="PostalCode" type="CodeType" minOccurs="0" maxOccurs="1">
@@ -1110,7 +1116,7 @@ The response returns an indication if the inventory has been guaranteed, and if 
 	</xs:complexType>
 	<xs:complexType name="PromotionType">
 		<xs:annotation>
-			<xs:documentation>Information related to publicizing  a product, organization, or venture so as to increase sales or public awareness.</xs:documentation>
+			<xs:documentation>Information related to publicizing a product, organization, or venture so as to increase sales or public awareness.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="OwnerName" type="ProperNameType" minOccurs="0" maxOccurs="1">
@@ -1133,7 +1139,7 @@ The response returns an indication if the inventory has been guaranteed, and if 
 					<xs:documentation>Additional, supplementary information about the document or service.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="URL" type="UniformResourceID_Type" minOccurs="0" maxOccurs="1">
+			<xs:element name="URL" type="URI_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Promotion URL. Example: http://promos.site.com</xs:documentation>
 				</xs:annotation>
@@ -1149,16 +1155,12 @@ The response returns an indication if the inventory has been guaranteed, and if 
 			<xs:maxLength value="64"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:complexType name="QtyType">
+	<xs:simpleType name="QtyType">
 		<xs:annotation>
 			<xs:documentation>A quantity is a counted number of non-monetary units, possibly including fractions</xs:documentation>
 		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="xs:decimal">
-				<xs:attribute name="UnitCode" type="xs:token" use="optional"/>
-			</xs:extension>
-		</xs:simpleContent>
-	</xs:complexType>
+		<xs:restriction base="xs:decimal"/>
+	</xs:simpleType>
 	<xs:simpleType name="RFIC_ContentType">
 		<xs:annotation>
 			<xs:documentation>Enumeration values for Reason for Issuance codes. {codeListAgencyName}PADIS{/codeListAgencyName} {codeListName}Special condition{/codeListName} {codeListIdentifier}4183{/codeListIdentifier}</xs:documentation>
@@ -1244,7 +1246,7 @@ The response returns an indication if the inventory has been guaranteed, and if 
 		<xs:sequence>
 			<xs:element name="DisplayInd" type="IndType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>When TRUE, this remark should be displayed.  Notes: 1. This capability may not be supported by all NDC-enabled systems or may be supported by bilateral agreement only.  The technical implementation of this capability is not dictated by this specification.</xs:documentation>
+					<xs:documentation>When TRUE, this remark should be displayed.  Notes: 1. This capability may not be supported by all NDC-enabled systems or may be supported by bilateral agreement only. The technical implementation of this capability is not dictated by this specification.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="RemarkText" type="TextType" minOccurs="0" maxOccurs="1">
@@ -1355,7 +1357,7 @@ The response returns an indication if the inventory has been guaranteed, and if 
 			</xs:element>
 			<xs:element name="SalesTaxRegistrationID" type="ID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Registered identifier of the business purchasing the goods and services.  For example, a GST number in India XX.</xs:documentation>
+					<xs:documentation>Registered identifier of the business purchasing the goods and services. For example, a GST number in India XX.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="StreetText" type="TextType" minOccurs="0" maxOccurs="2">
@@ -1458,7 +1460,7 @@ The response returns an indication if the inventory has been guaranteed, and if 
 		<xs:sequence>
 			<xs:element name="IncludeInd" type="IndType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>When TRUE, specified service should be included in search results.  When FALSE, exclude shopping results including the specified service.</xs:documentation>
+					<xs:documentation>When TRUE, specified service should be included in search results. When FALSE, exclude shopping results including the specified service.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="RFIC" type="RFIC_Type" minOccurs="0" maxOccurs="1">
@@ -1471,6 +1473,11 @@ The response returns an indication if the inventory has been guaranteed, and if 
 					<xs:documentation>Reason For Issuance Sub Code. Examples: 0CC (First Checked Bag) 0B1 (In-flight Entertainment) 0BX (Lounge)</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="TaxonomyCode" type="CodeType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Used  for  defining  a  product  or  service within  the Shared Industry Taxonomy or bilaterally.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ShoppingCriteriaType">
@@ -1480,12 +1487,12 @@ The response returns an indication if the inventory has been guaranteed, and if 
 		<xs:sequence>
 			<xs:element name="LocationCode" type="IATA_LocationCodeType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
-					<xs:documentation>IATA defined code identifying a city or station.  This information may be used for airport associated products, such as an annual lounge pass.</xs:documentation>
+					<xs:documentation>IATA defined code identifying a city or station. This information may be used for airport associated products, such as an annual lounge pass.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="PaymentCardCriteria" type="PaymentCardCriteriaType" minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="OfferItemTypeCriteria" type="OfferItemTypeCriteriaType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
-					<xs:documentation>Payment card specific filter criteria for shopping requests, including card issuer type and identification number.</xs:documentation>
+					<xs:documentation>there may be multiple offer item types associated with a shopping request.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="ProgramCriteria" type="ProgramCriteriaType" minOccurs="0" maxOccurs="unbounded">
@@ -1495,7 +1502,7 @@ The response returns an indication if the inventory has been guaranteed, and if 
 			</xs:element>
 			<xs:element name="PromotionCriteria" type="PromotionType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Information related to publicizing  a product, organization, or venture so as to increase sales or public awareness.</xs:documentation>
+					<xs:documentation>Information related to publicizing a product, organization, or venture so as to increase sales or public awareness.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="SeatCriteria" type="SeatType" minOccurs="0" maxOccurs="unbounded">
@@ -1508,16 +1515,9 @@ The response returns an indication if the inventory has been guaranteed, and if 
 					<xs:documentation>Reason for Issuance Group and Subgroup code(s) that specify the requested categories of Optional Services to be returned in the results.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="SpecialNeedsCriteria" type="SpecialServiceType" minOccurs="0">
+			<xs:element name="SpecialNeedsCriteria" type="SpecialServiceType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Passenger Special Needs Attributes.
-
-Notes:
-1. Supports specification of Traveler special needs in both IATA SSR encoding and non-IATA encoding.
-
-2. Special Needs may be associated to individual Travelers but will apply to ALL Travelers if no associations are specified.
-
-3. Special Needs may be associated to flight segments but will apply to ALL flight segments if no associations are specified.</xs:documentation>
+					<xs:documentation>Special service information</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="TripPurposeCode" type="TripPurposeCodeType" minOccurs="0" maxOccurs="1">
@@ -1580,14 +1580,12 @@ Notes:
 			<xs:maxLength value="16"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:complexType name="TextType">
+	<xs:simpleType name="TextType">
 		<xs:annotation>
 			<xs:documentation>Text is a character string such as a finite set of characters generally in the form of words of a language.</xs:documentation>
 		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="xs:string"/>
-		</xs:simpleContent>
-	</xs:complexType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
 	<xs:complexType name="TravelAgencyType">
 		<xs:annotation>
 			<xs:documentation>A private retailer or public service that provides travel and tourism related services to the public on behalf of suppliers such as activities, airlines, car rentals, cruise lines, hotels, railways, travel insurance, and package tours.</xs:documentation>
@@ -1605,12 +1603,12 @@ Notes:
 			</xs:element>
 			<xs:element name="IATA_Number" type="NumberType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>IATA-assigned agency number.  Example: 98417900</xs:documentation>
+					<xs:documentation>IATA-assigned agency number. Example: 98417900</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Name" type="ProperNameType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Agency name.  Example: Carson Travel</xs:documentation>
+					<xs:documentation>Agency name. Example: Carson Travel</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="PseudoCityID" type="ID_Type" minOccurs="0" maxOccurs="1">
@@ -1625,7 +1623,7 @@ Notes:
 			</xs:element>
 			<xs:element name="TypeCode" type="TravelAgencyTypeCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Agency type code.  Examples TravelAgency, OnlineTravelAgency, or TravelManagementCompany.</xs:documentation>
+					<xs:documentation>Agency type code. Examples TravelAgency, OnlineTravelAgency, or TravelManagementCompany.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -1667,7 +1665,7 @@ Notes:
 		<xs:annotation>
 			<xs:documentation>Enumeration set for the trip purpose code Type BDT.</xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:string">
+		<xs:restriction base="xs:token">
 			<xs:enumeration value="Business"/>
 			<xs:enumeration value="BusinessAndLeisure"/>
 			<xs:enumeration value="Leisure"/>
@@ -1681,7 +1679,7 @@ Notes:
 		</xs:annotation>
 		<xs:restriction base="TripPurposeCodeContentType"/>
 	</xs:simpleType>
-	<xs:simpleType name="UniformResourceID_Type">
+	<xs:simpleType name="URI_Type">
 		<xs:annotation>
 			<xs:documentation>A string of characters used to identify a resource. Such identification enables interaction with representations of the resource over a network, typically the World Wide Web, using specific protocols.</xs:documentation>
 		</xs:annotation>

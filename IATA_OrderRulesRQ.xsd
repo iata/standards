@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<xs:schema xmlns="http://www.iata.org/IATA/2015/00/2019.1/IATA_OrderRulesRQ" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.iata.org/IATA/2015/00/2019.1/IATA_OrderRulesRQ" elementFormDefault="qualified" version=" 2.000">
+<xs:schema xmlns="http://www.iata.org/IATA/2015/00/2019.2/IATA_OrderRulesRQ" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.iata.org/IATA/2015/00/2019.2/IATA_OrderRulesRQ" elementFormDefault="qualified" version="3.000" id="IATA2019.2">
 	<xs:element name="IATA_OrderRulesRQ">
 		<xs:annotation>
 			<xs:documentation>The Rules transaction set returns rules associated with and Order, including filed details of a specific fare basis code (FBC).</xs:documentation>
@@ -12,7 +12,7 @@
 					</xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
-							<xs:any namespace="##other" processContents="lax">
+							<xs:any namespace="##other" processContents="lax" minOccurs="1" maxOccurs="unbounded">
 								<xs:annotation>
 									<xs:documentation source="description" xml:lang="en">Implementer-Augmented Structure.</xs:documentation>
 								</xs:annotation>
@@ -20,7 +20,7 @@
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
-				<xs:element name="MessageDoc" type="MessageDocType" minOccurs="0" maxOccurs="1">
+				<xs:element name="MessageDoc" type="MessageDocType" minOccurs="0">
 					<xs:annotation>
 						<xs:documentation>Message document information including document name and version number.</xs:documentation>
 					</xs:annotation>
@@ -65,14 +65,14 @@
 			</xs:element>
 			<xs:element name="Name" type="ProperNameType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Aggregator Name.  Example: Farelogix.</xs:documentation>
+					<xs:documentation>Aggregator Name. Example: Farelogix.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:simpleType name="AirlineDesigCodeContentType">
 		<xs:annotation>
-			<xs:documentation>The codelist contents of IATA Resolution 762  airline codes, or of ICAO airline codes. {codeListAgencyName}IATA or ICAO{/codeListAgencyName} {codeListName}Resolution 762  Airline Codes or ICAO Airline Codes{/codeListName}</xs:documentation>
+			<xs:documentation>The codelist contents of IATA Resolution 762 airline codes, or of ICAO airline codes. {codeListAgencyName}IATA or ICAO{/codeListAgencyName} {codeListName}Resolution 762  Airline Codes or ICAO Airline Codes{/codeListName}</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:token">
 			<xs:pattern value="([A-Z]{3}|[A-Z]{2})|([0-9][A-Z])|([A-Z][0-9])"/>
@@ -204,7 +204,7 @@
 			</xs:element>
 			<xs:element name="OwnerID" type="ID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Owner entity ID.  Example: BA</xs:documentation>
+					<xs:documentation>Owner entity ID. Example: BA</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="OwnerName" type="NameType" minOccurs="0" maxOccurs="1">
@@ -214,14 +214,12 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="CodeType">
+	<xs:simpleType name="CodeType">
 		<xs:annotation>
 			<xs:documentation>A code is a character string of letters, numbers, special characters (except escape sequences), and symbols.</xs:documentation>
 		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="xs:token"/>
-		</xs:simpleContent>
-	</xs:complexType>
+		<xs:restriction base="xs:token"/>
+	</xs:simpleType>
 	<xs:complexType name="ContactInfoType">
 		<xs:annotation>
 			<xs:documentation>The electronic or geographic address which a party has provided as the contact channel. For example, contact email, contact postal address, contact phone number.</xs:documentation>
@@ -232,24 +230,19 @@
 					<xs:documentation>Uniquely Identifies a set of Contact Information, within the context of one message.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="ContactPurposeText" type="TextType" minOccurs="0" maxOccurs="99">
+				<xs:annotation>
+					<xs:documentation>to identify the contact purpose (PADIS code list 3299)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="ContactRefusedInd" type="IndType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>When TRUE, Contact Information was refused to be provided.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="ContactType" type="TextType" minOccurs="0" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>Classification for a particular set of contact information (e.g. Primary, Payment, etc.)</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element name="EmailAddress" type="EmailAddressType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>The email address which should be used for contact purposes.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="Employer" type="Org1Type" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>An organized structure set up for a particular purpose, such as a business, government body, department, charity, or financial institution.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="IndividualRefID" type="ID_Type" minOccurs="0" maxOccurs="1">
@@ -262,6 +255,11 @@
 					<xs:documentation>Other Contact Method information. E.g. web site URL, social media handle.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="PaxSegmentRefID" type="ID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Uniquely identifies a Passenger Segment within the context of one message.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="Phone" type="PhoneType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>A telephone number is a sequence of digits assigned to a fixed-line telephone subscriber station connected to a telephone line or to a wireless electronic telephony device, such as a radio telephone or a mobile telephone, or to other devices for data transmission via the public switched telephone network (PSTN) or other private networks.</xs:documentation>
@@ -270,6 +268,11 @@
 			<xs:element name="PostalAddress" type="PostalAddressType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Natural or physical address used for postal service. May be a building address, airport address, etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RelationshipToPax" type="TextType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Relationship to the passenger e.g. used for when this individual is an emergency contact</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -380,7 +383,7 @@
 	</xs:simpleType>
 	<xs:simpleType name="CurAppCodeType">
 		<xs:annotation>
-			<xs:documentation>Additional BDT to specify the currency code application.  Examples: Actual, Display, Requested, Conversion, Other .</xs:documentation>
+			<xs:documentation>Additional BDT to specify the currency code application. Examples: Actual, Display, Requested, Conversion, Other .</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="CurAppCodeContentType"/>
 	</xs:simpleType>
@@ -403,7 +406,7 @@
 		<xs:sequence>
 			<xs:element name="AppCode" type="CurAppCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Currency code application.  Examples: Actual, Display, Requested, Conversion, Other</xs:documentation>
+					<xs:documentation>Currency code application. Examples: Actual, Display, Requested, Conversion, Other</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="CurCode" type="CurCodeType" minOccurs="1" maxOccurs="1">
@@ -438,6 +441,11 @@
 			<xs:documentation>An account or representation of the certain or major aspects, characteristics, or features of a person, object, or event.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
+			<xs:element name="CategorizationText" type="TextType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>This will contain at present an  undefined list of informational types. E,G  passport and visa information Airport information Airline information General travel. etc,</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="DescText" type="TextType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Description text value.</xs:documentation>
@@ -448,9 +456,31 @@
 					<xs:documentation>Mark-up Style of the Description Text. Example: HTML</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="URL" type="UniformResourceID_Type" minOccurs="0" maxOccurs="1">
+			<xs:element name="URL" type="URI_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>URL to description information source.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DeviceLocationType">
+		<xs:annotation>
+			<xs:documentation>Location of device</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="City" type="CityType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>City (e.g., Dublin), town, or postal station (i.e., a postal service territory, often used in a military address, or metropolitan area)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Country" type="CountryType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A nation with its own government, occupying a particular territory.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GeospatialLocation" type="GeospatialLocationType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A location with a spatial attribute, probably on the surface of the earth. For example: Longitude and Latitude</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -460,29 +490,14 @@
 			<xs:documentation>Device upon which the secure transaction will occur.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="DeviceCode" type="CodeType" minOccurs="1" maxOccurs="1">
+			<xs:element name="DeviceCode" type="CodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The device code from which the request was initiated.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="DeviceName" type="NameType" minOccurs="0" maxOccurs="1">
+			<xs:element name="DeviceOwnerTypeCode" type="OwnershipTypeCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Named Device ID.  Example: Johns IPAD</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="GeospatialLocation" type="GeospatialLocationType" minOccurs="0" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>A location with a spatial attribute, probably on the surface of the earth. For example: Longitude and Latitude</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="IPAddressText" type="TextType" minOccurs="0" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>Associated IP address. Examples: 192.0.2.8, 198.51.100.0</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="MAC_Address" type="TextType" minOccurs="0" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>Device MAC Address. Example: 00:0a:95:9d:68:16</xs:documentation>
+					<xs:documentation>Specifies the type of Owner.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Phone" type="PhoneType" minOccurs="0" maxOccurs="1">
@@ -490,9 +505,9 @@
 					<xs:documentation>A telephone number is a sequence of digits assigned to a fixed-line telephone subscriber station connected to a telephone line or to a wireless electronic telephony device, such as a radio telephone or a mobile telephone, or to other devices for data transmission via the public switched telephone network (PSTN) or other private networks.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="TouchPointTrxCode" type="CodeType" minOccurs="0" maxOccurs="1">
+			<xs:element name="PresenceTypeCode" type="PresenceTypeCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>The travel event that triggered the request.  Example: Order/buy, Check-In, In Flight.  PADIS codeset TTT</xs:documentation>
+					<xs:documentation>Specifies the Presence of a customer and its payment card.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -502,14 +517,14 @@
 			<xs:documentation>The email address which should be used for contact purposes.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
+			<xs:element name="ContactTypeText" type="TextType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>PADIS code list: Contact Type (to identify the technical contact type information)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="EmailAddressText" type="TextType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The email address which should be used for contact purposes.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="LabelText" type="TextType" minOccurs="0" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>Used to differentiate multiple email addresses of one contact.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -558,7 +573,7 @@
 			</xs:element>
 			<xs:element name="FareBasisAppCode" type="CodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Indicates how the fare basis was applied.  E.g. Requested, Ticketed, Other.</xs:documentation>
+					<xs:documentation>Indicates how the fare basis was applied. E.g. Requested, Ticketed, Other.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="FareBasisCode" type="CodeType" minOccurs="1" maxOccurs="1">
@@ -568,7 +583,7 @@
 			</xs:element>
 			<xs:element name="FareIndCode" type="CodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Fare indicator code.  Example: 1 (SYSTEM PRICED WITHOUT MANUAL INTERVENTION)  Encoding Scheme: IATA PADIS Code List for data element 5387 - Price Type Qualifier</xs:documentation>
+					<xs:documentation>Fare indicator code. Example: 1 (SYSTEM PRICED WITHOUT MANUAL INTERVENTION)  Encoding Scheme: IATA PADIS Code List for data element 5387 - Price Type Qualifier</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="FareQualifier" type="ProgramCriteriaType" minOccurs="0" maxOccurs="unbounded">
@@ -600,7 +615,7 @@
 		<xs:sequence>
 			<xs:element name="RuleCode" type="CodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Fare Rule Category.  Example: ACC (Accompanied Travel). Encoding scheme: IATA PADIS FRC-Fare Rule Category</xs:documentation>
+					<xs:documentation>Fare Rule Category. Example: ACC (Accompanied Travel). Encoding scheme: IATA PADIS FRC-Fare Rule Category</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -629,7 +644,7 @@
 		<xs:sequence>
 			<xs:element name="NaturalAreaGeocode" type="CodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Natural Area Geocode as defined by NAC Geographic Products Inc.  Ex: 8KDB PGFD</xs:documentation>
+					<xs:documentation>Natural Area Geocode as defined by NAC Geographic Products Inc. Ex: 8KDB PGFD</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="PointElevationNumber" type="NumberType" minOccurs="0" maxOccurs="1">
@@ -685,7 +700,7 @@
 			</xs:element>
 			<xs:element name="PrimaryLangID" type="ID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Identifes the primary language preference for the message.  The human language is identified by ISO 639 codes.</xs:documentation>
+					<xs:documentation>Identifes the primary language preference for the message. The human language is identified by ISO 639 codes.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="RetransmissionInd" type="IndType" minOccurs="0" maxOccurs="1">
@@ -720,14 +735,12 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="ID_Type">
+	<xs:simpleType name="ID_Type">
 		<xs:annotation>
 			<xs:documentation>An identifier is a character string used to uniquely identify one instance of an object within an identification scheme that is managed by an agency.</xs:documentation>
 		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="xs:token"/>
-		</xs:simpleContent>
-	</xs:complexType>
+		<xs:restriction base="xs:token"/>
+	</xs:simpleType>
 	<xs:simpleType name="IndType">
 		<xs:annotation>
 			<xs:documentation>An indicator is a list of two mutually exclusive Boolean values that express the only possible states of a property.</xs:documentation>
@@ -740,14 +753,12 @@
 		</xs:annotation>
 		<xs:restriction base="xs:string"/>
 	</xs:simpleType>
-	<xs:complexType name="LangCodeType">
+	<xs:simpleType name="LangCodeType">
 		<xs:annotation>
 			<xs:documentation>BDT to represent ISO language code list.</xs:documentation>
 		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="LangCodeContentType"/>
-		</xs:simpleContent>
-	</xs:complexType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
 	<xs:complexType name="LangUsageType">
 		<xs:annotation>
 			<xs:documentation>Language Code representation.</xs:documentation>
@@ -774,14 +785,12 @@
 			<xs:enumeration value="Metric"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:complexType name="MeasurementSystemCodeType">
+	<xs:simpleType name="MeasurementSystemCodeType">
 		<xs:annotation>
 			<xs:documentation>BDT to represent measurement system codes (e.g. Imperial, Metric).</xs:documentation>
 		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="MeasurementSystemCodeContentType"/>
-		</xs:simpleContent>
-	</xs:complexType>
+		<xs:restriction base="MeasurementSystemCodeContentType"/>
+	</xs:simpleType>
 	<xs:complexType name="MessageDocType">
 		<xs:annotation>
 			<xs:documentation>NDC Message Document information.</xs:documentation>
@@ -816,14 +825,12 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="NameType">
+	<xs:simpleType name="NameType">
 		<xs:annotation>
 			<xs:documentation>A name is a word or phrase that constitutes the distinctive designation of a person, place, thing or concept</xs:documentation>
 		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="xs:token"/>
-		</xs:simpleContent>
-	</xs:complexType>
+		<xs:restriction base="xs:token"/>
+	</xs:simpleType>
 	<xs:simpleType name="NumberType">
 		<xs:annotation>
 			<xs:documentation>A mathematical number that is assigned or is determined by calculation.</xs:documentation>
@@ -902,7 +909,7 @@
 			</xs:element>
 			<xs:element name="DepositTimeLimitDateTime" type="DateTimeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>The date by which a deposit must be paid for an order Examples:  2015-01-13T13:59:38Z</xs:documentation>
+					<xs:documentation>The date by which a deposit must be paid for an order Examples: 2015-01-13T13:59:38Z</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="NamingTimeLimitDateTime" type="DateTimeType" minOccurs="0" maxOccurs="1">
@@ -915,6 +922,11 @@
 					<xs:documentation>Carrier assigned ID which uniquely identifies a specific Order across several messages.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="OrderVersionNumber" type="OrderVersionNumberType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Version of the Order used to track the evolution of an Order and the changes made to it.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="OwnerTypeCode" type="OwnerTypeCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Indicates whether the owner is the ORA or POA.</xs:documentation>
@@ -925,13 +937,19 @@
 					<xs:documentation>Indicates the current status of an Order E.g. OK (Confirmed)</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="WebAddressURI" type="UniformResourceID_Type" minOccurs="0" maxOccurs="1">
+			<xs:element name="WebAddressURI" type="URI_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Deep linking into another site to complete the transaction. E.g. to bring the customer directly to a page to continue with a purchase of a specific offer.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:simpleType name="OrderVersionNumberType">
+		<xs:annotation>
+			<xs:documentation>Order version number BDT.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:integer"/>
+	</xs:simpleType>
 	<xs:complexType name="Org1Type">
 		<xs:annotation>
 			<xs:documentation>An organized structure set up for a particular purpose, such as a business, government body, department, charity, or financial institution.</xs:documentation>
@@ -971,9 +989,9 @@
 			<xs:documentation>Other Contact Method information. E.g. web site URL, social media handle.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="LabelText" type="TextType" minOccurs="1" maxOccurs="1">
+			<xs:element name="ContactTypeText" type="TextType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Used to differentiate multiple Other Addresses of one contact.  (i.e. social media handle, website, etc.)</xs:documentation>
+					<xs:documentation>PADIS code list: Contact Type (to identify the technical contact type information)</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="OtherAddressText" type="TextType" minOccurs="1" maxOccurs="1">
@@ -983,6 +1001,29 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:simpleType name="OwnershipTypeCodeContentType">
+		<xs:annotation>
+			<xs:documentation>Ownership Type Code</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="CS">
+				<xs:annotation>
+					<xs:documentation>Customer</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SL">
+				<xs:annotation>
+					<xs:documentation>Seller</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OwnershipTypeCodeType">
+		<xs:annotation>
+			<xs:documentation>Ownership Type Code</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="OwnershipTypeCodeContentType"/>
+	</xs:simpleType>
 	<xs:simpleType name="OwnerTypeCodeContentType">
 		<xs:annotation>
 			<xs:documentation>Enumeration values for Owner Type BDT. {codeListAgencyName}IATA AIDM{/codeListAgencyName}</xs:documentation>
@@ -1087,7 +1128,12 @@
 		<xs:sequence>
 			<xs:element name="AreaCodeNumber" type="TextType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Phone number area code.  Example: 813 Note: The phone number can be put unstructured into the phone element or can be put structured into country dialing code, area code, phone number and extension.</xs:documentation>
+					<xs:documentation>Phone number area code. Example: 813 Note: The phone number can be put unstructured into the phone element or can be put structured into country dialing code, area code, phone number and extension.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ContactTypeText" type="TextType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>PADIS code list: Contact Type (to identify the technical contact type information)</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="CountryDialingCode" type="CountryDialingCodeType" minOccurs="0" maxOccurs="1">
@@ -1097,12 +1143,7 @@
 			</xs:element>
 			<xs:element name="ExtensionNumber" type="TextType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Phone extension number.  Example: 1234 Note: The phone number can be put unstructured into the phone element or can be put structured into countrydialing code, area code, phone number and extension.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="LabelText" type="TextType" minOccurs="0" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>Used to differentiate multiple Phone numbers of one contact.  Examples: Work, Home, Mobile</xs:documentation>
+					<xs:documentation>Phone extension number. Example: 1234 Note: The phone number can be put unstructured into the phone element or can be put structured into countrydialing code, area code, phone number and extension.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="PhoneNumber" type="TextType" minOccurs="0" maxOccurs="1">
@@ -1132,14 +1173,9 @@
 					<xs:documentation>A nation with its own government, occupying a particular territory.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Device" type="DeviceType" minOccurs="0" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>Device upon which the secure transaction will occur.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element name="RequestTime" type="DateTimeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Point of sale timestamp value.  Example: 2017-01-13T13:59:38Z  Note: This may be used if the point of sale time zone differs from the message creation timestamp.</xs:documentation>
+					<xs:documentation>Point of sale timestamp value. Example: 2017-01-13T13:59:38Z  Note: This may be used if the point of sale time zone differs from the message creation timestamp.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -1188,7 +1224,7 @@
 			</xs:element>
 			<xs:element name="VersionNumber" type="NumberType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Policy version number.  Example: 2.17</xs:documentation>
+					<xs:documentation>Policy version number. Example: 2.17</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -1208,6 +1244,11 @@
 					<xs:documentation>The name, expressed as text, of the city, town or village.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="ContactTypeText" type="TextType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>PADIS code list: Contact Type (to identify the technical contact type information)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="CountryCode" type="CountryCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>ISO Country Code (can be extended by bilateral agreement in case of exceptions, e.g. Kosovo). Examples: US, FR.</xs:documentation>
@@ -1223,14 +1264,9 @@
 					<xs:documentation>The name, expressed as text, of the sub-division of a country.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="LabelText" type="TextType" minOccurs="0" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>Used to differentiate multiple Postal Addresses of one contact.  Examples: AddressAtOrigin or AddressAtDestination</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element name="PO_BoxCode" type="CodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Post office box.  Example: P.O. Box 21</xs:documentation>
+					<xs:documentation>Post office box. Example: P.O. Box 21</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="PostalCode" type="CodeType" minOccurs="0" maxOccurs="1">
@@ -1245,6 +1281,39 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:simpleType name="PresenceTypeCodeContentType">
+		<xs:annotation>
+			<xs:documentation>Presence Type Code</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="CN">
+				<xs:annotation>
+					<xs:documentation>Customer not present</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CP">
+				<xs:annotation>
+					<xs:documentation>Customer present -&gt; (e.g. for non-PaymentCard payment methods)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CPCN">
+				<xs:annotation>
+					<xs:documentation>Customer present and card not present</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CPCP">
+				<xs:annotation>
+					<xs:documentation>Customer present and card present</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PresenceTypeCodeType">
+		<xs:annotation>
+			<xs:documentation>Presence Type Code</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="PresenceTypeCodeContentType"/>
+	</xs:simpleType>
 	<xs:complexType name="ProgamContractType">
 		<xs:annotation>
 			<xs:documentation>An agreement which provides access to discounted or negotiated prices.</xs:documentation>
@@ -1391,6 +1460,11 @@
 					<xs:documentation>Currency related parameters intended to influence which currency the shopping results are displayed in.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="Device" type="DeviceType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Device upon which the secure transaction will occur.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="LangUsage" type="LangUsageType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Language Code representation.</xs:documentation>
@@ -1398,7 +1472,12 @@
 			</xs:element>
 			<xs:element name="MeasurementSystemCode" type="MeasurementSystemCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Measurement system code.  Examples: Imperial, Metric</xs:documentation>
+					<xs:documentation>Measurement system code. Examples: Imperial, Metric</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ReasonCode" type="CodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Should be used for the Seller to communicate the reason for cancellation to the Seller (and for the Airline to respond with advice on the cancellation request.   Uses PADIS RAE Codeset.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -1467,7 +1546,7 @@
 			</xs:element>
 			<xs:element name="SalesTaxRegistrationID" type="ID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Registered identifier of the business purchasing the goods and services.  For example, a GST number in India XX.</xs:documentation>
+					<xs:documentation>Registered identifier of the business purchasing the goods and services. For example, a GST number in India XX.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="StreetText" type="TextType" minOccurs="0" maxOccurs="2">
@@ -1535,14 +1614,12 @@
 		</xs:annotation>
 		<xs:restriction base="xs:token"/>
 	</xs:simpleType>
-	<xs:complexType name="TextType">
+	<xs:simpleType name="TextType">
 		<xs:annotation>
 			<xs:documentation>Text is a character string such as a finite set of characters generally in the form of words of a language.</xs:documentation>
 		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="xs:string"/>
-		</xs:simpleContent>
-	</xs:complexType>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
 	<xs:complexType name="TransportArrivalType">
 		<xs:annotation>
 			<xs:documentation>The action or process of arriving of a transport vehicle in any place or location.</xs:documentation>
@@ -1555,7 +1632,7 @@
 			</xs:element>
 			<xs:element name="BoardingGateID" type="BoardingGateID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Identifier of the gate. E.g. â€œA5â€.</xs:documentation>
+					<xs:documentation>Identifier of the gate. E.g. 'A5'.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="IATA_LocationCode" type="IATA_LocationCodeType" minOccurs="1" maxOccurs="1">
@@ -1587,7 +1664,7 @@
 			</xs:element>
 			<xs:element name="BoardingGateID" type="BoardingGateID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Identifier of the gate. E.g. â€œA5â€.</xs:documentation>
+					<xs:documentation>Identifier of the gate. E.g. 'A5'.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="IATA_LocationCode" type="IATA_LocationCodeType" minOccurs="1" maxOccurs="1">
@@ -1624,12 +1701,12 @@
 			</xs:element>
 			<xs:element name="IATA_Number" type="NumberType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>IATA-assigned agency number.  Example: 98417900</xs:documentation>
+					<xs:documentation>IATA-assigned agency number. Example: 98417900</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Name" type="ProperNameType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Agency name.  Example: Carson Travel</xs:documentation>
+					<xs:documentation>Agency name. Example: Carson Travel</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="PseudoCityID" type="ID_Type" minOccurs="0" maxOccurs="1">
@@ -1644,7 +1721,7 @@
 			</xs:element>
 			<xs:element name="TypeCode" type="TravelAgencyTypeCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Agency type code.  Examples TravelAgency, OnlineTravelAgency, or TravelManagementCompany.</xs:documentation>
+					<xs:documentation>Agency type code. Examples TravelAgency, OnlineTravelAgency, or TravelManagementCompany.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -1682,7 +1759,7 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:simpleType name="UniformResourceID_Type">
+	<xs:simpleType name="URI_Type">
 		<xs:annotation>
 			<xs:documentation>A string of characters used to identify a resource. Such identification enables interaction with representations of the resource over a network, typically the World Wide Web, using specific protocols.</xs:documentation>
 		</xs:annotation>

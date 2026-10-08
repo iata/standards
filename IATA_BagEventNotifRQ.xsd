@@ -1,10 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns="http://www.iata.org/IATA/2015/00/2019.1/IATA_BagEventNotifRQ" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.iata.org/IATA/2015/00/2019.1/IATA_BagEventNotifRQ" elementFormDefault="qualified" version="1.002" id="IATA2019.1">
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2018 rel. 2 (x64) (http://www.altova.com) by Alun Davies (IATA LOCATION GENEVA) -->
+<xs:schema xmlns="http://www.iata.org/IATA/2015/00/2019.2/IATA_BagEventNotifRQ" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.iata.org/IATA/2015/00/2019.2/IATA_BagEventNotifRQ" elementFormDefault="qualified" version="2.000" id="IATA2019.2">
 	<xs:element name="IATA_BagEventNotifRQ">
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="Bag" type="BagType" minOccurs="1" maxOccurs="1"/>
-				<xs:element name="Signature" type="SignatureType" minOccurs="0" maxOccurs="1"/>
+				<xs:element name="Signature" type="SignatureType" minOccurs="0"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -13,6 +14,7 @@
 			<xs:documentation>The codelist contents of IATA handling agency organizations. {codeListAgencyIdentifier}3{/codeListAgencyIdentifier} {codeListAgencyName}IATA{/codeListAgencyName} {codeListName}Handling Agency Coded{/codeListName} {codeListIdentifier}BCL00AGT{/codeListIdentifier}</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
 			<xs:maxLength value="20"/>
 			<xs:pattern value="[0-9A-Z_]{1,20}"/>
 		</xs:restriction>
@@ -37,7 +39,7 @@
 	</xs:simpleType>
 	<xs:simpleType name="AirlineDesigCodeContentType">
 		<xs:annotation>
-			<xs:documentation>The codelist contents of IATA Resolution 762  airline codes, or of ICAO airline codes. {codeListAgencyName}IATA or ICAO{/codeListAgencyName} {codeListName}Resolution 762  Airline Codes or ICAO Airline Codes{/codeListName}</xs:documentation>
+			<xs:documentation>The codelist contents of IATA Resolution 762 airline codes, or of ICAO airline codes. {codeListAgencyName}IATA or ICAO{/codeListAgencyName} {codeListName}Resolution 762  Airline Codes or ICAO Airline Codes{/codeListName}</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:token">
 			<xs:pattern value="([A-Z]{3}|[A-Z]{2})|([0-9][A-Z])|([A-Z][0-9])"/>
@@ -49,6 +51,13 @@
 		</xs:annotation>
 		<xs:restriction base="xs:token">
 			<xs:length value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AreaID_Value">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="8"/>
+			<xs:pattern value="[a-zA-Z0-9]{1,8}"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="AuthenticationStatusCodeContentType">
@@ -386,7 +395,7 @@
 	</xs:simpleType>
 	<xs:simpleType name="BoardingStatusCodeContentType">
 		<xs:annotation>
-			<xs:documentation>The codelist contents of IATA Recommendation 1745 Attachment a baggage status codes. {codeListAgencyIdentifier}3{/codeListAgencyIdentifier} {codeListAgencyName}IATA{/codeListAgencyName} {codeListName}Recommendation 1745 Attach A Pax Boarding Status Codes.{/codeListName} {codeListIdentifier}BCL10045{/codeListIdentifier}</xs:documentation>
+			<xs:documentation>The codelist contents of IATA Recommendation 1745 Attachment a baggage status codes for Boarding status. {codeListAgencyIdentifier}3{/codeListAgencyIdentifier} {codeListAgencyName}IATA{/codeListAgencyName} {codeListName}Recommendation 1745 Attach A Pax Boarding Status Codes.{/codeListName} {codeListIdentifier}BCL10045{/codeListIdentifier}</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:token">
 			<xs:enumeration value="B">
@@ -505,15 +514,9 @@
 			<xs:length value="2"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="CompartmentID_Value">
-		<xs:restriction base="xs:token">
-			<xs:minLength value="1"/>
-			<xs:maxLength value="3"/>
-		</xs:restriction>
-	</xs:simpleType>
 	<xs:simpleType name="ContainerizationStatusCodeContentType">
 		<xs:annotation>
-			<xs:documentation>The codelist contents of IATA Recommendation 1745 Attachment a baggage status codes. {codeListAgencyIdentifier}3{/codeListAgencyIdentifier} {codeListAgencyName}IATA{/codeListAgencyName} {codeListName}Recommendation 1745 Attach A Baggage Containerization Status Codes.{/codeListName} {codeListIdentifier}BCL10047{/codeListIdentifier}</xs:documentation>
+			<xs:documentation>The codelist contents of IATA Recommendation 1745 Attachment a baggage status codes for containerization {codeListAgencyIdentifier}3{/codeListAgencyIdentifier} {codeListAgencyName}IATA{/codeListAgencyName} {codeListName}Recommendation 1745 Attach A Baggage Containerization Status Codes.{/codeListName} {codeListIdentifier}BCL10047{/codeListIdentifier}</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:token">
 			<xs:enumeration value="LOD">
@@ -576,6 +579,13 @@
 		</xs:annotation>
 		<xs:restriction base="xs:date"/>
 	</xs:simpleType>
+	<xs:simpleType name="DeviceID_Value">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="8"/>
+			<xs:pattern value="[a-zA-Z0-9]{2,8}"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:simpleType name="ExceptionCodeContentType">
 		<xs:annotation>
 			<xs:documentation>Enumeration of IATA RP 1745 Attachment A bag exception codes. {codeListAgencyIdentifier}3{/codeListAgencyIdentifier} {codeListAgencyName}IATA{/codeListAgencyName} {codeListName}RP 1745 Attachment A Bag Exception Codes{/codeListName} {codeListIdentifier}BCL10003{/codeListIdentifier}</xs:documentation>
@@ -619,10 +629,23 @@
 			<xs:pattern value="[0-9A-Z_]{1,20}"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:simpleType name="HandlingAgentID_Value">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="2"/>
+			<xs:maxLength value="9"/>
+			<xs:pattern value="[a-zA-Z0-9]{2,9}"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:simpleType name="HandlingBayID_Value">
 		<xs:restriction base="xs:token">
 			<xs:minLength value="1"/>
 			<xs:maxLength value="6"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HoldCompartmentID_Value">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="3"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="HoldID_Value">
@@ -656,11 +679,26 @@
 			<xs:maxLength value="4"/>
 		</xs:restriction>
 	</xs:simpleType>
+	<xs:simpleType name="ID_Value">
+		<xs:restriction base="xs:token">
+			<xs:maxLength value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
 	<xs:simpleType name="IndType">
 		<xs:annotation>
 			<xs:documentation>An indicator is a list of two mutually exclusive Boolean values that express the only possible states of a property.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:boolean"/>
+	</xs:simpleType>
+	<xs:simpleType name="InternetAddressIPV4ID_Value">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="InternetAddressIPV6ID_Value">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="([A-Fa-f0-9]{1,4}:){7}[A-Fa-f0-9]{1,4}"/>
+		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="LengthUnitCodeContentType">
 		<xs:annotation>
@@ -687,6 +725,12 @@
 					<xs:documentation>Meter</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LNIATAAddressID_Value">
+		<xs:restriction base="xs:token">
+			<xs:length value="6"/>
+			<xs:pattern value="[A-Z0-9]{6}"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="MovementStatusCodeContentType">
@@ -769,6 +813,13 @@
 					<xs:documentation>time out</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ScreeningDeviceID_Value">
+		<xs:restriction base="xs:token">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="8"/>
+			<xs:pattern value="[a-zA-Z0-9]{1,8}"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="ScreeningMethodCodeContentType">
@@ -938,12 +989,12 @@
 			<xs:maxLength value="8"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="TransponderID_Value">
+<xs:simpleType name="TransponderID_Value">
 		<xs:restriction base="xs:token">
 			<xs:maxLength value="32"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="ULD_ID_Value">
+<xs:simpleType name="ULD_ID_Value">
 		<xs:restriction base="xs:token">
 			<xs:pattern value="[A-Z0-9]{3}[0-9]{4,5}[A-Z0-9]{2,3}"/>
 		</xs:restriction>
@@ -989,12 +1040,12 @@
 		<xs:simpleContent>
 			<xs:extension base="AgencyCodeContentType">
 				<xs:attribute name="LangID" type="xs:token" use="optional"/>
-				<xs:attribute name="ListAgencyID" type="xs:string" use="optional" default="3"/>
+				<xs:attribute name="ListAgencyID" type="xs:token" use="optional" default="3"/>
 				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
 				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL00AGT"/>
 				<xs:attribute name="ListName" type="xs:string" use="optional" default="HandlingAgencyCoded"/>
-				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
-				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeUniformResourceID" type="xs:string" use="optional"/>
+				<xs:attribute name="ListUniformResourceID" type="xs:string" use="optional"/>
 				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
 				<xs:attribute name="Name" type="xs:string" use="optional"/>
 			</xs:extension>
@@ -1022,6 +1073,33 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:complexType name="AgentType">
+		<xs:annotation>
+			<xs:documentation>Role of an individual person to be a staff of an agency.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AgentID" type="ID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identifier of an agent as assigned by his/her agency.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Agency" type="AgencyType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>An organization which acts on behalf of another.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Individual" type="IndividualType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A single human being as distinct from a group, class, or family.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HandlingAgency" type="HandlingAgencyType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Handling Agency responsible for baggage handling</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
 	<xs:complexType name="AircraftParkingPositionID_Type">
 		<xs:annotation>
 			<xs:documentation>The aircraft parking position identifier of the infrastructure facility</xs:documentation>
@@ -1029,10 +1107,10 @@
 		<xs:simpleContent>
 			<xs:extension base="AircraftParkingPositionID_Value">
 				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
-				<xs:attribute name="SchemeDataURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
 				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
-				<xs:attribute name="SchemeURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
 			</xs:extension>
 		</xs:simpleContent>
@@ -1044,10 +1122,10 @@
 		<xs:simpleContent>
 			<xs:extension base="AircraftRegistrationID_Value">
 				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
-				<xs:attribute name="SchemeDataURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
 				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
-				<xs:attribute name="SchemeURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
 			</xs:extension>
 		</xs:simpleContent>
@@ -1071,15 +1149,15 @@
 	</xs:complexType>
 	<xs:complexType name="AirlineBagRefID_Type">
 		<xs:annotation>
-			<xs:documentation>An identifier is a character string used to uniquely identify one instance of an object within an identification scheme that is managed by an agency.</xs:documentation>
+			<xs:documentation>Baggage identifier used for internal usage only (typically used as Julian date on 3 numeric)  Example: 100 (100th Julian day)</xs:documentation>
 		</xs:annotation>
 		<xs:simpleContent>
 			<xs:extension base="AirlineBagRefID_Value">
 				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
-				<xs:attribute name="SchemeDataURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
 				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
-				<xs:attribute name="SchemeURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
 			</xs:extension>
 		</xs:simpleContent>
@@ -1095,8 +1173,8 @@
 				<xs:attribute name="ListAgencyName" type="xs:string" use="optional"/>
 				<xs:attribute name="ListID" type="xs:token" use="optional"/>
 				<xs:attribute name="ListName" type="xs:string" use="optional"/>
-				<xs:attribute name="ListSchemeURI" type="xs:anyURI" use="optional"/>
-				<xs:attribute name="ListURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="ListSchemeUniformResourceID" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="ListUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="ListVersionID" type="xs:token" use="optional"/>
 				<xs:attribute name="Name" type="xs:string" use="optional"/>
 			</xs:extension>
@@ -1130,10 +1208,25 @@
 				<xs:attribute name="ListAgencyName" type="xs:string" use="optional"/>
 				<xs:attribute name="ListID" type="xs:token" use="optional"/>
 				<xs:attribute name="ListName" type="xs:string" use="optional"/>
-				<xs:attribute name="ListSchemeURI" type="xs:anyURI" use="optional"/>
-				<xs:attribute name="ListURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="ListSchemeUniformResourceID" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="ListUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="ListVersionID" type="xs:token" use="optional"/>
 				<xs:attribute name="Name" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="AreaID_Type">
+		<xs:annotation>
+			<xs:documentation>The identifier of an area relevant to the business. Convention on identifier defined by the sender of the message. Potential example: 'PCA AB' for Passenger Check-in Area AB.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="AreaID_Value">
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
+				<xs:attribute name="SchemeUniformResourceID" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
@@ -1148,8 +1241,8 @@
 				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
 				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL10046"/>
 				<xs:attribute name="ListName" type="xs:string" use="optional" default="Recommendation1745AttachABaggageAuthenticationCodes"/>
-				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
-				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeUniformResourceID" type="xs:string" use="optional"/>
+				<xs:attribute name="ListUniformResourceID" type="xs:string" use="optional"/>
 				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
 				<xs:attribute name="Name" type="xs:string" use="optional"/>
 			</xs:extension>
@@ -1190,7 +1283,7 @@
 					<xs:documentation>The code of the function interaction screening method.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="ScreeningDeviceID" type="ID_Type" minOccurs="0" maxOccurs="1">
+			<xs:element name="ScreeningDeviceID" type="ScreeningDeviceID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Identifier, as defined by the manufacturer or airport, of the machine that has undertaken the screening activity and determined the screening result.</xs:documentation>
 				</xs:annotation>
@@ -1200,7 +1293,7 @@
 					<xs:documentation>An enterprise operating aircrafts for commercial purposes (see more details in Glossary of Terms:- Airline).</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="BaggageProcess" type="BaggageProcessType" minOccurs="0" maxOccurs="1">
+			<xs:element name="BaggageProcess" type="BaggageProcessType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>The (current) baggage process details. A process is a series of actions or steps taken in order to achieve a particular end.</xs:documentation>
 				</xs:annotation>
@@ -1210,12 +1303,12 @@
 					<xs:documentation>The status of a bag at a particular time in a process.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="HandlingAgency" type="HandlingAgencyType" minOccurs="0" maxOccurs="1">
+			<xs:element name="HandlingAgency" type="HandlingAgencyType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Handling Agency responsible for baggage handling</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="PaxStatus" type="PaxStatusType" minOccurs="0" maxOccurs="1">
+			<xs:element name="PaxStatus" type="PaxStatusType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>The status of a passenger at a particular time during a process.</xs:documentation>
 				</xs:annotation>
@@ -1238,8 +1331,8 @@
 				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
 				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL10028"/>
 				<xs:attribute name="ListName" type="xs:string" use="optional" default="Resolution743bAttachABasicCodes"/>
-				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
-				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeUniformResourceID" type="xs:string" use="optional"/>
+				<xs:attribute name="ListUniformResourceID" type="xs:string" use="optional"/>
 				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
 				<xs:attribute name="Name" type="xs:string" use="optional"/>
 			</xs:extension>
@@ -1256,8 +1349,8 @@
 				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
 				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL10029"/>
 				<xs:attribute name="ListName" type="xs:string" use="optional" default="Resolution743bAttachAColorCodes"/>
-				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
-				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeUniformResourceID" type="xs:string" use="optional"/>
+				<xs:attribute name="ListUniformResourceID" type="xs:string" use="optional"/>
 				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
 				<xs:attribute name="Name" type="xs:string" use="optional"/>
 			</xs:extension>
@@ -1274,8 +1367,8 @@
 				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
 				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL10030"/>
 				<xs:attribute name="ListName" type="xs:string" use="optional" default="Resolution743bAttachADescriptiveCodes"/>
-				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
-				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeUniformResourceID" type="xs:string" use="optional"/>
+				<xs:attribute name="ListUniformResourceID" type="xs:string" use="optional"/>
 				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
 				<xs:attribute name="Name" type="xs:string" use="optional"/>
 			</xs:extension>
@@ -1293,7 +1386,7 @@
 			</xs:element>
 			<xs:element name="WidthMeasure" type="LengthMeasureType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>A measurement or extent of the bag from side to side; the lesser of two or the least of three dimensions of the bag.  Unit must be CMT (centimeters).</xs:documentation>
+					<xs:documentation>A measurement or extent of the bag from side to side; the lesser of two or the least of three dimensions of the bag. Unit must be CMT (centimeters).</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="HeightMeasure" type="LengthMeasureType" minOccurs="0" maxOccurs="1">
@@ -1326,8 +1419,8 @@
 				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
 				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL10031"/>
 				<xs:attribute name="ListName" type="xs:string" use="optional" default="Resolution743bAttachAExternalFeatureCodes"/>
-				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
-				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeUniformResourceID" type="xs:string" use="optional"/>
+				<xs:attribute name="ListUniformResourceID" type="xs:string" use="optional"/>
 				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
 				<xs:attribute name="Name" type="xs:string" use="optional"/>
 			</xs:extension>
@@ -1344,8 +1437,8 @@
 				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
 				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL90019"/>
 				<xs:attribute name="ListName" type="xs:string" use="optional" default="Recommendation1745AttachAFunctionActvityCodes"/>
-				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
-				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeUniformResourceID" type="xs:string" use="optional"/>
+				<xs:attribute name="ListUniformResourceID" type="xs:string" use="optional"/>
 				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
 				<xs:attribute name="Name" type="xs:string" use="optional"/>
 			</xs:extension>
@@ -1358,10 +1451,10 @@
 		<xs:simpleContent>
 			<xs:extension base="BaggageClaimID_Value">
 				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
-				<xs:attribute name="SchemeDataURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
 				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
-				<xs:attribute name="SchemeURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
 			</xs:extension>
 		</xs:simpleContent>
@@ -1377,8 +1470,8 @@
 				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
 				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL10019"/>
 				<xs:attribute name="ListName" type="xs:string" use="optional" default="Recommendation1745AttachAProcessSourceIndicatorCodes"/>
-				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
-				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeUniformResourceID" type="xs:string" use="optional"/>
+				<xs:attribute name="ListUniformResourceID" type="xs:string" use="optional"/>
 				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
 				<xs:attribute name="Name" type="xs:string" use="optional"/>
 			</xs:extension>
@@ -1424,8 +1517,8 @@
 				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
 				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL10032"/>
 				<xs:attribute name="ListName" type="xs:string" use="optional" default="Resolution743bAttachAMaterialCodes"/>
-				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
-				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeUniformResourceID" type="xs:string" use="optional"/>
+				<xs:attribute name="ListUniformResourceID" type="xs:string" use="optional"/>
 				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
 				<xs:attribute name="Name" type="xs:string" use="optional"/>
 			</xs:extension>
@@ -1433,17 +1526,17 @@
 	</xs:complexType>
 	<xs:complexType name="BagOwnerType">
 		<xs:annotation>
-			<xs:documentation>Event that occurs spontaneously about a bag, and to which the organization is required to respond.</xs:documentation>
+			<xs:documentation>The owner of the Bag</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="CrewMember" type="CrewMemberType" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Role of an individual person to be a member of a crew.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="Pax" type="PaxType" minOccurs="0">
+			<xs:element name="Pax" type="PaxType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Any person except members of the crew carried or to be carried with the consent of the carrier, on board of any transport vehicle such as aircraft, train, bus, ship. Holds the attributes specific to a one booking, from shopping to fulfillment.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CrewMember" type="CrewMemberType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Role of an individual person to be a member of a crew.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -1557,32 +1650,32 @@
 					<xs:documentation>An exception for a bag on a particular segment of travel.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Compartment" type="CompartmentType" minOccurs="0" maxOccurs="1">
+			<xs:element name="HoldCompartment" type="HoldCompartmentType" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>For Load Control, Compartment is a space designated within a hold that can be containerized/palletized or not.</xs:documentation>
+					<xs:documentation>A space designated within a hold that can be containerized/palletized or not.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Hold" type="HoldType" minOccurs="0" maxOccurs="1">
+			<xs:element name="Hold" type="HoldType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>A space confined by ceiling, floor, walls and bulkhead, used for carrying load.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="SegmentSecurity" type="SegmentSecurityControlType" minOccurs="0" maxOccurs="1">
+			<xs:element name="SegmentSecurity" type="SegmentSecurityControlType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>A set of principles or procedures according to which something is done on a particular segment of travel.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="ServiceOffer" type="SegmentServiceOfferType" minOccurs="0" maxOccurs="1">
+			<xs:element name="ServiceOffer" type="SegmentServiceOfferType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>An offer that applies to a particular segment of travel.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="ArrivalStation" type="StationType" minOccurs="1" maxOccurs="1">
+			<xs:element name="ArrivalStation" type="StationType">
 				<xs:annotation>
 					<xs:documentation>Location or facility where air or surface transportation originates, stops and/or terminates, and where passengers and/or cargo can be taken on or off.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="DepStation" type="StationType" minOccurs="1" maxOccurs="1">
+			<xs:element name="DepStation" type="StationType">
 				<xs:annotation>
 					<xs:documentation>Location or facility where air or surface transportation originates, stops and/or terminates, and where passengers and/or cargo can be taken on or off.</xs:documentation>
 				</xs:annotation>
@@ -1595,6 +1688,11 @@
 			<xs:element name="ULD" type="ULD_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>A Unit Load Device is a load carrying device which interfaces directly with aircraft loading and restraint systems and meets all restraint requirements without the use of supplementary equipment. Examples include containers, pallets and pallet nets.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LoyaltyProgramAccount" type="LoyaltyProgramAccountType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>An account set up for a customer within a rewards program which holds funds on behalf of that customer.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -1648,10 +1746,10 @@
 		<xs:simpleContent>
 			<xs:extension base="BagTagID_Value">
 				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
-				<xs:attribute name="SchemeDataURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
 				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
-				<xs:attribute name="SchemeURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
 			</xs:extension>
 		</xs:simpleContent>
@@ -1666,12 +1764,12 @@
 					<xs:documentation>The identifier of bag tag.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="TransponderID" type="TransponderID_Type" minOccurs="0" maxOccurs="1">
+			<xs:element name="TransponderID" type="TransponderID_Type" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>Unique Transponder identifier, known as RFID.  When SchemeAgencyID is IATA, the SchemeID attribute can be used for possible values that can be G, T or X Examples G = RFC 4122 UUID (version 4) X = GUID generated from TID   T = TID (Transponder Identification)</xs:documentation>
+					<xs:documentation>Unique Transponder identifier, known as RFID.  When SchemeAgencyID is IATA, the SchemeID attribute can be used for possible values that can be G, T or X Examples G = RFC 4122 UUID (version 4) X = GUID generated from TID T = TID (Transponder Identification)</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="AirlineBagRefID" type="AirlineBagRefID_Type" minOccurs="0" maxOccurs="1">
+			<xs:element name="AirlineBagRefID" type="AirlineBagRefID_Type" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Baggage identifier used for internal usage only (typically used as Julian date on 3 numeric) Example: 100 (100 th Julian day)</xs:documentation>
 				</xs:annotation>
@@ -1718,12 +1816,12 @@
 			<xs:documentation>A piece of luggage associated with a passenger, packed for traveling, and necessary or appropriate in connection with a journey.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="BagActivity" type="BagActivityType" minOccurs="1" maxOccurs="1">
+			<xs:element name="BagActivity" type="BagActivityType">
 				<xs:annotation>
 					<xs:documentation>The condition in which things are happening or being done to a bag, such as 'scan a bag'.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="BagDimension" type="BagDimensionType" minOccurs="0" maxOccurs="1">
+			<xs:element name="BagDimension" type="BagDimensionType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>A measurable extent of a particular bag, such as length, or height.</xs:documentation>
 				</xs:annotation>
@@ -1733,7 +1831,7 @@
 					<xs:documentation>A bag that is excluded from a general statement or does not follow a rule. E.g. a bag that is too heavy for normal process.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="BagPhysicalProperty" type="BagPhysicalPropertyType" minOccurs="0" maxOccurs="1">
+			<xs:element name="BagPhysicalProperty" type="BagPhysicalPropertyType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>A property used to characterize a bag, such as weight, color.</xs:documentation>
 				</xs:annotation>
@@ -1748,7 +1846,7 @@
 					<xs:documentation>A small piece of paper, fabric, plastic or similar material attached to an bag and giving information about it.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="BagLocation" type="GeopoliticalLocationType" minOccurs="0" maxOccurs="1">
+			<xs:element name="BagLocation" type="GeopoliticalLocationType" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>A location which is defined based on politics. E.g. Country, State, City.</xs:documentation>
 				</xs:annotation>
@@ -1758,9 +1856,9 @@
 					<xs:documentation>A location with a spatial attribute, probably on the surface of the earth. For example: Longitude and Latitude</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="BagOwner" type="BagOwnerType" minOccurs="0" maxOccurs="1">
+			<xs:element name="BagOwner" type="BagOwnerType" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>A single human being as distinct from a group, class, or family.</xs:documentation>
+					<xs:documentation>The owner of the Bag</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -1772,10 +1870,10 @@
 		<xs:simpleContent>
 			<xs:extension base="BoardingGateID_Value">
 				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
-				<xs:attribute name="SchemeDataURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
 				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
-				<xs:attribute name="SchemeURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
 			</xs:extension>
 		</xs:simpleContent>
@@ -1791,8 +1889,8 @@
 				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
 				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL10045"/>
 				<xs:attribute name="ListName" type="xs:string" use="optional" default="Recommendation1745AttachABaggageStatusCodes"/>
-				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
-				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeUniformResourceID" type="xs:string" use="optional"/>
+				<xs:attribute name="ListUniformResourceID" type="xs:string" use="optional"/>
 				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
 				<xs:attribute name="Name" type="xs:string" use="optional"/>
 			</xs:extension>
@@ -1809,8 +1907,8 @@
 				<xs:attribute name="ListAgencyName" type="xs:string" use="optional"/>
 				<xs:attribute name="ListID" type="xs:token" use="optional"/>
 				<xs:attribute name="ListName" type="xs:string" use="optional"/>
-				<xs:attribute name="ListSchemeURI" type="xs:anyURI" use="optional"/>
-				<xs:attribute name="ListURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="ListSchemeUniformResourceID" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="ListUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="ListVersionID" type="xs:token" use="optional"/>
 				<xs:attribute name="Name" type="xs:string" use="optional"/>
 			</xs:extension>
@@ -1823,10 +1921,10 @@
 		<xs:simpleContent>
 			<xs:extension base="BookingRefID_Value">
 				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
-				<xs:attribute name="SchemeDataURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
 				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
-				<xs:attribute name="SchemeURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
 			</xs:extension>
 		</xs:simpleContent>
@@ -1839,8 +1937,8 @@
 				<xs:attribute name="ListAgencyName" type="xs:string" use="optional"/>
 				<xs:attribute name="ListID" type="xs:token" use="optional"/>
 				<xs:attribute name="ListName" type="xs:string" use="optional"/>
-				<xs:attribute name="ListSchemeURI" type="xs:anyURI" use="optional"/>
-				<xs:attribute name="ListURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="ListSchemeUniformResourceID" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="ListUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="ListVersionID" type="xs:token" use="optional"/>
 				<xs:attribute name="Name" type="xs:string" use="optional"/>
 			</xs:extension>
@@ -1851,7 +1949,7 @@
 			<xs:documentation>A booking or reservation.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="BookingRefID" type="BookingRefID_Type" minOccurs="0" maxOccurs="1">
+			<xs:element name="BookingID" type="BookingRefID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Booking reference Identifier, also called Record Locator (6 characters).</xs:documentation>
 				</xs:annotation>
@@ -1875,10 +1973,10 @@
 		<xs:simpleContent>
 			<xs:extension base="CabinTypeID_Value">
 				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
-				<xs:attribute name="SchemeDataURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
 				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
-				<xs:attribute name="SchemeURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
 			</xs:extension>
 		</xs:simpleContent>
@@ -1894,8 +1992,8 @@
 				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
 				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL10056"/>
 				<xs:attribute name="ListName" type="xs:string" use="optional" default="Recommendation1745AttachACarriageMediumCodes"/>
-				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
-				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeUniformResourceID" type="xs:string" use="optional"/>
+				<xs:attribute name="ListUniformResourceID" type="xs:string" use="optional"/>
 				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
 				<xs:attribute name="Name" type="xs:string" use="optional"/>
 			</xs:extension>
@@ -1912,8 +2010,8 @@
 				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
 				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL20062"/>
 				<xs:attribute name="ListName" type="xs:string" use="optional" default="RP1745BaggageServiceMessageChangeIndicatorCodes"/>
-				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
-				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeUniformResourceID" type="xs:string" use="optional"/>
+				<xs:attribute name="ListUniformResourceID" type="xs:string" use="optional"/>
 				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
 				<xs:attribute name="Name" type="xs:string" use="optional"/>
 			</xs:extension>
@@ -1926,11 +2024,29 @@
 		<xs:simpleContent>
 			<xs:extension base="CheckInDeskID_Value">
 				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
-				<xs:attribute name="SchemeDataURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
 				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
-				<xs:attribute name="SchemeURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="CodeType">
+		<xs:annotation>
+			<xs:documentation>A code is a character string of letters, numbers, special characters (except escape sequences), and symbols.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="xs:token">
+				<xs:attribute name="LangID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListAgencyName" type="xs:string" use="optional"/>
+				<xs:attribute name="ListID" type="xs:token" use="optional"/>
+				<xs:attribute name="ListName" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeUniformResourceID" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="ListUniformResourceID" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="ListVersionID" type="xs:token" use="optional"/>
+				<xs:attribute name="Name" type="xs:string" use="optional"/>
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
@@ -1945,39 +2061,12 @@
 				<xs:attribute name="ListAgencyName" type="xs:string" use="optional"/>
 				<xs:attribute name="ListID" type="xs:token" use="optional"/>
 				<xs:attribute name="ListName" type="xs:string" use="optional"/>
-				<xs:attribute name="ListSchemeURI" type="xs:anyURI" use="optional"/>
-				<xs:attribute name="ListURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="ListSchemeUniformResourceID" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="ListUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="ListVersionID" type="xs:token" use="optional"/>
 				<xs:attribute name="Name" type="xs:string" use="optional"/>
 			</xs:extension>
 		</xs:simpleContent>
-	</xs:complexType>
-	<xs:complexType name="CompartmentID_Type">
-		<xs:annotation>
-			<xs:documentation>Identifies a Compartment. As per AHM505, compartments are numbered from the rear of the aircraft in descending order from 6 to 1. A second figure can indicate a section in a compartment starting from the front to the back and from right to left.</xs:documentation>
-		</xs:annotation>
-		<xs:simpleContent>
-			<xs:extension base="CompartmentID_Value">
-				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
-				<xs:attribute name="SchemeDataURI" type="xs:anyURI" use="optional"/>
-				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
-				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
-				<xs:attribute name="SchemeURI" type="xs:anyURI" use="optional"/>
-				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
-			</xs:extension>
-		</xs:simpleContent>
-	</xs:complexType>
-	<xs:complexType name="CompartmentType">
-		<xs:annotation>
-			<xs:documentation>For Load Control, Compartment is a space designated within a hold that can be containerized/palletized or not.</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="CompartmentID" type="CompartmentID_Type" minOccurs="0" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>Identifies a compartment within a hold (compartment no). As per AHM505, compartments are numbered from 1 to 6. A second figure can indicate a section in a compartment starting from the front to the back and from right to left.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="ContainerizationStatusCodeType">
 		<xs:annotation>
@@ -1990,8 +2079,8 @@
 				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
 				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL10047"/>
 				<xs:attribute name="ListName" type="xs:string" use="optional" default="Recommendation1745AttachABaggageStatusCodes"/>
-				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
-				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeUniformResourceID" type="xs:string" use="optional"/>
+				<xs:attribute name="ListUniformResourceID" type="xs:string" use="optional"/>
 				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
 				<xs:attribute name="Name" type="xs:string" use="optional"/>
 			</xs:extension>
@@ -2008,8 +2097,8 @@
 				<xs:attribute name="ListAgencyName" type="xs:string" use="optional"/>
 				<xs:attribute name="ListID" type="xs:token" use="optional"/>
 				<xs:attribute name="ListName" type="xs:string" use="optional"/>
-				<xs:attribute name="ListSchemeURI" type="xs:anyURI" use="optional"/>
-				<xs:attribute name="ListURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="ListSchemeUniformResourceID" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="ListUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="ListVersionID" type="xs:token" use="optional"/>
 				<xs:attribute name="Name" type="xs:string" use="optional"/>
 			</xs:extension>
@@ -2017,7 +2106,7 @@
 	</xs:complexType>
 	<xs:complexType name="CountrySubDivisionCodeType">
 		<xs:annotation>
-			<xs:documentation>ISO 3166-2 Country Sub-Division Code.  Max-3-char sub-division code without preceding country code.  E.g. 'AZ' for Arizona, 'BY' for Bavaria region in Germany.</xs:documentation>
+			<xs:documentation>ISO 3166-2 Country Sub-Division Code. Max-3-char sub-division code without preceding country code. E.g. 'AZ' for Arizona, 'BY' for Bavaria region in Germany.</xs:documentation>
 		</xs:annotation>
 		<xs:simpleContent>
 			<xs:extension base="CountrySubDivisionCodeContentType">
@@ -2026,8 +2115,8 @@
 				<xs:attribute name="ListAgencyName" type="xs:string" use="optional"/>
 				<xs:attribute name="ListID" type="xs:token" use="optional"/>
 				<xs:attribute name="ListName" type="xs:string" use="optional"/>
-				<xs:attribute name="ListSchemeURI" type="xs:anyURI" use="optional"/>
-				<xs:attribute name="ListURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="ListSchemeUniformResourceID" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="ListUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="ListVersionID" type="xs:token" use="optional"/>
 				<xs:attribute name="Name" type="xs:string" use="optional"/>
 			</xs:extension>
@@ -2048,7 +2137,7 @@
 					<xs:documentation>An enterprise operating aircrafts for commercial purposes (see more details in Glossary of Terms:- Airline).</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Individual" type="IndividualType" minOccurs="0">
+			<xs:element name="Individual" type="IndividualType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>A single human being as distinct from a group, class, or family.</xs:documentation>
 				</xs:annotation>
@@ -2065,6 +2154,21 @@
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
+	<xs:complexType name="DeviceID_Type">
+		<xs:annotation>
+			<xs:documentation>The device identifier of the device technology</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="DeviceID_Value">
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
+				<xs:attribute name="SchemeUniformResourceID" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
 	<xs:complexType name="ExceptionCodeType">
 		<xs:annotation>
 			<xs:documentation>The code of the exception control</xs:documentation>
@@ -2076,8 +2180,8 @@
 				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
 				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL10003"/>
 				<xs:attribute name="ListName" type="xs:string" use="optional" default="Recommendation1745AttachABagExceptionCodes"/>
-				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
-				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeUniformResourceID" type="xs:string" use="optional"/>
+				<xs:attribute name="ListUniformResourceID" type="xs:string" use="optional"/>
 				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
 				<xs:attribute name="Name" type="xs:string" use="optional"/>
 			</xs:extension>
@@ -2105,8 +2209,8 @@
 				<xs:attribute name="ListAgencyName" type="xs:string" use="optional"/>
 				<xs:attribute name="ListID" type="xs:token" use="optional"/>
 				<xs:attribute name="ListName" type="xs:string" use="optional"/>
-				<xs:attribute name="ListSchemeURI" type="xs:anyURI" use="optional"/>
-				<xs:attribute name="ListURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="ListSchemeUniformResourceID" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="ListUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="ListVersionID" type="xs:token" use="optional"/>
 				<xs:attribute name="Name" type="xs:string" use="optional"/>
 			</xs:extension>
@@ -2141,22 +2245,22 @@
 		<xs:sequence>
 			<xs:element name="VolumeID" type="ID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>The identifier of a volume/space relevant to the business. Convention on identifier defined by the sender of the message. Potential example: “ACS UPPER” for Upper Air Control Space.</xs:documentation>
+					<xs:documentation>The identifier of a volume/space relevant to the business. Convention on identifier defined by the sender of the message. Potential example: 'ACS UPPER' for Upper Air Control Space.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="AreaID" type="ID_Type" minOccurs="0" maxOccurs="1">
+			<xs:element name="AreaID" type="AreaID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>The identifier of an area relevant to the business. Convention on identifier defined by the sender of the message. Potential example: “PCA AB” for Passenger Check-in Area AB.</xs:documentation>
+					<xs:documentation>The identifier of an area relevant to the business. Convention on identifier defined by the sender of the message. Potential example: 'PCA AB' for Passenger Check-in Area AB.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="LineID" type="ID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>The identifier of a spatial line relevant to the business. Convention on identifier defined by the sender of the message. Potential example: “PAP KRIC BNTLY CAVLR3 KIAD” for Planned Airway Path VOR name KRIC etc.</xs:documentation>
+					<xs:documentation>The identifier of a spatial line relevant to the business. Convention on identifier defined by the sender of the message. Potential example: 'PAP KRIC BNTLY CAVLR3 KIAD' for Planned Airway Path VOR name KRIC etc.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="PointID" type="ID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>The identifier of a point relevant to the business, to be located. Convention on identifier defined by the sender of the message. Potential example: “BSP 123” for Bag Sortation Point 123.</xs:documentation>
+					<xs:documentation>The identifier of a point relevant to the business, to be located. Convention on identifier defined by the sender of the message. Potential example: 'BSP 123' for Bag Sortation Point 123.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="PointLatitudeNumber" type="NumberType" minOccurs="0" maxOccurs="1">
@@ -2187,8 +2291,8 @@
 				<xs:attribute name="ListAgencyName" type="xs:string" use="optional"/>
 				<xs:attribute name="ListID" type="xs:token" use="optional"/>
 				<xs:attribute name="ListName" type="xs:string" use="optional"/>
-				<xs:attribute name="ListSchemeURI" type="xs:anyURI" use="optional"/>
-				<xs:attribute name="ListURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="ListSchemeUniformResourceID" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="ListUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="ListVersionID" type="xs:token" use="optional"/>
 				<xs:attribute name="Name" type="xs:string" use="optional"/>
 			</xs:extension>
@@ -2204,7 +2308,7 @@
 					<xs:documentation>The code of the baggage handling agency organization.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="HandlingAgentID" type="ID_Type" minOccurs="0" maxOccurs="1">
+			<xs:element name="HandlingAgentID" type="HandlingAgentID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Identifier of a handling agent as assigned by his/her agency.</xs:documentation>
 				</xs:annotation>
@@ -2216,6 +2320,21 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:complexType name="HandlingAgentID_Type">
+		<xs:annotation>
+			<xs:documentation>Identifier of a handling agent as assigned by his/her agency</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="HandlingAgentID_Value">
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
+				<xs:attribute name="SchemeUniformResourceID" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
 	<xs:complexType name="HandlingBayID_Type">
 		<xs:annotation>
 			<xs:documentation>The handling bay identifier of the infrastructure facility.</xs:documentation>
@@ -2223,13 +2342,45 @@
 		<xs:simpleContent>
 			<xs:extension base="HandlingBayID_Value">
 				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
-				<xs:attribute name="SchemeDataURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
 				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
-				<xs:attribute name="SchemeURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
 			</xs:extension>
 		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="HoldCompartmentID_Type">
+		<xs:annotation>
+			<xs:documentation>Identifies a Compartment. As per AHM505, compartments are numbered from the rear of the aircraft in descending order from 6 to 1. A second figure can indicate a section in a compartment starting from the front to the back and from right to left.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="HoldCompartmentID_Value">
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
+				<xs:attribute name="SchemeUniformResourceID" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="HoldCompartmentType">
+		<xs:annotation>
+			<xs:documentation>A space designated within a hold that can be containerized/palletized or not.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="HoldCompartmentID" type="HoldCompartmentID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identifies a compartment within a hold (compartment no). As per AHM505, compartments are numbered from 1 to 6. A second figure can indicate a section in a compartment starting from the front to the back and from right to left.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Hold" type="HoldType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A space confined by ceiling, floor, walls and bulkhead, used for carrying load.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="HoldID_Type">
 		<xs:annotation>
@@ -2238,10 +2389,10 @@
 		<xs:simpleContent>
 			<xs:extension base="HoldID_Value">
 				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
-				<xs:attribute name="SchemeDataURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
 				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
-				<xs:attribute name="SchemeURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
 			</xs:extension>
 		</xs:simpleContent>
@@ -2269,8 +2420,8 @@
 				<xs:attribute name="ListAgencyName" type="xs:string" use="optional"/>
 				<xs:attribute name="ListID" type="xs:token" use="optional"/>
 				<xs:attribute name="ListName" type="xs:string" use="optional"/>
-				<xs:attribute name="ListSchemeURI" type="xs:anyURI" use="optional"/>
-				<xs:attribute name="ListURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="ListSchemeUniformResourceID" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="ListUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="ListVersionID" type="xs:token" use="optional"/>
 				<xs:attribute name="Name" type="xs:string" use="optional"/>
 			</xs:extension>
@@ -2287,8 +2438,8 @@
 				<xs:attribute name="ListAgencyName" type="xs:string" use="optional"/>
 				<xs:attribute name="ListID" type="xs:token" use="optional"/>
 				<xs:attribute name="ListName" type="xs:string" use="optional"/>
-				<xs:attribute name="ListSchemeURI" type="xs:anyURI" use="optional"/>
-				<xs:attribute name="ListURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="ListSchemeUniformResourceID" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="ListUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="ListVersionID" type="xs:token" use="optional"/>
 				<xs:attribute name="Name" type="xs:string" use="optional"/>
 			</xs:extension>
@@ -2305,8 +2456,8 @@
 				<xs:attribute name="ListAgencyName" type="xs:string" use="optional"/>
 				<xs:attribute name="ListID" type="xs:token" use="optional"/>
 				<xs:attribute name="ListName" type="xs:string" use="optional"/>
-				<xs:attribute name="ListSchemeURI" type="xs:anyURI" use="optional"/>
-				<xs:attribute name="ListURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="ListSchemeUniformResourceID" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="ListUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="ListVersionID" type="xs:token" use="optional"/>
 				<xs:attribute name="Name" type="xs:string" use="optional"/>
 			</xs:extension>
@@ -2317,12 +2468,12 @@
 			<xs:documentation>An identifier is a character string used to uniquely identify one instance of an object within an identification scheme that is managed by an agency.</xs:documentation>
 		</xs:annotation>
 		<xs:simpleContent>
-			<xs:extension base="xs:token">
+			<xs:extension base="ID_Value">
 				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
-				<xs:attribute name="SchemeDataURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
 				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
-				<xs:attribute name="SchemeURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
 			</xs:extension>
 		</xs:simpleContent>
@@ -2344,7 +2495,7 @@
 			</xs:element>
 			<xs:element name="MiddleName" type="ProperNameType" minOccurs="0" maxOccurs="3">
 				<xs:annotation>
-					<xs:documentation>Individual's middle name or initial.  E.g. G, GEORGE.</xs:documentation>
+					<xs:documentation>Individual's middle name or initial. E.g. G, GEORGE.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Surname" type="ProperNameType" minOccurs="1" maxOccurs="1">
@@ -2369,6 +2520,36 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:complexType name="InternetAddressIPV4ID_Type">
+		<xs:annotation>
+			<xs:documentation>The identifier of the ip version 4 for electronic address validation example: 129.144.50.5</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="InternetAddressIPV4ID_Value">
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
+				<xs:attribute name="SchemeUniformResourceID" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="InternetAddressIPV6ID_Type">
+		<xs:annotation>
+			<xs:documentation>The identifier of the ip version 6 for electronic address validation example:2001:0db8:85a3:0000:0000:8a2e:0370:7334 </xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="InternetAddressIPV6ID_Value">
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
+				<xs:attribute name="SchemeUniformResourceID" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
 	<xs:complexType name="LengthMeasureType">
 		<xs:annotation>
 			<xs:documentation>A numeric value determining a length (linear dimension) along with the specified unit of measure.</xs:documentation>
@@ -2379,6 +2560,38 @@
 				<xs:attribute name="UnitCodeListVersionID" type="xs:token" use="optional"/>
 			</xs:extension>
 		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="LNIATAAddressID_Type">
+		<xs:annotation>
+			<xs:documentation>The identifier of the LNIATA electronic address.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="LNIATAAddressID_Value">
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
+				<xs:attribute name="SchemeUniformResourceID" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="LoyaltyProgramAccountType">
+		<xs:annotation>
+			<xs:documentation>An account set up for a customer within a rewards program which holds funds on behalf of that customer.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AccountNumber" type="CodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Loyalty Program account number. Example: ABC123456</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TierLevel" type="CodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Loyalty Program tier code.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="MovementStatusCodeType">
 		<xs:annotation>
@@ -2391,8 +2604,8 @@
 				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
 				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL10048"/>
 				<xs:attribute name="ListName" type="xs:string" use="optional" default="Recommendation1745AttachABaggageMovementStatusCodes"/>
-				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
-				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeUniformResourceID" type="xs:string" use="optional"/>
+				<xs:attribute name="ListUniformResourceID" type="xs:string" use="optional"/>
 				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
 				<xs:attribute name="Name" type="xs:string" use="optional"/>
 			</xs:extension>
@@ -2403,17 +2616,17 @@
 			<xs:documentation>A virtual address in an IT network.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="LNIATA_AddressID" type="ID_Type" minOccurs="0" maxOccurs="1">
+			<xs:element name="LNIATAAddressID" type="LNIATAAddressID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The identifier of the LNIATA electronic address.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="InternetProtocolV4ID" type="ID_Type" minOccurs="0" maxOccurs="1">
+			<xs:element name="InternetProtocolV4ID" type="InternetAddressIPV4ID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The identifier of the ip version 4 electronic address.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="InternetProtocolV6ID" type="ID_Type" minOccurs="0" maxOccurs="1">
+			<xs:element name="InternetProtocolV6ID" type="InternetAddressIPV6ID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The identifier of the ip version 6 electronic address.</xs:documentation>
 				</xs:annotation>
@@ -2482,14 +2695,14 @@
 					<xs:documentation>A booking or reservation.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="Individual" type="IndividualType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A single human being as distinct from a group, class, or family.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="PaxGroup" type="PaxGroupType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>A number of individual passengers traveling under one commercial name that associates them. E.g. a Tour group or a group for sales allotment from airline to agency.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="Individual" type="IndividualType" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>A single human being as distinct from a group, class, or family.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -2499,7 +2712,7 @@
 			<xs:documentation>A device for printing text or pictures or barcodes, especially one linked to a computer.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="PrinterDeviceID" type="ID_Type" minOccurs="0" maxOccurs="1">
+			<xs:element name="PrinterDeviceID" type="DeviceID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The identifier of the device.</xs:documentation>
 				</xs:annotation>
@@ -2527,7 +2740,7 @@
 			<xs:documentation>A device that scans objects and converts them into or extracts digital data. E.g. document scanner, barcode reader, biometric scanner.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="ScannerDeviceID" type="ID_Type" minOccurs="0" maxOccurs="1">
+			<xs:element name="ScannerDeviceID" type="DeviceID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The identifier of the technology device</xs:documentation>
 				</xs:annotation>
@@ -2550,10 +2763,25 @@
 				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
 				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL10014"/>
 				<xs:attribute name="ListName" type="xs:string" use="optional" default="Recommendation1745AttachAScreeningAlarmReasonCodes"/>
-				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
-				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeUniformResourceID" type="xs:string" use="optional"/>
+				<xs:attribute name="ListUniformResourceID" type="xs:string" use="optional"/>
 				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
 				<xs:attribute name="Name" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="ScreeningDeviceID_Type">
+		<xs:annotation>
+			<xs:documentation>The Identifier, as defined by the manufacturer or airport, of the machine that has undertaken the screening activity and determined the screening result.</xs:documentation>
+		</xs:annotation>
+		<xs:simpleContent>
+			<xs:extension base="ScreeningDeviceID_Value">
+				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
+				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
+				<xs:attribute name="SchemeUniformResourceID" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
 			</xs:extension>
 		</xs:simpleContent>
 	</xs:complexType>
@@ -2568,8 +2796,8 @@
 				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
 				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL10004"/>
 				<xs:attribute name="ListName" type="xs:string" use="optional" default="Recommendation1745AttachAScreeningInstructionCodes"/>
-				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
-				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeUniformResourceID" type="xs:string" use="optional"/>
+				<xs:attribute name="ListUniformResourceID" type="xs:string" use="optional"/>
 				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
 				<xs:attribute name="Name" type="xs:string" use="optional"/>
 			</xs:extension>
@@ -2586,8 +2814,8 @@
 				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
 				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL10018"/>
 				<xs:attribute name="ListName" type="xs:string" use="optional" default="Recommendation1745AttachAScreeningMethodCodes"/>
-				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
-				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeUniformResourceID" type="xs:string" use="optional"/>
+				<xs:attribute name="ListUniformResourceID" type="xs:string" use="optional"/>
 				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
 				<xs:attribute name="Name" type="xs:string" use="optional"/>
 			</xs:extension>
@@ -2600,10 +2828,10 @@
 		<xs:simpleContent>
 			<xs:extension base="SeatID_Value">
 				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
-				<xs:attribute name="SchemeDataURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
 				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
-				<xs:attribute name="SchemeURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
 			</xs:extension>
 		</xs:simpleContent>
@@ -2619,8 +2847,8 @@
 				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
 				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL10049"/>
 				<xs:attribute name="ListName" type="xs:string" use="optional" default="Recommendation1745AttachABaggageSecurityScreeningResultCodes"/>
-				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
-				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeUniformResourceID" type="xs:string" use="optional"/>
+				<xs:attribute name="ListUniformResourceID" type="xs:string" use="optional"/>
 				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
 				<xs:attribute name="Name" type="xs:string" use="optional"/>
 			</xs:extension>
@@ -2701,8 +2929,8 @@
 				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
 				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL10050"/>
 				<xs:attribute name="ListName" type="xs:string" use="optional" default="Recommendation1745AttachABaggageSortaionStatusCodes"/>
-				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
-				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeUniformResourceID" type="xs:string" use="optional"/>
+				<xs:attribute name="ListUniformResourceID" type="xs:string" use="optional"/>
 				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
 				<xs:attribute name="Name" type="xs:string" use="optional"/>
 			</xs:extension>
@@ -2720,7 +2948,7 @@
 			</xs:element>
 			<xs:element name="AircraftParkingPositionID" type="AircraftParkingPositionID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>The identifier of the gate or hard stand where the aircraft is located. E.g. “C102”.</xs:documentation>
+					<xs:documentation>The identifier of the gate or hard stand where the aircraft is located. E.g. 'C102'.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="IATA_TerminalCode" type="IATA_TerminalCodeType" minOccurs="0" maxOccurs="1">
@@ -2750,12 +2978,12 @@
 			</xs:element>
 			<xs:element name="BoardingGateID" type="BoardingGateID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Identifier of the gate. E.g. “A5”.</xs:documentation>
+					<xs:documentation>Identifier of the gate. E.g. 'A5'.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="BaggageClaimID" type="BaggageClaimID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>The identifier of baggage reclaim unit. E.g. “T1A”.</xs:documentation>
+					<xs:documentation>The identifier of baggage reclaim unit. E.g. 'T1A'.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -2771,8 +2999,8 @@
 				<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA"/>
 				<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL10051"/>
 				<xs:attribute name="ListName" type="xs:string" use="optional" default="Recommendation1745AttachABaggageStorageStatusCodes"/>
-				<xs:attribute name="ListSchemeURI" type="xs:string" use="optional"/>
-				<xs:attribute name="ListURI" type="xs:string" use="optional"/>
+				<xs:attribute name="ListSchemeUniformResourceID" type="xs:string" use="optional"/>
+				<xs:attribute name="ListUniformResourceID" type="xs:string" use="optional"/>
 				<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1"/>
 				<xs:attribute name="Name" type="xs:string" use="optional"/>
 			</xs:extension>
@@ -2796,10 +3024,10 @@
 		<xs:simpleContent>
 			<xs:extension base="SurfaceTransportID_Value">
 				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
-				<xs:attribute name="SchemeDataURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
 				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
-				<xs:attribute name="SchemeURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
 			</xs:extension>
 		</xs:simpleContent>
@@ -2828,10 +3056,10 @@
 		<xs:simpleContent>
 			<xs:extension base="TerminalPierID_Value">
 				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
-				<xs:attribute name="SchemeDataURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
 				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
-				<xs:attribute name="SchemeURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
 			</xs:extension>
 		</xs:simpleContent>
@@ -2843,10 +3071,10 @@
 		<xs:simpleContent>
 			<xs:extension base="TerminalSatelliteID_Value">
 				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
-				<xs:attribute name="SchemeDataURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
 				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
-				<xs:attribute name="SchemeURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
 			</xs:extension>
 		</xs:simpleContent>
@@ -2884,10 +3112,10 @@
 		<xs:simpleContent>
 			<xs:extension base="ULD_ID_Value">
 				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
-				<xs:attribute name="SchemeDataURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
 				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
-				<xs:attribute name="SchemeURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
 			</xs:extension>
 		</xs:simpleContent>
@@ -2899,10 +3127,10 @@
 		<xs:simpleContent>
 			<xs:extension base="ULD_LoadPositionID_Value">
 				<xs:attribute name="SchemeAgencyID" type="xs:token" use="optional"/>
-				<xs:attribute name="SchemeDataURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeDataUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="SchemeID" type="xs:token" use="optional"/>
 				<xs:attribute name="SchemeName" type="xs:string" use="optional"/>
-				<xs:attribute name="SchemeURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="SchemeUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="SchemeVersionID" type="xs:token" use="optional"/>
 			</xs:extension>
 		</xs:simpleContent>
@@ -2945,8 +3173,8 @@
 				<xs:attribute name="ListAgencyName" type="xs:string" use="optional"/>
 				<xs:attribute name="ListID" type="xs:token" use="optional"/>
 				<xs:attribute name="ListName" type="xs:string" use="optional"/>
-				<xs:attribute name="ListSchemeURI" type="xs:anyURI" use="optional"/>
-				<xs:attribute name="ListURI" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="ListSchemeUniformResourceID" type="xs:anyURI" use="optional"/>
+				<xs:attribute name="ListUniformResourceID" type="xs:anyURI" use="optional"/>
 				<xs:attribute name="ListVersionID" type="xs:token" use="optional"/>
 				<xs:attribute name="Name" type="xs:string" use="optional"/>
 			</xs:extension>
