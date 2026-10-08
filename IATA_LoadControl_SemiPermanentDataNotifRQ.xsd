@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2024 rel. 2 sp1 (x64) (https://www.altova.com) by Cornu (Iata) -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2025.2/IATA_LoadControl_SemiPermanentDataNotifRQ" targetNamespace="http://www.iata.org/IATA/2015/00/2025.2/IATA_LoadControl_SemiPermanentDataNotifRQ" elementFormDefault="qualified" version="1.009">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2026.1/IATA_LoadControl_SemiPermanentDataNotifRQ" targetNamespace="http://www.iata.org/IATA/2015/00/2026.1/IATA_LoadControl_SemiPermanentDataNotifRQ" elementFormDefault="qualified" version="1.010">
 	<xs:element name="IATA_LoadControl_SemiPermanentDataNotifRQ">
 		<xs:annotation>
 			<xs:documentation>Used to exchange semi-permanent data for weight and balance between the carrier owning the aircraft and airlines that operate the aircraft, handling agents and DCS providers.</xs:documentation>
@@ -443,7 +443,6 @@
 			<xs:documentation>Enumeration set for the Airflow Rate Base Code BDT. </xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:token">
-			<xs:length value="1"/>
 			<xs:enumeration value="H">
 				<xs:annotation>
 					<xs:documentation>Per Hour</xs:documentation>
@@ -800,15 +799,17 @@
 					<xs:documentation>Identifies a Bay (ULD) Grouping (String/Stack) in an aircraft. As per AHM565 Bay Groupings can be identified by joining the identifiers of the first and last bay in the group separated by a hyphen, e.g. 12L-21L. The Grouping ID can also contain configuration information.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Lock" type="LockType" minOccurs="1" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>ULD restraint which can be fixed within the aircraft.
- </xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element name="LockPositionCode" type="LockPositionCodeType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Position of lock relative to the ULD position.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ULD_LoadPosition" type="ULD_LoadPosition1Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Daughter ABIE of ULD Load Position (ABIE) to display only the selected Business Identifier Fields:
+ - ULD Load Position ID
+ - Balance Arm Forward Measure
+ - Balance Arm Aft Measure</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -874,7 +875,7 @@
 	<xs:simpleType name="CabinComponentTypeCodeContentType">
 		<xs:annotation>
 			<xs:documentation>Cabin component type code set.
- Examples:
+ Examples sourced from IATA CodeSet 9978: 
  701 (Movable compartment divider)
  702 (Convertible seats)
  AR (Air phone)
@@ -887,12 +888,9 @@
  MV (Movie screen)
  SO (Storage space)
  ST (Stairs to upper deck)
- TA (Table {codeListAgencyName}PADIS{/codeListAgencyName} {codeListName}Cabin facilities characteristic{/codeListName} {codeListIdentifier}9978{/codeListIdentifier} </xs:documentation>
+ TA (Table {codeListAgencyIdentifier}IATA Codeset{/codeListAgencyIdentifier} {codeListAgencyName}IATA{/codeListAgencyName} {codeListName}Cabin facilities characteristic{/codeListName} {codeListIdentifier}9978{/codeListIdentifier} </xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:token">
-			<xs:minLength value="1"/>
-			<xs:maxLength value="3"/>
-		</xs:restriction>
+		<xs:restriction base="xs:token"/>
 	</xs:simpleType>
 	<xs:simpleType name="CabinComponentTypeCodeType">
 		<xs:annotation>
@@ -937,7 +935,7 @@
 					<xs:documentation>Weight of each Cabin Crew Bag included in the DOW Configuration.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Baglocation" type="CabinCrewBaggageLocationType" minOccurs="0" maxOccurs="1">
+			<xs:element name="BagLocation" type="CabinCrewBaggageLocationType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Location of Cabin Crew Bag included in the DOW configuration</xs:documentation>
 				</xs:annotation>
@@ -1374,6 +1372,11 @@
 					<xs:documentation>Type or nature of the defined From/To values that limit the applicability of the balance limitation table. This may be specific units e.g. 'KG', 'Liters', but may also be used to identify the range e.g. 'Fuel Volume', 'Zero Fuel MAC'.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Additional, supplementary information about the document or service.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="TableName" type="NameType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Specific name for the table of CG limits.</xs:documentation>
@@ -1713,7 +1716,6 @@
 			<xs:documentation>Enumeration set for the Cumulative Load Direction Code BDT. </xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:token">
-			<xs:length value="3"/>
 			<xs:enumeration value="AFT">
 				<xs:annotation>
 					<xs:documentation>From the aft extremity of the aircraft to a point further forward</xs:documentation>
@@ -2012,7 +2014,6 @@
 			<xs:documentation>Enumeration set for the Door Position Code BDT. </xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:token">
-			<xs:length value="1"/>
 			<xs:enumeration value="C">
 				<xs:annotation>
 					<xs:documentation>Center of aircraft</xs:documentation>
@@ -2211,11 +2212,6 @@
 					<xs:documentation>Indicates that weight and center of gravity data are expressed as adjustments to be applied to the corresponding fleet data or as individual aircraft data.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Aircraft" type="AircraftType" minOccurs="1" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>A transport vehicle which is certified as airworthy by a competent aeronautical authority.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element name="AircraftRegistrationID" type="AircraftRegistrationID_Type" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The complete alphanumeric identification assigned by the appropriate licensing authority to an individual aircraft. Hyphens contained within the registration shall not be included. E.g. GBOAC, N46573, ZZ123.</xs:documentation>
@@ -2318,7 +2314,7 @@
 					<xs:documentation>Weight of each Flight Crew Bag included in the DOW Configuration.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Baglocation" type="FlightDeckCrewBaggageLocationType" minOccurs="0" maxOccurs="1">
+			<xs:element name="BagLocation" type="FlightDeckCrewBaggageLocationType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Location of Flight Deck Crew Bag included in the DOW configuration</xs:documentation>
 				</xs:annotation>
@@ -2507,7 +2503,8 @@
 		<xs:sequence>
 			<xs:element name="FuelVolumeMeasure" type="VolumeMeasureType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Value of the formula element expressed as a volume. E.g. A=139090 liter, B=6230 liter</xs:documentation>
+					<xs:documentation>Value of the formula element expressed as a volume. 
+ E.g. A=139090 liter, B=6230 liter</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="FuelWeightMeasure" type="WeightMeasureType" minOccurs="1" maxOccurs="1">
@@ -2524,17 +2521,17 @@
 	</xs:complexType>
 	<xs:complexType name="FormulaKeywordType">
 		<xs:annotation>
-			<xs:documentation>Definition of the standard keywords used in fuel distribution and ratio formulas</xs:documentation>
+			<xs:documentation>A keyword detail of the formula.</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Keyword" type="TextType" minOccurs="1" maxOccurs="1">
+			<xs:element name="Formula" type="WeightUnitCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Formula name keyword</xs:documentation>
+					<xs:documentation>Formula using defined formula elements e.g. A/(B-C) to calculate the ration of the last step for an A330-200.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Name" type="NameType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Formula name keyword to calculate the ration of the last step for an A330-200.</xs:documentation>
+					<xs:documentation>A name of the Formula keyword to calculate the ration of the last step.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -2544,14 +2541,14 @@
 			<xs:documentation>Definition of the operands used in the formulas</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Operand" type="NameType" minOccurs="1" maxOccurs="1">
+			<xs:element name="Operand" type="OperandCodeType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Formula operands defined formula elements.</xs:documentation>
+					<xs:documentation>A Formula Operand Code as defined Formula Operands elements. (example Add, Subtract, Multiply, Divide)</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Textcharacter" type="TextType" minOccurs="1" maxOccurs="1">
+			<xs:element name="TextCharacter" type="OperandTextCharacterCodeType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Formula operands text character defined formula elements.</xs:documentation>
+					<xs:documentation>A Formula Operands Text Character mathematical Code as defined in Formula elements. (e.g. valid values x, -, +, /)</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -2562,6 +2559,11 @@
  </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
+			<xs:element name="Formula" type="WeightUnitCodeType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Formula using defined formula elements e.g. A/(B-C) to calculate the ration of the last step for an A330-200.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="FuelingProcedureName" type="NameType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Specific name of the procedure for filling the complete set of tanks of an aircraft ('Standard Fueling', 'All Tanks'), or the name of an individual fuel tank ('Left Hand Outer', 'Tank 1') or group of tanks ('Outers', 'Wing Tanks').</xs:documentation>
@@ -2577,14 +2579,14 @@
 					<xs:documentation>Fuel quantity weight that is included in a specific tank or set of tanks after the fuel distribution step is carried out.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="Keyword" type="WeightMeasureType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Formula using defined formula elements e.g. A/(B-C) to calculate the ration of the last step for an A330-200.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="Ratio" type="RatioType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Fuel quantity that is included in a specific tank or set of tanks after the fuel distribution step is carried out, specified as a ratio with respect to other tanks within the fuel distribution step.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="RatioFormula" type="RatioFormulaType" minOccurs="0" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>A content of the ratio formula.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -2644,9 +2646,9 @@
 					<xs:documentation>Further specification of the fuel distribution name, e.g. CASE A, CASE B, etc.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="FormulaKeyword" type="FormulaKeywordType" minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="FormulaKeyword" type="FormulaKeywordType" minOccurs="0" maxOccurs="2">
 				<xs:annotation>
-					<xs:documentation>Definition of the standard keywords used in fuel distribution and ratio formulas</xs:documentation>
+					<xs:documentation>A keyword detail of the formula.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="FormulaOperands" type="FormulaOperandsType" minOccurs="0" maxOccurs="unbounded">
@@ -2948,7 +2950,7 @@
 					<xs:documentation>Indicator bulk hold - ULD hold</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Door" type="DoorType" minOccurs="1" maxOccurs="unbounded">
+			<xs:element name="Door" type="DoorType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>A swinging or sliding barrier that will close the entrance to a room or building or vehicle.
  </xs:documentation>
@@ -3310,7 +3312,7 @@
  </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="LockID" type="ID_Type" minOccurs="1" maxOccurs="1">
+			<xs:element name="LockID" type="ID_Type" minOccurs="1" maxOccurs="99">
 				<xs:annotation>
 					<xs:documentation>Identifies a lock within a hold.</xs:documentation>
 				</xs:annotation>
@@ -3322,7 +3324,6 @@
 			<xs:documentation>Enumeration set for the Lock Position Code BDT. </xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:token">
-			<xs:length value="1"/>
 			<xs:enumeration value="A">
 				<xs:annotation>
 					<xs:documentation>Aft restraint</xs:documentation>
@@ -3735,6 +3736,72 @@
 		</xs:annotation>
 		<xs:restriction base="xs:decimal"/>
 	</xs:simpleType>
+	<xs:simpleType name="OperandCodeContentType">
+		<xs:annotation>
+			<xs:documentation>The code list for the operand as used in the Formula Operands {codeListAgencyIdentifier}AHM{/codeListAgencyIdentifier} {codeListAgencyName}IATA{/codeListAgencyName} {codeListIdentifier}AHM565 - Airport Hanling Manual{/codeListIdentifier} </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="Add">
+				<xs:annotation>
+					<xs:documentation>Add</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Divide">
+				<xs:annotation>
+					<xs:documentation>DIVIDE</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Multiply">
+				<xs:annotation>
+					<xs:documentation>MULTIPLY</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="Substract">
+				<xs:annotation>
+					<xs:documentation>SUBTRACT</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OperandCodeType">
+		<xs:annotation>
+			<xs:documentation>Additional BDT to specify the Operand Code used in Formula Operands</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="OperandCodeContentType"/>
+	</xs:simpleType>
+	<xs:simpleType name="OperandTextCharacterCodeContentType">
+		<xs:annotation>
+			<xs:documentation>The code list for the operand Text character code as used in the Formula Operands </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="-">
+				<xs:annotation>
+					<xs:documentation>Subtract Character Code</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="/">
+				<xs:annotation>
+					<xs:documentation>Divide Character Code</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="+">
+				<xs:annotation>
+					<xs:documentation>Plus Character Code</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="x">
+				<xs:annotation>
+					<xs:documentation>Multiply Character code</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OperandTextCharacterCodeType">
+		<xs:annotation>
+			<xs:documentation>Operands Character mathematical Code as defined in Formula elements. (e.g. valid values x, -, +, /)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="OperandTextCharacterCodeContentType"/>
+	</xs:simpleType>
 	<xs:complexType name="OtherAddressType">
 		<xs:annotation>
 			<xs:documentation>Other Contact Method information. E.g. web site URL, social media handle.</xs:documentation>
@@ -3761,12 +3828,6 @@
 			<xs:element name="CabinComponentName" type="NameType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Name or description of the cabin component, e.g. Forward Galley, First Class Coat Locker.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="GalleyLocation" type="CabinComponentType" minOccurs="1" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>Non-seat related cabin feature or facility (e.g. lavatory, galley, closet, stowage, etc.)
- </xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="IndexValue" type="ValueType" minOccurs="0" maxOccurs="1">
@@ -4655,7 +4716,6 @@
 			<xs:documentation>Enumeration set for the Start Weight Type Code BDT. </xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:token">
-			<xs:maxLength value="3"/>
 			<xs:enumeration value="BW">
 				<xs:annotation>
 					<xs:documentation>Basic Weight</xs:documentation>
@@ -4904,7 +4964,6 @@
 			<xs:documentation>Enumeration set for the Trim Type Code BDT. </xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:token">
-			<xs:maxLength value="10"/>
 			<xs:enumeration value="Cabin Area">
 				<xs:annotation>
 					<xs:documentation>Cabin area trim</xs:documentation>
@@ -5226,7 +5285,6 @@
 			<xs:documentation>Enumeration set for the Weight Type Code BDT. </xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:token">
-			<xs:length value="2"/>
 			<xs:enumeration value="IN">
 				<xs:annotation>
 					<xs:documentation>Inflight</xs:documentation>
@@ -5262,7 +5320,7 @@
 	</xs:simpleType>
 	<xs:simpleType name="WeightUnitCodeContentType">
 		<xs:annotation>
-			<xs:documentation>List of Weight Unit Codes. Subset of UN/CEFACT Recommendation 20. {codeListAgencyName}AIDM (extract from UN/CEFACT){/codeListAgencyName} </xs:documentation>
+			<xs:documentation>List of Weight Unit Codes. {codeListAgencyName}AIDM (extract from UN/CEFACT){/codeListAgencyName} </xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:token">
 			<xs:enumeration value="KGM">

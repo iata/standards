@@ -1,12 +1,12 @@
 <?xml  version="1.0" encoding="UTF-8" ?>
-<xs:schema targetNamespace="http://www.iata.org/IATA/2015/00/2025.4/IATA_Baggage_BagRS" elementFormDefault="qualified" version="1.003" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2025.4/IATA_Baggage_BagRS" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"><xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/>
+<xs:schema targetNamespace="http://www.iata.org/IATA/2015/00/2026.1/IATA_Baggage_BagRS" elementFormDefault="qualified" version="1.005" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2026.1/IATA_Baggage_BagRS" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"><xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/>
 <xs:element name="IATA_Baggage_BagRS">
 <xs:annotation>
 <xs:documentation>Result of bag handling from handler to airline</xs:documentation>
 </xs:annotation>
 <xs:complexType>
 <xs:sequence>
-<xs:element name="BagSegment" type="BagSegmentType" minOccurs="1" maxOccurs="1">
+<xs:element name="BagSegment" type="ResultForBagSegmentType" minOccurs="1" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Active segment of bag journey including relevant details</xs:documentation>
 </xs:annotation>
@@ -45,10 +45,9 @@
 </xs:element>
 </xs:sequence>
 </xs:complexType>
-<xs:complexType name="AgentCollapsedType">
+<xs:complexType name="AgentType">
 <xs:annotation>
-<xs:documentation>A Role of an individual person to be a staff of an agency.
- </xs:documentation>
+<xs:documentation>A role of an individual person to be a staff of an agency</xs:documentation>
 </xs:annotation>
 <xs:sequence>
 <xs:element name="Agency" type="AgencyType" minOccurs="0" maxOccurs="1">
@@ -133,8 +132,7 @@
 </xs:simpleType>
 <xs:complexType name="BagDimensionsType">
 <xs:annotation>
-<xs:documentation>A set of measurable extents of a particular bag, such as length, or height or width.
- </xs:documentation>
+<xs:documentation>A set of measurable extents of a particular bag, such as length, or height or width.</xs:documentation>
 </xs:annotation>
 <xs:sequence>
 <xs:element name="HeightMeasure" type="LengthMeasureType" minOccurs="0" maxOccurs="1">
@@ -202,8 +200,7 @@
 <xs:annotation>
 <xs:documentation>PSCRM edition 44 
  RP1745-Annex 3.1 Additional Recommended Codes for Check in Location Identifier
- RP1745-Annex 5.1 Location Categories
- {codeListAgencyName}IATA{/codeListAgencyName} {codeListName}Baggage Location Identifier or Category{/codeListName} {codeListIdentifier}RP1745 Attachment A section 3.1 plus 5.1{/codeListIdentifier} </xs:documentation>
+ RP1745-Annex 5.1 Location Categories {codeListAgencyName}IATA{/codeListAgencyName} {codeListName}Baggage Location Identifier or Category{/codeListName} {codeListIdentifier}RP1745 Attachment A section 3.1 plus 5.1{/codeListIdentifier} </xs:documentation>
 </xs:annotation>
 <xs:restriction base="xs:token">
 <xs:pattern value="[A-Z]{2,4}"></xs:pattern>
@@ -218,8 +215,7 @@
 </xs:simpleType>
 <xs:complexType name="BaggageFacilityTypeType">
 <xs:annotation>
-<xs:documentation>A classification of Facility according to Facility Type
- </xs:documentation>
+<xs:documentation>A classification of Facility according to Facility Type</xs:documentation>
 </xs:annotation>
 <xs:sequence>
 <xs:element name="BaggageFacilityTypeCode" type="BaggageFacilityTypeCodeType" minOccurs="1" maxOccurs="1">
@@ -286,10 +282,9 @@
  </xs:documentation>
 </xs:annotation>
 <xs:sequence>
-<xs:element name="Agent" type="AgentCollapsedType" minOccurs="0" maxOccurs="unbounded">
+<xs:element name="Agent" type="AgentType" minOccurs="0" maxOccurs="unbounded">
 <xs:annotation>
-<xs:documentation>A Role of an individual person to be a staff of an agency.
- </xs:documentation>
+<xs:documentation>A role of an individual person to be a staff of an agency</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="BaggageEvent" type="BaggageEventType" minOccurs="1" maxOccurs="1">
@@ -307,8 +302,7 @@
 <xs:element name="BaggageSubProcessCode" type="BaggageSubProcessCodeType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Secondary level baggage process naming
- Follows baggage journey (bag, cart, ULD)
- </xs:documentation>
+ Follows baggage journey (bag, cart, ULD)</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="BaggageSubSubProcessCode" type="BaggageSubSubProcessCodeType" minOccurs="0" maxOccurs="1">
@@ -474,12 +468,12 @@
 <xs:documentation>Material code of the physical property measurement. Refer to resolution 743b description codes.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="WeightAllowanceMeasure" type="WeightMeasureCodeType" minOccurs="0" maxOccurs="1">
+<xs:element name="WeightAllowanceMeasure" type="WeightMeasureType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Allowance for Weight for a single Bag</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="WeightMeasure" type="WeightMeasureCodeType" minOccurs="0" maxOccurs="1">
+<xs:element name="WeightMeasure" type="WeightMeasureType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>A measurement of the heaviness of a bag. Only checked weight supported.</xs:documentation>
 </xs:annotation>
@@ -492,80 +486,6 @@
 </xs:annotation>
 <xs:restriction base="xs:boolean"></xs:restriction>
 </xs:simpleType>
-<xs:complexType name="BagSegmentDeliveringDaughterType">
-<xs:annotation>
-<xs:documentation>A completed allocation of a bag to a specific set of consecutive legs 
- </xs:documentation>
-</xs:annotation>
-<xs:sequence>
-<xs:element name="AircraftScheduledDepDateTime" type="DateTimeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Scheduled date and time of departure of the aircraft at the terminal or departure gate at an airport.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="ArrivalIATA_LocationCode" type="IATA_LocationCodeType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>IATA defined code identifying a city or station.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="ArrivalTerminalCode" type="IATA_TerminalCodeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Code of the terminal infrastructure facility, as defined by IATA SSIM Appendix D. For example: '2W'.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="CarrierDesigCode" type="AirlineDesigCodeType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>ICAO-defined 3-character code or IATA-defined 2-character code assigned to the carrier. For example: BA is British Airways PLC, 2C is SNCF and is also CMA CGM Air Cargo
- 
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="ClassOfServiceCode" type="RBD_CodeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Code used to identify a particular Reservations Booking Designator. For example: P, J, W, M.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="DeliveringJourneyOrdinal" type="OrdinalType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Indicates position in sequence of delivering Bag Segments following the journey</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="DepIATA_LocationCode" type="IATA_LocationCodeType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>IATA defined code identifying a city or station.
- 
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="DepTerminalCode" type="IATA_TerminalCodeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Code of the terminal infrastructure facility, as defined by IATA SSIM Appendix D. For example: '2W'.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="FlightID_Date" type="DateType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>(UTC) date of the scheduled aircraft departure from the station of origin.
- 
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="FlightNumberText" type="FlightNumberTextType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Numerical designation of a flight as it is operated by a carrier.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="OperationalSuffixText" type="OperationalSuffixTextType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>from SIX XSD: Alphabetical character following a flight number assigned for operational purposes. SSIM: A code assigned by the administrating carrier for operational purposes.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-</xs:sequence>
-</xs:complexType>
 <xs:complexType name="BagSegmentExceptionType">
 <xs:annotation>
 <xs:documentation>Baggage Exception as per RP1745 Attachment A Section 1</xs:documentation>
@@ -578,215 +498,47 @@
 </xs:element>
 </xs:sequence>
 </xs:complexType>
-<xs:complexType name="BagSegmentOnwardDaughterType">
+<xs:complexType name="BagSegmentSecurityControlsType">
 <xs:annotation>
-<xs:documentation>A anticipated allocation of a bag to a specific set of consecutive legs
- </xs:documentation>
+<xs:documentation>A set of principles or procedures according to which something is done on a particular segment of travel.
+ #EndOfDef
+ Refers to flattened Passenger Segment</xs:documentation>
 </xs:annotation>
 <xs:sequence>
-<xs:element name="AircraftScheduledDepDateTime" type="DateTimeType" minOccurs="0" maxOccurs="1">
+<xs:element name="AuthorityToLoadInd" type="IndType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>Scheduled date and time of departure of the aircraft at the terminal or departure gate at an airport.
+<xs:documentation>The authority to load indicator of the security control. An authority security control is an official permission; sanction from a security context.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="AuthorityToTransportInd" type="IndType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>The authority to transport indicator of the security control. An authority security control is an official permission; sanction from a security context.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="BagDeleteRequestInd" type="BagDeleteRequestIndType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>A request by the airline to delete or mark as deleted the record for this bag as no longer expected for the flight.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="BagRemovalRequestInd" type="BagRemovalRequestIndType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>A request by the airline to unload a loaded bag, Should be set with the authorization to load set to NO.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="BagTagStatusCode" type="BagTagStatusCodeType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Determines whether bag is authorized to load
  </xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="ArrivalIATA_LocationCode" type="IATA_LocationCodeType" minOccurs="1" maxOccurs="1">
+<xs:element name="PaxStatus" type="PaxSegmentType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>IATA defined code identifying a city or station.
- </xs:documentation>
+<xs:documentation>A transportation of a passenger on a Dated Operating Segment.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="ArrivalTerminalCode" type="IATA_TerminalCodeType" minOccurs="0" maxOccurs="1">
+<xs:element name="ScreeningInstructionCode" type="ScreeningInstructionCodeType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>Code of the terminal infrastructure facility, as defined by IATA SSIM Appendix D. For example: '2W'.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="CarrierDesigCode" type="AirlineDesigCodeType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>ICAO-defined 3-character code or IATA-defined 2-character code assigned to the carrier. For example: BA is British Airways PLC, 2C is SNCF and is also CMA CGM Air Cargo
- 
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="ClassOfServiceCode" type="RBD_CodeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Code used to identify a particular Reservations Booking Designator. For example: P, J, W, M.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="DepIATA_LocationCode" type="IATA_LocationCodeType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>IATA defined code identifying a city or station.
- 
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="DepTerminalCode" type="IATA_TerminalCodeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Code of the terminal infrastructure facility, as defined by IATA SSIM Appendix D. For example: '2W'.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="FlightID_Date" type="DateType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>(UTC) date of the scheduled aircraft departure from the station of origin.
- 
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="FlightNumberText" type="FlightNumberTextType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Numerical designation of a flight as it is operated by a carrier.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="OnwardJourneyOrdinal" type="OrdinalType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Indicates position in sequence of onward Bag Segments following the journey</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="OperationalSuffixText" type="OperationalSuffixTextType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>from SIX XSD: Alphabetical character following a flight number assigned for operational purposes. SSIM: A code assigned by the administrating carrier for operational purposes.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="BagSegmentRecapsType">
-<xs:annotation>
-<xs:documentation>A recap of received statements on allocation of a bag to a specific set of consecutive legs and a load position in vehicle performing the legs
- 
- </xs:documentation>
-</xs:annotation>
-<xs:sequence>
-<xs:element name="ClassOfServiceCode" type="RBD_CodeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Code used to identify a particular Reservations Booking Designator. For example: P, J, W, M.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="Collection" type="CollectionType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A collection reports when an item is (planned to be) collected at a facility potentially using a vehicle 
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="Delivery" type="DeliveryType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A delivery reports when an item is (planned to be) delivered at a facility potentially using a vehicle</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="LoyaltyProgramAccount" type="LoyaltyProgramAccountType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>An account set up for a customer within a rewards program which holds funds on behalf of that customer.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="SegmentSecurityControls" type="SegmentSecurityControlsType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A set of principles or procedures according to which something is done on a particular segment of travel.</xs:documentation>
-</xs:annotation>
-</xs:element>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="BagSegmentType">
-<xs:annotation>
-<xs:documentation>An allocation of a bag to a specific set of consecutive legs and a load position in vehicle performing the legs
- 
- </xs:documentation>
-</xs:annotation>
-<xs:sequence>
-<xs:element name="Bag" type="BagType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A piece of luggage associated with a passenger, packed for traveling, and necessary or appropriate in connection with a journey.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="BaggageProcess" type="BaggageProcessType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A series of tasks or steps taken in order to achieve a particular end in the context of baggage logistics.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="BaggageState" type="BaggageStatusesType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A set of statuses of baggage at a particular time in a process.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="CarryingSegment" type="DatedOperatingSegmentCollapsedType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A collapsed view on an operation between board point and any subsequent off point within the same flight designator. Could be one or more legs. Could also be used for other transport vehicles such as train or bus etc.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="ClassOfServiceCode" type="RBD_CodeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Code used to identify a particular Reservations Booking Designator. For example: P, J, W, M.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="Collection" type="CollectionType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A collection reports when an item is (planned to be) collected at a facility potentially using a vehicle 
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="DeliveringBagSegment" type="BagSegmentDeliveringDaughterType" minOccurs="0" maxOccurs="unbounded">
-<xs:annotation>
-<xs:documentation>A completed allocation of a bag to a specific set of consecutive legs 
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="Delivery" type="DeliveryType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A delivery reports when an item is (planned to be) delivered at a facility potentially using a vehicle</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="Exception" type="BagSegmentExceptionType" minOccurs="0" maxOccurs="unbounded">
-<xs:annotation>
-<xs:documentation>Baggage Exception as per RP1745 Attachment A Section 1</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="HoldCompartment" type="HoldCompartmentType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A space designated within a hold that can be containerized/palletized or not.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="InternalAirlineData" type="InternalAirlineDataTextType" minOccurs="0" maxOccurs="10">
-<xs:annotation>
-<xs:documentation>For airline to determine its use and meaning in extension of standard</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="LoadSeqOrdinal" type="OrdinalType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>This is the sequence number in which the baggage item was loaded into the stowage device.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="OnwardBagSegment" type="BagSegmentOnwardDaughterType" minOccurs="0" maxOccurs="unbounded">
-<xs:annotation>
-<xs:documentation>A anticipated allocation of a bag to a specific set of consecutive legs
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="PackInto" type="PackIntoType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>bag is packed into either ULD or Cart</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="RecapInstructions" type="BagSegmentRecapsType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A recap of received statements on allocation of a bag to a specific set of consecutive legs and a load position in vehicle performing the legs
- 
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="SecurityNumber" type="SecurityControlNumberType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Security Number as per RP1739</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="SegmentSecurityOutcomes" type="SegmentSecurityOutcomesType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A set of outcomes of applying Segment Security Controls to Baggage Process</xs:documentation>
+<xs:documentation>The Screening Instruction of the security control. Security instruction control is a security control or a direction or order in a security context.</xs:documentation>
 </xs:annotation>
 </xs:element>
 </xs:sequence>
@@ -867,10 +619,9 @@
 <xs:documentation>An organization which acts on behalf of another.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="IssuingAgent" type="AgentCollapsedType" minOccurs="0" maxOccurs="1">
+<xs:element name="IssuingAgent" type="AgentType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>A Role of an individual person to be a staff of an agency.
- </xs:documentation>
+<xs:documentation>A role of an individual person to be a staff of an agency</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="Printer" type="PrinterType" minOccurs="0" maxOccurs="1">
@@ -878,10 +629,9 @@
 <xs:documentation>A device for printing text or pictures or barcodes, especially one linked to a computer.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="ScanningAgent" type="AgentCollapsedType" minOccurs="0" maxOccurs="1">
+<xs:element name="ScanningAgent" type="AgentType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>A Role of an individual person to be a staff of an agency.
- </xs:documentation>
+<xs:documentation>A role of an individual person to be a staff of an agency</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="SerialNumberID" type="BagTagSerialNumberID_Type" minOccurs="1" maxOccurs="1">
@@ -930,14 +680,12 @@
 </xs:element>
 <xs:element name="Dimensions" type="BagDimensionsType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>A set of measurable extents of a particular bag, such as length, or height or width.
- </xs:documentation>
+<xs:documentation>A set of measurable extents of a particular bag, such as length, or height or width.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="Owner" type="IndividualType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>A single human being as distinct from a group, class, or family.
- </xs:documentation>
+<xs:documentation>A single human being as distinct from a group, class, or family.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="PhysicalProperties" type="BagPhysicalPropertiesType" minOccurs="0" maxOccurs="1">
@@ -1058,140 +806,17 @@
 </xs:simpleType>
 <xs:complexType name="CarrierType">
 <xs:annotation>
-<xs:documentation>An organization operating transport vehicles for commercial purposes which offers transport services, both scheduled or non-scheduled, to the public for carriage of passengers and their baggage, mail and/or cargo and is certified for such purposes by an authority of the state in which it is established.
- </xs:documentation>
+<xs:documentation>An organization operating transport vehicles for commercial purposes which offers transport services, both scheduled or non-scheduled, to the public for carriage of passengers and their baggage, mail and/or cargo and is certified for such purposes by an authority of the state in which it is established.</xs:documentation>
 </xs:annotation>
 <xs:sequence>
 <xs:element name="CarrierDesigCode" type="AirlineDesigCodeType" minOccurs="1" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>ICAO-defined 3-character code or IATA-defined 2-character code assigned to the carrier. For example: BA is British Airways PLC, 2C is SNCF and is also CMA CGM Air Cargo.
- </xs:documentation>
+<xs:documentation>ICAO-defined 3-character code or IATA-defined 2-character code assigned to the carrier. For example: BA is British Airways PLC, 2C is SNCF and is also CMA CGM Air Cargo.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="DuplicateDesigInd" type="IndType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Indicates that the carrier designator code is a duplicate code shared by multiple carriers. In this case to uniquely identify the carrier the carrier name must be specified in addition to the carrier designator code.</xs:documentation>
-</xs:annotation>
-</xs:element>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="CartRideRecapsType">
-<xs:annotation>
-<xs:documentation>A recap of (instructed) use of a baggage cart to package a collection of bags of same segregation for transport between terminal and aircraft stand
- </xs:documentation>
-</xs:annotation>
-<xs:sequence>
-<xs:element name="ClassOfServiceCode" type="RBD_CodeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Code used to identify a particular RBD. For example: P, J, W, M.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="Collection" type="CollectionType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A collection reports when an item is (planned to be) collected at a facility potentially using a vehicle 
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="Delivery" type="DeliveryType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A delivery reports when an item is (planned to be) delivered at a facility potentially using a vehicle</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="InternalAirlineData" type="InternalAirlineDataTextType" minOccurs="0" maxOccurs="10">
-<xs:annotation>
-<xs:documentation>Internal Airline Data</xs:documentation>
-</xs:annotation>
-</xs:element>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="CartRideRestrictedType">
-<xs:annotation>
-<xs:documentation>A use of a baggage cart to package a collection of bags of same segregation for transport between terminal and aircraft stand
- </xs:documentation>
-</xs:annotation>
-<xs:sequence>
-<xs:element name="Cart" type="CartType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A cart may be used to transport baggage or cargo over the airport
- has wheels, offers a platform, has towing interface
- see AHM 963: FUNCTIONAL SPECIFICATION FOR A BAGGAGE/CARGO CART</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="ClassOfServiceCode" type="RBD_CodeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Code used to identify a particular RBD. For example: P, J, W, M.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="CommodityCode" type="CommodityCodeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Code set used with ULDs for segregation of bags and/or cargo for efficient load and unload from the aircraft and subsequent ground operations. Load information codes, known also as commodity codes, are defined by but not limited to IATA Load Control - AHM 510, 1.1.</xs:documentation>
-</xs:annotation>
-</xs:element>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="CartRideType">
-<xs:annotation>
-<xs:documentation>A use of a baggage cart to package a collection of bags of same segregation for transport between terminal and aircraft stand
- </xs:documentation>
-</xs:annotation>
-<xs:sequence>
-<xs:element name="BaggageProcess" type="BaggageProcessType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A series of tasks or steps taken in order to achieve a particular end in the context of baggage logistics.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="BaggageState" type="BaggageStatusesType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A set of statuses of baggage at a particular time in a process.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="Cart" type="CartType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A cart may be used to transport baggage or cargo over the airport
- has wheels, offers a platform, has towing interface
- see AHM 963: FUNCTIONAL SPECIFICATION FOR A BAGGAGE/CARGO CART</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="ClassOfServiceCode" type="RBD_CodeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Code used to identify a particular RBD. For example: P, J, W, M.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="Collection" type="CollectionType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A collection reports when an item is (planned to be) collected at a facility potentially using a vehicle 
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="CommodityCode" type="CommodityCodeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Code set used with ULDs for segregation of bags and/or cargo for efficient load and unload from the aircraft and subsequent ground operations. Load information codes, known also as commodity codes, are defined by but not limited to IATA Load Control - AHM 510, 1.1.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="Delivery" type="DeliveryType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A delivery reports when an item is (planned to be) delivered at a facility potentially using a vehicle</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="HoldCompartment" type="HoldCompartmentType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A space designated within a hold that can be containerized/palletized or not.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="InternalAirlineData" type="InternalAirlineDataTextType" minOccurs="0" maxOccurs="10">
-<xs:annotation>
-<xs:documentation>Internal Airline Data</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="Support" type="SupportType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Cart Ride either supports an arrival or a departure</xs:documentation>
 </xs:annotation>
 </xs:element>
 </xs:sequence>
@@ -1219,8 +844,7 @@
 <xs:simpleType name="CartTypeCodeContentType">
 <xs:annotation>
 <xs:documentation>A qualification of a Cart as BAGGAGE or CARGO CART
- see AHM 963: FUNCTIONAL SPECIFICATION FOR A BAGGAGE/CARGO CART
- {codeListAgencyIdentifier}3{/codeListAgencyIdentifier} {codeListAgencyName}IATA{/codeListAgencyName} {codeListName}qualification of a Cart, AHM 963 (2023){/codeListName} </xs:documentation>
+ see AHM 963: FUNCTIONAL SPECIFICATION FOR A BAGGAGE/CARGO CART {codeListAgencyIdentifier}3{/codeListAgencyIdentifier} {codeListAgencyName}IATA{/codeListAgencyName} {codeListName}qualification of a Cart, AHM 963 (2023){/codeListName} </xs:documentation>
 </xs:annotation>
 <xs:restriction base="xs:token">
 <xs:enumeration value="Baggage">
@@ -1238,8 +862,7 @@
 <xs:simpleType name="CartTypeCodeType">
 <xs:annotation>
 <xs:documentation>A qualification of a Cart as BAGGAGE or CARGO CART
- see AHM 963: FUNCTIONAL SPECIFICATION FOR A BAGGAGE/CARGO CART
- </xs:documentation>
+ see AHM 963: FUNCTIONAL SPECIFICATION FOR A BAGGAGE/CARGO CART</xs:documentation>
 </xs:annotation>
 <xs:restriction base="CartTypeCodeContentType"></xs:restriction>
 </xs:simpleType>
@@ -1259,8 +882,7 @@
 </xs:complexType>
 <xs:complexType name="CityType">
 <xs:annotation>
-<xs:documentation>A City (e.g., Dublin), town, or postal station (i.e., a postal service territory, often used in a military address, or metropolitan area)
- </xs:documentation>
+<xs:documentation>A City (e.g., Dublin), town, or postal station (i.e., a postal service territory, often used in a military address, or metropolitan area)</xs:documentation>
 </xs:annotation>
 <xs:sequence>
 <xs:element name="CityName" type="ProperNameType" minOccurs="1" maxOccurs="1">
@@ -1278,8 +900,7 @@
 </xs:simpleType>
 <xs:complexType name="CollectionType">
 <xs:annotation>
-<xs:documentation>A collection reports when an item is (planned to be) collected at a facility potentially using a vehicle 
- </xs:documentation>
+<xs:documentation>A collection reports when an item is (planned to be) collected at a facility potentially using a vehicle</xs:documentation>
 </xs:annotation>
 <xs:sequence>
 <xs:element name="EarliestDateTime" type="DateTimeType" minOccurs="0" maxOccurs="1">
@@ -1326,14 +947,6 @@
 </xs:annotation>
 <xs:restriction base="xs:token"></xs:restriction>
 </xs:simpleType>
-<xs:simpleType name="ContainerHandlingTypeTextType">
-<xs:annotation>
-<xs:documentation>Free text field up to 8 characters</xs:documentation>
-</xs:annotation>
-<xs:restriction base="xs:string">
-<xs:pattern value="[A-Z 0-9]{1,8}"></xs:pattern>
-</xs:restriction>
-</xs:simpleType>
 <xs:simpleType name="ControlStateCodeType">
 <xs:annotation>
 <xs:documentation>Codifies Control</xs:documentation>
@@ -1347,8 +960,7 @@
 <xs:sequence>
 <xs:element name="Carrier" type="CarrierType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>An organization operating transport vehicles for commercial purposes which offers transport services, both scheduled or non-scheduled, to the public for carriage of passengers and their baggage, mail and/or cargo and is certified for such purposes by an authority of the state in which it is established.
- </xs:documentation>
+<xs:documentation>An organization operating transport vehicles for commercial purposes which offers transport services, both scheduled or non-scheduled, to the public for carriage of passengers and their baggage, mail and/or cargo and is certified for such purposes by an authority of the state in which it is established.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="CrewMemberID" type="ID_Type" minOccurs="0" maxOccurs="1">
@@ -1358,7 +970,7 @@
 </xs:element>
 </xs:sequence>
 </xs:complexType>
-<xs:complexType name="DatedOperatingSegmentCollapsedType">
+<xs:complexType name="DatedOperatingSegmentType">
 <xs:annotation>
 <xs:documentation>A collapsed view on an operation between board point and any subsequent off point within the same flight designator. Could be one or more legs. Could also be used for other transport vehicles such as train or bus etc.</xs:documentation>
 </xs:annotation>
@@ -1380,8 +992,7 @@
 </xs:element>
 <xs:element name="CarrierDesigCode" type="AirlineDesigCodeType" minOccurs="1" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>ICAO-defined 3-character code or IATA-defined 2-character code assigned to the carrier. For example: BA is British Airways PLC, 2C is SNCF and is also CMA CGM Air Cargo.
- </xs:documentation>
+<xs:documentation>ICAO-defined 3-character code or IATA-defined 2-character code assigned to the carrier. For example: BA is British Airways PLC, 2C is SNCF and is also CMA CGM Air Cargo.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="DepIATA_LocationCode" type="IATA_LocationCodeType" minOccurs="1" maxOccurs="1">
@@ -1423,6 +1034,80 @@
 </xs:annotation>
 <xs:restriction base="xs:date"></xs:restriction>
 </xs:simpleType>
+<xs:complexType name="DeliveringBagSegmentType">
+<xs:annotation>
+<xs:documentation>A completed allocation of a bag to a specific set of consecutive legs 
+ </xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="AircraftScheduledDepDateTime" type="DateTimeType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Scheduled date and time of departure of the aircraft at the terminal or departure gate at an airport.
+ </xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="ArrivalIATA_LocationCode" type="IATA_LocationCodeType" minOccurs="1" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>IATA defined code identifying a city or station.
+ </xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="ArrivalTerminalCode" type="IATA_TerminalCodeType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Code of the terminal infrastructure facility, as defined by IATA SSIM Appendix D. For example: '2W'.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="CarrierDesigCode" type="AirlineDesigCodeType" minOccurs="1" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>ICAO-defined 3-character code or IATA-defined 2-character code assigned to the carrier. For example: BA is British Airways PLC, 2C is SNCF and is also CMA CGM Air Cargo
+ 
+ </xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="ClassOfServiceCode" type="RBD_CodeType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Code used to identify a particular Reservations Booking Designator. For example: P, J, W, M.
+ </xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="DeliveringJourneyOrdinal" type="OrdinalType" minOccurs="1" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Indicates position in sequence of delivering Bag Segments following the journey</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="DepIATA_LocationCode" type="IATA_LocationCodeType" minOccurs="1" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>IATA defined code identifying a city or station.
+ 
+ </xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="DepTerminalCode" type="IATA_TerminalCodeType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Code of the terminal infrastructure facility, as defined by IATA SSIM Appendix D. For example: '2W'.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="FlightID_Date" type="DateType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>(UTC) date of the scheduled aircraft departure from the station of origin.
+ 
+ </xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="FlightNumberText" type="FlightNumberTextType" minOccurs="1" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Numerical designation of a flight as it is operated by a carrier.
+ </xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="OperationalSuffixText" type="OperationalSuffixTextType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>from SIX XSD: Alphabetical character following a flight number assigned for operational purposes. SSIM: A code assigned by the administrating carrier for operational purposes.
+ </xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
 <xs:complexType name="DeliveryType">
 <xs:annotation>
 <xs:documentation>A delivery reports when an item is (planned to be) delivered at a facility potentially using a vehicle</xs:documentation>
@@ -1462,8 +1147,7 @@
 </xs:simpleType>
 <xs:simpleType name="EventTriggerCodeType">
 <xs:annotation>
-<xs:documentation>IATA RP1745 ch 2.3.21 Event Trigger Qualifier
- </xs:documentation>
+<xs:documentation>IATA RP1745 ch 2.3.21 Event Trigger Qualifier</xs:documentation>
 </xs:annotation>
 <xs:restriction base="EventTriggerCodeContentType"></xs:restriction>
 </xs:simpleType>
@@ -1490,8 +1174,7 @@
 <xs:sequence>
 <xs:element name="BaggageFacilityType" type="BaggageFacilityTypeType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>A classification of Facility according to Facility Type
- </xs:documentation>
+<xs:documentation>A classification of Facility according to Facility Type</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="FacilityID" type="ID_Type" minOccurs="0" maxOccurs="1">
@@ -1501,8 +1184,7 @@
 </xs:element>
 <xs:element name="GeospatialLocation" type="GeospatialLocationType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>A location with a spatial attribute, probably on the surface of the earth. For example: Longitude and Latitude
- </xs:documentation>
+<xs:documentation>A location with a spatial attribute, probably on the surface of the earth. For example: Longitude and Latitude</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="Name" type="ProperNameType" minOccurs="0" maxOccurs="1">
@@ -1513,8 +1195,7 @@
 </xs:element>
 <xs:element name="PostalAddress" type="PostalAddressType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>A natural or physical address used for postal service. May be a building address, airport address, etc.
- </xs:documentation>
+<xs:documentation>A natural or physical address used for postal service. May be a building address, airport address, etc.</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="Station" type="StationType" minOccurs="1" maxOccurs="1">
@@ -1535,8 +1216,7 @@
 </xs:simpleType>
 <xs:complexType name="GeospatialLocationType">
 <xs:annotation>
-<xs:documentation>A location with a spatial attribute, probably on the surface of the earth. For example: Longitude and Latitude
- </xs:documentation>
+<xs:documentation>A location with a spatial attribute, probably on the surface of the earth. For example: Longitude and Latitude</xs:documentation>
 </xs:annotation>
 <xs:sequence>
 <xs:element name="PointElevationNumber" type="NumberType" minOccurs="0" maxOccurs="1">
@@ -1635,8 +1315,7 @@
 </xs:simpleType>
 <xs:complexType name="IndividualType">
 <xs:annotation>
-<xs:documentation>A single human being as distinct from a group, class, or family.
- </xs:documentation>
+<xs:documentation>A single human being as distinct from a group, class, or family.</xs:documentation>
 </xs:annotation>
 <xs:sequence>
 <xs:element name="GivenName" type="ProperNameType" minOccurs="0" maxOccurs="5">
@@ -1747,6 +1426,80 @@
 </xs:annotation>
 <xs:restriction base="xs:decimal"></xs:restriction>
 </xs:simpleType>
+<xs:complexType name="OnwardBagSegmentType">
+<xs:annotation>
+<xs:documentation>A anticipated allocation of a bag to a specific set of consecutive legs
+ </xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="AircraftScheduledDepDateTime" type="DateTimeType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Scheduled date and time of departure of the aircraft at the terminal or departure gate at an airport.
+ </xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="ArrivalIATA_LocationCode" type="IATA_LocationCodeType" minOccurs="1" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>IATA defined code identifying a city or station.
+ </xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="ArrivalTerminalCode" type="IATA_TerminalCodeType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Code of the terminal infrastructure facility, as defined by IATA SSIM Appendix D. For example: '2W'.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="CarrierDesigCode" type="AirlineDesigCodeType" minOccurs="1" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>ICAO-defined 3-character code or IATA-defined 2-character code assigned to the carrier. For example: BA is British Airways PLC, 2C is SNCF and is also CMA CGM Air Cargo
+ 
+ </xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="ClassOfServiceCode" type="RBD_CodeType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Code used to identify a particular Reservations Booking Designator. For example: P, J, W, M.
+ </xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="DepIATA_LocationCode" type="IATA_LocationCodeType" minOccurs="1" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>IATA defined code identifying a city or station.
+ 
+ </xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="DepTerminalCode" type="IATA_TerminalCodeType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Code of the terminal infrastructure facility, as defined by IATA SSIM Appendix D. For example: '2W'.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="FlightID_Date" type="DateType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>(UTC) date of the scheduled aircraft departure from the station of origin.
+ 
+ </xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="FlightNumberText" type="FlightNumberTextType" minOccurs="1" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Numerical designation of a flight as it is operated by a carrier.
+ </xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="OnwardJourneyOrdinal" type="OrdinalType" minOccurs="1" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Indicates position in sequence of onward Bag Segments following the journey</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="OperationalSuffixText" type="OperationalSuffixTextType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>from SIX XSD: Alphabetical character following a flight number assigned for operational purposes. SSIM: A code assigned by the administrating carrier for operational purposes.
+ </xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
 <xs:simpleType name="OperationalSuffixTextType">
 <xs:annotation>
 <xs:documentation>Defines the Operational Suffix which is appended to a flight number.</xs:documentation>
@@ -1761,24 +1514,75 @@
 </xs:annotation>
 <xs:restriction base="xs:integer"></xs:restriction>
 </xs:simpleType>
+<xs:complexType name="PackIntoCartRideType">
+<xs:annotation>
+<xs:documentation>A use of a baggage cart to pack a bag for transport between terminal and aircraft stand
+ </xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="Cart" type="CartType" minOccurs="1" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>A cart may be used to transport baggage or cargo over the airport
+ has wheels, offers a platform, has towing interface
+ see AHM 963: FUNCTIONAL SPECIFICATION FOR A BAGGAGE/CARGO CART</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="ClassOfServiceCode" type="RBD_CodeType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Code used to identify a particular RBD. For example: P, J, W, M.
+ </xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="CommodityCode" type="CommodityCodeType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Code set used with ULDs for segregation of bags and/or cargo for efficient load and unload from the aircraft and subsequent ground operations. Load information codes, known also as commodity codes, are defined by but not limited to IATA Load Control - AHM 510, 1.1.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
 <xs:complexType name="PackIntoType">
 <xs:annotation>
 <xs:documentation>bag is packed into either ULD or Cart</xs:documentation>
 </xs:annotation>
 <xs:choice>
-<xs:element name="CartRide" type="CartRideRestrictedType" minOccurs="1" maxOccurs="1">
+<xs:element name="CartRide" type="PackIntoCartRideType" minOccurs="1" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>A use of a baggage cart to package a collection of bags of same segregation for transport between terminal and aircraft stand
+<xs:documentation>A use of a baggage cart to pack a bag for transport between terminal and aircraft stand
  </xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="ULD_Allocation" type="ULD_AllocationRestrictedType" minOccurs="1" maxOccurs="1">
+<xs:element name="ULD_Allocation" type="PackIntoULD_AllocationType" minOccurs="1" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>An allocation of a ULD to a specific set of legs and a load position in vehicle performing the legs
+<xs:documentation>An allocation of a ULD to pack a bag for a specific set of legs and a load position in vehicle performing the legs
  </xs:documentation>
 </xs:annotation>
 </xs:element>
 </xs:choice>
+</xs:complexType>
+<xs:complexType name="PackIntoULD_AllocationType">
+<xs:annotation>
+<xs:documentation>An allocation of a ULD to pack a bag for a specific set of legs and a load position in vehicle performing the legs
+ </xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="ClassOfServiceCode" type="RBD_CodeType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Code used to identify a particular RBD. For example: P, J, W, M.
+ </xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="CommodityCode" type="CommodityCodeType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Used with ULDs to segregate bags for efficient load and unload from the aircraft and subsequent ground operations. Recommended codes are listed in AHM240. Airlines who wish to use their own codes may do so. E.g. 'BY' for Economy Bags.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="ULD" type="ULD_Type" minOccurs="1" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>A Unit Load Device is a load carrying device which interfaces directly with aircraft loading and restraint systems and meets all restraint requirements without the use of supplementary equipment. Examples include containers, pallets and pallet nets.
+ </xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
 </xs:complexType>
 <xs:simpleType name="PaxGroupNameType">
 <xs:annotation>
@@ -1867,8 +1671,7 @@
 </xs:complexType>
 <xs:complexType name="PostalAddressType">
 <xs:annotation>
-<xs:documentation>A natural or physical address used for postal service. May be a building address, airport address, etc.
- </xs:documentation>
+<xs:documentation>A natural or physical address used for postal service. May be a building address, airport address, etc.</xs:documentation>
 </xs:annotation>
 <xs:sequence>
 <xs:element name="BuildingRoomText" type="TextType" minOccurs="0" maxOccurs="1">
@@ -1878,8 +1681,7 @@
 </xs:element>
 <xs:element name="City" type="CityType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>A City (e.g., Dublin), town, or postal station (i.e., a postal service territory, often used in a military address, or metropolitan area)
- </xs:documentation>
+<xs:documentation>A City (e.g., Dublin), town, or postal station (i.e., a postal service territory, often used in a military address, or metropolitan area)</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="LabelText" type="TextType" minOccurs="0" maxOccurs="1">
@@ -1943,6 +1745,147 @@
 </xs:annotation>
 <xs:restriction base="RBD_CodeContentType"></xs:restriction>
 </xs:simpleType>
+<xs:complexType name="RecapInstructionBagSegmentType">
+<xs:annotation>
+<xs:documentation>A recap of instructions to allocate of a bag to a specific set of consecutive legs 
+ </xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="ClassOfServiceCode" type="RBD_CodeType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Code used to identify a particular Reservations Booking Designator. For example: P, J, W, M.
+ </xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="Collection" type="CollectionType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>A collection reports when an item is (planned to be) collected at a facility potentially using a vehicle</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="Delivery" type="DeliveryType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>A delivery reports when an item is (planned to be) delivered at a facility potentially using a vehicle</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="InternalAirlineData" type="InternalAirlineDataTextType" minOccurs="0" maxOccurs="10">
+<xs:annotation>
+<xs:documentation>For airline to determine its use and meaning in extension of standard</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="LoyaltyProgramAccount" type="LoyaltyProgramAccountType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>An account set up for a customer within a rewards program which holds funds on behalf of that customer.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="SegmentSecurityControls" type="BagSegmentSecurityControlsType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>A set of principles or procedures according to which something is done on a particular segment of travel.
+ #EndOfDef
+ Refers to flattened Passenger Segment</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="ResultForBagSegmentType">
+<xs:annotation>
+<xs:documentation>A result in allocation of a bag to a specific set of consecutive legs 
+ </xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="Bag" type="BagType" minOccurs="1" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>A piece of luggage associated with a passenger, packed for traveling, and necessary or appropriate in connection with a journey.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="BaggageProcess" type="BaggageProcessType" minOccurs="1" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>A series of tasks or steps taken in order to achieve a particular end in the context of baggage logistics.
+ </xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="BaggageState" type="BaggageStatusesType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>A set of statuses of baggage at a particular time in a process.
+ </xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="CarryingSegment" type="DatedOperatingSegmentType" minOccurs="1" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>A collapsed view on an operation between board point and any subsequent off point within the same flight designator. Could be one or more legs. Could also be used for other transport vehicles such as train or bus etc.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="ClassOfServiceCode" type="RBD_CodeType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Code used to identify a particular Reservations Booking Designator. For example: P, J, W, M.
+ </xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="Collection" type="CollectionType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>A collection reports when an item is (planned to be) collected at a facility potentially using a vehicle</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="DeliveringBagSegment" type="DeliveringBagSegmentType" minOccurs="0" maxOccurs="unbounded">
+<xs:annotation>
+<xs:documentation>A completed allocation of a bag to a specific set of consecutive legs 
+ </xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="Delivery" type="DeliveryType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>A delivery reports when an item is (planned to be) delivered at a facility potentially using a vehicle</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="Exception" type="BagSegmentExceptionType" minOccurs="0" maxOccurs="unbounded">
+<xs:annotation>
+<xs:documentation>Baggage Exception as per RP1745 Attachment A Section 1</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="HoldCompartment" type="HoldCompartmentType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>A space designated within a hold that can be containerized/palletized or not.
+ </xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="InternalAirlineData" type="InternalAirlineDataTextType" minOccurs="0" maxOccurs="10">
+<xs:annotation>
+<xs:documentation>For airline to determine its use and meaning in extension of standard</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="LoadSeqOrdinal" type="OrdinalType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>This is the sequence number in which the baggage item was loaded into the stowage device.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="OnwardBagSegment" type="OnwardBagSegmentType" minOccurs="0" maxOccurs="unbounded">
+<xs:annotation>
+<xs:documentation>A anticipated allocation of a bag to a specific set of consecutive legs
+ </xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="PackInto" type="PackIntoType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>bag is packed into either ULD or Cart</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="RecapInstructions" type="RecapInstructionBagSegmentType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>A recap of instructions to allocate of a bag to a specific set of consecutive legs 
+ </xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="SecurityNumber" type="SecurityControlNumberType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Security Number as per RP1739</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="SegmentSecurityOutcomes" type="SegmentSecurityOutcomesType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>A set of outcomes of applying Segment Security Controls to Baggage Process</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
 <xs:complexType name="RoleType">
 <xs:annotation>
 <xs:documentation>A Bag is owned by an individual who may take role of either passenger or crew member for a given bag segment. In this case, the presence/absence of CREW exception code will tell for each Bag Segment which of the two applies.
@@ -2167,71 +2110,6 @@
 </xs:annotation>
 <xs:restriction base="SecurityScreeningStatusCodeContentType"></xs:restriction>
 </xs:simpleType>
-<xs:complexType name="SegmentSecurityControlsDaughterType">
-<xs:annotation>
-<xs:documentation>A set of principles or procedures according to which something is done on a particular segment of travel for a ULD</xs:documentation>
-</xs:annotation>
-<xs:sequence>
-<xs:element name="AuthorityToLoadInd" type="IndType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>The authority to load indicator of the security control. An authority security control is an official permission; sanction from a security context.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="AuthorityToTransportInd" type="IndType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>The authority to transport indicator of the security control. An authority security control is an official permission; sanction from a security context.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="ScreeningInstructionCode" type="ScreeningInstructionCodeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>The Screening Instruction of the security control. Security instruction control is a security control or a direction or order in a security context.</xs:documentation>
-</xs:annotation>
-</xs:element>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="SegmentSecurityControlsType">
-<xs:annotation>
-<xs:documentation>A set of principles or procedures according to which something is done on a particular segment of travel.</xs:documentation>
-</xs:annotation>
-<xs:sequence>
-<xs:element name="AuthorityToLoadInd" type="IndType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>The authority to load indicator of the security control. An authority security control is an official permission; sanction from a security context.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="AuthorityToTransportInd" type="IndType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>The authority to transport indicator of the security control. An authority security control is an official permission; sanction from a security context.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="BagDeleteRequestInd" type="BagDeleteRequestIndType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A request by the airline to delete or mark as deleted the record for this bag as no longer expected for the flight.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="BagRemovalRequestInd" type="BagRemovalRequestIndType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A request by the airline to unload a loaded bag, Should be set with the authorization to load set to NO.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="BagTagStatusCode" type="BagTagStatusCodeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Determines whether bag is authorized to load
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="PaxStatus" type="PaxSegmentType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A transportation of a passenger on a Dated Operating Segment.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="ScreeningInstructionCode" type="ScreeningInstructionCodeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>The Screening Instruction of the security control. Security instruction control is a security control or a direction or order in a security context.</xs:documentation>
-</xs:annotation>
-</xs:element>
-</xs:sequence>
-</xs:complexType>
 <xs:complexType name="SegmentSecurityOutcomesType">
 <xs:annotation>
 <xs:documentation>A set of outcomes of applying Segment Security Controls to Baggage Process</xs:documentation>
@@ -2298,23 +2176,6 @@
 <xs:maxLength value="16"></xs:maxLength>
 </xs:restriction>
 </xs:simpleType>
-<xs:complexType name="SupportType">
-<xs:annotation>
-<xs:documentation>Cart Ride either supports an arrival or a departure</xs:documentation>
-</xs:annotation>
-<xs:choice>
-<xs:element name="TransportArrival" type="TransportArrivalCollapsedType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A collapsed view on an action or process of arriving of a transport vehicle in any place or location.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="TransportDep" type="TransportDepartureCollapsedType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A collapsed view on an action or process of leaving of a transport vehicle from any place or location.</xs:documentation>
-</xs:annotation>
-</xs:element>
-</xs:choice>
-</xs:complexType>
 <xs:simpleType name="SurfaceTransportID_Type">
 <xs:annotation>
 <xs:documentation>The identifier of a surface transport vehicle.</xs:documentation>
@@ -2355,423 +2216,6 @@
 <xs:pattern value="[0-9A-F]{24,48}"></xs:pattern>
 </xs:restriction>
 </xs:simpleType>
-<xs:complexType name="TransportArrivalCollapsedType">
-<xs:annotation>
-<xs:documentation>A collapsed view on an action or process of arriving of a transport vehicle in any place or location.</xs:documentation>
-</xs:annotation>
-<xs:sequence>
-<xs:element name="AircraftScheduledArrivalDateTime" type="DateTimeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Scheduled date and time of arrival of the aircraft at the terminal or departure gate at an airport.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="AircraftScheduledDepDateTime" type="DateTimeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Scheduled date and time of departure of the aircraft at the terminal or departure gate at an airport.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="ArrivalIATA_LocationCode" type="IATA_LocationCodeType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>IATA defined code identifying a city or station.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="ArrivalTerminalCode" type="IATA_TerminalCodeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Code of the terminal infrastructure facility, as defined by IATA SSIM Appendix D. For example: '2W'.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="CarrierDesigCode" type="AirlineDesigCodeType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>ICAO-defined 3-character code or IATA-defined 2-character code assigned to the carrier. For example: BA is British Airways PLC, 2C is SNCF and is also CMA CGM Air Cargo.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="FlightID_Date" type="DateType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>(UTC) date of the scheduled aircraft departure from the station of origin.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="FlightNumberText" type="FlightNumberTextType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Numerical designation of a flight.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="OperationalSuffixText" type="OperationalSuffixTextType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>from SIX XSD: Alphabetical character following a flight number assigned for operational purposes. SSIM: A code assigned by the administrating carrier for operational purposes.</xs:documentation>
-</xs:annotation>
-</xs:element>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="TransportDepartureCollapsedType">
-<xs:annotation>
-<xs:documentation>A collapsed view on an action or process of leaving of a transport vehicle from any place or location.</xs:documentation>
-</xs:annotation>
-<xs:sequence>
-<xs:element name="AircraftScheduledDepDateTime" type="DateTimeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Scheduled date and time of departure of the aircraft at the terminal or departure gate at an airport.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="ArrivalTerminalCode" type="IATA_TerminalCodeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Code of the terminal infrastructure facility, as defined by IATA SSIM Appendix D. For example: '2W'.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="CarrierDesigCode" type="AirlineDesigCodeType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>ICAO-defined 3-character code or IATA-defined 2-character code assigned to the carrier. For example: BA is British Airways PLC, 2C is SNCF and is also CMA CGM Air Cargo.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="DepIATA_LocationCode" type="IATA_LocationCodeType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>IATA defined code identifying a city or station.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="FlightID_Date" type="DateType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>(UTC) date of the scheduled aircraft departure from the station of origin.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="FlightNumberText" type="FlightNumberTextType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Numerical designation of a flight.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="OperationalSuffixText" type="OperationalSuffixTextType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>from SIX XSD: Alphabetical character following a flight number assigned for operational purposes. SSIM: A code assigned by the administrating carrier for operational purposes.</xs:documentation>
-</xs:annotation>
-</xs:element>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="ULD_AllocationDeliveringDaughterType">
-<xs:annotation>
-<xs:documentation>A completed allocation of a ULD to a specific set of legs and a load position in vehicle performing the legs
- </xs:documentation>
-</xs:annotation>
-<xs:sequence>
-<xs:element name="AircraftScheduledDepDateTime" type="DateTimeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Scheduled date and time of departure of the aircraft at the terminal or departure gate at an airport.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="ArrivalIATA_LocationCode" type="IATA_LocationCodeType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>IATA defined code identifying a city or station.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="ArrivalTerminalCode" type="IATA_TerminalCodeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Code of the terminal infrastructure facility, as defined by IATA SSIM Appendix D. For example: '2W'.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="CarrierDesigCode" type="AirlineDesigCodeType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>ICAO-defined 3-character code or IATA-defined 2-character code assigned to the carrier. For example: BA is British Airways PLC, 2C is SNCF and is also CMA CGM Air Cargo
- 
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="ClassOfServiceCode" type="RBD_CodeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Code used to identify a particular Reservations Booking Designator. For example: P, J, W, M.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="DeliveringJourneyOrdinal" type="OrdinalType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Indicates position in sequence of delivering ULD Allocations following the journey</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="DepIATA_LocationCode" type="IATA_LocationCodeType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>IATA defined code identifying a city or station.
- 
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="DepTerminalCode" type="IATA_TerminalCodeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Code of the terminal infrastructure facility, as defined by IATA SSIM Appendix D. For example: '2W'.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="FlightID_Date" type="DateType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>(UTC) date of the scheduled aircraft departure from the station of origin.
- 
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="FlightNumberText" type="FlightNumberTextType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Numerical designation of a flight as it is operated by a carrier.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="OperationalSuffixText" type="OperationalSuffixTextType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>from SIX XSD: Alphabetical character following a flight number assigned for operational purposes. SSIM: A code assigned by the administrating carrier for operational purposes.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="ULD_AllocationOnwardDaughterType">
-<xs:annotation>
-<xs:documentation>An anticipated allocation of a ULD to a specific set of legs and a load position in vehicle performing the legs
- </xs:documentation>
-</xs:annotation>
-<xs:sequence>
-<xs:element name="AircraftScheduledDepDateTime" type="DateTimeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Scheduled date and time of departure of the aircraft at the terminal or departure gate at an airport.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="ArrivalIATA_LocationCode" type="IATA_LocationCodeType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>IATA defined code identifying a city or station.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="ArrivalTerminalCode" type="IATA_TerminalCodeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Code of the terminal infrastructure facility, as defined by IATA SSIM Appendix D. For example: '2W'.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="CarrierDesigCode" type="AirlineDesigCodeType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>ICAO-defined 3-character code or IATA-defined 2-character code assigned to the carrier. For example: BA is British Airways PLC, 2C is SNCF and is also CMA CGM Air Cargo
- 
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="ClassOfServiceCode" type="RBD_CodeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Code used to identify a particular Reservations Booking Designator. For example: P, J, W, M.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="DepIATA_LocationCode" type="IATA_LocationCodeType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>IATA defined code identifying a city or station.
- 
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="DepTerminalCode" type="IATA_TerminalCodeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Code of the terminal infrastructure facility, as defined by IATA SSIM Appendix D. For example: '2W'.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="FlightID_Date" type="DateType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>(UTC) date of the scheduled aircraft departure from the station of origin.
- 
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="FlightNumberText" type="FlightNumberTextType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Numerical designation of a flight as it is operated by a carrier.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="OnwardJourneyOrdinal" type="OrdinalType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Indicates position in sequence of onward ULD Allocations following the journey</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="OperationalSuffixText" type="OperationalSuffixTextType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>from SIX XSD: Alphabetical character following a flight number assigned for operational purposes. SSIM: A code assigned by the administrating carrier for operational purposes.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="ULD_AllocationRecapType">
-<xs:annotation>
-<xs:documentation>Recap of relevant outcomes or instructions as posted to date on this ULD Allocation
- </xs:documentation>
-</xs:annotation>
-<xs:sequence>
-<xs:element name="ClassOfServiceCode" type="RBD_CodeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Code used to identify a particular RBD. For example: P, J, W, M.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="Collection" type="CollectionType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A collection reports when an item is (planned to be) collected at a facility potentially using a vehicle 
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="Delivery" type="DeliveryType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A delivery reports when an item is (planned to be) delivered at a facility potentially using a vehicle</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="InternalAirlineText" type="InternalAirlineDataTextType" minOccurs="0" maxOccurs="10">
-<xs:annotation>
-<xs:documentation>Internal Airline Data</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="SecurityControls" type="SegmentSecurityControlsDaughterType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A set of principles or procedures according to which something is done on a particular segment of travel for a ULD</xs:documentation>
-</xs:annotation>
-</xs:element>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="ULD_AllocationRestrictedType">
-<xs:annotation>
-<xs:documentation>An allocation of a ULD to a specific set of legs and a load position in vehicle performing the legs
- </xs:documentation>
-</xs:annotation>
-<xs:sequence>
-<xs:element name="ClassOfServiceCode" type="RBD_CodeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Code used to identify a particular RBD. For example: P, J, W, M.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="CommodityCode" type="CommodityCodeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Used with ULDs to segregate bags for efficient load and unload from the aircraft and subsequent ground operations. Recommended codes are listed in AHM240. Airlines who wish to use their own codes may do so. E.g. 'BY' for Economy Bags.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="ULD" type="ULD_Type" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A Unit Load Device is a load carrying device which interfaces directly with aircraft loading and restraint systems and meets all restraint requirements without the use of supplementary equipment. Examples include containers, pallets and pallet nets.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="ULD_AllocationType">
-<xs:annotation>
-<xs:documentation>An allocation of a ULD to a specific set of legs and a load position in vehicle performing the legs
- </xs:documentation>
-</xs:annotation>
-<xs:sequence>
-<xs:element name="BaggageProcess" type="BaggageProcessType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A series of tasks or steps taken in order to achieve a particular end in the context of baggage logistics.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="BaggageState" type="BaggageStatusesType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A set of statuses of baggage at a particular time in a process.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="CarryingSegment" type="DatedOperatingSegmentCollapsedType" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A collapsed view on an operation between board point and any subsequent off point within the same flight designator. Could be one or more legs. Could also be used for other transport vehicles such as train or bus etc.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="ClassOfServiceCode" type="RBD_CodeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Code used to identify a particular RBD. For example: P, J, W, M.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="Collection" type="CollectionType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A collection reports when an item is (planned to be) collected at a facility potentially using a vehicle 
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="CommodityCode" type="CommodityCodeType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Code set used with ULDs for segregation of bags and/or cargo for efficient load and unload from the aircraft and subsequent ground operations. Load information codes, known also as commodity codes, are defined by but not limited to IATA Load Control - AHM 510, 1.1.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="ContainerHandlingType" type="ContainerHandlingTypeTextType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Container Handling Type expressed in free format 8 characters</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="DeliveringULD_Allocation" type="ULD_AllocationDeliveringDaughterType" minOccurs="0" maxOccurs="unbounded">
-<xs:annotation>
-<xs:documentation>A completed allocation of a ULD to a specific set of legs and a load position in vehicle performing the legs
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="Delivery" type="DeliveryType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A delivery reports when an item is (planned to be) delivered at a facility potentially using a vehicle</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="InternalAirlineData" type="InternalAirlineDataTextType" minOccurs="0" maxOccurs="10">
-<xs:annotation>
-<xs:documentation>Internal Airline Data</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="OnwardULD_Allocation" type="ULD_AllocationOnwardDaughterType" minOccurs="0" maxOccurs="unbounded">
-<xs:annotation>
-<xs:documentation>An anticipated allocation of a ULD to a specific set of legs and a load position in vehicle performing the legs
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="RecapInstructions" type="ULD_AllocationRecapType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation></xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="SegmentSecurityOutcomes" type="SegmentSecurityOutcomesType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A set of outcomes of applying Segment Security Controls to Baggage Process</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="ULD" type="ULD_Type" minOccurs="1" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A Unit Load Device is a load carrying device which interfaces directly with aircraft loading and restraint systems and meets all restraint requirements without the use of supplementary equipment. Examples include containers, pallets and pallet nets.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="ULD_LoadPosition" type="ULD_LoadPositionType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A subdivision of a containerized/palletized compartment.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-</xs:sequence>
-</xs:complexType>
-<xs:simpleType name="ULD_LoadPositionID_Type">
-<xs:annotation>
-<xs:documentation>Specifies a ULD Load Position identifier.</xs:documentation>
-</xs:annotation>
-<xs:restriction base="xs:token">
-<xs:pattern value="[A-Z]{1,3}|[0-9]{1,4}[A-Z]"></xs:pattern>
-</xs:restriction>
-</xs:simpleType>
-<xs:complexType name="ULD_LoadPositionType">
-<xs:annotation>
-<xs:documentation>A subdivision of a containerized/palletized compartment.
- </xs:documentation>
-</xs:annotation>
-<xs:sequence>
-<xs:element name="HoldCompartment" type="HoldCompartmentType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A space designated within a hold that can be containerized/palletized or not.
- </xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="ULD_LoadPositionID" type="ULD_LoadPositionID_Type" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Identifies a possible ULD position within the aircraft, using one of the patterns described in AHM505. E.g. A, BR, CDL, E3, 13,22L, 32P, 413, 1112O. May contain compartment number, row position, left-to-right position in a row.</xs:documentation>
-</xs:annotation>
-</xs:element>
-</xs:sequence>
-</xs:complexType>
 <xs:simpleType name="ULD_OwnerCodeContentType">
 <xs:annotation>
 <xs:documentation>Code set used with ULDs for segregation of bags for efficient load and unload from the aircraft and subsequent ground operations. 
@@ -2809,14 +2253,12 @@
 </xs:element>
 <xs:element name="SerialNumberID" type="ULD_SerialNumberID_Type" minOccurs="1" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>Specifies ULD Serial Number as per IATA ULD Regulations section 4
- </xs:documentation>
+<xs:documentation>Specifies ULD Serial Number as per IATA ULD Regulations section 4</xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="TypeCode" type="ULD_TypeCodeType" minOccurs="1" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>Specifies ULD Type Code as per IATA ULD Regulations section 4
- </xs:documentation>
+<xs:documentation>Specifies ULD Type Code as per IATA ULD Regulations section 4</xs:documentation>
 </xs:annotation>
 </xs:element>
 </xs:sequence>
@@ -2824,8 +2266,7 @@
 <xs:simpleType name="ULD_TypeCodeContentType">
 <xs:annotation>
 <xs:documentation>Code set used with ULDs for segregation of bags for efficient load and unload from the aircraft and subsequent ground operations. 
- The type code consist of three characters, with the first character in alpha-numeric and the rest numeric
- {codeListAgencyName}IATA{/codeListAgencyName} {codeListName}IATA ULD Codes for Identification{/codeListName} {codeListIdentifier}IATA ULD Regulation (ULDR) {/codeListIdentifier} {enumerationURI}IATA ULD Regulations section 4{/enumerationURI}</xs:documentation>
+ The type code consist of three characters, with the first character in alpha-numeric and the rest numeric {codeListAgencyName}IATA{/codeListAgencyName} {codeListName}IATA ULD Codes for Identification{/codeListName} {codeListIdentifier}IATA ULD Regulation (ULDR) {/codeListIdentifier} {enumerationURI}IATA ULD Regulations section 4{/enumerationURI}</xs:documentation>
 </xs:annotation>
 <xs:restriction base="xs:token">
 <xs:pattern value="[A-Z][A-Z0-9]{2}"></xs:pattern>
@@ -2843,12 +2284,12 @@
 </xs:annotation>
 <xs:restriction base="xs:anyURI"></xs:restriction>
 </xs:simpleType>
-<xs:complexType name="WeightMeasureCodeType">
+<xs:complexType name="WeightMeasureType">
 <xs:annotation>
 <xs:documentation>A numeric value determining a weight along with the specified unit of measure.</xs:documentation>
 </xs:annotation>
 <xs:simpleContent>
-<xs:extension base="WeightUnitCodeContentType">
+<xs:extension base="WeightMeasureValue">
 <xs:attribute name="UnitCode" type="WeightUnitCodeContentType" use="optional">
 <xs:annotation>
 <xs:documentation>The weight unit code of measure.</xs:documentation>
@@ -2857,9 +2298,14 @@
 </xs:extension>
 </xs:simpleContent>
 </xs:complexType>
+<xs:simpleType name="WeightMeasureValue">
+<xs:restriction base="xs:integer">
+<xs:minExclusive value="0"></xs:minExclusive>
+</xs:restriction>
+</xs:simpleType>
 <xs:simpleType name="WeightUnitCodeContentType">
 <xs:annotation>
-<xs:documentation>List of Weight Unit Codes. {codeListAgencyName}AIDM (extract from UN/CEFACT){/codeListAgencyName} </xs:documentation>
+<xs:documentation>List of Weight Unit Codes. Subset of UN/CEFACT Recommendation 20. {codeListAgencyName}AIDM (extract from UN/CEFACT){/codeListAgencyName} </xs:documentation>
 </xs:annotation>
 <xs:restriction base="xs:token">
 <xs:enumeration value="KGM">
