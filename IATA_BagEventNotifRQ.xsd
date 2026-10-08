@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2021.4/IATA_BagEventNotifRQ" targetNamespace="http://www.iata.org/IATA/2015/00/2021.4/IATA_BagEventNotifRQ" elementFormDefault="qualified" version="2.004">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2022.1/IATA_BagEventNotifRQ" targetNamespace="http://www.iata.org/IATA/2015/00/2022.1/IATA_BagEventNotifRQ" elementFormDefault="qualified" version="2.004">
 	<xs:element name="IATA_BagEventNotifRQ">
 		<xs:annotation>
 			<xs:documentation>Used to track baggage event notification message</xs:documentation>
@@ -3018,11 +3018,6 @@
 					<xs:documentation>Animal in hold</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
-			<xs:enumeration value="SPEV">
-				<xs:annotation>
-					<xs:documentation>Special Events</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
 			<xs:enumeration value="BIKE">
 				<xs:annotation>
 					<xs:documentation>Bicycle</xs:documentation>
@@ -3226,6 +3221,11 @@
 			<xs:enumeration value="SHOP">
 				<xs:annotation>
 					<xs:documentation>Item bought at the airport that cannot be accepted as carry-on baggage</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SPEV">
+				<xs:annotation>
+					<xs:documentation>Special Events</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="SPEQ">

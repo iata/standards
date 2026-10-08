@@ -49,7 +49,7 @@
           },
           "example" : "8086"
         }, {
-          "name" : "depatureAirport",
+          "name" : "departureAirport",
           "in" : "query",
           "description" : "IATA code of departure airport.",
           "required" : false,
@@ -61,7 +61,7 @@
           },
           "example" : "YUL"
         }, {
-          "name" : "depatureCity",
+          "name" : "departureCity",
           "in" : "query",
           "description" : "IATA code of departure city.",
           "required" : false,
