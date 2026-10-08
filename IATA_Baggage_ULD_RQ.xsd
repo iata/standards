@@ -1,5 +1,5 @@
 <?xml  version="1.0" encoding="UTF-8" ?>
-<xs:schema targetNamespace="http://www.iata.org/IATA/2015/00/2025.3/IATA_Baggage_ULD_RQ" elementFormDefault="qualified" version="1.002" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2025.3/IATA_Baggage_ULD_RQ" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"><xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/>
+<xs:schema targetNamespace="http://www.iata.org/IATA/2015/00/2025.4/IATA_Baggage_ULD_RQ" elementFormDefault="qualified" version="1.004" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2025.4/IATA_Baggage_ULD_RQ" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"><xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/>
 <xs:element name="IATA_Baggage_ULD_RQ">
 <xs:annotation>
 <xs:documentation>Instructions to handle baggage ULD from airline to handler</xs:documentation>
@@ -474,12 +474,12 @@
 <xs:documentation>Material code of the physical property measurement. Refer to resolution 743b description codes.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="WeightAllowanceMeasure" type="WeightMeasureType" minOccurs="0" maxOccurs="1">
+<xs:element name="WeightAllowanceMeasure" type="WeightMeasureCodeType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Allowance for Weight for a single Bag</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="WeightMeasure" type="WeightMeasureType" minOccurs="0" maxOccurs="1">
+<xs:element name="WeightMeasure" type="WeightMeasureCodeType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>A measurement of the heaviness of a bag. Only checked weight supported.</xs:documentation>
 </xs:annotation>
@@ -1209,12 +1209,6 @@
 <xs:documentation>Internal Airline Data</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="RecapInstructions" type="CartRideRecapsType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>A recap of (instructed) use of a baggage cart to package a collection of bags of same segregation for transport between terminal and aircraft stand
- </xs:documentation>
-</xs:annotation>
-</xs:element>
 <xs:element name="RecapOutcomes" type="CartRideRecapsType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>A recap of (instructed) use of a baggage cart to package a collection of bags of same segregation for transport between terminal and aircraft stand
@@ -1312,60 +1306,12 @@
 </xs:enumeration>
 </xs:restriction>
 </xs:simpleType>
-<xs:complexType name="ChangeIndCodeType">
+<xs:simpleType name="ChangeIndCodeType">
 <xs:annotation>
 <xs:documentation>The change indicator code of the bag movement</xs:documentation>
 </xs:annotation>
-<xs:simpleContent>
-<xs:extension base="ChangeIndCodeContentType">
-<xs:attribute name="LangID" type="xs:token" use="optional">
-<xs:annotation>
-<xs:documentation>The identifier of the language used in the corresponding text string.</xs:documentation>
-</xs:annotation>
-</xs:attribute>
-<xs:attribute name="ListAgencyID" type="xs:string" use="optional" default="3">
-<xs:annotation>
-<xs:documentation>An agency that maintains one or more code lists.</xs:documentation>
-</xs:annotation>
-</xs:attribute>
-<xs:attribute name="ListAgencyName" type="xs:string" use="optional" default="IATA">
-<xs:annotation>
-<xs:documentation>The name of the agency that maintains the code list.</xs:documentation>
-</xs:annotation>
-</xs:attribute>
-<xs:attribute name="ListID" type="xs:string" use="optional" default="BCL20062">
-<xs:annotation>
-<xs:documentation>The identification of a list of codes.</xs:documentation>
-</xs:annotation>
-</xs:attribute>
-<xs:attribute name="ListName" type="xs:string" use="optional" default="RP1745BaggageServiceMessageChangeIndicatorCodes">
-<xs:annotation>
-<xs:documentation>The name of a list of codes.</xs:documentation>
-</xs:annotation>
-</xs:attribute>
-<xs:attribute name="ListSchemeUniformResourceID" type="xs:string" use="optional">
-<xs:annotation>
-<xs:documentation>The Uniform Resource identifier that identifies where the code list scheme is located.</xs:documentation>
-</xs:annotation>
-</xs:attribute>
-<xs:attribute name="ListUniformResourceID" type="xs:string" use="optional">
-<xs:annotation>
-<xs:documentation>The Uniform Resource Identifier that identifies where the code list is located.</xs:documentation>
-</xs:annotation>
-</xs:attribute>
-<xs:attribute name="ListVersionID" type="xs:string" use="optional" default="1">
-<xs:annotation>
-<xs:documentation>The version of the code list.</xs:documentation>
-</xs:annotation>
-</xs:attribute>
-<xs:attribute name="Name" type="xs:string" use="optional">
-<xs:annotation>
-<xs:documentation>The textual equivalent of the code content.</xs:documentation>
-</xs:annotation>
-</xs:attribute>
-</xs:extension>
-</xs:simpleContent>
-</xs:complexType>
+<xs:restriction base="ChangeIndCodeContentType"></xs:restriction>
+</xs:simpleType>
 <xs:complexType name="CityType">
 <xs:annotation>
 <xs:documentation>A City (e.g., Dublin), town, or postal station (i.e., a postal service territory, often used in a military address, or metropolitan area)
@@ -1724,60 +1670,12 @@
 <xs:maxLength value="4"></xs:maxLength>
 </xs:restriction>
 </xs:simpleType>
-<xs:complexType name="IATA_TerminalCodeType">
+<xs:simpleType name="IATA_TerminalCodeType">
 <xs:annotation>
 <xs:documentation>The code of the terminal infrastructure facility, as defined by IATA SSIM Appendix D. Example: '2W'.</xs:documentation>
 </xs:annotation>
-<xs:simpleContent>
-<xs:extension base="IATA_TerminalCodeContentType">
-<xs:attribute name="LangID" type="xs:token" use="optional">
-<xs:annotation>
-<xs:documentation>The identifier of the language used in the corresponding text string.</xs:documentation>
-</xs:annotation>
-</xs:attribute>
-<xs:attribute name="ListAgencyID" type="xs:token" use="optional">
-<xs:annotation>
-<xs:documentation>An agency that maintains one or more code lists.</xs:documentation>
-</xs:annotation>
-</xs:attribute>
-<xs:attribute name="ListAgencyName" type="xs:string" use="optional">
-<xs:annotation>
-<xs:documentation>The name of the agency that maintains the code list.</xs:documentation>
-</xs:annotation>
-</xs:attribute>
-<xs:attribute name="ListID" type="xs:token" use="optional">
-<xs:annotation>
-<xs:documentation>The identification of a list of codes.</xs:documentation>
-</xs:annotation>
-</xs:attribute>
-<xs:attribute name="ListName" type="xs:string" use="optional">
-<xs:annotation>
-<xs:documentation>The name of a list of codes.</xs:documentation>
-</xs:annotation>
-</xs:attribute>
-<xs:attribute name="ListSchemeUniformResourceID" type="xs:anyURI" use="optional">
-<xs:annotation>
-<xs:documentation>The Uniform Resource Identifier that identifies where the code list scheme is located.</xs:documentation>
-</xs:annotation>
-</xs:attribute>
-<xs:attribute name="ListUniformResourceID" type="xs:anyURI" use="optional">
-<xs:annotation>
-<xs:documentation>The Uniform Resource Identifier that identifies where the code list is located.</xs:documentation>
-</xs:annotation>
-</xs:attribute>
-<xs:attribute name="ListVersionID" type="xs:token" use="optional">
-<xs:annotation>
-<xs:documentation>The version of the code list.</xs:documentation>
-</xs:annotation>
-</xs:attribute>
-<xs:attribute name="Name" type="xs:string" use="optional">
-<xs:annotation>
-<xs:documentation>The textual equivalent of the code content.</xs:documentation>
-</xs:annotation>
-</xs:attribute>
-</xs:extension>
-</xs:simpleContent>
-</xs:complexType>
+<xs:restriction base="IATA_TerminalCodeContentType"></xs:restriction>
+</xs:simpleType>
 <xs:simpleType name="ID_Type">
 <xs:annotation>
 <xs:documentation>An identifier is a character string used to uniquely identify one instance of an object within an identification scheme that is managed by an agency.</xs:documentation>
@@ -2790,7 +2688,7 @@
 <xs:documentation>A delivery reports when an item is (planned to be) delivered at a facility potentially using a vehicle</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="InternalAirlineText" type="InternalAirlineDataTextType" minOccurs="0" maxOccurs="1">
+<xs:element name="InternalAirlineText" type="InternalAirlineDataTextType" minOccurs="0" maxOccurs="10">
 <xs:annotation>
 <xs:documentation>Internal Airline Data</xs:documentation>
 </xs:annotation>
@@ -2889,7 +2787,7 @@
 <xs:documentation>A delivery reports when an item is (planned to be) delivered at a facility potentially using a vehicle</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="InternalAirlineData" type="InternalAirlineDataTextType" minOccurs="0" maxOccurs="1">
+<xs:element name="InternalAirlineData" type="InternalAirlineDataTextType" minOccurs="0" maxOccurs="10">
 <xs:annotation>
 <xs:documentation>Internal Airline Data</xs:documentation>
 </xs:annotation>
@@ -3017,12 +2915,12 @@
 </xs:annotation>
 <xs:restriction base="xs:anyURI"></xs:restriction>
 </xs:simpleType>
-<xs:complexType name="WeightMeasureType">
+<xs:complexType name="WeightMeasureCodeType">
 <xs:annotation>
 <xs:documentation>A numeric value determining a weight along with the specified unit of measure.</xs:documentation>
 </xs:annotation>
 <xs:simpleContent>
-<xs:extension base="WeightMeasureValue">
+<xs:extension base="WeightUnitCodeContentType">
 <xs:attribute name="UnitCode" type="WeightUnitCodeContentType" use="optional">
 <xs:annotation>
 <xs:documentation>The weight unit code of measure.</xs:documentation>
@@ -3031,15 +2929,9 @@
 </xs:extension>
 </xs:simpleContent>
 </xs:complexType>
-<xs:simpleType name="WeightMeasureValue">
-<xs:restriction base="xs:integer">
-<xs:minExclusive value="0"></xs:minExclusive>
-<xs:maxInclusive value="2147483647"></xs:maxInclusive>
-</xs:restriction>
-</xs:simpleType>
 <xs:simpleType name="WeightUnitCodeContentType">
 <xs:annotation>
-<xs:documentation>List of Weight Unit Codes. Subset of UN/CEFACT Recommendation 20. {codeListAgencyName}AIDM (extract from UN/CEFACT){/codeListAgencyName} </xs:documentation>
+<xs:documentation>List of Weight Unit Codes. {codeListAgencyName}AIDM (extract from UN/CEFACT){/codeListAgencyName} </xs:documentation>
 </xs:annotation>
 <xs:restriction base="xs:token">
 <xs:enumeration value="KGM">
