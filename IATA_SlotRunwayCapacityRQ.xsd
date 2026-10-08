@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns="http://www.iata.org/IATA/2007/00" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.iata.org/IATA/2007/00" elementFormDefault="qualified" version="2.001" id="IATA2022.1">
+<xs:schema xmlns="http://www.iata.org/IATA/2007/00" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.iata.org/IATA/2007/00" elementFormDefault="qualified" version="2.002" id="IATA2023.1">
 	<xs:include schemaLocation="IATA_CommonTypes.xsd"/>
 	<xs:include schemaLocation="IATA_SlotCommonTypes.xsd"/>
 	<xs:element name="IATA_SlotRunwayCapacityRQ">
@@ -61,13 +61,13 @@
 											<xs:documentation>The number of minutes for staggering rolling time brackets.</xs:documentation>
 										</xs:annotation>
 									</xs:attribute>
-								    <xs:attribute name="DisplayBracket" type="Numeric0to99" use="optional">
+									<xs:attribute name="DisplayBracket" type="Numeric0to99" use="optional">
 										<xs:annotation>
 											<xs:documentation>The size of the time bracket used to measure capacity that is to be returned to the client.</xs:documentation>
 										</xs:annotation>
 									</xs:attribute>
 									<xs:attributeGroup ref="DateTimeSpanGroup"/>
-                                </xs:complexType>
+								</xs:complexType>
 							</xs:element>
 							<xs:element name="Dates">
 								<xs:annotation>
@@ -82,14 +82,13 @@
 									</xs:attribute>
 								</xs:complexType>
 							</xs:element>
-							
 							<xs:element name="AdditionalCriteria" minOccurs="0">
 								<xs:annotation>
 									<xs:documentation>Additional information to help refine the response</xs:documentation>
 								</xs:annotation>
 								<xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element name="OrigDestStn" minOccurs="0">
+									<xs:sequence>
+										<xs:element name="OrigDestStn" minOccurs="0">
 											<xs:annotation>
 												<xs:documentation>To limit the retrieval of slot availability to a specific origin or destination station.</xs:documentation>
 											</xs:annotation>
@@ -106,7 +105,7 @@
 												</xs:attribute>
 											</xs:complexType>
 										</xs:element>
-    									<xs:element name="PrevNextStn" minOccurs="0">
+										<xs:element name="PrevNextStn" minOccurs="0">
 											<xs:annotation>
 												<xs:documentation>To limit the retrieval of slot availability to a specific previous or next station.</xs:documentation>
 											</xs:annotation>
@@ -133,19 +132,19 @@
 														<xs:documentation>The type of aircraft for which slot availability is requested.</xs:documentation>
 													</xs:annotation>
 												</xs:attribute>
-												<xs:attribute 	name="CodeContext" 																				type="IATA_OrICAO_Type">
+												<xs:attribute name="CodeContext" type="IATA_OrICAO_Type">
 													<xs:annotation>
 														<xs:documentation>Used to specify if an IATA or an ICAO code.</xs:documentation>
 													</xs:annotation>
 												</xs:attribute>
 											</xs:complexType>
 										</xs:element>
-                				        <xs:element name="Service" type="ServiceType" minOccurs="0">
+										<xs:element name="Service" type="ServiceType" minOccurs="0">
 											<xs:annotation>
 												<xs:documentation>Used to specify slot availability for specific SSIM services.</xs:documentation>
 											</xs:annotation>
-                       		            </xs:element>
-                        	            <xs:element name="Airline" minOccurs="0">
+										</xs:element>
+										<xs:element name="Airline" minOccurs="0">
 											<xs:annotation>
 												<xs:documentation>To limit the retrieval of slot availability to a specific airline.</xs:documentation>
 											</xs:annotation>
@@ -162,11 +161,14 @@
 												</xs:attribute>
 											</xs:complexType>
 										</xs:element>
-                     		         </xs:sequence>
+										<xs:element name="Seats" type="Numeric0to999" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Used to specify availability for a specific seat count</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
 								</xs:complexType>
 							</xs:element>
-
-							
 						</xs:sequence>
 						<xs:attribute name="Type" type="RunwayCapacityType" use="required">
 							<xs:annotation>
@@ -190,5 +192,3 @@
 		</xs:complexType>
 	</xs:element>
 </xs:schema>
-
-

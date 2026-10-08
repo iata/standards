@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2007/00" targetNamespace="http://www.iata.org/IATA/2007/00" elementFormDefault="qualified" version="4.005" id="IATA2022.1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2007/00" targetNamespace="http://www.iata.org/IATA/2007/00" elementFormDefault="qualified" version="4.006" id="IATA2023.1">
 	<xs:include schemaLocation="IATA_SimpleTypes.xsd"/>
 	<xs:include schemaLocation="IATA_CommonTypes.xsd"/>
 	<xs:complexType name="BaseTransactionType">
@@ -1191,12 +1191,44 @@
 					<xs:documentation>The outstanding number of seats requested by the airline.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-            <xs:element name="ReqTerminal" type="UpperCaseAlphaNumericStringLength1to2" minOccurs="0">
+			<xs:element name="ReqTerminal" type="UpperCaseAlphaNumericStringLength1to2" minOccurs="0">
 				<xs:annotation>
-					<xs:documentation>
-                        The requested terminal Identifier.
-                    </xs:documentation>
+					<xs:documentation>The requested terminal Identifier.</xs:documentation>
 				</xs:annotation>
+			</xs:element>
+			<xs:element name="ReqOrigDestStn" minOccurs="0" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation>The requested origin/destination airport.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="Station" type="StationType" use="required">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The airport code for the origin/destination.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="CodeContext" type="IATA_OrICAO_Type" use="required">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Used to specify if an IATA or an ICAO code.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ReqPrevNextStn" minOccurs="0" maxOccurs="2">
+				<xs:annotation>
+					<xs:documentation>The requested previous/next airport code.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="Station" type="StationType" use="required">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">The airport code for the previous/next station.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="CodeContext" type="IATA_OrICAO_Type" use="required">
+						<xs:annotation>
+							<xs:documentation xml:lang="en">Used to specify if an IATA or an ICAO code.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
 			</xs:element>
 			<xs:element name="ReqOffset" type="DateOffsetType" minOccurs="0">
 				<xs:annotation>
@@ -2286,5 +2318,3 @@
 		</xs:attribute>
 	</xs:complexType>
 </xs:schema>
-
-

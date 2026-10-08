@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema targetNamespace="http://www.iata.org/IATA/2015/EASD/00/IATA_OffersAndOrdersCommonTypes"  xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"  elementFormDefault="qualified" version="1.1" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/EASD/00/IATA_OffersAndOrdersCommonTypes"> <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/> 
+<xs:schema targetNamespace="http://www.iata.org/IATA/2015/EASD/00/IATA_OffersAndOrdersCommonTypes"  xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"  elementFormDefault="qualified" version="1.2" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/EASD/00/IATA_OffersAndOrdersCommonTypes"> <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/> 
 <xs:complexType name="AcceptanceRuleType">
 <xs:annotation>
 <xs:documentation>A rule which is an account or representation of the certain or major aspects, characteristics, or features of a person, object, or event.</xs:documentation>
@@ -7816,6 +7816,14 @@
 </xs:annotation>
 <xs:restriction base="IdentityDocTypeCodeContentType"></xs:restriction>
 </xs:simpleType>
+<xs:simpleType name="IIN_NumberType">
+<xs:annotation>
+<xs:documentation>Issuer identification number.</xs:documentation>
+</xs:annotation>
+<xs:restriction base="xs:string">
+<xs:pattern value="[0-9]{1,8}"></xs:pattern>
+</xs:restriction>
+</xs:simpleType>
 <xs:complexType name="IndividualType">
 <xs:annotation>
 <xs:documentation>A single human being as distinct from a group, class, or family.</xs:documentation>
@@ -11636,16 +11644,6 @@
  An Order may support non-homogeneity, i.e. each passenger in an Order may hold different sets of order items at different prices.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="PaymentInfoList" type="PaymentInfoListType" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Information related to the settlement of a transaction through monetary or other compensations. For example, a payment may be applied to an entire Order or individual Order Items.</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="PromotionList" type="PromotionListType" minOccurs="0" maxOccurs="unbounded">
-<xs:annotation>
-<xs:documentation>Information related to publicizing a product, organization, or venture so as to increase sales or public awareness.</xs:documentation>
-</xs:annotation>
-</xs:element>
 <xs:element name="ResponseParameters" type="ResponseParametersRequestType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>A set of Information related to how response results should be returned.</xs:documentation>
@@ -13140,6 +13138,12 @@
 <xs:documentation>Additional description for the magnetic stripe card type (debit card, credit card, prepaid card, etc.)</xs:documentation>
 </xs:annotation>
 </xs:element>
+<xs:element name="IIN_IINNumber" type="IIN_NumberType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Payment card IIN/BIN number. Example: 401123
+ </xs:documentation>
+</xs:annotation>
+</xs:element>
 <xs:element name="SecurePaymentAuthenticationVersion" type="SecurePaymentAuthenticationVersionType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Used by Seller if 3D-Secure is supported. Seller can specify which version of 3D-Secure is supported. Note: 3D-Secure context should be used when the Customer-Seller interaction type is web and/or mobile.</xs:documentation>
@@ -13165,6 +13169,12 @@
 <xs:element name="CardTypeText" type="TextType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Additional description for the magnetic stripe card type (debit card, credit card, prepaid card, etc.)</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="IIN_IINNumber" type="IIN_NumberType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Payment card IIN/BIN number. Example: 401123
+ </xs:documentation>
 </xs:annotation>
 </xs:element>
 <xs:element name="SecurePaymentAuthenticationVersion" type="SecurePaymentAuthenticationVersionType" minOccurs="0" maxOccurs="1">
@@ -17072,7 +17082,7 @@
 <xs:documentation>Carrier assigned ID which exists uniquely within an Order.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="OwnerCode" type="AirlineDesigCodeType" minOccurs="1" maxOccurs="1">
+<xs:element name="OwnerCode" type="AirlineDesigCodeType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Airline code assigned to a carrier. Either ICAO-defined 3-character code or IATA-defined 2-character code.</xs:documentation>
 </xs:annotation>
@@ -18850,7 +18860,7 @@
 <xs:documentation>Carrier assigned ID which exists uniquely within an Order.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="OwnerCode" type="AirlineDesigCodeType" minOccurs="1" maxOccurs="1">
+<xs:element name="OwnerCode" type="AirlineDesigCodeType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Airline code assigned to a carrier. Either ICAO-defined 3-character code or IATA-defined 2-character code.</xs:documentation>
 </xs:annotation>
