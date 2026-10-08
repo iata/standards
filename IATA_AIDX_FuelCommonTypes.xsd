@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns="http://www.iata.org/IATA/2007/00" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.iata.org/IATA/2007/00" elementFormDefault="qualified" version="1.003" id="IATA2022.1">
+<xs:schema xmlns="http://www.iata.org/IATA/2007/00" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.iata.org/IATA/2007/00" elementFormDefault="qualified" version="1.004" id="IATA2022.4">
 	<xs:include schemaLocation="IATA_SimpleTypes.xsd"/>
 	<xs:include schemaLocation="IATA_CommonTypes.xsd"/>
 	<xs:include schemaLocation="IATA_AIDX_CommonTypes.xsd"/>
@@ -331,6 +331,9 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="Quantity" type="QuantityType" minOccurs="1" maxOccurs="2"/>
+			<xs:element name="SupplierName" type="SupplierNameType" minOccurs="0"/>
+			<xs:element name="SupplierCode" type="SupplierCodeType" minOccurs="0"/>
+			<xs:element name="Density" type="DensityType" minOccurs="0"/>
 			<xs:element name="CaptureTime" type="DateOrTimeOrDateTimeType"/>
 			<xs:element name="CaptureEntity" type="StringLength0to50" minOccurs="0"/>
 			<xs:element name="Distribution" type="DistributionType" minOccurs="0"/>
@@ -349,6 +352,11 @@
 		<xs:attribute name="RepeatIndex" type="Numeric1to99" use="optional">
 			<xs:annotation>
 				<xs:documentation>Identifies a repeating item.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="FuelQualifier" type="IATA_CodeType">
+			<xs:annotation>
+				<xs:documentation>Type indication associated with FuelOnBoard.</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
 	</xs:complexType>
@@ -437,6 +445,11 @@
 					<xs:documentation>Name of Fuel Additive Delivered </xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="FuelQualityChecks" type="QualityCheckType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Fuel Quality Checks</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="Distribution" type="DistributionType" minOccurs="0"/>
 			<xs:element name="Acknowledgement" type="AcknowledgementType" minOccurs="0">
 				<xs:annotation>
@@ -500,6 +513,21 @@
 			</xs:annotation>
 		</xs:attribute>
 		<xs:attributeGroup ref="PositionGroup"/>
+	</xs:complexType>
+	<xs:complexType name="QualityCheckType">
+		<xs:annotation>
+			<xs:documentation>Additional Fuel Quality Checks performed by IPA during fueling</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AppearanceCheck" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="QualityCheck" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="WaterMeasured" type="ScaleType" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="RepeatIndex" type="Numeric1to99" use="optional">
+			<xs:annotation>
+				<xs:documentation>Identifies a repeating item.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
 	</xs:complexType>
 	<xs:complexType name="QuantityType">
 		<xs:complexContent>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2022.1/IATA_LoadControl_SemiPermanentDataNotifRQ" targetNamespace="http://www.iata.org/IATA/2015/00/2022.1/IATA_LoadControl_SemiPermanentDataNotifRQ" elementFormDefault="qualified" version="1.006" id="IATA2022.1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2022.4/IATA_LoadControl_SemiPermanentDataNotifRQ" targetNamespace="http://www.iata.org/IATA/2015/00/2022.4/IATA_LoadControl_SemiPermanentDataNotifRQ" elementFormDefault="qualified" version="1.007" id="IATA2022.4">
 	<xs:element name="IATA_LoadControl_SemiPermanentDataNotifRQ">
 		<xs:annotation>
 			<xs:documentation>Used to exchange semi-permanent data for weight and balance between the carrier owning the aircraft and airlines that operate the aircraft, handling agents and DCS providers.</xs:documentation>
@@ -92,15 +92,10 @@
  </xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Deck" type="DeckType" minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="Deck" type="DeckType" minOccurs="1" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>A structural floor level. For aircraft having one structural level only, this floor level shall be referred to as the main deck. For aircraft having more than one structural floor level, the different floor levels shall be referred to as 'lower deck', 'main deck' and 'upper deck', starting from bottom to top.
  </xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="DefaultInd" type="IndType" minOccurs="1" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>Defines the default aircraft group configuration.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="DOW_Configuration" type="DOW_ConfigurationType" minOccurs="0" maxOccurs="unbounded">
@@ -116,7 +111,7 @@
  </xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="DryOperatingAircraft" type="DryOperatingAircraftType" minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="DryOperatingAircraft" type="DryOperatingAircraftType" minOccurs="1" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Aircraft configured according to a given Dry Operating Weight configuration.
  </xs:documentation>
@@ -140,6 +135,12 @@
 			<xs:element name="FleetWeightMeasure" type="WeightMeasureType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Standard empty weight that may be utilized for all aircraft registrations of a group.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FlightDeckCrewLocation" type="FlightDeckCrewLocationType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Seat location for flight deck crew.
+ </xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="FloorLoadLimitationTable" type="FloorLoadLimitationTableType" minOccurs="0" maxOccurs="unbounded">
@@ -189,8 +190,7 @@
 					<xs:documentation>Daughter ABIE of Carrier (ABIE) to display only the selected Business Identifier Fields:
  - Airline Designator Code
  - Duplicate Designator Indicator
- - Name
- </xs:documentation>
+ - Name</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="PantryDistribution" type="PantryDistributionType" minOccurs="0" maxOccurs="unbounded">
@@ -484,15 +484,19 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:simpleType name="AirlineDesigCodeType">
+	<xs:simpleType name="AirlineDesigCodeContentType">
 		<xs:annotation>
-			<xs:documentation>Specifies either the ICAO-defined 3-character code or IATA-defined 2-character code of an airline designator, as per supplementary component agency name.</xs:documentation>
+			<xs:documentation>The codelist contents of IATA Resolution 762 airline codes, or of ICAO airline codes. {codeListAgencyName}IATA or ICAO{/codeListAgencyName} {codeListName}Resolution 762 Airline Codes or ICAO Airline Codes{/codeListName} </xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:token">
-			<xs:minLength value="2"/>
-			<xs:maxLength value="3"/>
 			<xs:pattern value="([A-Z]{3}|[A-Z]{2})|([0-9][A-Z])|([A-Z][0-9])"/>
 		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AirlineDesigCodeType">
+		<xs:annotation>
+			<xs:documentation>Either the IATA-defined 2-character code or the ICAO-defined 3-character code of an airline, as per the length of the value.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="AirlineDesigCodeContentType"/>
 	</xs:simpleType>
 	<xs:complexType name="AirlineLoadInfoType">
 		<xs:annotation>
@@ -612,14 +616,6 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="AugmentationPoint">
-		<xs:annotation>
-			<xs:documentation>Implementer-Augmented Structure.</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
 	<xs:complexType name="BaggageStandardWeightsType">
 		<xs:annotation>
 			<xs:documentation>Approved baggage standard weights to be used for weight and balance calculation.
@@ -672,68 +668,7 @@
 		<xs:annotation>
 			<xs:documentation>Enumeration set for Balance Output codes (Basic Index, Dry Operating Index, Dead load MAC, MAC - at zero fuel weight,...) {codeListAgencyName}IATA{/codeListAgencyName} {codeListName}Balance output{/codeListName} {codeListIdentifier}PADIS BAL{/codeListIdentifier} </xs:documentation>
 		</xs:annotation>
-		<xs:restriction base="xs:token">
-			<xs:enumeration value="BI">
-				<xs:annotation>
-					<xs:documentation>Basic Index</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="DLI">
-				<xs:annotation>
-					<xs:documentation>Deadload Index</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="DOI">
-				<xs:annotation>
-					<xs:documentation>Dry Operating Index</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="LILAW">
-				<xs:annotation>
-					<xs:documentation>Loaded Index at landing weight</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="LITOW">
-				<xs:annotation>
-					<xs:documentation>Loaded Index at take-off weight</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="LIZFW">
-				<xs:annotation>
-					<xs:documentation>Loaded Index at zero fuel weight</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="MACDLW">
-				<xs:annotation>
-					<xs:documentation>Deadload MAC</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="MACLAW">
-				<xs:annotation>
-					<xs:documentation>MAC -- at landing weight</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="MACTOW">
-				<xs:annotation>
-					<xs:documentation>MAC -- at take-off weight</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="MACZFW">
-				<xs:annotation>
-					<xs:documentation>MAC -- at zero fuel weight</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="STABLA">
-				<xs:annotation>
-					<xs:documentation>Stabilizer trim setting at landing</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="STABTO">
-				<xs:annotation>
-					<xs:documentation>Stabilizer trim setting at take-off</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-		</xs:restriction>
+		<xs:restriction base="xs:token"/>
 	</xs:simpleType>
 	<xs:simpleType name="BalanceOutputCodeType">
 		<xs:annotation>
@@ -772,7 +707,7 @@
 					<xs:documentation>Indicates that output is required on the preliminary EDP load sheet (AHM517).</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="1">
+			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Additional, supplementary information about the document or service.</xs:documentation>
 				</xs:annotation>
@@ -785,7 +720,7 @@
 		</xs:annotation>
 		<xs:restriction base="xs:token">
 			<xs:minLength value="1"/>
-			<xs:maxLength value="30"/>
+			<xs:maxLength value="11"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:complexType name="BayGroupingType">
@@ -834,6 +769,12 @@
 					<xs:documentation>Maximum permitted weight for the Bay Grouping</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="MissingRestraintRule" type="MissingRestraintRuleType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Restriction on weight applicable when one or more locks are inoperable or missing.
+ </xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="ULD_LoadPosition" type="ULD_LoadPositionType" minOccurs="1" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>A subdivision of a containerized/palletized compartment.
@@ -851,6 +792,12 @@
 			<xs:element name="BayGroupingID" type="BayGroupingID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Identifies a Bay (ULD) Grouping (String/Stack) in an aircraft. As per AHM565 Bay Groupings can be identified by joining the identifiers of the first and last bay in the group separated by a hyphen, e.g. 12L-21L. The Grouping ID can also contain configuration information.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Lock" type="LockType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>ULD restraint which can be fixed within the aircraft.
+ </xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="LockPositionCode" type="LockPositionCodeType" minOccurs="1" maxOccurs="1">
@@ -955,6 +902,43 @@
 		</xs:annotation>
 		<xs:restriction base="CabinComponentTypeCodeContentType"/>
 	</xs:simpleType>
+	<xs:complexType name="CabinCrewBaggageLocationType">
+		<xs:sequence>
+			<xs:element name="HoldCompartmentID" type="HoldCompartmentID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identifies a compartment within a hold (compartment no). As per AHM505, compartments are numbered from 1 to 6. A second figure can indicate a section in a compartment starting from the front to the back and from right to left.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HoldID" type="HoldID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identifies a hold within a deck. Typical values include FWD (forward), AFT, BULK, MAIN (deck).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ULD_LoadPositionID" type="ULD_LoadPositionID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identifies a possible ULD position within the aircraft, using one of the patterns described in AHM505. E.g. A, BR, CDL, E3, 13,22L, 32P, 413, 1112O. May contain compartment number, row position, left-to-right position in a row.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CabinCrewBaggageType">
+		<xs:annotation>
+			<xs:documentation>Specification of Cabin Crew Baggage included in the DOW Configuration.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="BaggagePieces" type="QtyType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Total number of Cabin Crew Bags included in the DOW Configuration</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BaggageWeightMeasure" type="WeightMeasureType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Weight of each Cabin Crew Bag included in the DOW Configuration.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="baglocation" type="CabinCrewBaggageLocationType" minOccurs="0" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
 	<xs:complexType name="CabinCrewDistributionElementType">
 		<xs:annotation>
 			<xs:documentation>A specific allocation in a crew distribution related to cabin crew.
@@ -972,6 +956,12 @@
 			<xs:element name="BaggageWithCrewInd" type="IndType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>True if baggage is with the crew, false otherwise.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CabinCrewLocation" type="CabinCrewLocationType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Seat location for cabin crew.
+ </xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="CabinCrewLocationID" type="CabinCrewLocationID_Type" minOccurs="0" maxOccurs="1">
@@ -1002,7 +992,7 @@
 		</xs:annotation>
 		<xs:restriction base="xs:token">
 			<xs:minLength value="1"/>
-			<xs:maxLength value="50"/>
+			<xs:maxLength value="15"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:complexType name="CabinCrewLocationType">
@@ -1109,7 +1099,7 @@
 	</xs:complexType>
 	<xs:simpleType name="CabinTypeCodeContentType">
 		<xs:annotation>
-			<xs:documentation>Enumeration values of Cabin Type Codes as defined by PADIS code set 9873 {codeListAgencyName}PADIS{/codeListAgencyName} {codeListName}Cabin class of service,coded{/codeListName} {codeListIdentifier}9873{/codeListIdentifier} </xs:documentation>
+			<xs:documentation>Enumeration values of Cabin Type Codes as defined by PADIS codeset 9873. {codeListAgencyName}IATA{/codeListAgencyName} {codeListName}PADIS Codeset 9873{/codeListName} </xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:token">
 			<xs:length value="1"/>
@@ -1132,6 +1122,18 @@
 					<xs:documentation>Indicates that there is a master switch in the cockpit for the heating capability.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="Hold" type="HoldType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A space in an aircraft confined by ceiling, floor, walls and bulkhead, used for carrying load.
+ </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HoldCompartment" type="HoldCompartmentType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A space designated within a hold that can be containerized/palletized or not.
+ </xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="HoldCompartmentID" type="HoldCompartmentID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Identifies a compartment within a hold (compartment no). As per AHM505, compartments are numbered from 1 to 6. A second figure can indicate a section in a compartment starting from the front to the back and from right to left.</xs:documentation>
@@ -1142,7 +1144,7 @@
 					<xs:documentation>Identifies a hold within a deck. Typical values include FWD (forward), AFT, BULK, MAIN (deck).</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="1">
+			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Additional, supplementary information about the document or service.</xs:documentation>
 				</xs:annotation>
@@ -1165,6 +1167,12 @@
 			<xs:element name="TemperatureToValue" type="ValueType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Maximum expected temperature for the specified control panel setting.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ULD_LoadPosition" type="ULD_LoadPositionType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A subdivision of a containerized/palletized compartment.
+ </xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="ULD_LoadPositionID" type="ULD_LoadPositionID_Type" minOccurs="0" maxOccurs="1">
@@ -1200,6 +1208,18 @@
 					<xs:documentation>Indicates that the Air Exchange Rate is expressed in Times Per Hour (true) or Times Per Minute (false).</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="Hold" type="HoldType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A space in an aircraft confined by ceiling, floor, walls and bulkhead, used for carrying load.
+ </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HoldCompartment" type="HoldCompartmentType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A space designated within a hold that can be containerized/palletized or not.
+ </xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="HoldCompartmentID" type="HoldCompartmentID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Identifies a compartment within a hold (compartment no). As per AHM505, compartments are numbered from 1 to 6. A second figure can indicate a section in a compartment starting from the front to the back and from right to left.</xs:documentation>
@@ -1225,6 +1245,12 @@
 					<xs:documentation>The setting as it appears on the aircraft's cargo ventilation control panel. Exact wording should be used where possible to avoid confusion, e.g. 'High', 'ON'. Leave blank if no ventilation control available.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="ULD_LoadPosition" type="ULD_LoadPositionType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A subdivision of a containerized/palletized compartment.
+ </xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="ULD_LoadPositionID" type="ULD_LoadPositionID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Identifies a possible ULD position within the aircraft, using one of the patterns described in AHM505. E.g. A, BR, CDL, E3, 13,22L, 32P, 413, 1112O. May contain compartment number, row position, left-to-right position in a row.</xs:documentation>
@@ -1237,8 +1263,7 @@
 			<xs:documentation>Daughter ABIE of Carrier (ABIE) to display only the selected Business Identifier Fields:
  - Airline Designator Code
  - Duplicate Designator Indicator
- - Name
- </xs:documentation>
+ - Name</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="AirlineDesigCode" type="AirlineDesigCodeType" minOccurs="1" maxOccurs="1">
@@ -1298,13 +1323,13 @@
 					<xs:documentation>The electronic or geographic address which a party has provided as the contact channel. For example, contact email, contact postal address, contact phone number.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="CrewBaggageStandardWeights" type="CrewBaggageStandardWeightsType" minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="CrewBaggageStandardWeights" type="CrewBaggageStandardWeightsType" minOccurs="1" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Approved crew baggage standard weights to be used for weight and balance calculation.
  </xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="CrewStandardWeights" type="CrewStandardWeightsType" minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="CrewStandardWeights" type="CrewStandardWeightsType" minOccurs="1" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Approved crew standard weights to be used for weight and balance calculation.
  </xs:documentation>
@@ -1324,11 +1349,6 @@
 				<xs:annotation>
 					<xs:documentation>Approved passenger standard weights to be used for weight and balance calculation.
  </xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="SupplierContact" type="ContactInfoType" minOccurs="0" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>The electronic or geographic address which a party has provided as the contact channel. For example, contact email, contact postal address, contact phone number.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="ULD_Type" type="ULD_TypeType" minOccurs="0" maxOccurs="unbounded">
@@ -1384,11 +1404,6 @@
 			<xs:element name="RangeTypeCode" type="CodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Type or nature of the defined From/To values that limit the applicability of the balance limitation table. This may be specific units e.g. 'KG', 'Liters', but may also be used to identify the range e.g. 'Fuel Volume', 'Zero Fuel MAC'.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="1">
-				<xs:annotation>
-					<xs:documentation>Additional, supplementary information about the document or service.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="TableName" type="NameType" minOccurs="1" maxOccurs="1">
@@ -1483,7 +1498,7 @@
 					<xs:documentation>Type or nature of the defined From/To values that limit the applicability of the load limitation table. This may indicate a specific unit or weight unit type such as 'Zero fuel weight' or 'Take off weight', but may also be used to identify the range e.g. 'Fuel Volume', 'Zero Fuel MAC'.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="1">
+			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Additional, supplementary information about the document or service.</xs:documentation>
 				</xs:annotation>
@@ -1501,6 +1516,18 @@
  </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
+			<xs:element name="Hold" type="HoldType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>A space in an aircraft confined by ceiling, floor, walls and bulkhead, used for carrying load.
+ </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HoldCompartment" type="HoldCompartmentType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>A space designated within a hold that can be containerized/palletized or not.
+ </xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="HoldCompartmentID" type="HoldCompartmentID_Type" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Identifies a compartment within a hold (compartment no). As per AHM505, compartments are numbered from 1 to 6. A second figure can indicate a section in a compartment starting from the front to the back and from right to left.</xs:documentation>
@@ -1582,13 +1609,13 @@
 	</xs:complexType>
 	<xs:simpleType name="CountryDialingCodeContentType">
 		<xs:annotation>
-			<xs:documentation>Enumeration set for the Country Dialing Code BDT. {codeListAgencyName}ITU{/codeListAgencyName} {enumerationURI}ITU-T in standards E.123 and E.164{/enumerationURI}</xs:documentation>
+			<xs:documentation>Enumeration set for the Country Dialing Code BDT. {codeListAgencyIdentifier}ITU{/codeListAgencyIdentifier} {codeListAgencyName}ITU{/codeListAgencyName} {codeListIdentifier}ITU-T in standards E.123 and E.164{/codeListIdentifier} {enumerationURI}ITU-T in standards E.123 and E.164{/enumerationURI}</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:token"/>
 	</xs:simpleType>
 	<xs:simpleType name="CountryDialingCodeType">
 		<xs:annotation>
-			<xs:documentation>Specifies the numeric telephone dialing prefixes for the member countries of the International Telecommunication Union (ITU).</xs:documentation>
+			<xs:documentation>Additional BDT to specify the numeric telephone dialing prefixes for the member countries of the International Telecommunication Union (ITU).</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="CountryDialingCodeContentType"/>
 	</xs:simpleType>
@@ -1608,7 +1635,7 @@
 					<xs:documentation>Standard weight of the baggage of a flight deck crew member other than hand baggage</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="1">
+			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Additional, supplementary information about the document or service.</xs:documentation>
 				</xs:annotation>
@@ -1616,6 +1643,23 @@
 			<xs:element name="VariationCode" type="VariationForWeightsCodeType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Variation code. Apart from Standard may include Domestic, International, Charter, etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CrewBaggagesType">
+		<xs:annotation>
+			<xs:documentation>Crew Baggage included in the DOW configuration</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CabinCrewBaggage" type="CabinCrewBaggageType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Specification of Cabin Crew Baggage included in the DOW Configuration.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FlightDeckCrewBaggage" type="FlightDeckCrewBaggageType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Specification of Flight Deck Crew Baggage included in the DOW Configuration.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -1643,7 +1687,7 @@
  </xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="1">
+			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Additional, supplementary information about the document or service.</xs:documentation>
 				</xs:annotation>
@@ -1686,7 +1730,7 @@
 					<xs:documentation>Indicates that the hand baggage weight is included/not included in the specified crew weights. If not, actual or standard hand baggage weight must be used.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="1">
+			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Additional, supplementary information about the document or service.</xs:documentation>
 				</xs:annotation>
@@ -1826,7 +1870,7 @@
  </xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="1">
+			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Additional, supplementary information about the document or service.</xs:documentation>
 				</xs:annotation>
@@ -1949,18 +1993,6 @@
 					<xs:documentation>Aircraft deck code (Upper, Main, Lower).</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Door" type="DoorType" minOccurs="0" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>A swinging or sliding barrier that will close the entrance to a room or building or vehicle.
- </xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="FlightDeckCrewLocation" type="FlightDeckCrewLocationType" minOccurs="0" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>Seat location for flight deck crew.
- </xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element name="Hold" type="HoldType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>A space in an aircraft confined by ceiling, floor, walls and bulkhead, used for carrying load.
@@ -1982,7 +2014,7 @@
 					<xs:documentation>Maximum total weight permitted on the deck</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="1">
+			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Additional, supplementary information about the document or service.</xs:documentation>
 				</xs:annotation>
@@ -2067,9 +2099,35 @@
  </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
+			<xs:element name="CrewBaggages" type="CrewBaggagesType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Crew Baggage included in the DOW configuration</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CrewDistribution" type="CrewDistributionType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Allocation of crew (flight deck and cabin crew) and their baggage to associated locations.
+ </xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="CrewDistributionCode" type="CodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Name/identifier of the crew distribution, e.g. 'A', 'International Ops', 'Domestic'.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DefaultIndexValue" type="ValueType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Default Dry Operating Index that may apply for all aircraft registrations of a group.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DefaultMAC_Percent" type="PercentType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Default Dry Operating %MAC that may apply for all aircraft registrations of a group.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DefaultWeightMeasure" type="WeightMeasureType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Default Dry Operating Weight that may apply for all aircraft registrations of a group.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="DOW_ConfigurationCode" type="CodeType" minOccurs="1" maxOccurs="1">
@@ -2077,9 +2135,41 @@
 					<xs:documentation>Name/identifier of the Dry Operating Weight Configuration, e.g. 'All UK Services', 'B'. 'Flight Range 1'.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="IncludedCabinCrewTotal" type="NumberType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Total number of Cabin Crew Included in the Dry Operating Weight Configuration.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IncludedCrewBaggageTotal" type="NumberType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Total number of Crew Baggage's included in the DOW Configuration.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IncludedFlightDeckCrewTotal" type="NumberType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Total number of Flight Deck Crew Included in the Dry Operating Weight Configuration.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PantryDistribution" type="PantryDistributionType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Allocation of galley equipment, food, service items etc. to specified locations or regardless of location.
+ </xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="PantryDistributionCode" type="CodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Name/identifier of the pantry distribution, e.g. 'Domestic', 'Charter', 'Z'.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PotableWaterDistribution" type="PotableWaterDistributionType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Distribution of potable water to each individually specified potable water tank or to all tanks.
+ Water can be specified as follows:
+ - Weight per tank, with corresponding index.
+ - Distribution: For a given total water weight, specify the quantity in each tank
+ - Specific water weights, with corresponding index.
+ - Adjustment (from full) e.g. full water included in basic weight.
+ </xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="PotableWaterDistributionCode" type="CodeType" minOccurs="0" maxOccurs="1">
@@ -2087,9 +2177,15 @@
 					<xs:documentation>Name/identifier of the potable water distribution, e.g. 'Long Haul', 'Short Haul', '75% Water', '1/4','1/2','3/4','0','200'.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="1">
+			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Additional, supplementary information about the document or service.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SWA" type="SWA_Type" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Service Weight Adjustment. Standard adjustment to the service weight of an aircraft with optional balance arm and/or index.
+ </xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="SWA_Code" type="CodeType" minOccurs="0" maxOccurs="unbounded">
@@ -2123,7 +2219,7 @@
 					<xs:documentation>Dry Operating Weight Item code (Basic Weight, Flight Deck Crew, Cabin Crew, Flight Deck Crew Baggage, Cabin Crew Baggage, Pantry, Potable water...) based on PADIS Code List.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="1">
+			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Additional, supplementary information about the document or service.</xs:documentation>
 				</xs:annotation>
@@ -2141,6 +2237,11 @@
 					<xs:documentation>Indicates that weight and center of gravity data are expressed as adjustments to be applied to the corresponding fleet data or as individual aircraft data.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="Aircraft" type="AircraftType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A transport vehicle which is certified as airworthy by a competent aeronautical authority.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="AircraftRegistrationID" type="AircraftRegistrationID_Type" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The complete alphanumeric identification assigned by the appropriate licensing authority to an individual aircraft. Hyphens contained within the registration shall not be included. E.g. GBOAC, N46573, ZZ123.</xs:documentation>
@@ -2149,6 +2250,12 @@
 			<xs:element name="BalanceArmMeasure" type="LengthMeasureType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The balance arm of the center of gravity of the specific aircraft.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DOW_Configuration" type="DOW_ConfigurationType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identification of operational items such as crew, pantry, potable water and/or service weight adjustments and their weight and/or index influence that are included in the Dry Operating Weight of an aircraft or aircraft group.
+ </xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="DOW_ConfigurationCode" type="CodeType" minOccurs="0" maxOccurs="1">
@@ -2201,6 +2308,52 @@
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
+	<xs:complexType name="FlightDeckCrewBaggageLocationType">
+		<xs:annotation>
+			<xs:documentation>Location of Cabin Crew Bag included in the DOW configuration
+ </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="HoldCompartmentID" type="HoldCompartmentID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identifies a compartment within a hold (compartment no). As per AHM505, compartments are numbered from 1 to 6. A second figure can indicate a section in a compartment starting from the front to the back and from right to left.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HoldID" type="HoldID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identifies a hold within a deck. Typical values include FWD (forward), AFT, BULK, MAIN (deck).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ULD_LoadPositionID" type="ULD_LoadPositionID_Type" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Identifies a possible ULD position within the aircraft, using one of the patterns described in AHM505. E.g. A, BR, CDL, E3, 13,22L, 32P, 413, 1112O. May contain compartment number, row position, left-to-right position in a row.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FlightDeckCrewBaggageType">
+		<xs:annotation>
+			<xs:documentation>Specification of Flight Deck Crew Baggage included in the DOW Configuration.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="BaggagePieces" type="QtyType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Total number of Flight Deck Crew Bags included in the DOW Configuration</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BaggageWeightMeasure" type="WeightMeasureType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Weight of each Flight Crew Bag included in the DOW Configuration.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BagLocation" type="FlightDeckCrewBaggageLocationType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Location of Cabin Crew Bag included in the DOW configuration
+ </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
 	<xs:complexType name="FlightDeckCrewDistributionElementType">
 		<xs:annotation>
 			<xs:documentation>A specific allocation in a crew distribution related to flight deck crew.
@@ -2228,6 +2381,12 @@
 			<xs:element name="CrewQty" type="QtyType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Number of flight deck crew allocated to the associated location.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FlightDeckCrewLocation" type="FlightDeckCrewLocationType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Seat location for flight deck crew.
+ </xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="FlightDeckCrewLocationID" type="FlightDeckCrewLocationID_Type" minOccurs="0" maxOccurs="1">
@@ -2321,7 +2480,7 @@
 					<xs:documentation>Type or nature of the defined From/To values that limit the applicability of the load limitation table. This may indicate a specific unit or weight unit type such as 'Zero fuel weight' or 'Take off weight', but may also be used to identify the range e.g. 'Fuel Volume', 'Zero Fuel MAC'.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="1">
+			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Additional, supplementary information about the document or service.</xs:documentation>
 				</xs:annotation>
@@ -2354,6 +2513,12 @@
 					<xs:documentation>The balance arm that defines the aft boundary of the zone of the aircraft that is to be considered for the specified area loading.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="Deck" type="DeckType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A structural floor level. For aircraft having one structural level only, this floor level shall be referred to as the main deck. For aircraft having more than one structural floor level, the different floor levels shall be referred to as 'lower deck', 'main deck' and 'upper deck', starting from bottom to top.
+ </xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="DeckCode" type="DeckCodeType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Aircraft deck code (Upper, Main, Lower).</xs:documentation>
@@ -2362,6 +2527,28 @@
 			<xs:element name="LimitWeightPerAreaMeasure" type="WeightMeasureType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The maximum load permitted per unit of area.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FormulaElementType">
+		<xs:annotation>
+			<xs:documentation>A characteristic of the Formula element.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="FuelVolumeMeasure" type="VolumeMeasureType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Value of the formula element expressed as a volume. E.g. A=139090 liter, B=6230 liter</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FuelWeightMeasure" type="WeightMeasureType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Value of the volume element as a weight. E.g. C=2400 KGM</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Name" type="NameType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Name of the element. E.g. A, B, C</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -2390,6 +2577,17 @@
 			<xs:element name="Ratio" type="RatioType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Fuel quantity that is included in a specific tank or set of tanks after the fuel distribution step is carried out, specified as a ratio with respect to other tanks within the fuel distribution step.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RatioFormula" type="RatioFormulaType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A content of the ratio formula.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TankName" type="FuelingProcedureType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A procedure for filling the complete set of tanks (All Tanks) of an aircraft or an individual fuel tank, which might be composite when multiple tanks have been combined under one. 
+ </xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -2584,7 +2782,7 @@
 					<xs:documentation>Minimum fuel density permitted, expressed as weight for a given fuel density volume unit.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="1">
+			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Additional, supplementary information about the document or service.</xs:documentation>
 				</xs:annotation>
@@ -2603,10 +2801,9 @@
 	</xs:complexType>
 	<xs:simpleType name="GenderCodeContentType">
 		<xs:annotation>
-			<xs:documentation>The code list contents of ICAO doc9303 machine readable travel documents sex codes {codeListAgencyIdentifier}13{/codeListAgencyIdentifier} {codeListAgencyName}ICAO{/codeListAgencyName} {codeListName}DOC9303 Machine Readable Travel Documents Sex Codes{/codeListName} {codeListIdentifier}9303{/codeListIdentifier} </xs:documentation>
+			<xs:documentation>Enumeration set for Gender Code. {codeListAgencyName}ICAO{/codeListAgencyName} {codeListName}Document 9303 Sex of the holder{/codeListName} </xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:token">
-			<xs:length value="1"/>
 			<xs:enumeration value="F">
 				<xs:annotation>
 					<xs:documentation>Female</xs:documentation>
@@ -2626,13 +2823,13 @@
 	</xs:simpleType>
 	<xs:simpleType name="GenderCodeType">
 		<xs:annotation>
-			<xs:documentation>Specifies Gender code list.</xs:documentation>
+			<xs:documentation>Additional BDT to specify Gender code.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="GenderCodeContentType"/>
 	</xs:simpleType>
 	<xs:simpleType name="HoldCompartmentID_Type">
 		<xs:annotation>
-			<xs:documentation>Specifies a Hold Compartment identifier.</xs:documentation>
+			<xs:documentation>Identifies a Compartment. As per AHM505, compartments are numbered from the rear of the aircraft in descending order from 6 to 1. A second figure can indicate a section in a compartment starting from the front to the back and from right to left.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:token">
 			<xs:minLength value="1"/>
@@ -2705,7 +2902,7 @@
 	</xs:complexType>
 	<xs:simpleType name="HoldID_Type">
 		<xs:annotation>
-			<xs:documentation>Specifies a Hold identifier (AFT, FWD, BULK, MAIN).</xs:documentation>
+			<xs:documentation>Specifies a Hold identifier (AFT, FWD, BULK)</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:token">
 			<xs:minLength value="1"/>
@@ -2742,6 +2939,12 @@
 			<xs:element name="BulkInd" type="IndType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Indicator bulk hold - ULD hold</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Door" type="DoorType" minOccurs="1" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>A swinging or sliding barrier that will close the entrance to a room or building or vehicle.
+ </xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="HoldCompartment" type="HoldCompartmentType" minOccurs="0" maxOccurs="unbounded">
@@ -2781,12 +2984,6 @@
 					<xs:documentation>Maximum permitted weight for the hold</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="MissingRestraintRules" type="MissingRestraintRulesType" minOccurs="0" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>Set of missing restraint rules applicable to a ULD load position, a bay grouping or a ULD load position within a bay grouping.
- </xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element name="NoRuleIsZeroInd" type="IndType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>True means that in case no missing restraint rule is found the restricted weight is zero. False means that in case no missing restraint rule is found no reduction is applicable.</xs:documentation>
@@ -2795,6 +2992,12 @@
 			<xs:element name="SpecialLoadLimitation" type="SpecialLoadLimitationType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Limitation of the quantity of a specified special load for a specific hold or position.
+ </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ULD_LoadPosition" type="ULD_LoadPositionType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>A subdivision of a containerized/palletized compartment.
  </xs:documentation>
 				</xs:annotation>
 			</xs:element>
@@ -3011,7 +3214,7 @@
 			</xs:element>
 			<xs:element name="WeightTypeCode" type="WeightTypeCodeType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Type of weight to which the balance limit applies : Taxi (TA), Take Off (TO), Landing (LD).</xs:documentation>
+					<xs:documentation>Type of weight to which the balance limit applies: Taxi (TA), Take Off (TO), Landing (LD).</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -3230,7 +3433,7 @@
 					<xs:documentation>Type or nature of the defined From/To values that limit the applicability of the load limitation table. This may indicate a specific weight unit or weight type such as 'Zero fuel weight' or 'Take-off weight'.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="1">
+			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Additional, supplementary information about the document or service.</xs:documentation>
 				</xs:annotation>
@@ -3248,6 +3451,11 @@
  </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
+			<xs:element name="Aircraft" type="AircraftType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A transport vehicle which is certified as airworthy by a competent aeronautical authority.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="AircraftRegistrationID" type="AircraftRegistrationID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The complete alphanumeric identification assigned by the appropriate licensing authority to an individual aircraft. Hyphens contained within the registration shall not be included. E.g. GBOAC, N46573, ZZ123.</xs:documentation>
@@ -3258,7 +3466,7 @@
 					<xs:documentation>Maximum weight permitted at Landing.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="1">
+			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Additional, supplementary information about the document or service.</xs:documentation>
 				</xs:annotation>
@@ -3317,7 +3525,7 @@
 					<xs:documentation>Type or nature of the defined From/To values that limit the applicability of the load limitation table. This may indicate a specific weight unit or weight type such as 'Zero fuel weight' or 'Take off weight'.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="1">
+			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Additional, supplementary information about the document or service.</xs:documentation>
 				</xs:annotation>
@@ -3335,6 +3543,11 @@
  </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
+			<xs:element name="Aircraft" type="AircraftType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A transport vehicle which is certified as airworthy by a competent aeronautical authority.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="AircraftRegistrationID" type="AircraftRegistrationID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The complete alphanumeric identification assigned by the appropriate licensing authority to an individual aircraft. Hyphens contained within the registration shall not be included. E.g. GBOAC, N46573, ZZ123.</xs:documentation>
@@ -3345,7 +3558,7 @@
 					<xs:documentation>Minimum weight permitted at Landing.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="1">
+			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Additional, supplementary information about the document or service.</xs:documentation>
 				</xs:annotation>
@@ -3435,12 +3648,6 @@
  </xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="MissingRestraintRule" type="MissingRestraintRuleType" minOccurs="1" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>Restriction on weight applicable when one or more locks are inoperable or missing.
- </xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element name="ULD_LoadPosition" type="ULD_LoadPosition1Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Daughter ABIE of ULD Load Position (ABIE) to display only the selected Business Identifier Fields:
@@ -3490,7 +3697,7 @@
 					<xs:documentation>The number of missing or inoperable locks to which the specified reduced maximum weight applies.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="1">
+			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Additional, supplementary information about the document or service.</xs:documentation>
 				</xs:annotation>
@@ -3553,6 +3760,12 @@
 			<xs:element name="CabinComponentName" type="NameType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Name or description of the cabin component, e.g. Forward Galley, First Class Coat Locker.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GalleyLocation" type="CabinComponentType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Non-seat related cabin feature or facility (e.g. lavatory, galley, closet, stowage, etc.)
+ </xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="IndexValue" type="ValueType" minOccurs="0" maxOccurs="1">
@@ -3664,8 +3877,7 @@
 			</xs:element>
 			<xs:element name="UnspecifiedGenderWeightMeasure" type="WeightMeasureType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
-					<xs:documentation>Standard weight of an unspecified gender
- </xs:documentation>
+					<xs:documentation>Standard weight of an unspecified gender</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="VariationCode" type="VariationForWeightsCodeType" minOccurs="1" maxOccurs="1">
@@ -3681,7 +3893,7 @@
  </xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
-			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="1">
+			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Additional, supplementary information about the document or service.</xs:documentation>
 				</xs:annotation>
@@ -3695,7 +3907,7 @@
 	</xs:complexType>
 	<xs:simpleType name="PercentType">
 		<xs:annotation>
-			<xs:documentation>A percent is a value representing a fraction of one hundred, expressed as a quotient.</xs:documentation>
+			<xs:documentation>A percent is a value representing a fraction of one hundred,expressed as a quotient.</xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:decimal"/>
 	</xs:simpleType>
@@ -3794,6 +4006,12 @@
 					<xs:documentation>The index influence of the weight of water in the specified tank.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="PotableWaterTank" type="PotableWaterTankType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Tank of potable water located in the cabin.
+ </xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="PotableWaterTankName" type="NameType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Name or description of the potable water tank.</xs:documentation>
@@ -3838,7 +4056,7 @@
  </xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="1">
+			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Additional, supplementary information about the document or service.</xs:documentation>
 				</xs:annotation>
@@ -3913,6 +4131,23 @@
 		</xs:annotation>
 		<xs:restriction base="xs:decimal"/>
 	</xs:simpleType>
+	<xs:complexType name="RatioFormulaType">
+		<xs:annotation>
+			<xs:documentation>A content of the ratio formula.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Formula" type="TextType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Formula using defined formula elements e.g. A/(B-C) to calculate the ration of the last step for an A330-200.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FormulaElement" type="FormulaElementType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A characteristic of the Formula element.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
 	<xs:simpleType name="RatioType">
 		<xs:annotation>
 			<xs:documentation>A ratio is a relation between two independent quantities, using the same unit of measure or currency.</xs:documentation>
@@ -3967,7 +4202,7 @@
 					<xs:documentation>Type or nature of the defined From/To values that limit the applicability of the load limitation table. This may indicate a specific unit or weight unit type such as 'Zero fuel weight' or 'Take off weight', but may also be used to identify the range e.g. 'Fuel Volume', 'Zero Fuel MAC'.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="1">
+			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Additional, supplementary information about the document or service.</xs:documentation>
 				</xs:annotation>
@@ -3999,6 +4234,12 @@
 			<xs:element name="BalanceArmToMeasure" type="LengthMeasureType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>The balance arm that defines the aft boundary of the zone of the aircraft that is to be considered for the specified running load.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Deck" type="DeckType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A structural floor level. For aircraft having one structural level only, this floor level shall be referred to as the main deck. For aircraft having more than one structural floor level, the different floor levels shall be referred to as 'lower deck', 'main deck' and 'upper deck', starting from bottom to top.
+ </xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="DeckCode" type="DeckCodeType" minOccurs="0" maxOccurs="1">
@@ -4115,6 +4356,12 @@
 					<xs:documentation>The linear dimension from the aircraft datum to the forward edge of the specified cabin section. Used when graphical representation of each cabin section is available in the supplier's departure control system.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="CabinSection" type="CabinSectionType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Division of the cabin into zones for the purpose of balance.
+ </xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="CabinSectionID" type="CabinSectionID_Type" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Identifies a cabin section within a deck. As per AHM505, cabin sections can be identified starting with a zero (0) as a first figure to indicate the cabin followed by an alpha character starting with A from the front to the rear. If the cabin sections correspond with the configuration layout per class, it is also possible to use the class designator, e.g. F for first class, to identify a cabin section.</xs:documentation>
@@ -4165,7 +4412,7 @@
 	</xs:complexType>
 	<xs:simpleType name="SeatCharacteristicCodeContentType">
 		<xs:annotation>
-			<xs:documentation>Refers to aircraft seat characteristic codes e.g. A (Aisle seat), E (Exit and emergency exit). See PADIS code list 9825. {codeListAgencyName}PADIS{/codeListAgencyName} {codeListName}Seat characteristic,coded{/codeListName} {codeListIdentifier}9825{/codeListIdentifier} </xs:documentation>
+			<xs:documentation>Refers to aircraft seat characteristic codes e.g. A (Aisle seat), E (Exit and emergency exit). See PADIS code list 9825. {codeListAgencyName}PADIS{/codeListAgencyName} {codeListName}Seat characteristic, coded{/codeListName} {codeListIdentifier}9825{/codeListIdentifier} </xs:documentation>
 		</xs:annotation>
 		<xs:restriction base="xs:token"/>
 	</xs:simpleType>
@@ -4244,7 +4491,7 @@
 					<xs:documentation>The maximum quantity of the specified special load for the nominated Position/hold.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="1">
+			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Additional, supplementary information about the document or service.</xs:documentation>
 				</xs:annotation>
@@ -4310,7 +4557,7 @@
 					<xs:documentation>The minimum value of the Thrust Rating range to which the specific stabilizer trim table applies.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="1">
+			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Additional, supplementary information about the document or service.</xs:documentation>
 				</xs:annotation>
@@ -4449,7 +4696,7 @@
 					<xs:documentation>Indicates that output is required on the preliminary EDP load sheet (AHM517).</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="1">
+			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Additional, supplementary information about the document or service.</xs:documentation>
 				</xs:annotation>
@@ -4477,7 +4724,7 @@
 					<xs:documentation>The index influence of the SWA.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="1">
+			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Additional, supplementary information about the document or service.</xs:documentation>
 				</xs:annotation>
@@ -4518,6 +4765,12 @@
 			<xs:element name="SeqNumber" type="NaturalNumberType" minOccurs="1" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Identifies the tank burning sequence during taxiing.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TankName" type="FuelingProcedureType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A procedure for filling the complete set of tanks (All Tanks) of an aircraft or an individual fuel tank, which might be composite when multiple tanks have been combined under one. 
+ </xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:sequence>
@@ -4583,7 +4836,7 @@
 					<xs:documentation>Type or nature of the defined From/To values that limit the applicability of the balance limitation table. This may be specific units e.g. 'KG', 'Liters', but may also be used to identify the range e.g. 'Fuel Volume', 'Fuel Wt','Zero Fuel MAC'.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="1">
+			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Additional, supplementary information about the document or service.</xs:documentation>
 				</xs:annotation>
@@ -4664,7 +4917,7 @@
 					<xs:documentation>Indicates it is permitted to load the ULD on the bay</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="1">
+			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Additional, supplementary information about the document or service.</xs:documentation>
 				</xs:annotation>
@@ -4672,6 +4925,12 @@
 			<xs:element name="RestrictedWeightMeasure" type="WeightMeasureType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Restrictive weight where a ULD is permitted in a Bay/Position, but with a maximum weight that is lower than the maximum weight specified for the ULD.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ULD_Type" type="ULD_TypeType" minOccurs="1" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Grouping of Unit Load Devices (ULD's) with the same dimension, weights and limitations. Is identified by ULD Type Code (eg AKE, PAG, etc.) and optional owner and/or serial number or range of serial numbers.
+ </xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="ULD_TypeCode" type="ULD_TypeCodeType" minOccurs="1" maxOccurs="1">
@@ -4736,6 +4995,18 @@
 					<xs:documentation>The linear dimension from the aircraft datum to the forward edge of the Bay/Position. Used when graphical representation of each deck is available in the supplier's departure control system.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="BayLock" type="BayLockType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Lock used by a Bay Grouping or a ULD Load Position.
+ </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HoldCompartment" type="HoldCompartmentType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A space designated within a hold that can be containerized/palletized or not.
+ </xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="HoldLayoutID" type="ID_Type" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Identifies the hold layout (load configuration) for a given aircraft type e.g. 10 Pallets/16 Containers, All Container, All Pallet.</xs:documentation>
@@ -4759,6 +5030,12 @@
 			<xs:element name="MaximumWeightMeasure" type="WeightMeasureType" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:documentation>Maximum permitted weight for the Bay/Position</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MissingRestraintRule" type="MissingRestraintRuleType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Restriction on weight applicable when one or more locks are inoperable or missing.
+ </xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="1">
@@ -4844,7 +5121,7 @@
 					<xs:documentation>Owner specific identifier where ULD owner utilizes non-IATA standard ULD codes</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="1">
+			<xs:element name="Remark" type="RemarkType" minOccurs="0" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Additional, supplementary information about the document or service.</xs:documentation>
 				</xs:annotation>
@@ -4887,7 +5164,7 @@
 			<xs:extension base="xs:decimal">
 				<xs:attribute name="UnitCode" type="VolumeUnitCodeContentType" use="optional">
 					<xs:annotation>
-						<xs:documentation>The weight unit code of measure.</xs:documentation>
+						<xs:documentation>The volume unit code of measure.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
 			</xs:extension>
