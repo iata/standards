@@ -1,5 +1,5 @@
 <?xml  version="1.0" encoding="UTF-8" ?>
-<xs:schema targetNamespace="http://www.iata.org/IATA/2015/EASD/00/IATA_OffersAndOrdersMessage" elementFormDefault="qualified" version="11.005" xmlns:cns="http://www.iata.org/IATA/2015/EASD/00/IATA_OffersAndOrdersCommonTypes" xmlns:opt="http://www.iata.org/IATA/2015/EASD/00/IATA_OffersAndOrdersCommonTypesFullyOptional" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/EASD/00/IATA_OffersAndOrdersMessage" id="IATA2024.3"><xs:import namespace="http://www.iata.org/IATA/2015/EASD/00/IATA_OffersAndOrdersCommonTypes" schemaLocation="IATA_OffersAndOrdersCommonTypes.xsd"/><xs:import namespace="http://www.iata.org/IATA/2015/EASD/00/IATA_OffersAndOrdersCommonTypesFullyOptional" schemaLocation="IATA_OffersAndOrdersCommonTypesFullyOptional.xsd"/>
+<xs:schema targetNamespace="http://www.iata.org/IATA/2015/EASD/00/IATA_OffersAndOrdersMessage" elementFormDefault="qualified" version="11.006" xmlns:cns="http://www.iata.org/IATA/2015/EASD/00/IATA_OffersAndOrdersCommonTypes" xmlns:opt="http://www.iata.org/IATA/2015/EASD/00/IATA_OffersAndOrdersCommonTypesFullyOptional" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/EASD/00/IATA_OffersAndOrdersMessage" id="IATA2025.2"><xs:import namespace="http://www.iata.org/IATA/2015/EASD/00/IATA_OffersAndOrdersCommonTypes" schemaLocation="IATA_OffersAndOrdersCommonTypes.xsd"/><xs:import namespace="http://www.iata.org/IATA/2015/EASD/00/IATA_OffersAndOrdersCommonTypesFullyOptional" schemaLocation="IATA_OffersAndOrdersCommonTypesFullyOptional.xsd"/>
 <xs:element name="IATA_OrderHistoryRS">
 <xs:annotation>
 <xs:documentation>The OrderHistory transaction of an Order managed and tracked by the Airline in their Order Management System from the time of Order creation.</xs:documentation>
@@ -104,6 +104,9 @@ Should not have multiple change operations to the same element.</xs:documentatio
 </xs:sequence>
 </xs:complexType>
 <xs:complexType name="OrderHistoryResponseType">
+<xs:annotation>
+<xs:documentation>Information related to the response for Order History</xs:documentation>
+</xs:annotation>
 <xs:sequence>
 <xs:element name="ChangeGroup" type="ChangeGroupType" minOccurs="0" maxOccurs="unbounded">
 <xs:annotation>

@@ -1,5 +1,5 @@
 <?xml  version="1.0" encoding="UTF-8" ?>
-<xs:schema targetNamespace="http://www.iata.org/IATA/2015/00/2024.2/IATA_LoadControl_SemiPermanentDataNotifRQ" elementFormDefault="qualified" version="1.008" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2024.2/IATA_LoadControl_SemiPermanentDataNotifRQ">
+<xs:schema targetNamespace="http://www.iata.org/IATA/2015/00/2025.2/IATA_LoadControl_SemiPermanentDataNotifRQ" elementFormDefault="qualified" version="1.009" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/00/2025.2/IATA_LoadControl_SemiPermanentDataNotifRQ">
 <xs:element name="IATA_LoadControl_SemiPermanentDataNotifRQ">
 <xs:annotation>
 <xs:documentation>Used to exchange semi-permanent data for weight and balance between the carrier owning the aircraft and airlines that operate the aircraft, handling agents and DCS providers.</xs:documentation>
@@ -92,7 +92,7 @@
  </xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="Deck" type="DeckType" minOccurs="1" maxOccurs="unbounded">
+<xs:element name="Deck" type="DeckType" minOccurs="0" maxOccurs="unbounded">
 <xs:annotation>
 <xs:documentation>A structural floor level. For aircraft having one structural level only, this floor level shall be referred to as the main deck. For aircraft having more than one structural floor level, the different floor levels shall be referred to as 'lower deck', 'main deck' and 'upper deck', starting from bottom to top.
  </xs:documentation>
@@ -111,7 +111,7 @@
  </xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="DryOperatingAircraft" type="DryOperatingAircraftType" minOccurs="1" maxOccurs="unbounded">
+<xs:element name="DryOperatingAircraft" type="DryOperatingAircraftType" minOccurs="0" maxOccurs="unbounded">
 <xs:annotation>
 <xs:documentation>Aircraft configured according to a given Dry Operating Weight configuration.
  </xs:documentation>
@@ -245,7 +245,7 @@
  </xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="StartWeightTypeCode" type="StartWeightTypeCodeType" minOccurs="1" maxOccurs="1">
+<xs:element name="StartWeightTypeCode" type="StartWeightTypeCodeType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Method of starting weight calculation (Basic Weight (BW), Dry Operating Weight (DOW)).</xs:documentation>
 </xs:annotation>
@@ -354,7 +354,7 @@
 <xs:documentation>Length of Mean Aerodynamic Chord/ Reference Chord (RC) in aircraft length units.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="ManufacturerName" type="NameType" minOccurs="1" maxOccurs="1">
+<xs:element name="ManufacturerName" type="NameType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Name of the aircraft manufacturer.</xs:documentation>
 </xs:annotation>
@@ -769,7 +769,7 @@
 <xs:documentation>The linear dimension from the aircraft centerline to the right hand edge of the Bay Grouping. Enter values as positive.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="MaximumWeightMeasure" type="WeightMeasureType" minOccurs="1" maxOccurs="1">
+<xs:element name="MaximumWeightMeasure" type="WeightMeasureType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Maximum permitted weight for the Bay Grouping</xs:documentation>
 </xs:annotation>
@@ -1062,7 +1062,7 @@
 <xs:documentation>Identifies a cabin section within a deck. As per AHM505, cabin sections can be identified starting with a zero (0) as a first figure to indicate the cabin followed by an alpha character starting with A from the front to the rear. If the cabin sections correspond with the configuration layout per class, it is also possible to use the class designator, e.g. F for first class, to identify a cabin section.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="EndRowNumber" type="NaturalNumberType" minOccurs="1" maxOccurs="1">
+<xs:element name="EndRowNumber" type="NaturalNumberType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Seat Row Number at which the cabin ends.</xs:documentation>
 </xs:annotation>
@@ -1083,7 +1083,7 @@
  </xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="StartRowNumber" type="NaturalNumberType" minOccurs="1" maxOccurs="1">
+<xs:element name="StartRowNumber" type="NaturalNumberType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Seat Row Number at which the cabin starts.</xs:documentation>
 </xs:annotation>
@@ -1285,19 +1285,19 @@
 <xs:documentation>The electronic or geographic address which a party has provided as the contact channel. For example, contact email, contact postal address, contact phone number.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="CrewBaggageStandardWeights" type="CrewBaggageStandardWeightsType" minOccurs="1" maxOccurs="unbounded">
+<xs:element name="CrewBaggageStandardWeights" type="CrewBaggageStandardWeightsType" minOccurs="0" maxOccurs="unbounded">
 <xs:annotation>
 <xs:documentation>Approved crew baggage standard weights to be used for weight and balance calculation.
  </xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="CrewStandardWeights" type="CrewStandardWeightsType" minOccurs="1" maxOccurs="unbounded">
+<xs:element name="CrewStandardWeights" type="CrewStandardWeightsType" minOccurs="0" maxOccurs="unbounded">
 <xs:annotation>
 <xs:documentation>Approved crew standard weights to be used for weight and balance calculation.
  </xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="DuplicateDesigInd" type="IndType" minOccurs="1" maxOccurs="1">
+<xs:element name="DuplicateDesigInd" type="IndType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Indicates that the IATA Airline Designator is a duplicate code shared by multiple airlines. To identify the airline - in this case - its name must be specified in addition to the designator.</xs:documentation>
 </xs:annotation>
@@ -1319,7 +1319,7 @@
  </xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="VolumeUnitCode" type="VolumeUnitCodeType" minOccurs="1" maxOccurs="1">
+<xs:element name="VolumeUnitCode" type="VolumeUnitCodeType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Standard volume unit used by the carrier</xs:documentation>
 </xs:annotation>
@@ -2041,12 +2041,12 @@
  </xs:documentation>
 </xs:annotation>
 <xs:sequence>
-<xs:element name="BalanceArmAftMeasure" type="LengthMeasureType" minOccurs="1" maxOccurs="1">
+<xs:element name="BalanceArmAftMeasure" type="LengthMeasureType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Linear dimension from the aircraft datum to the aft edge of the door.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="BalanceArmForwardMeasure" type="LengthMeasureType" minOccurs="1" maxOccurs="1">
+<xs:element name="BalanceArmForwardMeasure" type="LengthMeasureType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Linear dimension from the aircraft datum to the forward edge of the door.</xs:documentation>
 </xs:annotation>
@@ -2056,17 +2056,12 @@
 <xs:documentation>Identifies a door within a hold. E.g. Door 1, Door 2, Door 1L, Door 2R.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="HeightMeasure" type="LengthMeasureType" minOccurs="1" maxOccurs="1">
+<xs:element name="HeightMeasure" type="LengthMeasureType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Linear dimension of the height of the door.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="HoldID" type="HoldID_Type" minOccurs="0" maxOccurs="1">
-<xs:annotation>
-<xs:documentation>Identifies a hold within a deck. Typical values include FWD (forward), AFT, BULK, MAIN (deck).</xs:documentation>
-</xs:annotation>
-</xs:element>
-<xs:element name="PositionCode" type="DoorPositionCodeType" minOccurs="1" maxOccurs="1">
+<xs:element name="PositionCode" type="DoorPositionCodeType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Position of the door; L = Left side of aircraft, R = Right side of aircraft, C = Center of aircraft</xs:documentation>
 </xs:annotation>
@@ -2094,17 +2089,17 @@
 <xs:documentation>Name/identifier of the crew distribution, e.g. 'A', 'International Ops', 'Domestic'.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="DefaultIndexValue" type="ValueType" minOccurs="1" maxOccurs="1">
+<xs:element name="DefaultIndexValue" type="ValueType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Default Dry Operating Index that may apply for all aircraft registrations of a group.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="DefaultMAC_Percent" type="PercentType" minOccurs="1" maxOccurs="1">
+<xs:element name="DefaultMAC_Percent" type="PercentType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Default Dry Operating %MAC that may apply for all aircraft registrations of a group.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="DefaultWeightMeasure" type="WeightMeasureType" minOccurs="1" maxOccurs="1">
+<xs:element name="DefaultWeightMeasure" type="WeightMeasureType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Default Dry Operating Weight that may apply for all aircraft registrations of a group.</xs:documentation>
 </xs:annotation>
@@ -2287,8 +2282,7 @@
 </xs:complexType>
 <xs:complexType name="FlightDeckCrewBaggageLocationType">
 <xs:annotation>
-<xs:documentation>Location of Flight Deck Crew Bag included in the DOW configuration
- </xs:documentation>
+<xs:documentation>Location of Flight Deck Crew Bag included in the DOW configuration</xs:documentation>
 </xs:annotation>
 <xs:sequence>
 <xs:element name="HoldCompartmentID" type="HoldCompartmentID_Type" minOccurs="0" maxOccurs="1">
@@ -2325,8 +2319,7 @@
 </xs:element>
 <xs:element name="Baglocation" type="FlightDeckCrewBaggageLocationType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
-<xs:documentation>Location of Flight Deck Crew Bag included in the DOW configuration
- </xs:documentation>
+<xs:documentation>Location of Flight Deck Crew Bag included in the DOW configuration</xs:documentation>
 </xs:annotation>
 </xs:element>
 </xs:sequence>
@@ -2528,6 +2521,40 @@
 </xs:element>
 </xs:sequence>
 </xs:complexType>
+<xs:complexType name="FormulaKeywordType">
+<xs:annotation>
+<xs:documentation>Definition of the standard keywords used in fuel distribution and ratio formulas</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="Keyword" type="TextType" minOccurs="1" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Formula name keyword</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="Name" type="NameType" minOccurs="1" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Formula name keyword to calculate the ration of the last step for an A330-200.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="FormulaOperandsType">
+<xs:annotation>
+<xs:documentation>Definition of the operands used in the formulas</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="Operand" type="NameType" minOccurs="1" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Formula operands defined formula elements.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="Textcharacter" type="TextType" minOccurs="1" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Formula operands text character defined formula elements.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
 <xs:complexType name="FuelDistributionStepElementType">
 <xs:annotation>
 <xs:documentation>The quantity or ratio allocated to a specific tank or set of tanks during a fuel distribution step.
@@ -2616,6 +2643,16 @@
 <xs:documentation>Further specification of the fuel distribution name, e.g. CASE A, CASE B, etc.</xs:documentation>
 </xs:annotation>
 </xs:element>
+<xs:element name="FormulaKeyword" type="FormulaKeywordType" minOccurs="0" maxOccurs="unbounded">
+<xs:annotation>
+<xs:documentation>Definition of the standard keywords used in fuel distribution and ratio formulas</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="FormulaOperands" type="FormulaOperandsType" minOccurs="0" maxOccurs="unbounded">
+<xs:annotation>
+<xs:documentation>Definition of the operands used in the formulas</xs:documentation>
+</xs:annotation>
+</xs:element>
 <xs:element name="FuelDensityMeasure" type="WeightMeasureType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Fuel density used in case fuel data is defined as weight/index, expressed as weight for a given fuel density volume unit.</xs:documentation>
@@ -2671,7 +2708,7 @@
  </xs:documentation>
 </xs:annotation>
 <xs:sequence>
-<xs:element name="BalanceArmMeasure" type="LengthMeasureType" minOccurs="1" maxOccurs="1">
+<xs:element name="BalanceArmMeasure" type="LengthMeasureType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>The linear dimension from the aircraft datum to the mean centroid of the loaded fuel volume or weight.</xs:documentation>
 </xs:annotation>
@@ -2816,7 +2853,7 @@
 <xs:documentation>The linear dimension from the aircraft datum to the aft edge of the hold compartment. Used when graphical representation of each deck is available in the supplier's departure control system.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="BalanceArmCentroidMeasure" type="LengthMeasureType" minOccurs="1" maxOccurs="1">
+<xs:element name="BalanceArmCentroidMeasure" type="LengthMeasureType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>The linear dimension from the aircraft datum at which the departure control system will calculate the center of gravity influence of load item applied at the specified hold compartment.</xs:documentation>
 </xs:annotation>
@@ -2846,7 +2883,7 @@
 <xs:documentation>The linear dimension from the aircraft centerline to the right hand edge of the hold compartment. Enter values as positive.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="MaximumWeightMeasure" type="WeightMeasureType" minOccurs="1" maxOccurs="1">
+<xs:element name="MaximumWeightMeasure" type="WeightMeasureType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Maximum permitted weight for the hold compartment</xs:documentation>
 </xs:annotation>
@@ -2889,7 +2926,7 @@
 <xs:documentation>The linear dimension from the aircraft datum to the aft edge of the hold. Used when graphical representation of each deck is available in the supplier's departure control system.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="BalanceArmCentroidMeasure" type="LengthMeasureType" minOccurs="1" maxOccurs="1">
+<xs:element name="BalanceArmCentroidMeasure" type="LengthMeasureType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>The linear dimension from the aircraft datum at which the departure control system will calculate the center of gravity influence of load item applied at the specified hold.</xs:documentation>
 </xs:annotation>
@@ -2905,7 +2942,7 @@
  </xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="BulkInd" type="IndType" minOccurs="1" maxOccurs="1">
+<xs:element name="BulkInd" type="IndType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Indicator bulk hold - ULD hold</xs:documentation>
 </xs:annotation>
@@ -2948,7 +2985,7 @@
  </xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="MaximumWeightMeasure" type="WeightMeasureType" minOccurs="1" maxOccurs="1">
+<xs:element name="MaximumWeightMeasure" type="WeightMeasureType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Maximum permitted weight for the hold</xs:documentation>
 </xs:annotation>
@@ -3336,7 +3373,7 @@
  </xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="LateralArmMeasure" type="LengthMeasureType" minOccurs="1" maxOccurs="1">
+<xs:element name="LateralArmMeasure" type="LengthMeasureType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Lateral position of lock. Specify values as negative for linear dimensions extending to the left of the aircraft centerline and positive for linear dimensions extending to the right of the aircraft centerline.</xs:documentation>
 </xs:annotation>
@@ -3346,7 +3383,7 @@
 <xs:documentation>Identifies a lock within a hold.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="LockTypeCode" type="LockTypeCodeType" minOccurs="1" maxOccurs="1">
+<xs:element name="LockTypeCode" type="LockTypeCodeType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Type of lock (Pallet Lock, Lateral Guide, Fixed End Stop, Center Guide, ...).</xs:documentation>
 </xs:annotation>
@@ -3793,7 +3830,7 @@
  </xs:documentation>
 </xs:annotation>
 <xs:sequence>
-<xs:element name="AdultWeightMeasure" type="WeightMeasureType" minOccurs="1" maxOccurs="1">
+<xs:element name="AdultWeightMeasure" type="WeightMeasureType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Standard weight of an adult</xs:documentation>
 </xs:annotation>
@@ -3813,7 +3850,7 @@
 <xs:documentation>Standard weight of a female</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="HandBaggageInd" type="IndType" minOccurs="1" maxOccurs="1">
+<xs:element name="HandBaggageInd" type="IndType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Indicates that the hand baggage weight is included/not included in the specified passenger weights. If not, actual or standard hand baggage weight must be used.</xs:documentation>
 </xs:annotation>
@@ -4051,7 +4088,7 @@
 <xs:documentation>The linear dimension from the aircraft datum to the aft edge of the specified tank location. Used when graphical representation of each specified tank location is available in the supplier's departure control system.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="BalanceArmCentroidMeasure" type="LengthMeasureType" minOccurs="1" maxOccurs="1">
+<xs:element name="BalanceArmCentroidMeasure" type="LengthMeasureType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>The linear dimension from the aircraft datum to the potable water tank, at which the departure control system will calculate the center of gravity influence of potable water in that tank.</xs:documentation>
 </xs:annotation>
@@ -4071,7 +4108,7 @@
 <xs:documentation>The lateral position of the water tank. Used when potable water lateral imbalance influence is required to be calculated.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="MaximumWeightMeasure" type="WeightMeasureType" minOccurs="1" maxOccurs="1">
+<xs:element name="MaximumWeightMeasure" type="WeightMeasureType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Maximum weight of water permitted in the specified tank.</xs:documentation>
 </xs:annotation>
@@ -4246,7 +4283,7 @@
 <xs:documentation>The linear dimension from the aircraft datum to the aft edge of the cabin section at the specified class. Used when graphical representation of each specified cabin section/class is available in the supplier's departure control system.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="BalanceArmCentroidMeasure" type="LengthMeasureType" minOccurs="1" maxOccurs="1">
+<xs:element name="BalanceArmCentroidMeasure" type="LengthMeasureType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>The linear dimension from the aircraft datum to the mean point at which the CG influence of all passengers in the specified class is calculated.</xs:documentation>
 </xs:annotation>
@@ -4261,12 +4298,12 @@
 <xs:documentation>Cabin Type Code as defined by PADIS code set (e.g. 1, 2, 3, etc.)</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="FirstRowNumber" type="NaturalNumberType" minOccurs="1" maxOccurs="1">
+<xs:element name="FirstRowNumber" type="NaturalNumberType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>The row number of the first seat row in the specified class.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="LastRowNumber" type="NaturalNumberType" minOccurs="1" maxOccurs="1">
+<xs:element name="LastRowNumber" type="NaturalNumberType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>The row number of the last seat row in the specified class.</xs:documentation>
 </xs:annotation>
@@ -4322,7 +4359,7 @@
 <xs:documentation>The linear dimension from the aircraft datum to the aft edge of the specified cabin section. Used when graphical representation of each cabin section is available in the supplier's departure control system.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="BalanceArmCentroidMeasure" type="LengthMeasureType" minOccurs="1" maxOccurs="1">
+<xs:element name="BalanceArmCentroidMeasure" type="LengthMeasureType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>The linear dimension from the aircraft datum to the mean point at which the CG influence of all passengers in the cabin section is calculated.</xs:documentation>
 </xs:annotation>
@@ -4403,17 +4440,17 @@
  </xs:documentation>
 </xs:annotation>
 <xs:sequence>
-<xs:element name="BalanceArmMeasure" type="LengthMeasureType" minOccurs="1" maxOccurs="1">
+<xs:element name="BalanceArmMeasure" type="LengthMeasureType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>The linear dimension from the aircraft datum the mean centroid of the seat row.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="MaximumSeatsQty" type="QtyType" minOccurs="1" maxOccurs="1">
+<xs:element name="MaximumSeatsQty" type="QtyType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>The maximum number of seats that exist at the specified row. Where convertible seats exist, define the maximum possible passenger positions available.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="MaximumWeightMeasure" type="WeightMeasureType" minOccurs="1" maxOccurs="1">
+<xs:element name="MaximumWeightMeasure" type="WeightMeasureType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>The maximum weight that is permitted in the specified row. Used to limit the total allocation of (SOC) dead load into the row.
  Ensure procedures are in place to observe any individual seat max weight limitations.</xs:documentation>
@@ -4424,7 +4461,7 @@
 <xs:documentation>Ordinal number identifying a seat row in an aircraft.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="Seat" type="SeatType" minOccurs="1" maxOccurs="unbounded">
+<xs:element name="Seat" type="SeatType" minOccurs="0" maxOccurs="unbounded">
 <xs:annotation>
 <xs:documentation>Passenger position located in the cabin.
  </xs:documentation>
@@ -4605,7 +4642,7 @@
 <xs:documentation>Stabilizer trim setting.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="TOW_Measure" type="WeightMeasureType" minOccurs="1" maxOccurs="1">
+<xs:element name="TOW_Measure" type="WeightMeasureType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Take-off weight for which the stabilizer trim setting applies.</xs:documentation>
 </xs:annotation>
@@ -4765,12 +4802,12 @@
 <xs:documentation>Additional, supplementary information about the document or service.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="StandardTaxiFuelWeightMeasure" type="WeightMeasureType" minOccurs="1" maxOccurs="1">
+<xs:element name="StandardTaxiFuelWeightMeasure" type="WeightMeasureType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Standard fuel weight burned during taxiing.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="TaxiFuelBurnOrder" type="TaxiFuelBurnOrderType" minOccurs="1" maxOccurs="unbounded">
+<xs:element name="TaxiFuelBurnOrder" type="TaxiFuelBurnOrderType" minOccurs="0" maxOccurs="unbounded">
 <xs:annotation>
 <xs:documentation>Tank order for taxi fuel burn.
  </xs:documentation>
@@ -5061,7 +5098,7 @@
 <xs:documentation>Individual serial number or first serial number when defining ULD serial number ranges</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="DefaultInd" type="IndType" minOccurs="1" maxOccurs="1">
+<xs:element name="DefaultInd" type="IndType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Indicates that the ULD type is the default type, i.e. when serial number and/or owner code do not match this data will be applied to any ULD of that type. 
  To be used during load planning.</xs:documentation>
@@ -5077,7 +5114,7 @@
 <xs:documentation>Maximum internal volume of ULD</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="MaximumWeightMeasure" type="WeightMeasureType" minOccurs="1" maxOccurs="1">
+<xs:element name="MaximumWeightMeasure" type="WeightMeasureType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Maximum total gross weight of ULD (tare included)</xs:documentation>
 </xs:annotation>
@@ -5092,7 +5129,7 @@
 <xs:documentation>Additional, supplementary information about the document or service.</xs:documentation>
 </xs:annotation>
 </xs:element>
-<xs:element name="TareWeightMeasure" type="WeightMeasureType" minOccurs="1" maxOccurs="1">
+<xs:element name="TareWeightMeasure" type="WeightMeasureType" minOccurs="0" maxOccurs="1">
 <xs:annotation>
 <xs:documentation>Tare (empty) weight of ULD</xs:documentation>
 </xs:annotation>

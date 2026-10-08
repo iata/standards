@@ -1,5 +1,5 @@
 <?xml  version="1.0" encoding="UTF-8" ?>
-<xs:schema targetNamespace="http://www.iata.org/IATA/2015/EASD/00/IATA_OffersAndOrdersCommonTypesFullyOptional"  xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"  elementFormDefault="qualified" version="1.006" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/EASD/00/IATA_OffersAndOrdersCommonTypesFullyOptional"> <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/> 
+<xs:schema targetNamespace="http://www.iata.org/IATA/2015/EASD/00/IATA_OffersAndOrdersCommonTypesFullyOptional"  xmlns:dsig="http://www.w3.org/2000/09/xmldsig#"  elementFormDefault="qualified" version="1.007" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2015/EASD/00/IATA_OffersAndOrdersCommonTypesFullyOptional"> <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/> 
 <xs:complexType name="AcceptanceRuleType">
 <xs:annotation>
 <xs:documentation>A rule which is an account or representation of the certain or major aspects, characteristics, or features of a person, object, or event.</xs:documentation>
@@ -2260,6 +2260,18 @@
 </xs:extension>
 </xs:simpleContent>
 </xs:complexType>
+<xs:simpleType name="AppliesToCodeContentType">
+<xs:annotation>
+<xs:documentation>Codeset to be defined by OOTSSWG and IG. </xs:documentation>
+</xs:annotation>
+<xs:restriction base="xs:token"></xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="AppliesToCodeType">
+<xs:annotation>
+<xs:documentation>NOTE: Missing definiton, expected to be an ENUM. To be finalized element name and defintion or annotation by WG.</xs:documentation>
+</xs:annotation>
+<xs:restriction base="AppliesToCodeContentType"></xs:restriction>
+</xs:simpleType>
 <xs:complexType name="ArrivalFilterCriteriaType">
 <xs:annotation>
 <xs:documentation>Flight arrival information.</xs:documentation>
@@ -4807,6 +4819,105 @@
 </xs:annotation>
 <xs:restriction base="ConsequenceOfInactionCodeContentType"></xs:restriction>
 </xs:simpleType>
+<xs:complexType name="ConsumptionTaxInfoType">
+<xs:annotation>
+<xs:documentation>Details the properties of tax consumption, applicable to offer and order purchase price, referring consumption tax type and amount, that include but are not limited to VAT, GST, or exemptions.</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="AppliesToCode" type="AppliesToCodeType" minOccurs="0" maxOccurs="unbounded">
+<xs:annotation>
+<xs:documentation>NOTE: To be finalized element name and defintion or annotation by OOTSWG. Expected to by of an ENUM type of external source, not hardcoded in BDT. A new code set of Consumption Taxes (CTA?) to be created in IG?</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="ConsumptionTaxCode" type="CodeType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>2-alphahnumeric code of consumption tax, e.g. UI, UO</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="GrossAmount" type="AmountType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Amount including both domestic (consumption tax included) and international portions (consumption tax excluded).</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="GrossAmountIncludedInd" type="IndType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Indicates whether consumption tax is included in the gross amount.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="NetAmount" type="AmountType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Amount that excludes consumption tax.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="NonTaxableInfo" type="NonTaxableInfoType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>NOTE: Missing definition from OO(TSS)WG. Does it represent the threshold information to which Consumption Tax does not apply? Similar to a non taxable 10% portion to which VAT does not apply?</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="TaxableGrossAmount" type="AmountType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Amount a customer must pay plus the applicable consumption tax, which excludes any portions that are not subject to consumption tax.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="TaxAmount" type="AmountType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Product of tax base amount and the tax percentage.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="TaxBaseAmount" type="AmountType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Difference between Net Amount and Non Taxable Amount.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="TaxExemptionInfo" type="TaxExemptionInfoType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>NOTE: for definition clarity and AIDM modeling guideline, changed from ExemptionInfo into TaxExemptionInfo and avoid conflict with existing element of IATA_AirShoppingRS.Response.Processing.PricingParameter.TaxExemption. Missing definition and unclear what the difference is between NonTaxableInfo and TaxExemptionInfo data elements.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="ConsumptionTaxType">
+<xs:annotation>
+<xs:documentation>A tax on the purchase of goods or services, which may take the form of sales taxes, tariffs, value added tax (VAT), or goods and service tax (GST), varying by jurisdiction.</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="ConsumptionTaxInfo" type="ConsumptionTaxInfoType" minOccurs="0" maxOccurs="unbounded">
+<xs:annotation>
+<xs:documentation>Details the properties of tax consumption, applicable to offer and order purchase price, referring consumption tax type and amount, that include but are not limited to VAT, GST, or exemptions.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="ConsumptionTaxPercent" type="PercentType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>NOTE: missing definition. E.g. is Consumption tax a percentage rate of base or total amount of a fare, e.g. 19% VAT percent?</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="ConsumptionTaxTypeCode" type="CodeType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Code defining the category of consumption tax, e.g. VAT, GST, etc. NOTE: possible name conflict or confusion with Tax Type Code of TAX element</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="Jurisdiction" type="SalesCountryJurisdictionType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>NOTE: missing definition. Tax jurisdiction may be different or equal sales transaction country, e.g. CA is country of sale but both US and CA jurisdiction apply to consumption taxes, US is country of sale, but specific state tax consumption applies.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="NotIncludedTotalTaxAmount" type="AmountType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>NOTE: missing definition.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="SalesCountry" type="SalesCountryJurisdictionType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>Country of sales for transaction</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="TotalTaxAmount" type="AmountType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>NOTE: missing definition, can we reuse from Tax Summary - Total Tax Amount defintion? Which is Total of all applicable tax amounts included in the price. If tax breakdowns are provided, this amount should match the sum of the tax breakdown amounts.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
 <xs:complexType name="ContactInfoListType">
 <xs:annotation>
 <xs:documentation>Contact info data list definition.</xs:documentation>
@@ -10208,6 +10319,33 @@
 </xs:element>
 </xs:sequence>
 </xs:complexType>
+<xs:complexType name="NonTaxableInfoType">
+<xs:annotation>
+<xs:documentation>NOTE: Missing definition from OO(TSS)WG. Does it represent the threshold information to which Consumption Tax does not apply? Similar to a non taxable 10% portion to which VAT does not apply?</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="Amount" type="AmountType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>NOTE: missing definition</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="Percent" type="PercentType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>NOTE: missing definition</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="ReasonCode" type="CodeType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>NOTE: missing definition</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="ReasonText" type="TextType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>NOTE: missing definition</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
 <xs:simpleType name="NumberType">
 <xs:annotation>
 <xs:documentation>A mathematical number that is assigned or is determined by calculation.</xs:documentation>
@@ -13466,6 +13604,11 @@
 <xs:documentation>ISO Country Code (can be extended by bilateral agreement in case of exceptions, e.g. Kosovo). Examples: US, FR.</xs:documentation>
 </xs:annotation>
 </xs:element>
+<xs:element name="TaxIdentityInfo" type="TaxIdentityInfoType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>The information related to the tax identity of an individual or organization.</xs:documentation>
+</xs:annotation>
+</xs:element>
 </xs:sequence>
 </xs:complexType>
 <xs:simpleType name="PayCardDateTextType">
@@ -13652,6 +13795,11 @@
 <xs:documentation>A physical address that is associated with payment types , 
  
  This comprises of a postal address and optional payment verification.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="TaxIdentityInfo" type="TaxIdentityInfoType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>The information related to the tax identity of an individual or organization.</xs:documentation>
 </xs:annotation>
 </xs:element>
 </xs:sequence>
@@ -17636,6 +17784,23 @@
 </xs:element>
 </xs:sequence>
 </xs:complexType>
+<xs:complexType name="SalesCountryJurisdictionType">
+<xs:annotation>
+<xs:documentation>Pair of country of sales and applicable jurisdiction for sales transaction.</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="Country" type="CountryType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>A nation with its own government, occupying a particular territory.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="CountrySubDivision" type="CountrySubDivisionType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>An area of land which is a sub-division within a country, such as a state, a county, a canton, a province, etc.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
 <xs:complexType name="SalesTaxRegistrationType">
 <xs:annotation>
 <xs:documentation>The Identification and contact information of a party purchasing goods or services as registered with a Purchase Tax.</xs:documentation>
@@ -20882,6 +21047,33 @@
 </xs:annotation>
 <xs:restriction base="TaxCodeContentType"></xs:restriction>
 </xs:simpleType>
+<xs:complexType name="TaxExemptionInfoType">
+<xs:annotation>
+<xs:documentation>NOTE: for definition clarity and AIDM modeling guideline, changed from ExemptionInfo into TaxExemptionInfo and avoid conflict with existing element of IATA_AirShoppingRS.Response.Processing.PricingParameter.TaxExemption. Missing definition and unclear what the difference is between NonTaxableInfo and TaxExemptionInfo data elements.</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="Amount" type="AmountType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>NOTE: missing definition</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="AmountBeforeExemptionAmount" type="AmountType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>NOTE: missing definition</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="ReasonCode" type="CodeType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>NOTE: missing definition</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="ReasonText" type="TextType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>NOTE: missing definition</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
 <xs:simpleType name="TaxExemptionQualificationCodeContentType">
 <xs:annotation>
 <xs:documentation>Enumeration values for Tax exemption Qualification
@@ -20914,6 +21106,23 @@
 </xs:annotation>
 <xs:restriction base="TaxExemptionQualificationCodeContentType"></xs:restriction>
 </xs:simpleType>
+<xs:complexType name="TaxIdentityInfoType">
+<xs:annotation>
+<xs:documentation>The information related to the tax identity of an individual or organization.</xs:documentation>
+</xs:annotation>
+<xs:sequence>
+<xs:element name="IssuingCountryCode" type="CountryCodeType" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>The code for the country that issued the tax identification document.</xs:documentation>
+</xs:annotation>
+</xs:element>
+<xs:element name="TaxIdentityDocID" type="ID_Type" minOccurs="0" maxOccurs="1">
+<xs:annotation>
+<xs:documentation>The document number of either the individual or company who will be reclaiming taxes.</xs:documentation>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
 <xs:simpleType name="TaxonomyCodeContentType">
 <xs:annotation>
 <xs:documentation>The code for a product or service within the Shared Industry Taxonomy or bilaterally. Refer to EASD Codeset 
